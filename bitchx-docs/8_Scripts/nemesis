@@ -1,0 +1,18 @@
+Synopsis:
+   load nemesis
+
+Description:
+   This script is an interface to the |Nemesis IRC-MUD gateway bot.  It
+   opens a new client window to display the MUD activity in.  A pair of
+   aliases are provided, /nwho and /ntell.  The first issues the "who"
+   command to the |Nemesis bot, and the second issues a "tell" command.
+   Any additional arguments are also passed along to the bot.
+
+See Also:
+   load(5); mudirc(8)
+
+Other Notes:
+   This script was written in 1992, so it's probably safe to say that the
+   |Nemesis bot no longer exists.  The script itself was written by Carl
+   von Loesch (lynx).
+

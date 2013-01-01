@@ -1,0 +1,28 @@
+Synopsis:
+   $chanmode(<channel>|* [<channel> ...])
+
+Technical:
+   This function is used to retrieved the current channel mode for the given
+   channel.  If no channel, or a "*", is given, the current is assumed.  You
+   must be on the channel specified for it to function properly.  Multiple
+   channels may be specified.
+
+Practical:
+   You give it a list of channels you want to know the channel mode for, and
+   it returns the modes on that channel.  Of course, you have to be on the
+   channel for it to make any sense.  You can use an asterisk ('*') to stand
+   for the current channel.  If you don't specify any arguments, the current
+   channel is assumed.
+
+Returns:
+   modes for specified channels
+
+Examples:
+   $chanmode(#blah)             returns modes for #blah
+   $chanmode(#foo #bar)         returns modes for #foo and #bar
+   $chanmode(*)                 returns modes for current channel
+   $chanmode()                  returns modes for current channel too
+
+See also:
+  key(6); mode(1); onchannel(6)
+

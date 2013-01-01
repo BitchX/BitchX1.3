@@ -1,0 +1,20 @@
+Synopsis:
+   $pad(<length> <char> <text>)
+
+Technical:
+   This function pads the end of <text> with <char> until it is <length>
+   characters long. If <text> is longer than <length>, nothing is done.
+
+Practical:
+   This function is especially useful for forcing strings to a minimum
+   length, possibly for a script that hooks and displays a /names reply.
+
+Returns:
+   <text> padded with a number of <char>s until it's length is <length>
+
+Examples:
+   $pad(8 ! test)                       returns "test!!!!!"
+
+See Also:
+   left(6); right(6); mid(6)
+

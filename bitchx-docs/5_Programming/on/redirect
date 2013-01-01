@@ -1,0 +1,13 @@
+Synopsis:
+   on [<modes>]redirect [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever something is /redirect'd.
+
+Parameters:
+   $0    Target to which the text is about to be sent
+   $1-   The actual text to be sent
+
+See Also:
+   redirect(5)
+

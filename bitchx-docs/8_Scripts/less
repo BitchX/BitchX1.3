@@ -1,0 +1,14 @@
+Synopsis:
+   load more
+
+Description:
+   This script is an emulation of the Unix utility of the same name.  It
+   displays the contents of a text file, pausing after each windowfull.
+
+See Also:
+   load(5); more(8)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net, who
+   was inspired by the more script by archon, archon@tamu.edu.
+

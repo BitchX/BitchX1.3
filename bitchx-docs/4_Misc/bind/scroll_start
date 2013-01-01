@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> scroll_start
+
+Description:
+   This function causes the client to enter scrollback mode.  This allows
+   the lastlog buffer to be viewed interactively.  Any server messages
+   received while in scrollback mode are queued, and are not displayed
+   until the client exits scrollback mode.  It is generally a good idea to
+   set HOLD_MODE on while in scrollback mode.
+   
+See Also:
+   bind(4) scroll_backward, scroll_end, scroll_forward; lastlog(1);
+   set(4) hold_mode, scroll
+

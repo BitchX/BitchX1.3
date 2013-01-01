@@ -1,0 +1,20 @@
+Synopsis:
+   on [<modes>]invite [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives an invitation to a
+   channel.
+
+Parameters:
+   $0    nickname inviting the client to a channel
+   $1    channel invited to
+
+Examples:
+   Customizing the appearance of the invitation:
+      on ^invite "*" {
+         echo *** $0 cordially invites you to $1
+      }
+
+See Also:
+   invite(1)
+

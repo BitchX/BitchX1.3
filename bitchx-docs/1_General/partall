@@ -1,0 +1,17 @@
+Synopsis:
+   partall 
+
+Description:
+   PARTALL makes you leave all channels.  That's it.  
+   
+Examples:
+   To leave all your channels:
+      /partall
+
+See Also:
+   join(1); l; part; on(5) leave; set(4) novice 
+
+Restrictions:
+   If you specify "*" as the channel to leave, you may not specify any
+   other channels to leave at the same time.
+

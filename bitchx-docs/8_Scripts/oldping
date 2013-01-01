@@ -1,0 +1,24 @@
+Synopsis:
+   load oldping
+
+Description:
+   This is a script version of the now-ubiquitous CTCP PING command.  It is
+   necessary when dealing with other clients that are particularly old, or
+   that do not otherwise support CTCP PING (but do support other CTCP
+   commands).  It works by sending the ping message in a CTCP ERRMSG, which
+   most clients will reply to.  It otherwise works just like PING, except
+   the command is /oping.
+
+See Also:
+   ctcp(1); load(5); ping(1)
+
+Other Notes:
+   This script has been contributed to by numerous people.  Credit for the
+   original idea goes to Robey Pointer (Robey), robey@netcom.com, with some
+   inspiration from Klaus Zeuge (sojge), sojge@minsk.docs.uu.se, and
+   Nicolas Pioch (Nap), pioch@poly.polytecnique.fr.  Some credit also goes
+   to Peter Hellmonds (snoopy), hellmond@phoenix.princeton.edu.  Ian
+   Frechette (Daemon), frechett@spot.colorado.edu, made the necessary
+   modifications for it to run under ircII 2.2pre6.  Further modifications
+   have been made by Jeremy Nelson (hop), jnelson@acronet.net, for EPIC.
+

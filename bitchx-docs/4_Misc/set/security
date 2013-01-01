@@ -1,0 +1,28 @@
+Synopsis:
+   set security [<number>]
+
+Description:
+   This variable allows the user to enable a number of security options,
+   with the intent of preventing a rogue hook or loaded script from
+   doing any potential damage.
+
+   The setting is based on a set of bits, each of which can be enabled or
+   disabled independently or in any combination.  Each bit has a specific
+   value associated with it.  The bits are additive, much like the DEBUG
+   setting.
+
+      Bit  Value   Purpose
+       0     1     prevents variables from being used as commands
+       1     2     the EXEC command may only be used interactively
+       2     4     the SET command may only be used interactively
+
+Examples:
+   To disable EXEC and SET inside aliases or hooks:
+      /set security 6
+
+   To disable everything listed:
+      /set security 7
+
+See Also:
+   set(4) debug, exec_protection, novice
+

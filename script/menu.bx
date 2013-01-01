@@ -1,0 +1,2613 @@
+# This code is based on GemZ by gemini however it is not his responsibily
+#
+# If there are any errors contact [NuKe]! !!!!NOT!!!! gemini!
+#
+# All credits are stated (if not...they are most likely gemini)
+
+^fset FORMAT_XTERM_TITLE [$0][$2] $5-
+
+^set COMMENT_BREAKAGE on
+^set JOIN_NEW_WINDOW on
+^set JOIN_NEW_WINDOW_TYPE create double on
+^set QUERY_NEW_WINDOW on
+^set QUERY_NEW_WINDOW_TYPE create
+^set WINDOW_DESTROY_PART on
+^set SERVER_GROUPS on
+
+@ actionsfile = [$IRCLIB()/script/actplug.gmz]
+@ loadacts = [NO]
+@ ctcpsound = [OFF]
+@ ctcpsndreq = [OFF]
+@ EXEDIR = [~]
+@ sounddir = [$EXEDIR/sounds]
+@ SOUND_PATH = [$EXEDIR/sounds ~ ~/sounds]
+@ gz.sounds        = 1
+
+# Echo Strings
+^assign gemz.act *
+^assign gemz.str .gz.
+^assign gemz.usage ***
+^eval ^assign gemzov.str \\[\$bgrn\ov${cl}\\]\
+alias gecho xecho -b -level crap $*
+alias gbecho xecho -b -level crap $*
+alias gbecho xecho -b -level crap $*
+alias gtecho xecho -b -target $0 $1-
+alias gtbecho xecho -b -target $0 $1-
+alias gtbecho xecho -b $1-
+alias gaecho xecho -b -level crap $*
+alias gnecho xecho -b -level crap $*
+alias guecho xecho -b -level crap gemz.usage $*
+
+@ NUMKICK = [7]
+@ kick.0 = [uh, huh huh... uh... yew suck, or something]
+@ kick.1 = [meep meep!]
+@ kick.2 = [bork bork bork bork]
+@ kick.3 = [oops, silly me, that's the wrong key]
+@ kick.4 = [nostalgia kick: Roadkill splattered all over the infobahn]
+@ kick.5 = [nostalgia kick: CDA VIOLATION]
+@ kick.6 = [If anybody gets funk'd its gun' be U!]
+
+#----------------------------Kicks-----------------------------#
+alias bkk {/k $0 BurgerKingKick - You get it my way}
+alias mck {/k $0 McKick: You Want Fries with that?}
+alias mcdk {/k $0 McKick: Have you had your break today?!?}
+alias tbk {/k $0 TacoBellKick: Make a run for the border}
+alias cjk {/k $0 CarlsJrKick: If it don't get all over your face, you don't belong in this place}
+alias jbk {/k $0 JackInTheBoxKick: Jacks Back!!}
+alias kfck {/k $0 KentuckyFriedKick: Original Recipe or Extra Crispy?}
+alias kt {/k $0 Kick Toy (tm)}
+alias tkl {/k $0 TaeKwonLeapKick}
+alias gk {/k $0 [GreetKick] Hello to you too!}
+alias wk {/k $0 woikick}
+
+alias save {
+  if (fexist(~/menu.sav) != -1) {
+        @ unlink(~/menu.sav)
+  }
+  @ outfile = open(~/menu.sav W)
+# gecho Saving menu.bx settings...
+  @ write($outfile //^assign ctcpsound $ctcpsound)
+  @ write($outfile //^assign loadacts $loadacts)
+  @ write($outfile //^assign ctcpsndreq $ctcpsndreq)
+  @ write($outfile //^assign SOUND_PATH $SOUND_PATH)
+  @ write($outfile //^assign sounddir $sounddir)
+  @ write($outfile //^assign actionsfile $actionsfile)
+  @ close($outfile)
+  //save
+}
+
+#
+# This code courtesy of mikh
+#
+
+alias searchpath {
+     fe ($1-) bleah {
+          if (file.exist($bleah/$0)) { return $bleah/$0 }
+          }
+    return 0
+}
+
+### returns 1 if we have file $* for playing, path is stripped from parameter
+### so you can safely pass full qualified filenames here, if file exist,
+### ctcpsnd.fname variable will contain full path to the file, which can
+### be passed to mmpm.playfile or mmpm.playfile2
+
+alias ctcpsnd.havefile {
+        @ctcpsnd.fname = searchpath($file.sanspath($*) $SOUND_PATH)
+        @function_return = file.exist($ctcpsnd.fname)
+}
+
+### should be called if you requested a file from someone, and expect dcc
+### send to happen
+### $0 == file name
+alias ctcpsnd.requested {
+        @ctcpsnd[$file.sanspath($*)] = time()
+}
+
+### this function returns if we already have this file requested from someone
+### it returns time since we requested file, or 10000 if we did not requested
+### such file, so if (ctcpsnd.isrequested(file.wav) > 30) will check if
+### file was requested longer then 30 seconds ago, or not requested at all
+
+alias ctcpsnd.isrequested {
+        @ function_return = 10000
+        if (ctcpsnd[$file.sanspath($*)] != []) @function_return = time() - ctcpsnd[$%file.sanspath($*)]
+}
+
+### returns 1 if we getting this file right now...
+alias ctcpsnd.isgetting {
+        @ function_return = ctcpsnd.getting[$file.sanspath($*)] > 0
+}
+
+### usage is simple, in your own on ^dcc_request, do something like
+### ^on dcc_request * if (!ctcpsnd.dcc_request($*)) {
+###        your code here
+### }
+
+alias ctcpsnd.dcc_request {
+        @ function_return = 0
+        if (ctcpsnd[$file.sanspath($2)] > 0) {
+                @function_return = 1
+                if (file.isdir($EXEDIR/SOUNDS)) {
+                        @mkdir($EXEDIR/SOUNDS/RECV)
+                        //^dcc rename $4 $EXEDIR/SOUNDS/RECV/$file.sanspath($2)
+                        @ctcpsnd.getting[$file.sanspath($2)] = time()
+                        ^on ^dcc_connect "$4 $0 GET % %" #
+                        //^dcc get $4
+                        ^on ^dcc_connect -"$4 $0 SEND % %"
+                        if (dccitem($4) == []) {
+                                //^assign -ctcpsnd.getting[$file.sanspath($2)]
+                                //^assign -ctcpsnd[$file.sanspath($2)]
+                        }{
+                                //on ^dcc_lost "$4 $0 GET $word(8 $dccitem($4)) %*" {
+                                        @ctcpsnd.dcc_lost($*)
+                                }
+                        }
+                }{
+                        //^assign -ctcpsnd.getting[$file.sanspath($2)]
+                        //^assign -ctcpsnd[$file.sanspath($2)]
+                        //^dcc close $4
+                }
+        }
+}
+
+### same here
+
+alias ctcpsnd.dcc_lost {
+        @function_return = 0
+        if (ctcpsnd[$%file.sanspath($3)] > 0) {
+                @function_return = 1
+                switch ($4) {
+                        (ERROR)(LOST)(CLOSED) {
+                                @unlink($3)
+                                //^assign -ctcpsnd.getting[$file.sanspath($3)]
+                                //^assign -ctcpsnd[$file.sanspath($3)]
+                                //hook ctcpsnd error $file.sanspath($3) closed
+                        }
+                        (COMPLETED) {
+                                //^assign -ctcpsnd.getting[$file.sanspath($3)]
+                                //^assign -ctcpsnd[$file.sanspath($3)]
+                                if (fsize($3) && fsize($3) == word(7 $dccitem($0))) {
+                                        @rename($3 $exedir/sounds/$file.sanspath($3))
+                                        //^hook ctcpsnd received $exedir/sounds/$file.sanspath($3)
+                                }{
+                                        if (fsize($3)) {
+                                                 @unlink($3)
+                                                 //hook ctcpsnd error file.sanspath($3) file size mistmatch
+                                        }{
+                                                @unlink($3)
+                                                 //hook ctcpsnd error file.sanspath($3) zero length file
+                                        }
+                                }
+                        }
+                }
+                //on ^dcc_lost -"$0 $1 $2 $3 %*"
+        }
+}
+
+### this function is called from main script /sound routine to find if
+### we have a local file. If we do, it is assumed that we gonna send it,
+### so its added to a circlular buffer of last 10 filenames sent via /sound
+### if function returns 1, then ctcpsnd.fname will be a full filename, ready
+### to be passed to mmpm.playfile
+
+if (ctcpsnd.cansendidx == []) @ctcpsnd.cansendidx=0
+
+alias ctcpsnd.localfile {
+        @ function_return = 1
+# cannot send files which we are currently downloading yet
+        if (ctcpsnd.isgetting($*)) { @function_return = 0
+        } else if (file.exist($*)) {
+                @ ctcpsnd.fname = [$*]
+                @ ctcpsnd.cansend[$ctcpsnd.cansendidx] = [$*]
+                @ ctcpsnd.cansendidx = (ctcpsnd.cansendidx+1) % 10
+        } else if (file.exist(${ctcpsnd.fname = searchpath($* $SOUND_PATH)})) {
+                @ ctcpsnd.cansend[$ctcpsnd.cansendidx] = [$*]
+                @ ctcpsnd.cansendidx = (ctcpsnd.cansendidx+1) % 10
+        } else @function_return = 0
+
+}
+
+### $0 is what they requested, function returns 0 or 1, if it returns 1, then
+### ctcpsnd.fname will be a file name for /dcc send
+
+alias ctcpsnd.cansend {
+        @function_return = 0
+        if (rmatch($* %.wav %.au %.mid)) {
+                @ctcpsnd.tmp = file.sanspath($*)
+                foreach ctcpsnd.cansend ctcpsnd.ii {
+                        if (ctcpsnd.tmp == file.sanspath($ctcpsnd.cansend[$ctcpsnd.ii])) {
+                                if (file.exist($ctcpsnd.cansend[$ctcpsnd.ii])) {
+                                        @ ctcpsnd.fname = ctcpsnd.cansend[$ctcpsnd.ii]
+                                        @ function_return = 1
+                                        //break
+                                } else if (file.exist(${ctcpsnd.fname = searchpath($file.sanspath($ctcpsnd.cansend[$ctcpsnd.ii]) $SOUND_PATH)})) {
+                                        @ function_return = 1
+                                        //break
+                                }
+                        }
+                }
+        }
+}
+
+### next 3 ones should be called from ON ^PUBLIC, ON ^MSG and ^ON NOTICE
+### Note that we only allow to request these sounds we just recently played
+### using /sound, last 10 actually
+
+alias ctcpsnd.msg {
+        @function_return = 0
+        if ([$1] == [!$N] && [$2] != [] && [$3] == []) {
+                @ function_return = 1
+                if (ctcpsnd.cansend($2)) {
+                        //^hook ctcpsnd request 1 $0 $ctcpsnd.fname
+                        ctcpsnd.sendfile_with_timeout $0 $ctcpsnd.fname
+                }{
+                        //^hook ctcpsnd request 0 $0 $2
+                }
+        }
+}
+
+alias ctcpsnd.notice {
+        @function_return = 0
+        if (index(# $0) == -1 && ([$1] == [!dccsend] || [$1] == [!$N]) && [$2] != [] && [$3] == []) {
+                @ function_return = 1
+                if (ctcpsnd.cansend($2)) {
+                        //^hook ctcpsnd request 1 $0 $ctcpsnd.fname
+                        ctcpsnd.sendfile_with_timeout $0 $ctcpsnd.fname
+                }{
+                        //^hook ctcpsnd request 0 $0 $2
+                }
+        }
+}
+
+alias ctcpsnd.public {
+        if ([$2] == [!$N] && ctcpsnd.cansend($3)) {
+                //^hook ctcpsnd request 1 $0 $ctcpsnd.fname
+                ctcpsnd.sendfile_with_timeout $0 $ctcpsnd.fname
+        }
+}
+
+
+alias ctcpsnd.close_unactive {
+        if (dccitem($0) != [] && word(2 $dccitem($0)) != [active]) {
+                //^dcc close $0
+                //^on ^dcc_connect -"$0 $1 SEND % %"
+        }
+}
+
+### $0 == nick, $1 == file
+alias ctcpsnd.sendfile_with_timeout {
+        @ dnum = 0
+        on ^dcc_sent "$0 SEND % % #%" {@dnum = [$4]}
+        //^dcc send $0 $1-
+        on ^dcc_sent -"$0 SEND % % #%"
+        on ^dcc_connect "$dnum $0 SEND % %" {
+                //on ^dcc_connect -"$0 $1 SEND % %"
+                //on ^dcc_lost "$0 $1 SEND $word(8 $dccitem($0)) %*" {
+                        //on ^dcc_lost -"$0 $1 $2 $3 %*"
+                }
+        }
+        if (dnum) /timer 180 ctcpsnd.close_unactive $dnum $0
+}
+
+alias file.exist {
+        @ function_return = fexist($*) == 1
+}
+
+alias file.isdir {
+        @ function_return = fexist($* d) == 1
+}
+
+alias file.sanspath {
+        if (file.spi=rindex(\\/: $*)+1) {
+                @function_return=mid($file.spi 255 $*)
+                } else {
+                @function_return=[$*]
+                }
+}
+
+alias file.ext {
+        @file.sp=file.sanspath($*)
+        if (file.exi=rindex(. $file.sp)+1) {
+                @function_return=[mid($file.exi 255 $file.sp)]
+                } else {
+                @ function_return = []
+                }
+}
+
+alias file.sansext {
+        @file.sp=file.sanspath($*)
+        if (file.sei=rindex(. $file.sp)+1) {
+                @function_return=left(${[$@*] - ((@file.sp - file.sei) + 1)} $*)
+                } else {
+                @function_return=[$*]
+                }
+}
+
+alias file.path {
+        if (file.spi=rindex(\\/: $*)+1) {
+                @function_return=[mid(0 $file.spi $*)]
+                } else {
+                @function_return=[]
+                }
+}
+
+alias file.tofat {
+        @file.path=file.path($*)
+        @file.name=file.sansext($file.sanspath($*))
+        @file.ext=file.ext($*)
+# if extention is >3 chars long truncate it
+        if (@file.ext > 3) @file.ext=left(3 $file.ext)
+        if (@file.name > 8) {
+                @file.tohash=right(${@file.name-5} $file.name)
+                echo +++ tohash = $file.tohash
+                @file.name=left(5 $file.name)
+                @file.tmp=0
+                fec ($file.tohash) file.c {
+                        @file.tmp = file.tmp + ascii($toupper($file.c))
+                }
+                echo +++ result = $file.tmp
+                @file.tmp = file.tmp % 256
+                @file.name #= file.tmp
+        }
+        if (file.path) @function_return=[$file.path/$file.name\.$file.ext] else @function_return=[$file.name\.$file.ext]
+}
+
+alias mmpm.debug {
+    if (mmpm.debug) {xecho +++ [mmpm] $*}
+}
+
+if (!mmpm.loaded) {
+        @ mmpm.loading = 1
+        @ mmpm.multimedia = mciapi()
+        if (!mmpm.multimedia) { /mmpm.debug
+        } else { /mmpm.debug }
+        @ mmpm.loaded = 1
+        @ mmpm.volume = mmpm.midi.volume = mmpm.wave.volume = 100
+}
+### outside of 1st if in case we loading it over an older mmpm.api version...
+if (mmpm.wave.state == [] && mmpm.midi.state == []) {
+        @ mmpm.wave.state = [CLOSED]
+        @ mmpm.midi.state = [CLOSED]
+}
+
+### always interrups previous sound
+
+#alias mmpm.playfile {
+#        @mmpm.donotstop = 0
+#        mmpm.playfile_internal $*
+#}
+
+#alias mmpm.playfile2 {
+#        @mmpm.donotstop = [$0]
+#        mmpm.playfile_internal $1-
+#}
+
+#I am not sure why the raw version of mmpm.playfile does not work...
+#until I figure it out...
+
+alias mmpm.playfile {
+eval $mciapi(playfile $0)
+}
+
+alias mmpm.playfile2 {
+eval $mciapi(playfile $0)
+}
+
+
+alias mmpm.sendplaycmd {
+        @ mmpm[$device][nextfile] = [$*]
+        switch ($mmpm[$device][state]) {
+                (CLOSED) {
+                                if (device == [wave]) { @ device.name = [waveaudio]
+                                } else if (device == [midi]) { @ device.name = [sequencer]
+                                } else { @ device.name = 0 }
+                                mmpm.raw open $device.name alias $device$pid() shareable
+                                if (!mmpm.err) @mmpm[$device][state] = [OPEN_WAIT]
+                }
+                (PLAYING) {
+                        ### let the stop notification kick in next file
+                                mmpm.raw stop $device$pid()
+                                if (mmpm.err) {mmpm.close}
+                }
+        }
+}
+
+### should return a device name 'wave' or 'midi' for a filename passed
+### as a parameter
+alias mmpm.get_device_for_file {
+        @ function_return = 0
+        switch ($*) {
+                (*.wav)(*.au)("*.wav")("*.au") {
+                        @ function_return = [wave]
+                }
+                (*.mid)(*.midi)("*.mid")("*.midi") {
+                        @ function_return = [midi]
+                }
+                (*) {
+                        ### todo: default, may open file and look for a header
+                }
+        }
+}
+
+alias mmpm.playfile_internal {
+        if (mmpm.multimedia && file.exist($*)) {
+                @ device = mmpm.get_device_for_file($*)
+                if (device) {
+                        if (!mmpm.donotstop || mmpm[$device][state] != [PLAYING])
+                        {
+                                mmpm.sendplaycmd $*
+                        }
+                }{
+                        mmpm.debug +++ Unknown file extention `$*'
+                }
+        }
+}
+
+#       Numeric code for commands we use:
+#
+
+@mmpm.commands[OPEN]    = 1
+@mmpm.commands[CLOSE]   = 2
+@mmpm.commands[LOAD]    = 22
+@mmpm.commands[PLAY]    = 4
+@mmpm.commands[STOP]    = 6
+
+#
+#       These are notification codes, anything else is an error code and
+#       error description can be found using mciapi(errorstr code) function
+#
+#      #define MCI_NOTIFY_SUCCESSFUL               0x0000
+#      #define MCI_NOTIFY_SUPERSEDED               0x0001
+#      #define MCI_NOTIFY_ABORTED                  0x0002
+#      #define MCI_NOTIFY_ERROR                    0x0003
+
+### global variable device == wave or midi
+
+alias mmpm.close {
+        if (mmpm[$device][state] != [CLOSED] && mmpm[$device][state] != [CLOSE_WAIT]) {
+                mmpm.raw close $device$pid()
+                if (!mmpm.err) { @ mmpm[$device][state] = [CLOSE_WAIT]
+                } else { @ mmpm[$device][state] = [CLOSED] }
+        }
+}
+
+### #define MCIERR_BASE                      5000
+
+alias mmpm.raw {
+        mmpm.debug Raw $*
+        @mmpm.result = mciapi(raw ${device==[wave]?11:12} $* notify)
+        @mmpm.err = mmpm.result > 5000
+}
+
+alias mmpm.kickload {
+        if (mmpm[$device][nextfile] != []) {
+                mmpm.raw load $device$pid() $mmpm[$device][nextfile] ${device==[wave]?[readonly]:[]}
+                if (!mmpm.err) {
+                        @mmpm[$device][state] = [LOAD_WAIT]
+                        @mmpm[$device][nextfile] = []
+                }{
+                        mmpm.close
+                }
+        }{
+                mmpm.close
+        }
+}
+
+
+### we are receiving control of a device
+on ^mci_notify "passdevice % 2" {
+        if ([$1] == mmpm.wave) { @ device = [wave]
+        } else if ([$1] == mmpm.midi) { @ device = [midi]
+        } else { @ device = 0 }
+        if (device) {
+                if (mmpm[$device][state] == [OPENED]) {
+                        mmpm.kickload
+                }
+        } else {
+                mmpm.debug +++ Aqured device $1 (not opened by mmpm.api module)
+        }
+}
+
+### we are loosing control of a device, so lets close it to avoid confusion
+on ^mci_notify "passdevice % 1" {
+        if ([$1] == mmpm.wave) { @ device = [wave]
+        } else if ([$1] == mmpm.midi) { @ device = [midi]
+        } else @ device = 0
+        if (device) {
+                mmpm.debug someone is taking device from us...
+                mmpm.close
+        }
+}
+
+### This is a main handler of notifications from mmpm/2, each command we
+### issue (except set volume ones) have `nofify' flag, and is confirmed here.
+### Much to my surprise I yet have to see mmpm/2 to lose notifications...
+
+on ^mci_notify "NOTIFY % 1? % %" {
+        mmpm.debug Notify $*
+        if ([$2] == 11) { @ device = [wave]
+        } else if ([$2] == 12) { @ device = [midi]
+        } else @ device = 0
+        if (device)
+        {
+                if ([$4] == mmpm.commands[OPEN]) {
+        ### open notification
+                        if ([$1] == 0) {
+                                @ mmpm[$device] = [$3]
+                                @ mmpm[$device][state] = [OPENED]
+        ### it waits for passdevice now, which gonna start file loading
+                        }{
+                                mmpm.close
+                        }
+                } else if ([$4] == mmpm.commands[LOAD]) {
+        ### load notification, lets play it now when it finished loading
+                        if ([$1] == 0) {
+                                if (mmpm[$device][volume] != 100) {
+                                        if (device == [midi]) { @mciapi(raw set midi$pid() volume $mmpm[$device][volume])
+                                        } else if (device == [wave]) { @mciapi(raw set wave$pid() audio volume all $mmpm[$device][volume]) }
+                                }
+                                mmpm.raw play $device$pid()
+                                if (!mmpm.err) { @ mmpm[$device][state] = [PLAYING]
+                                } else {
+                                        mmpm.close
+                                }
+                        }{
+                                mmpm.close
+                        }
+                } else if ([$4] == mmpm.commands[PLAY]) {
+        ### play is finished, try to start next file in case we were stopped
+                        mmpm.kickload
+                } else if ([$4] == mmpm.commands[STOP]) {
+        ### stop notification, not actually used anyhow
+                        mmpm.debug Stop confirmed
+                } else if ([$4] == mmpm.commands[CLOSE]) {
+        ### close notification, lets mark device as closed...
+                        if ([$1] == 0) {
+                                @mmpm[$device][state] = [CLOSED]
+                                @mmpm[$device] = 0
+                        }
+                }
+        } else {
+                mmpm.debug +++ Unknown device $3 notification received
+        }
+}
+
+alias mmpm.midi.stop {
+        @ device=[midi]
+        mmpm.close
+}
+
+alias mmpm.wave.stop {
+        @ device=[wave]
+        mmpm.close
+}
+
+alias mmpm.stop {
+        mmpm.wave.stop
+        mmpm.midi.stop
+}
+
+alias mmpm.midi.volume {
+        @ mmpm.midi.volume = [$0]
+        if (mmpm.midi.state == [PLAYING]) @mciapi(raw set midi$pid() volume $0)
+}
+
+
+alias mmpm.wave.volume {
+        @ mmpm.wave.volume = [$0]
+        if (mmpm.wave.state == [PLAYING]) @mciapi(raw set wave$pid() audio volume all $0)
+}
+
+alias mmpm.volume {
+        mmpm.wave.volume $0
+        mmpm.midi.volume $0
+}
+
+### these are aliases for debugging, /mci <mci string commands> sends a raw
+### command to mmpm/2 and displays result and an error string in case of error
+
+/on ^mci_notify * {echo [mci] $*}
+
+/alias mci {
+        @ _rc = mciapi(raw $0-)
+        if (_rc) {
+                echo [mci] Error: $mciapi(errstring $_rc)
+        }{
+                if (mciapi(result) != []) {
+                        echo [mci] Result: $mciapi(result)
+                }
+        }
+}
+#############
+#GemZ Extras#
+#############
+@ gz.extras = 1
+
+#########################################################################
+### figlet v1.0 support by Kanji_Man.  Modified by Gemini
+### Modified by OS2-Mike
+#   fixed code by OS2-Mike (with a lot of help from mikh)
+#   fixored the prob of 4OS2 echoing its logo info into the figlet pipe.
+#   filget.exe is borked - it expects a ^Z EOF to terminate it -
+#   added to $fig.text
+#   Modified slightly by gemini to replace ^Z with $chr(26) :)
+#########################################################################
+@ def.figfont = [short]
+@ fig.fontdir  = [$exedir/fonts]
+@ figfont = [$fig.fontdir/bubble.flf]
+alias figfix {
+ if ([$0]) {
+  @ figfix.count = 0
+  ^assign -figfix.text
+  while ([$@0-]>=[$figfix.count]) {
+   @ figfix.char = [$mid($figfix.count 1 $0-)]
+   if ([$strip(<>\;\(\)*/\\\{\}$$~`|'\" $figfix.char)]!=[$figfix.char]) {
+    @ figfix.text = [$figfix.text\\]
+   }
+   if (figfix.char) {
+    ^assign figfix.text $figfix.text$figfix.char
+   } else {^assign figfix.text $figfix.text}
+  @ figfix.count++
+ }
+ @ FUNCTION_RETURN = [$encode($figfix.text)]
+ purge fixfix
+ } else {gecho [Error] FIGFIX is an internal alias, avoid using!}
+}
+
+alias fig figlet $*
+#alias figlist {^exec -name figlet ls $fig.fontdir/*.flf}
+alias figlist {
+ gecho Starting Font list
+ fe ($findfiles(fn $fig.fontdir/*.flf)) _f.1 _f.2 _f.3 _f.4 {
+  gecho $[15]_f.1 $[15]_f.2 $[15]_f.3 $[15]_f.4
+ }
+ gecho End of Font list
+ purge _f
+}
+
+alias figlet {
+ if ([$0]) {
+  @ fig.text = encode($strip(| $1-)) ## encode($chr(26))
+  ^on ^exec_error "figlet *" {gecho [ERROR] Cannot load figlet!}
+  if ([$0]==[*]) {^exec -name figlet -out figlet -f $figfont;^msg %figlet $decode($fig.text)
+  } else {^exec -name figlet -msg $0 figlet -f $figfont;^msg %figlet $decode($fig.text)}
+  ^assign -fig.text
+ } else {gecho Usage: /FIGLET <nick/channel> <text>}
+}
+
+alias figfont {
+ if ([$0]) {
+  @ figfont.file = [$0]
+  if ([$fexist($fig.fontdir/$figfont.file\.flf)]==[1]) {
+   gecho Figlet font changed from $fig.fontfile\ to $figfont.file\.
+   @ figfont = [$fig.fontdir/$figfont.file\.flf]
+   @ fig.fontfile = [$figfont.file]
+   if ([$1]==[-d]) {@ def.figfont = [$figfont.file];gecho Default Figlet Font Changed}
+   ^assign -figfont.file
+  } else {gecho [Error] Figlet font not found: $figfont.file\}
+ } else {
+  gecho Current Figlet Font: $fig.fontfile\
+  gecho Usage: /FIGFONT <fontfile>
+ }
+}
+
+alias figdir {
+ input "Please Enter The directory where you fonts are located: " if ([$0]) {
+  if ([$fexist($0-)]==[1]) {
+   @ fig.fontdir = [$0-]
+   gecho Figlet Font Directory Changed to $fig.fontdir
+  }
+ } else {
+  gecho Figlet Font Directory is $fig.fontdir
+ }
+ figfont $fig.fontfile
+}
+
+#added by request -- Ripped from Kanji :)
+alias bleah {
+ if ([$0]) {
+  ^msg $0  \\|/ ____ \\|/             \\|/ ____ \\|/
+  ^msg $0  ~@-/ oO \\-@~             ~@-/ Oo \\-@~
+  ^msg $0  /_\( \\__/ \)_\\   Bleah!!   /_\( \\__/ \)_\\;
+  ^msg $0     \\__U_/                   \\_U__/
+  gecho BLEAH launched on $0.
+ }{gecho Usage: /BLEAH <nick/channel>}
+}
+alias bork {
+ if (C) {
+  @ _o.s = lastserver()
+  @ _o.t = _dfn($_o.s)
+  evalserver $_o.s @ _o.n = N
+  evalserver $_o.s @ _o.c = C
+  evalserver $_o.s nick SwdshChef
+  evalserver $_o.s WAIT
+  evalserver $_o.s saysend $_o.c bork bork bork bork
+  evalserver $_o.s nick $_o.n
+  @ _rfn($_o.s $_o.t)
+  purge _o
+ }{gecho Yer not on a channel in this window.}
+}
+
+alias _dfn {
+ @ function_return = fn[$servergroup($0)]
+ @ fn[$servergroup($0)] = 0
+}
+alias _rfn {@ fn[$servergroup($0)] = [$1]}
+
+alias fozzie {
+ if (C) {
+  @ _o.s = lastserver()
+  @ _o.t = _dfn($_o.s)
+  evalserver $_o.s @ _o.c = C
+  evalserver $_o.s @ _o.n = N
+  evalserver $_o.s nick _fozzie_
+  evalserver $_o.s WAIT
+  evalserver $_o.s saysend $_o.c wakka wakka wakka
+  evalserver $_o.s nick $_o.n
+  @ _rfn($_o.s $_o.t)
+  purge _o
+ }{gecho Your not in a channel in this window.}
+}
+
+alias beaker {@ o.n = [$N];nick _Beaker_;WAIT;say meep meep meep meep;nick $o.n;^assign -o.n}
+
+alias gimpkick {
+ @ _g.s = lastserver()
+ @ _g.t = _dfn($_g.s)
+ @ _g.n = N
+ @ _g.c = C
+ if (ischanop($_g.n $_g.c)) {
+ evalserver $_g.s saysend $_g.c $0, I think The Gimp would love a piece of meat like you...
+ evalserver $_g.s saysend $_g.c You're the kind of piece of shit trash he likes...
+ evalserver $_g.s nick _The_Gimp_
+ evalserver $_g.s WAIT
+ evalserver $_g.s saysend $_g.c ARRRGGGGGGGGGHHHHHHHH!!!!!
+ evalserver $_g.s saysend $_g.c I'm gonna drill you a new asshole!!!
+ evalserver $_g.s WAIT
+ evalserver $_g.s me Bends $0 over and "goes to town" on him!
+ evalserver $_g.s saysend $_g.c AAHHHHHHHHHHHHHHHHHHHHHHHHHHH!!!!
+ evalserver $_g.s saysend $_g.c Feels so fuckin good don't it boy!!!!?????
+ evalserver $_g.s WAIT
+ evalserver $_g.s me zip up $gender leather pants and leaves $0 crying and rubbing his ass!
+ evalserver $_g.s //kick $_g.c $0 You're good...you should give references...
+ evalserver $_g.s nick $_g.n
+ @ _rfn($_g.s $_g.t)
+}{gecho You're not a channel Operator}
+ purge _g
+}
+#
+alias soupkick {
+ @ _s.s = lastserver()
+ @ _s.t = _dfn($_s.s)
+ @ _s.c = C
+ if (ischanop($N $C)) {
+  evalserver $_s.s @ _s.n = N
+  evalserver $_s.s nick Soup_Nzi
+  evalserver $_s.s Wait
+  evalserver $_s.s saysend $_s.c VAT!??!??!!!!
+  evalserver $_s.s //kick $_s.c $0 N() S()UP F()R Y()U
+  evalserver $_s.s Wait
+  evalserver $_s.s nick $_s.n
+  @ _rfn($_s.s $_s.t)
+ }
+ purge _s
+}
+
+#ripped from Kanji_man
+alias gerbilkick {
+ if (ischanop($N $C)) {
+ @ old_nick = N
+ say $0, watch out for the giant gerbil...
+ say I hear he likes MomoBoys like you...
+ nick _Gerbil_
+ WAIT
+ me towers above the entire channel... looking for pleasure...
+ me reaches down and grabs $0 by the shoulders with one claw...
+ WAIT
+ me bends over, parts both cheeks with the other claw...
+ WAIT
+ me begins to scream as a muffled shreek can be heard from $0
+ /k $0 SCREEEEEEEEEEEEEECH!
+ nick $old_nick
+ ^assign -old_nick
+}{gecho You're not a channel operator}
+}
+###Pimp Ideas Ripped from PimpToolz
+alias pimpslap {
+ if (ischanop($N $C)) {
+ @ old_nick = N
+ nick PimpGuido
+ WAIT
+ say WhaT HaPPenS wHeN YeR hO dOn'T WoRk??
+ /k $0 !PiMPSlaP HeR!
+ WAIT
+ nick $old_nick
+ WAIT
+ ^assign -old_nick
+}{gecho You're not a channel operator}
+}
+alias pimpkick {
+ if (ischanop($N $C)) {
+ @ old_nick = N
+ nick PimpGuido
+ WAIT
+ say WHAT IS THE MEANING OF PIMP?
+ say PiMP = PoWeR!
+ say PiMP = PoWeR!
+ say PiMP = PoWeR!
+ WAIT
+ /k $0 !PiMP-PoWeR! !PiMP-PoWeR!
+ WAIT
+ nick $old_nick
+ WAIT
+ ^assign -old_nick
+}{gecho You're not a channel Operator}
+}
+alias stinkkick {
+ if (ischanop($N $C)) {
+  say ShiT SomEThinG FuXinG StINkS!!!
+  /k $0 !ThaT'S BeTTeR!
+ }{gecho You're not a channel Operator}
+}
+alias lamahkick {
+ if (ischanop($N $C)) {
+  say I'M A LaMaH HawK...
+  say HuNtInG FoR A LaMaH...
+  /k $0 !FuXinG LaMaH!
+ }{gecho You're not a channel Operator}
+}
+
+#-------------------------------------------------------------------------#
+#Swedish Chef Filter by gemini
+alias chefsay {
+ @ in_line = [$0-]
+ fe ($in_line) _in_word {
+  switch ($_in_word) {
+   (bork) {@ _out_line = _out_line ## [$_in_word]}
+   (*tion) {
+    @ _len = [$@_in_word] - 4
+    @ _out_line = [$_out_line ]##[$subchef($left($_len $_in_word))]##[shun]
+   }
+   (an) {@ _out_line = _out_line ## [un ]}
+   (the) {@ _out_line = _out_line ## [zee ]}
+   (*) {@ _out_line = _out_line##[$subchef($_in_word)]
+   }
+  }
+ }
+ say $_out_line
+ ^assign -_out_line;^assign -_in_line;^assign -_in_word
+}
+
+alias chefme {
+ @ in_line = [$0-]
+ fe ($in_line) _in_word {
+  switch ($_in_word) {
+   (bork) {@ _out_line = _out_line ## [$_in_word]}
+   (*tion) {
+    @ _len = [$@_in_word] - 4
+    @ _out_line = [$_out_line ]##[$subchef($left($_len $_in_word))]##[shun]
+   }
+   (an) {@ _out_line = _out_line ## [un]}
+   (the) {@ _out_line = _out_line ## [zee]}
+   (*) {@ _out_line = _out_line##[$subchef($_in_word)]
+   }
+  }
+ }
+ me $_out_line
+ ^assign -_out_line;^assign -_in_line;^assign -_in_word
+}
+
+alias chefmsg {
+ @ in_line = [$1-]
+ fe ($in_line) _in_word {
+  switch ($_in_word) {
+   (bork) {@ _out_line = _out_line ## [$_in_word]}
+   (*tion) {
+    @ _len = [$@_in_word] - 4
+    @ _out_line = [$_out_line ]##[$subchef($left($_len $_in_word))]##[shun]
+   }
+   (an) {@ _out_line = _out_line ## [un]}
+   (the) {@ _out_line = _out_line ## [zee]}
+   (*) {@ _out_line = _out_line ##[$subchef($_in_word)]
+   }
+  }
+ }
+ /msg $0 $_out_line
+ ^assign -_out_line;^assign -_in_line;^assign _in_word
+}
+
+alias subchef {
+ @ __bork = [$0]
+ fec ($__bork) _bork {
+  switch ($_bork) {
+   (a) {@ bork_return = bork_return ## [e]}
+   (e) {@ bork_return = bork_return ## [i]}
+   (f) {@ bork_return = bork_return ## [ff]}
+   (i) {@ bork_return = bork_return ## [ee]}
+   (v) {@ bork_return = bork_return ## [f]}
+   (o) {@ bork_return = bork_return ## [u]}
+   (u) {@ bork_return = bork_return ## [oo]}
+   (w) {@ bork_return = bork_return ## [v]}
+   #(.) {@ bork_return = bork_return ## [. Bork Bork Bork!]}
+   (!) {@ bork_return = bork_return ## [! Bork Bork Bork!]}
+   (*) {@ bork_return = bork_return ## [$_bork]}
+  }
+ }
+ @ FUNCTION_RETURN = [$bork_return ]
+ ^assign -bork_return;^assign -_bork;^assign -__bork
+}
+
+alias postal {
+ if (C) {
+  @ _p.s = lastserver()
+  @ _p.t = _dfn($_p.s)
+  @ _p.c = C
+  @ _p.mn = N
+  evalserver $_p.s if (ischanop($_p.mn $_p.c)) {
+   if ([$0]==[all]) {
+    evalserver $_p.s @ _p.l = chanusers($_p.c)
+   }{
+    evalserver $_p.s fe ($chanusers($_p.c)) _p.u {if (!ischanop($_p.u $_p.c)) {@ _p.l = [$_p.l $_p.u]}}
+   }
+   @ _p.n = [$mid(0 3 $_p.mn)]
+   @ _p.n = [$_p.n]##[Postal]
+   @ _p.o = [$_p.mn]
+   evalserver $_p.s /me suddenly has an urge to become a postal worker.
+   evalserver $_p.s /nick $_p.n
+   evalserver $_p.s WAIT
+   evalserver $_p.s /me grabs an assault weapon and picks a random person...
+   evalserver $_p.s //kick $_p.c $word($rand($#_p.l - 1) $_p.l) pOsTaLkIcK vIcTiM
+   evalserver $_p.s /nick $_p.o
+   @ _rfn($_p.s $_p.t)
+  }{gecho You don't own a gun, You can't go postal without one!}
+ }{gecho Not in a channel, how can you go postal???}
+ purge _p
+}
+
+alias gz.unloadextras {
+ ^alias -bleah;^alias -bork;^alias -fozzie;^alias -beaker
+ ^alias -postal;^alias -chefme;^alias -chefsay;^alias -subchef
+ ^alias -gimpkick;^alias -soupkick;^alias -gerbilkick;^alias -pimpslap
+ ^alias -pimpkick;^alias -pimpslap;^alias -lamahkick;^alias -stinkkick
+ ^assign -gz.extras;
+ ^timer 1 ^alias -gz.unloadextras
+ ^timer 2 makegemzmenu
+}
+
+#Stripw (orginal asmodean)
+alias stripw {
+ for (@ __i = 1, [$($__i)] != [], @ __i = __i + 1) {
+  if ([$($__i)] != [$0]) {@ _sw = _sw ## [ $($__i)]}
+ }
+ @ function_return = mid(1 2048 $_sw)
+ ^assign -_sw;
+}
+
+alias _srvc.menu {
+ if (isconnected($0)) {
+#  //window goto ${ww = _srv.win($0)}
+  //xecho -window $ww $SHOW_NUMERICS_STR\This server is connected or in process of connecting
+ } else {
+  //server $0
+ }
+}
+
+alias _srvn.menu {
+ if (isconnected($0)) {
+#  //window goto ${ww = _srv.win($0)}
+  //xecho -window $ww $SHOW_NUMERICS_STR\This server is connected or in process of connecting
+ } else {
+  //window create server $0
+ }
+}
+
+alias _cm {if ([$0]==[ON] || [$0]==[YES] || [$0]==[1]) {@ FUNCTION_RETURN = [-c]}
+}
+
+alias makemenu {
+^menu -menubar
+^menu menubar
+
+^submenu menubar main -s "~Main"
+^submenu menubar join -s "~Join"
+^submenu menubar user -s "~User"
+^submenu menubar server -s "~Server"
+^submenu menubar cdcc -s "~CDCC"
+^submenu menubar msgs -s "M~esgs"
+^submenu menubar bx -s "~BitchX"
+#^submenu menubar window -s "~Windows"
+^submenu menubar help -s "~Help"
+
+^makemain
+^makejoin
+^makeuser
+^makeserver
+^makecdcc
+^makemesgs
+^makebx
+#^makewindows
+^makehelp
+
+^set DEFAULT_MENU menubar
+
+^window menu menubar
+}
+
+alias makemain {
+menu -main
+menu main
+^submenu main saveset "Save Settings"
+^menuitem saveset "Save All" {
+                        /save
+                        /cdcc save
+                        }
+^menuitem saveset "Save BitchX Settings" {/save}
+^menuitem saveset "Save CDCC pack list" {/cdcc save}
+^submenu main clrscr "Clear Screen"
+^menuitem clrscr "Clear Screen" {/clear}
+^menuitem clrscr "Clear All" {/clear -all}
+^menuitem clrscr "Clear Scrollback" {/clear -scrollback}
+^menuitem clrscr "Clear All Scrollback" {/clear -scrollback -all}
+^submenu main settings "Settings"
+^menuitem settings -n -c $_cm($ctcpsound) 9 "Ctcp Sound" {
+        if (ctcpsound == [ON]) {
+                @ ctcpsound = [OFF]
+                @ menucontrol(settings 9 check 0)
+                } else {
+                @ ctcpsound = [ON]
+                @ menucontrol(settings 9 check 1)
+                }
+        }
+^menuitem settings -n -c $_cm($ctcpsndreq) 10 "Ctcp Sound Request" {
+        if (ctcpsndreq == [ON]) {
+                @ ctcpsndreq = [OFF]
+                @ menucontrol(settings 10 check 0)
+                } else {
+                @ ctcpsndreq = [ON]
+                @ menucontrol(settings 10 check 1)
+                }
+        }
+^menuitem settings -n -c $_cm($loadacts) 11 "Load Action File" {
+        if (loadacts == [YES]) {
+                @ loadacts = [NO]
+                @ menucontrol(settings 11 check 0)
+                } else {
+                @ loadacts = [YES]
+                @ menucontrol(settings 11 check 1)
+                }
+        }
+
+if (ctcpsound == [ON]) {
+        @ menucontrol(settings 9 check 1)
+        } else {
+        @ menucontrol(settings 9 check 0)
+        }
+if (ctcpsndreq == [ON]) {
+        @ menucontrol(settings 10 check 1)
+        } else {
+        @ menucontrol(settings 10 check 0)
+        }
+if (loadacts == [YES]) {
+        @ menucontrol(settings 11 check 1)
+        } else {
+        @ menucontrol(settings 11 check 0)
+        }
+        
+^menuitem main "Properties" {/properties}
+^menuitem main "Change Font" {/fontdialog 0 0}
+^menuitem main separator
+^menuitem main "Quit" {/quit}
+}
+
+alias makejoin {
+menu -join
+menu join
+for (@ ajl=0, ajoinitem($ajl), @ajl++) {
+   @ ajlchan = [$word(0 $ajoinitem($ajl))]
+   @ ajlkey = [$word(1 $ajoinitem($ajl))]
+   submenu join join$ajl "$ajlchan"
+   menuitem join$ajl -d "Join Channel" {j $ajlchan $ajlkey}
+   menuitem join$ajl "Leave Channel" {leave $ajlchan}
+   menuitem join$ajl "Cycle Channel" {cycle $ajlchan}
+   menuitem join$ajl "Remove From List" {unajoin $ajlchan}
+ }
+ menuitem join separator
+ menuitem join "Leave ~Current Channel" {l}
+ menuitem join "~Leave & Kill Current Window" {window delete}
+ menuitem join "~Show AutoJoinList" {ajoinlist}
+# gz.addonjoin
+# menu join -reset
+}
+
+alias makeuser {
+menu -user
+menu user
+^menuitem user "Set Away" {/away $J Away}
+^menuitem user "Set Back" {/back}
+^menuitem user separator
+^menuitem user "Show Notify" {//notify}
+}
+
+alias makeserver {
+ menu -srv
+ menu srv
+ submenu server srvc "Change Current Server"
+ submenu server srvn "Connect to new server"
+ purge srvgrp
+ for (@ srv=0, servername($srv), @srv++) {
+  if (srvgrp = servergroup($srv)) {
+   if (!srvgrp[srvc][$encode($srvgrp)]) {
+    @ srvgrp[srvc][$encode($srvgrp)] = 1
+    submenu srvc srvc_$encode($srvgrp) "$srvgrp"
+   }
+   menuitem srvc_$encode($srvgrp) "$servername($srv):$word(0 $serverport($srv))" {_srvc.menu $srv}
+   # if submenu does not exist
+   if (!srvgrp[srvn][$encode($srvgrp)]) {
+    @ srvgrp[srvn][$encode($srvgrp)] = 1
+    submenu srvn srvn_$encode($srvgrp) "$srvgrp"
+   }
+   menuitem srvn_$encode($srvgrp) "$servername($srv):$word(0 $serverport($srv))" {_srvn.menu $srv}
+  } else {
+   #servers without a group
+   menuitem srvc "$servername($srv):$word($serverport($srv))" {_srvc.menu $srv}
+   menuitem srvn "$servername($srv):$word($serverport($srv))" {_srvn.menu $srv}
+#   menuitem srvc ${isconnected($srv)?[-c]:[]} "$servername($srv):$word($serverport($srv))" {_srvc.menu $srv}
+#   menuitem srvn ${isconnected($srv)?[-c]:[]} "$servername($srv):$word($serverport($srv))" {_srvn.menu $srv}
+  }
+ }
+ menuitem srvc separator
+ menuitem srvc "Manually enter server: " { manserv }
+ menuitem srvn separator
+ menuitem srvn "Manually enter server: " { manservn }
+ menuitem server separator
+^menuitem server "Reconnect" {/rec}
+^menuitem server "Disconnect" {/disco}
+^menuitem server separator
+^submenu server servinfo "Server Information"
+^menuitem servinfo "Administration" {/admin}
+^menuitem servinfo "List users" {/luser}
+^menuitem servinfo "Message of the Day" {/motd}
+^menuitem servinfo "Server Links" {/links}
+^menuitem servinfo "Server Uptime" {/stats u}
+^submenu server ov "Toggle OperView"
+^menuitem ov "On" {/ov on}
+^menuitem ov "Off" {/ov off}
+}
+
+alias makedccmenu {
+ menu -dccgl
+ menu dccgl
+ if (dccitem(1)) {
+  #add default when fixed
+  menuitem dccgl -d "Display DCC Items" { dcc }
+  menuitem dccgl separator
+ } else {
+  menuitem dccgl -d "No DCC's in progress" { dcc }
+ }
+ for (@ _gl.i = 1, _gl.x = dccitem($_gl.i), @ _gl.i++) {
+  if (word(0 $_gl.x) == [chat] || word(0 $_gl.x) == [raw]) {
+   submenu dccgl dccsubgl$_gl.i "~$_gl.i $toupper($word(0 $_gl.x)): $word(1 $_gl.x)"
+  } else {
+   submenu dccgl dccsubgl$_gl.i "~$_gl.i $toupper($word(0 $_gl.x)): $word(1 $_gl.x) \($file.sanspath($word(8 $_gl.x))\)" gl $_gl.i
+  }
+  menuitem dccsubgl$_gl.i -d "Display" { dcc }
+  if (xdcc.isoktopreview($file.sanspath($word(8 $_gl.x)))) {
+   menuitem dccsubgl$_gl.i "~Preview Image" { previewbynum $word(9 $_gl.x) }
+  }
+  menuitem dccsubgl$_gl.i "Close" { //dcc close $word(9 $_gl.x) }
+ }
+ purge _gl
+ menu dccgl -reset
+}
+
+makedccmenu
+
+alias makecdcc {
+menu -cdcc
+menu cdcc
+^submenu cdcc dccgl -s "Current DCC Items"
+^submenu cdcc cdccoff "Offers..."
+^menuitem cdccoff "Create New offer" {cdcc offer}
+^menuitem cdccoff "Remove an Existing offer" {cdcc doffer}
+^menuitem cdccoff "List your offers (local)" {cdcc list}
+^menuitem cdccoff "Notify Current Channel" {cdcc notice}
+^menuitem cdccoff "Show channel your offers" {cdcc plist}
+^menuitem cdccoff separator
+^menuitem cdccoff "Save Offer File" {cdcc save}
+^menuitem cdccoff "Reload Offer File" {cdcc load}
+^menuitem cdcc separator
+^menuitem cdcc "Create DCC ~Window" {/window create level dcc}
+^menuitem cdcc "Send File(s)" { mansenddialog }
+^menuitem cdcc "ReSend File(s)" { manresenddialog }
+}
+
+alias manserv {
+  @ _kat = [$"Enter Server name: "]
+  if (_kat) {//^server $_kat}
+  ^assign -_kat
+}
+
+alias manservn {
+  @ _kat = [$"Enter Server name: "]
+  if (_kat) {//^window create server $_kat}
+  ^assign -_kat
+}
+
+alias makemesgs {
+^menuitem msgs "Read Message log" {/readlog}
+^menuitem msgs "Delete Message log" {/remlog}
+}
+
+alias makebx {
+^submenu bx bxmdi "MDI Window..."
+^menuitem bxmdi "MDI On" {/set MDI on}
+^menuitem bxmdi "MDI Off" {/set MDI off}
+^menuitem bx separator
+^menuitem bx "Paste" {/pmpaste}
+^menuitem bx "Paste to input" {/pmpaste -input}
+^menuitem bx "SmartPaste" {/pmpaste -smart}
+^menuitem bx separator
+^menuitem bx "Play a sound" {/dialogplaysound}
+^menuitem bx separator
+^menuitem bx "Show Version" {/sv}
+}
+
+alias makewindows {
+^menuitem window "New Window" {/window create}
+^menuitem window "Describe Window" {/window describe}
+}
+
+alias makehelp {
+^menuitem help "Help" {/help}
+^menuitem help "Extended Help" {/bhelp index}
+^menuitem help separator
+^menuitem help "About" {/about}
+}
+
+alias redraw_menus {
+ for (@ idx = 1, (win = winitem($idx)) && !done, @ idx++) {
+  if (win) {
+   if ([$word(6 $win)]!=[<none>]) {
+    ^window $word(0 $win) menu $word(6 $win)
+   }
+  } else {@ done = 1}
+ }
+ ^assign -done;^assign -win;^assign -idx
+}
+
+alias makepopup {
+@ gt.ppnick = [$1]
+@ gt.ppchan = [$0]
+
+menu -popup
+menu popup
+ //submenu popup md "$gt.ppnick"
+  //menuitem md "Op     (+o)" {op $gt.ppnick}
+  //menuitem md "DeOp   (-o)" {deop $gt.ppnick}
+  //menuitem md "Voice  (+v)" {voice $gt.ppnick}
+  //menuitem md "Quiet  (-v)" {quiet $gt.ppnick}
+##Add some cool ignore stuff here.
+  //menuitem md "Ignore (temp)" {ig $gt.ppnick all}
+  //menuitem md "Ignore (perm)" {ig $gt.ppnick -p all}
+  //menuitem md "Unignore" {unig $gt.ppnick all}
+##Do it right
+ //submenu popup nxdcc "XDCC"
+  //menuitem nxdcc -d "Req Pack List" {msg $gt.ppnick xdcc list}
+  //menuitem nxdcc separator
+  for (@ _xidx = 1, _xidx <= 15, @ _xidx++) {
+   //submenu nxdcc nx$_xidx "Pack #$_xidx  "
+   //menuitem nx$_xidx "List" msg $gt.ppnick xdcc list #$_xidx
+   //menuitem nx$_xidx -d "Send" msg $gt.ppnick xdcc send #$_xidx
+   //menuitem nx$_xidx "ReSend" msg $gt.ppnick xdcc resend #$_xidx
+  }
+
+ //menuitem popup "Send File(s)" {senddialog $gt.ppnick}
+ //menuitem popup "ReSend File(s)" {resenddialog $gt.ppnick}
+ //menuitem popup "Send Sound" {dialogsound $gt.ppnick}
+ //submenu popup popother "Other"
+  //menuitem popother -d "Whois" {whois $gt.ppnick}
+  //menuitem popother "Server Whois" {wii $gt.ppnick}
+  //menuitem popother "Lookup" {nslookup $gt.ppnick}
+  //menuitem popother "Channel Idletime" {/showidle}
+  //menuitem popother separator
+  //menuitem popother "Talk (query)" {talk $gt.ppnick}
+  //menuitem popother "Chat (dcc chat query)" {chat $gt.ppnick}
+  //menuitem popother separator
+  //menuitem popother "Ping" {ping $gt.ppnick}
+  //menuitem popother "Time" {/ctcp $gt.ppnick TIME}
+  //menuitem popother "UserInfo" {/ctcp $gt.ppnick userinfo}
+  //menuitem popother "Finger" {/ctcp $gt.ppnick finger}
+  //menuitem popother "Version" {ver $gt.ppnick}
+ //menuitem popup separator
+ //submenu popup kicks "Kicks"
+  //menuitem kicks -d "Random Kick" {k $gt.ppnick}
+  //menuitem kicks "McKick" {mck $gt.ppnick}
+  //menuitem kicks "McKick (break)" {mcdk $gt.ppnick}
+  //menuitem kicks "TacobellKick" {tbk $gt.ppnick}
+  //menuitem kicks "BurgerKing Kick" {bkk $gt.ppnick}
+  //menuitem kicks "KentuckyFried" {kfck $gt.ppnick}
+  //menuitem kicks "CarlsJr Kick" {cjk $gt.ppnick}
+  //menuitem kicks "TaeKwonLeap Kick" {tkl $gt.ppnick}
+  //menuitem kicks "GreetKick" {gk $gt.ppnick}
+  if (gz.extras) //menuitem kicks -b "PimpKick" {pimpkick $gt.ppnick}
+  if (gz.extras) //menuitem kicks "PimpSlap" {pimpslap $gt.ppnick}
+  if (gz.extras) //menuitem kicks "GerbilKick" {gerbilkick $gt.ppnick}
+  if (gz.extras) //menuitem kicks "GimpKick" {gimpkick $gt.ppnick}
+  if (gz.extras) //menuitem kicks "Stinkkick" {stinkkick $gt.ppnick}
+  if (gz.extras) //menuitem kicks "LamahKick" {lamahkick $gt.ppnick}
+  if (gz.extras) //menuitem kicks "Soup Kick" {soupkick $gt.ppnick}
+ //submenu popup popban "Bans"
+  //menuitem popban "Ban" {ban $gt.ppnick}
+  //menuitem popban -d "Ban/Kick" {bk $gt.ppnick}
+  //menuitem popban "Kick/Ban/Ignore" {kbi $gt.ppnick}
+  //menuitem popban separator
+  //menuitem popban "Screw Ban" {sban $gt.ppnick}
+  //menuitem popban "Screw Ban/Kick" {sban $gt.ppnick;k $gt.ppnick}
+  //menuitem popban "Screw Ban/Kick/Ignore" {sban $gt.ppnick;k $gt.ppnick;ig $gt.ppnick}
+ //menuitem popup separator
+ //submenu popup popnotify "Notify..."
+  //menuitem popnotify "Add to Notify list" {//notify $gt.ppnick}
+  //menuitem popnotify "Remove from Notify List" {//notify -$gt.ppnick}
+  //menuitem popnotify "Show Notify List" {//notify}
+ //submenu popup poppaste "Clipboard"
+  //menuitem poppaste -d "Paste" {//pmpaste}
+  //menuitem poppaste "SmartPaste" {//pmpaste -smart}
+ //menuitem popup separator
+ //submenu popup actions "Actions"
+  //submenu actions cluebats "ClueBats"
+   //menuitem cluebats "Clue Bludgeon" {/me bludgeons $gt.ppnick with the cluebat}
+   //menuitem cluebats "Lead ClueBat" {/me pulls out a lead cluebat, engraves $gt.ppnick's name on it, and swings wildly}
+   //menuitem cluebats "Pi¤ata" {/me strings $gt.ppnick up, puts on a blindfold, and declares a cluebat pi¤ata party!!!}
+   //menuitem cluebats "SuperMomoCluebat" {/me purchases a sUpErMoMo (tm) cluebat and pummels $gt.ppnick to the ground}
+   //menuitem cluebats "Windows Cluebat" {/me finds the Windows edition Cluebat, taps it over $gt.ppnick's head, and watches it break}
+  //menuitem actions separator
+  //menuitem actions "Awake?" {/me pokes $gt.ppnick in the ribs ... you awake?}
+  //menuitem actions "Backside" {/me calls attention to $gt.ppnick's backside}
+  //menuitem actions "Booger" {/me flicks a booger at $gt.ppnick}
+  //menuitem actions "Cookie Toss" {/me tosses $gt.ppnick a cookie... good boy}
+  //menuitem actions "Curse" {/me wishes the fleas of a thousand camels upon $gt.ppnick's underwear drawer.}
+  //menuitem actions "Fart" {/me farts in $gt.ppnick's general direction, clearing $gt.ppchan as well.}
+  //menuitem actions "Finger" {/me gives $gt.ppnick the finger.  nInn}
+  //menuitem actions "Glare" {/me glares at $gt.ppnick}
+  //submenu actions ctacts -b "Cute Actions"
+   //menuitem ctacts "Hug" {/me hugs $gt.ppnick ....}
+   //menuitem ctacts "Pass Kiss" {/me Passionately Kisses $gt.ppnick}
+   //menuitem ctacts "Hug/Kiss" {/me Hugs and Kisses $gt.ppnick}
+   //menuitem ctacts "Dance" {/me takes $gt.ppnick in hand and Dances $rgenderex() around the channel}
+   //menuitem ctacts "OZ-Hug" {/me gives $gt.ppnick a Big Ole Ozzie hug....}
+   //menuitem ctacts "Rose" {/me drops to $gender knees and hands $gt.ppnick a long stemed rose @>->-`-,-->---}
+   //menuitem ctacts "Snuggle" {/me snuggles up to $gt.ppnick ....}
+  //menuitem actions separator
+  //menuitem actions "HerringSlap" {/me slaps $gt.ppnick around a bit with an official sized #os/2 herring...}
+  //menuitem actions "Noogie" {/me noogies $gt.ppnick}
+  //menuitem actions "Nosepicker" {/me watches in disgust, as $gt.ppnick picks their nose}
+  //menuitem actions "Slap" {/me slaps $gt.ppnick around a bit with a substantially large Brown Cow...}
+  //menuitem actions "Moon" {/me drops $gender drawers and moons $gt.ppnick ( | )}
+  //menuitem actions "PoopFace" {say Hey $gt.ppnick does the expression "Up your Bum PoopFace" Mean anything to you ??? :P}
+  //menuitem actions "Rose" {/me tosses $gt.ppnick a rose @>--`-}
+  //menuitem actions "Smurf" {/me points at $gt.ppnick and calls him a 09SMURF07}
+  //submenu actions deaths -b "Deaths"
+   //menuitem deaths "AK47" {/me pulls out $gender trusty AK47... nestles the sites squarely on $gt.ppnick's head... eases back on the trigger and empties a 30 round clip....BANG You're Dead}
+  //menuitem actions separator
+  //menuitem actions "Sneeze" {/me sneezes violently and a blob of snot lands on $gt.ppnick}
+  //menuitem actions "Thwap" {/me thwaps $gt.ppnick upside the head...   \"Get with the program.\"}
+  //menuitem actions "Tickle" {/me sneaks up behind $gt.ppnick ... tickle tickle tickle...}
+  //menuitem actions "Wet Noodle" {/me pummels $gt.ppnick with a wet noodle}
+  //menuitem actions "Whistle" {/me whistles with an innocent look on $gender face...}
+  //menuitem actions "Win95 Torture" {/me handcuffs $gt.ppnick to a desk with Windows95 - "Multitask, bitch."}
+  //menuitem actions "Vomit upon" {/me vomits repeatedly upon $gt.ppnick}
+  //menuitem actions "Yucko" {/me slids over close to $gt.ppnick and gives them a nice slimey YUCKO !!!!}
+  //submenu popup greets "Greets"
+   //menuitem greets "moo" {say moo $gt.ppnick}
+   //menuitem greets "\'lo" {say 'lo $gt.ppnick}
+   //menuitem greets "heya" {say heya $gt.ppnick}
+   //menuitem greets "what's up" {say what's up $gt.ppnick}
+   //menuitem greets "re" {say re $gt.ppnick}
+   //menuitem greets "hi" {say hi $gt.ppnick}
+   //menuitem greets "Yo" {say Yo!! $gt.ppnick\!}
+   //menuitem greets "hello" {say hello $gt.ppnick}
+   //menuitem greets "Howdy" {say Howdy $gt.ppnick}
+   //menuitem greets "\'sup?" {say \'sup $gt.ppnick\?}
+   //menuitem greets "!!!!!" {say $gt.ppnick!!!!!}
+   //menuitem greets "!@#\$\%\^" {say $gt.ppnick\!@#\$\%\^}
+ //submenu popup byes "Byes"
+  //menuitem byes "bye" {say bye $gt.ppnick}
+  //menuitem byes "hastalapasta" {say hastalapasta $gt.ppnick}
+  //menuitem byes "hastalabyebye" {say Hastalabyebye $gt.ppnick}
+  //menuitem byes "wave" {/me waves bye to $gt.ppnick\.  \"Don't let the door hit you in the arse\"}
+  //menuitem byes "See ya" {say See ya $gt.ppnick}
+ if ([$loadacts]==[YES]) {
+   /loadplug $actionsfile
+ }
+^popupmenu popup
+}
+
+alias rccheck {
+ if (onchannel($lastclickline(4) $C)==1) {makepopup $C $lastclickline(4)} else {windowlist}
+ }
+
+alias ldccheck {
+ if (onchannel($lastclickline(4) $C)==1) {talk $lastclickline(4)}
+ }
+
+alias logstart {
+  @ cc = [$0]
+     filedialog S $exedir/*.log "Logfile for $cc" "Set" {
+      if ([$0]==[OK]) {
+                       ^cset CHANNEL_LOG_FILE $decode($1-)
+                       ^cset CHANNEL_LOG on
+                       gecho Logging of $cc to $decode($1-) now active.
+                       }
+      }
+}
+
+alias logchange {
+  @ cc = [$0]
+   if ([$getcset(CHANNEL_LOG $cc)]!=[ON]) {
+    filedialog S $exedir/*.log "Logfile for $cc" "Set" {
+     if ([$0]==[OK]) {
+      ^cset CHANNEL_LOG_FILE $decode($1-)
+      gecho Log file for $cc changed to $decode($1-).
+      }
+    }
+  } else {gecho You must turn Logging off before changing the log file}
+}
+
+alias logstop {
+  @ cc = [$0]
+      ^cset CHANNEL_LOG OFF
+      gecho Log file $getcset(CHANNEL_LOG_FILE $cc) for $cc now closed.
+}
+
+alias gz.ajoinlist {
+ for (@ idx = 0, ajoinitem($idx), @ idx++) {
+ push _ret $ajoinitem($idx)
+ }
+#@function_return = $_ret
+return $_ret
+purge _ret
+}
+
+alias inajoinlist {
+@ function_return = match($0 $gz.ajoinlist()) ? 1 : 0
+}
+
+#Popup Channel Menu inspired by menus.scr by OS3
+alias chanmenu {
+@ cc = [$0]
+ menu -popcm
+ menu popcm
+ if (match($cc $mychannels())) {
+  if (cc != T) {//menuitem popcm "goto $cc window" /j $cc}
+  //menuitem popcm \"~Leave: $cc\" {leave $cc}
+ } else {//menuitem popcm \"~Join: $cc\" {join $cc}}
+ if (inajoinlist($cc)) {
+    //menuitem popcm "~Remove from AJoin" {unajoin $cc}
+    } else {
+    //menuitem popcm "~Add to AJoin" {ajoin $cc}
+    }
+ if (match($cc $mychannels())) {
+  if ([$getcset(CHANNEL_LOG $cc)]==[ON]) {
+   menuitem popcm "Stop Logging" { logstop $cc  }
+  } else {
+    menuitem popcm "Start Logging" { logstart $cc $1- }
+  }
+  menuitem popcm "Change Logfile" { logchange $cc $1- }
+  }
+if (![$1]) {
+ menuitem popcm separator
+ //submenu popcm cmm "Channel Stats"
+  if (gz.longcsc) {
+   //menuitem cmm -d "Names (detailed)" {/scan}
+   //menuitem cmm "Names (short)" {cnames}
+  } else {
+   //menuitem cmm -d "Names (short)" {cnames}
+   //menuitem cmm "Names (detailed)" {/scan}
+  }
+  //menuitem cmm "Who (Detailed)" {cwho}
+  //menuitem cmm "Show Channel Bans" {csb}
+  //menuitem cmm "Show Channel Topic" {t}
+ //submenu popcm cmodes "Modes"
+  //menuitem cmodes "Show Modes" {gecho Mode For $cc is \+$chanmode($cc)}
+  //menuitem cmodes "Remove Keys (unlock)" {unlock}
+  //submenu cmodes csetmode "Set Modes"
+   //menuitem csetmode "Mode (+nst)" {/mode $cc +nst}
+   //menuitem csetmode "Mode (+inst)" {/mode $cc +inst}
+  //submenu cmodes creset "Reset Modes"
+   //menuitem creset "Reset (+nst)" {/creset}
+   //menuitem creset "Reset (+inst)" {/creseti}
+  //submenu cmodes cmass "Mass"
+   //menuitem cmass "Mass Op (+o)" {mop}
+   //menuitem cmass "Mass DeOp (-o)" {mdop}
+   //menuitem cmass "Mass Voice (+v)" {mvoice}
+   //menuitem cmass "Mass UnVoice (-v)" {mdvoice}
+ //menuitem popcm separator
+  //submenu popcm credir "Redirects"
+  //submenu credir lrm "Last Received Message"
+   //menuitem lrm "=>  Channel" {relm}
+   //menuitem lrm "=>  Topic" {relmt}
+  //submenu credir lrn "Last Received Notice"
+   //menuitem lrn "=>  Channel" {reln}
+   //menuitem lrn "=>  Topic" {relnt}
+  //submenu credir lsm "Last Sent Message"
+   //menuitem lsm "=>  Channel" {relsm}
+   //menuitem lsm "=>  Topic" {relsmt}
+  //submenu credir lsn "Last Sent Notice"
+   //menuitem lsn "=>  Channel" {relsn}
+   //menuitem lsn "=>  Topic" {relsnt}
+ //submenu popcm other "Other"
+  //menuitem other "Channel Away" {away -c}
+  //menuitem other "Channel Back" {cback}
+  //menuitem other "Cycle" {cycle}
+  //menuitem other "Check Offers" {/ctcp $cc xdcc list}
+  //menuitem other "Check ctcp Time" {/ctcp $cc time}
+ //menuitem popcm "Send Sound" dialogsound $cc
+ //menuitem popcm separator
+ //submenu popcm cgreets "Greets"
+  //menuitem cgreets "moo" {/say moo!}
+  //menuitem cgreets "zug zug" {/say zug zug}
+  //menuitem cgreets "Hey all" {/say Hey all}
+  //menuitem cgreets "'lo" {/say 'lo}
+  //menuitem cgreets "What's up folks?" {/say What's up folks?}
+ //submenu popcm cacts "Actions"
+  //menuitem cacts "Binoculars" {/me pulls out $gender binoculars and searches $cc for intelligent life.... Damn... None to be found!}
+  //menuitem cacts "Gerbil Release" {/me releases $gender gerbils upon $cc, run while you can!!!}
+  //menuitem cacts "PinDrop" {/me drops the proverbial pin...}
+  //menuitem cacts "Slide" {/me slides into the channel...  dances a happy jig... falls on $gender arse in the process}
+ //submenu popcm cbyes "Byes"
+  //menuitem cbyes "Later all" {/say Later all}
+ //menuitem popcm separator
+ //menuitem popcm "Ping" {ping $CC}
+ //menuitem popcm "Version" {ver $CC}
+}
+  popupmenu popcm
+  #^assign -cc
+}
+
+alias targetmenu {
+ menu -tm
+ menu tm
+ if (![$1]) {
+  menuitem tm "Queried: $0    " #
+ } else {
+  menuitem tm "nick: $0 " #
+ }
+ menuitem tm separator
+ if (![$1]) {
+  menuitem tm "Turn Log On" {//^window logfile $exedir/logs/$left(8 $strip(=\\*?<>|\"\' $T)).log;//window log on}
+  menuitem tm "Turn Log off" //window log off
+ } else {
+  menuitem tm "Talk Window" /talk $0
+  menuitem tm "Chat Window" /chat $0
+ }
+ submenu tm tmi "Ignores"
+  menuitem tmi -d "Ignore (temp)" ig $0 -t 180 all
+  menuitem tmi "Ignore (perm)" ig $0 -p all
+  menuitem tmi "Unignore" unig $0 all
+ //submenu tm tmo "Other"
+  //menuitem tmo -d "Whois" whois $0
+  //menuitem tmo "Server Whois" wii $0
+  //menuitem tmo "Lookup" nslookup $0
+  //menuitem tmo separator
+  //menuitem tmo "Ping" ping $0
+  //menuitem tmo "Time" ctcp $0 TIME
+  //menuitem tmo "UserInfo" ctcp $0 userinfo
+  //menuitem tmo "Finger" ctcp $0 finger
+  //menuitem tmo "Version" ver $0
+ //submenu tm tmx "XDCC"
+  //menuitem tmx -d "Req Pack List" msg $0 xdcc list
+  //menuitem tmx separator
+  for (@ _xidx = 1, _xidx <= 15, @ _xidx++) {
+   //submenu tmx tmx$_xidx "Pack #$_xidx  "
+   //menuitem tmx$_xidx "List" msg $0 xdcc list #$_xidx
+   //menuitem tmx$_xidx -d "Send" msg $0 xdcc send #$_xidx
+   //menuitem tmx$_xidx "ReSend" msg $0 xdcc resend #$_xidx
+  }
+ //menuitem tm "Send File(s)" senddialog $0
+ //menuitem tm "ReSend File(s)" resenddialog $0
+ //menuitem tm "Send Sound" dialogsound $0
+ popupmenu tm
+ ^assign -_xidx
+}
+
+alias windowlist {
+ @ _ll.l = lastclickline(0)
+ if (![$0]) {@ _cw = lastclickline(3);@ __cw = lastclickline(4)} else {@ _cw = []}
+ if ((word(2 $_ll.l) == [SOUND:]) && (![$0])  && (word(4 $_ll.l) == [\(autorequest])) {
+  menu -tmpmenu
+  menu tmpmenu
+  if (gz.mircsndpatch) {
+         //^quote PRIVMSG $1 :!$0 $3
+   menuitem tmpmenu "request Sound [$word(3 $_ll.l)]" { /msg $C !$word(1 $_ll.l) $word(3 $_ll.l) }
+        } else {
+   menuitem tmpmenu "request Sound [$word(3 $_ll.l)]" { /msg $word(1 $_ll.l) !$word(1 $_ll.l) $word(3 $_ll.l) }
+        }
+#  menuitem tmpmenu "request Sound [$word(3 $_ll.l)]" { /msg $word(1 $_ll.l) !$word(1 $_ll.l) $word(3 $_ll.l) }
+  popupmenu tmpmenu
+ } else if ((rmatch($_cw *.??*)) && (@_cw > 4)) {
+#  if (!rmatch($_cw http:// ftp:// gopher://)) {@_cw=[http://]##_cw}
+  urlmenu $_cw;^assign -_cw
+# } else if (ischannel($strip(@\'\"\(\) $_cw))) {chanmenu $strip(@\'\"\(\) $_cw) -d;^assign -_cw
+ } else if (ischannel($gz.safechan($_cw))) {chanmenu $gz.safechan($_cw) -d;^assign -_cw
+# } else if (ischannel($strip(+@\'\"\(\) $_cw))) {chanmenu $_cw -d;^assign -_cw}
+ } else if (__cw == T && [$T]!=[]) {targetmenu $T
+ } else {
+  menu -menulist
+  menu menulist
+  #submenu menulist setup -s "Setup"
+  //submenu menulist pastepop "Clipboard"
+   //menuitem pastepop -d "Paste" {//pmpaste}
+   //menuitem pastepop "SmartPaste" {//pmpaste -smart}
+#  if (lastclickline(3)) {
+#   //submenu menulist webster "Dictionary"
+#    //menuitem webster "Define: $strip(\[\]!@#$%^&*\(\)-_=+\\|,.<>\/?~`\" $lastclickline(3))" define $strip(\[\]!@#$%^&*\(\)-_=+\\|,.<>\/?~`\" $lastclickline(3))
+#    //menuitem webster "Spell:  $strip(\[\]!@#$%^&*\(\)-_=+\\|,.<>\/?~`\" $lastclickline(3))" spell $strip(\[\]!@#$%^&*\(\)-_=+\\|,.<>\/?~`\" $lastclickline(3))
+#  }
+  //submenu menulist popsave "Save..."
+   //menuitem popsave "Save All" {
+                        /save
+                        /cdcc save
+                        }
+   //menuitem popsave "Save BitchX Settings" {/save}
+   //menuitem popsave "Save CDCC Pack List" {/cdcc save}
+  //menuitem menulist "Change Font" {fontdialog 0 0}
+  makedccmenu
+  submenu menulist subdcc "Current DCC Items"
+  if (dccitem(1)) {
+  #add default when fixed
+   menuitem subdcc -d "Display DCC Items" dcc
+  menuitem subdcc separator
+  } else {
+   menuitem subdcc -d "No DCC's in progress" dcc
+  }
+  for (@ _gl.i = 1, _gl.x = dccitem($_gl.i), @ _gl.i++) {
+   if (word(0 $_gl.x) == [chat] || word(0 $_gl.x) == [raw]) {
+    submenu subdcc subdccsubgl$_gl.i "~$_gl.i $toupper($word(0 $_gl.x)): $word(1 $_gl.x)"
+   } else {
+    submenu subdcc subdccsubgl$_gl.i "~$_gl.i $toupper($word(0 $_gl.x)): $word(1 $_gl.x) \($file.sanspath($word(8 $_gl.x))\)" gl $_gl.i
+   }
+   menuitem subdccsubgl$_gl.i -d "Display" dcc
+   if (xdcc.isoktopreview($file.sanspath($word(8 $_gl.x)))) {
+    menuitem subdccsubgl$_gl.i "~Preview Image" { previewbynum $word(9 $_gl.x) }
+   }
+   menuitem subdccsubgl$_gl.i "Close" { //dcc close $word(9 $_gl.x) }
+  }
+  purge _gl
+  //menuitem menulist "Show Notify" {//notify}
+  //menuitem menulist separator
+  //menuitem menulist "Properties" {/properties}
+  //menuitem menulist separator
+  //menuitem menulist "   <<  Window list >>   " #
+  @ done = 0
+  for (@ idx = 1, (win = winitem($idx)) && !done, @ idx++) {
+   if (win) {
+    if ([$word(3 $win)]!=[<none>]) {
+     //menuitem menulist "~$idx  $word(3 $win)  [$word(0 $win)]" { //window show $word(0 $win) }
+    } else if ([$word(4 $win)!=[<none>]) {
+     //menuitem menulist "~$idx  $word(4 $win)  [$word(0 $win)]" { //window show $word(0 $win) }
+    } else {
+     //menuitem menulist "~$idx  $word(1 $win)  [$word(0 $win)]" { //window show $word(0 $win) }
+    }
+   } else {@ done = 1}
+  }
+  popupmenu menulist
+ }
+ ^assign -_cw;^assign -__cw
+ ^assign -done
+}
+
+alias urlmenu {
+ @ url = [$strip(\(\)\" $0)]
+ if (url) {
+  menu -wm
+  menu wm
+  //submenu wm wm3 "Netscape"
+   //menuitem wm3 -d \"$left(100 $url)\" webfix netscape $url
+  //submenu wm wm1 "WebExplorer"
+   //menuitem wm1 -d \"$left(100 $url)\" webfix webexplorer $url
+  //submenu wm wm2 "Lynx"
+   //menuitem wm2 -d \"$left(100 $url)\" exec -start LYNX $url
+  //menuitem wm separator
+  //submenu wm wmh "Add to URL Save File"
+   //menuitem wmh -d \"$left(100 $url)\" addtofile $url
+  //submenu wm wmc "Copy URL to clipboard"
+   //menuitem wmc -d \"$left(100 $url)\" clipbrdput $url
+ popupmenu wm
+ }
+ ^assign -url
+}
+
+alias webfix {
+ @ _weblist = [$webrun($0)]
+ if (_weblist) {
+  @ webrun(activate $word(0 $_weblist))
+  @ webrun($0 pushurl $word(0 $_weblist) $1)
+ } else {
+  if ([$0]==[webexplorer]) {/exec -noshell explore.exe $1}
+  if ([$0]==[netscape]) {/exec -start netscape $browserparams $1}
+ }
+ ^assign -_weblist
+}
+
+#OS2-Mike's idea and code stub.
+alias dialogsound {
+ @ gt.sndnick = [$0]
+ if (ischannel($gt.sndnick)) {
+  filedialog OA $sounddir/*.* "Send Sound Files" "Send/Exit" "Send" {
+   if ([$0]==[OK]) {/csound $gt.sndnick $decode($1);^assign -gt.sndnick}
+   if ([$0]==[APPLY]) {/csound $gt.sndnick $decode($1)}
+   if ([$0]==[CANCEL]) {^assign -gt.sndnick}
+  }
+ } else {
+  filedialog OA $sounddir/*.* "Send Sound Files" "Send/Exit" "Send" {
+   if ([$0]==[OK]) {
+    if (ctcpsnd.localfile($decode($1))) {
+     /mmpm.playfile $ctcpsnd.fname
+     //ctcp $gt.sndnick SOUND $decode($1)
+     ^assign -gt.sndnick
+    }
+   }
+   if ([$0]==[APPLY]) {
+    if (ctcpsnd.localfile($decode($1))) {
+     /mmpm.playfile $ctcpsnd.fname
+     //ctcp $gt.sndnick SOUND $decode($1)
+    }
+   }
+   if ([$0]==[CANCEL) {
+    ^assign -gt.sndnick
+   }
+  }
+ }
+}
+
+alias dialogplaysound {
+  filedialog OA $sounddir/*.* "Play Sound Files" "Play" "Test" {
+   if ([$0]==[OK]) {
+    if (ctcpsnd.localfile($decode($1))) {
+     /mmpm.playfile $ctcpsnd.fname
+     ^assign -gt.sndnick
+    }
+   }
+   if ([$0]==[APPLY]) {
+    if (ctcpsnd.localfile($decode($1))) {
+     /mmpm.playfile $ctcpsnd.fname
+    }
+   }
+   if ([$0]==[CANCEL) {
+    ^assign -gt.sndnick
+   }
+  }
+}
+
+alias senddialog {//filedialog OM $gx.uploaddir\* "Select Files to send" sendproc send $0 $$*}
+alias resenddialog {//filedialog OM $gx.uploaddir\* "Select Files to send" sendproc resend $0 $$*}
+
+alias sendproc {
+ if ([$2] == [OK]) {
+  @ _sp.f = 0
+  fe ($3-) _sp.t {
+   if (fexist($decode($3-)) == 1) {
+    //dcc $0 $1 $decode($3-)
+    @ _sp.f = 1
+   }
+  }
+  if (_sp.f) {gecho File Request sent to $1}
+  purge _sp
+ }
+}
+
+alias mansenddialog {//filedialog OM $gx.uploaddir\* "Select Files to send" mansendproc send $$*}
+alias manresenddialog {//filedialog OM $gx.uploaddir\* "Select Files to send" mansendproc resend $$*}
+
+alias mansendproc {
+ if ([$1] == [OK]) {
+  @ _sp.n = [$"[gxDCC] Nick to send to : "]
+  if (_sp.n) {
+   @ _sp.f = 0
+   fe ($2-) _sp.t {
+    if (fexist($decode($_sp.t)) == 1) {
+     //dcc $0 $_sp.n $decode($_sp.t)
+     @ _sp.f = 1
+    }
+   }
+  }
+  if (_sp.f) {gecho File Request sent to $_sp.n}
+  purge _sp
+ }
+}
+
+#on ^hook "dccchanged*" {
+#   makedccmenu
+#   /redraw_menus
+#   }
+
+#on #-dcc_connect 23 "*" {^hook dccchanged}
+#on #-dcc_lost 23 "*" {^hook dccchanged}
+#on #-dcc_request 23 "*" {^hook dccchanged}
+
+#^on ^connect "*" {
+#   makemenu
+#   /redraw_menu
+#}
+
+^on #^timer 60 * {
+ if (rmatch($0 %:00*) || match($0 %:30*) || match($0 %:15*) || match($0 %:45*)) {
+  for (@ idx = 1, (win = winitem($idx)), @ idx++) {
+   if (win) {xecho -b -window $word(0 $win) The Time is now $0}   }
+  }
+}
+
+alias gz.sndon {
+ if (ctcpsound == [OFF]) {
+  @ function_return = 0
+ } else {
+  if (away && gz.noctcpaway) {
+   @ function_return = 0
+  } else {
+   @ function_return = isctog($0 S) ? 0 : 1
+  }
+ }
+}
+
+alias gz.reqon {
+ if (ctcpsndreq == [OFF]) {
+  @ function_return = 0
+ } else {
+  if (away && gz.noctcpaway) {
+   @ function_return = 0
+  } else {
+   @ function_return = isctog($0 R) ? 0 : 1
+  }
+ }
+}
+
+on ^ctcp "% % SOUND *" {
+        @ _dl = []
+        if (rmatch($3 *.wav *.au *.mid) && [$3] && gz.sndon($1)) {
+                if (ctcpsnd.havefile($3)) {
+#               mmpm.playfile2 $gz.playifplaying $ctcpsnd.fname
+                mmpm.playfile $ctcpsnd.fname
+                } else {
+                        if (!gz.reqon($1)) { @ _dl = [autorequest disabled]
+                        } else if (ctcpsnd.isgetting($3)) { @ _dl = [downloading]
+                        } else if (ctcpsnd.isrequested($3) < 30) { @ _dl = [requested]
+                        } else {
+        if (gz.mircsndpatch) {
+                                        //^quote PRIVMSG $1 :!$0 $3
+                                } else {
+                                        //^quote PRIVMSG $0 :!$0 $3
+                                }
+                                ctcpsnd.requested $3
+                                @ _dl = [requesting]
+                        }
+                }
+                if (ischannel($1)) {
+                        //xecho -b -t $1 ${gc.nickaction}$0${cl}/$1 SOUND: $file.sanspath($3) ${_dl?[\($_dl\)]:[]} $mirc2cntl(,$4-)
+                } else {
+                        //xecho -b ${gc.nickaction}$0${cl} SOUND: $file.sanspath($3) ${_dl?[\($_dl\)]:[]} $mirc2cntl(,$4-)
+                }
+        } else {
+                if (ischannel($1)) {
+                        //xecho -b -t $1 ${gc.nickaction}$0${cl}/$1 SOUND: $file.sanspath($3) \(ctcp sounds disabled\) $mirc2cntl(,$4-)
+                } else {
+                        //xecho -b ${gc.nickaction}$0${cl} SOUND: $file.sanspath($3) \(ctcp sounds disabled) $mirc2cntl(,$4-)
+                }
+        }
+}
+
+on ^hook "ctcpsnd received %*" {
+ if (ctcpsound == [on]) {
+  gecho Requested Sound Finished: $2-
+# /mmpm.playfile2 $gz.playifplaying $2
+  /mmpm.playfile $2
+ }
+}
+
+on ^hook "ctcpsnd request % % *" {
+ gecho \($4\) file request from $3 ${[$2]?[sent]:[access denied]}
+}
+
+on #-send_msg 74 "% !% %.wav" ctcpsnd.request $2
+on #-send_msg 74 "% !%.au" ctcpsnd.request $2
+on #-send_msg 74 "% !%.mid" ctcpsnd.request $2
+
+on #-send_notice 74 "% !% %.wav" ctcpsnd.request $2
+on #-send_notice 74 "% !% %.au" ctcpsnd.request $2
+on #-send_notice 74 "% !% %.mid" ctcpsnd.request $2
+
+on #-send_public 74 "% !% %.wav" ctcpsnd.request $2
+on #-send_notice 74 "% !% %.mid" ctcpsnd.request $2
+on #-send_msg 74 "% !% %.au" ctcpsnd.request $2
+
+alias sound {
+ if ([$0]) {
+  if (T) {
+   if (ischannel($T)) {@ _t = T} else {@ _t = strip(= $T)}
+   if (ctcpsnd.localfile($0)) {
+#   /mmpm.playfile2 $gz.playifplaying $ctcpsnd.fname
+    /mmpm.playfile $ctcpsnd.fname
+    /ctcp $_t SOUND $0-
+    if ([$1] != []) {
+     //xecho -b ${gc.action}$N${cl}/$T SOUND \($0\): $1-
+    } else {
+     //xecho -b ${gc.action}$N${cl}/$T SOUND \($0\)
+    }
+   } else {
+    gecho File $0 does not exist${index(\\/: $0) >= 0 ? [, please check your /set sound_path] : []}
+   }
+  } else {
+   gecho There are no channel or /query in this window
+  }
+ } else {
+  gecho Usage: /sound file.wav [</me like action>]
+ }
+ ^assign -_t
+}
+
+alias csound {
+ if (ctcpsnd.localfile($1)) {
+# /mmpm.playfile2 $gz.playifplaying $ctcpsnd.fname
+  /mmpm.playfile $ctcpsnd.fname
+  /ctcp $0 SOUND $1-
+  //xecho -b ${gc.action}$N${cl} SOUND \($1)
+ } else {
+  gecho File $1 does not exist
+ }
+}
+
+alias chat {
+ if ([$1]==[-b]) {@ _oink = gz.autotalkfg} else {@ _oink = 1}
+ if ([$0]) {
+  for (@ idx = 1, (win = winitem($idx)) && !done, @ idx++) {
+   if (win) {
+    if (word(4 $win)==[=$0]) {
+     gecho You already have a query to $0
+     @ borky = 1
+    }
+   } else {@ done = 1}
+  }
+  if (!borky) {
+   gecho ${gc.msginfo} Creating chat window with${cl} ${gc.msgfrom} $0${cl}
+   //^window create nicklist 0 query =$0
+   //dcc chat $0
+   if (autotalklogging == [ON]) {
+    switch ($gz.drivetype($gz.logdir)) {
+     (hpfs) {@ _talk.file = strip(\\*?<>|\"\' $0) ## [.log]}
+     (*) {@ _talk.file = left(8 $strip(\\*?<>|\"\' $0)) ## [.log]}
+    }
+    //^window $_moo logfile $gz.logdir\/$_talk.file
+    xecho -target $0 $gemz Window Logfile is $gz.logdir\/$_talk.file
+    //^window $_moo log on
+    xecho -target $0 $gemz Window LOG is ON
+   }
+  }
+ } else {gecho Usage talk <nick>}
+ ^assign -done;^assign -borky;^assign -_moo;^assign -_oink
+}
+
+alias talk {
+ if ([$1]==[-b]) {@ _oink = gz.autotalkfg} else {@ _oink = 1}
+ if ([$0]) {
+  for (@ idx = 1, (win = winitem($idx)) && !done, @ idx++) {
+   if (win) {
+    if (word(4 $win)==[$0]) {
+     gecho You already have a query to $0
+     @ borky = 1
+    }
+   } else {@ done = 1}
+  }
+  if (!borky) {
+   gecho ${gc.msginfo} Creating chat window with${cl} ${gc.msgfrom} $0${cl}
+   //^window create nicklist 0 query $0
+   if (autotalklogging == [ON]) {
+    switch ($gz.drivetype($gz.logdir)) {
+     (hpfs) {@ _talk.file = strip(\\*?<>|\"\' $0) ## [.log]}
+     (*) {@ _talk.file = left(8 $strip(\\*?<>|\"\' $0)) ## [.log]}
+    }
+    //^window $_moo logfile $gz.logdir\/$_talk.file
+    xecho -target $0 $gemz Window Logfile is $gz.logdir\/$_talk.file
+    //^window $_moo log on
+    xecho -target $0 $gemz Window LOG is ON
+   }
+  }
+ } else {gecho Usage talk <nick>}
+ ^assign -done;^assign -borky;^assign -_moo;^assign -_oink
+}
+
+alias addhilite {
+ if ([$0]) {
+  if ([$0]==[-n]) {
+   push hilitelist $1
+   gecho \$1\ added to the hilite list.
+  } else {
+   if (match($0 $hilitelist)) {
+    gecho a matching highlite string was found, to force
+    gecho a new highlight, use /addhilite -n <string>
+   } else {
+    push hilitelist $0
+    gecho \$0\ added to the hilite list.
+   }
+  }
+ } else {
+  gecho Usage: /addhilite <word/filter>
+ }
+}
+
+alias addignore /ignore $*
+
+alias addnotify {
+ if ([$0]) {
+  notify $0
+ } else {gecho Usage: /addnotify <nick1>}
+}
+
+alias showignore {
+        /ignore
+}
+
+alias cnames {
+ if ([$0]) {
+  if (ischannel($0)) {
+   if (onchannel($N $0)) {
+    gtecho $0 $0: $_cnames($0)
+   } else {gecho You are not on $0}
+  } else {gecho $0 is not a valid channel;gecho Usage: /cnames [<#channel>]}
+ } else {
+  if (C) {
+   gecho $C: $_cnames($C)
+  } else {gecho You are not on any channels}
+ }
+}
+
+alias _cnames {
+ fe ($chanusers($0)) _cn.ch {
+  if (ischanop($_cn.ch $0)) {
+   @ _cn.no #= [ @$_cn.ch]
+  } else {
+   @ _cn.nv #= isvoice($_cn.ch $0) ? [ +$_cn.ch] : [ $_cn.ch]
+  }
+ }
+ @ function_return = [${gc.chops}$_cn.no${cl}${gc.lamers}$_cn.nv$_cn.nl${cl}]
+ purge _cn
+}
+
+alias creseti {/c -inst+mlk 40 resetting;/c +inst-mlk resetting}
+alias creset {/c -nst+milk 40 resetting;/c +nst-milk resetting}
+alias ctcpreply if ([$0]) {gecho ${gc.ctcpban}ctcp${cl}: ${gc.ctcp}$tolower($1) reply${cl} from ${gc.ctcpnk}$0${cl}: $2-}
+alias ctcpreq if ([$0]) {gecho ${gc.ctcpban}ctcp${cl}: ${gc.ctcp}$tolower($2) request${cl} from ${gc.ctcpnk}$0${cl} ${gc.peren}\(${gc.ctcpnk}$userhost()${gc.peren}\)${cl} to ${gc.ctcpnk}$1${cl}}
+alias cwait {wait -CMD #;wait -CMD $0-}
+
+alias ctogg {
+        if (![$0]) {
+                foreach ch.flags _ch {
+                        gecho Channel $decode($_ch)\ flags $ch.flags[$_ch]\
+                }
+                gecho Usage: /ctogg [#channel] flags
+        } else {
+                if (![$1]) {
+                        if (ischannel($0)) {
+                                @ _ch = [$%0]
+                                gecho Channel $decode($_ch)\ flags $ch.flags[$_ch]\
+                        } else {
+                                if (C) {
+                                        ctogg $C $0
+                                } else {
+                                        gecho No current channel in this window
+                                        gecho Usage: /ctogg [#channel] flags
+                                }
+                        }
+                } else {
+                        @ _ch = ischannel($0) ? [$0] : [#$0]
+                        @ _wasm = index(M $ch.flags[$%_ch]) >= 0
+                        @ ch.flags[$%_ch] = _alter_flags($_valid_ctogg($1) $ch.flags[$%_ch])
+                        if (!ch.flags[$%_ch]) {
+                                //^assign -ch.flags[$%_ch]
+                                gecho Channel $_ch\ removed
+                                if (_wasm) {
+                                        _recache_channels $_ch
+                                }
+                        } else {
+                                gecho New flags for $_ch\ are '$ch.flags[$%_ch]'
+                                if (_wasm != (index(M $ch.flags[$%_ch]) >= 0)) {
+                                        _recache_channels $_ch
+                                }
+                        }
+                }
+        }
+        //^assign -_ch
+}
+
+# cached /who
+alias cwho {
+        if ([$0] && onchannel($N $0)) {
+                fe ($chanusers($0)) _n {
+                        gecho ${ischanop($_n $0) ? [@] : isvoice($_n $0) ? [+] : [ ]}$[9]_n [$[8]nickdata($0 $_n 2)\] '$nick($_n)->host'
+                }
+                //^assign -_n
+        } else {
+                if ([$0]) {
+                        gecho You are not on channel $0
+                } else {
+                        if (C) {
+                                cwho $C
+                        } else {
+                                gecho You aren't on any channel in this window
+                        }
+                }
+        }
+}
+
+# cached banlist
+alias csb {
+        if ([$0] && onchannel($N $0)) {
+                @ _idx = 0
+    @ _idx2 = 0
+                fe ($chanmode($0 1)) _n {
+      @ _idx++
+                        gecho [$[2]_idx\] '$_n' $tdiff(${time() - word(${_idx2 * 3 + 2} $chanmode($0 2))}) old
+                        gecho ${_idx2*3}
+      @ _idx2++
+                }
+                if ([$_idx]==[0]) {gecho There Are No Bans in $0}
+                //^assign -_n
+                //^assign -_idx
+    //^assign -_idx2
+        } else {
+                if ([$0]) {
+                        gecho You are not on channel $0
+                } else {
+                        if (C) {
+                                csb $C
+                        } else {
+                                gecho You are on any channel in this window
+                        }
+                }
+        }
+}
+
+
+#csc written by mikh, enhanced by gemini
+alias csc {
+ if ([$0] && onchannel($N $0)) {
+  @ _co.t = #chanusers($C)_co.u
+  fe ($gz.chanops($0)) _co.tn {@ _co.co #= _co.co ? [ @$_co.tn] : [@$_co.tn]}
+  fe ($gz.voices($0)) _co.tn {@ _co.v #= _co.v ? [ +$_co.tn] : [+$_co.tn]}
+  @ _co.l = gz.lamers($0)
+  gtbecho $0 ${gc.cscborder}ÚÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄ¿
+  gtbecho $0 ${gc.cscborder}³${gc.topicchan}$[10]0${cl} ${gc.cscborder}³${cl} ${gc.chops}ChanOps${cl}: \$[-3]#_co.co\ ${gc.cscborder}³${cl} ${gc.lamers}Voiced${cl}: \$[-3]#_co.v\ ${gc.cscborder}³${cl} ${gc.lamers}Normal${cl}: \$[-3]#_co.l\ ${gc.cscborder}³${cl} Total: \$[-3]_co.t\ ${gc.cscborder}³
+  gtbecho $0 ${gc.cscborder}ÃÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄ´
+  if (_co.co) {
+  fe ($_co.co) _co.1 _co.2 _co.3 _co.4 _co.5 _co.6 {
+   gtbecho $0 ${gc.cscborder}³ ${gc.chops}$[10]_co.1 $[10]_co.2 $[10]_co.3 $[10]_co.4 $[10]_co.5 $[10]_co.6 ${gc.cscborder}³
+  }
+  }
+  if (_co.v || _co.l) {
+  fe ($_co.v $_co.l) _co.1 _co.2 _co.3 _co.4 _co.5 _co.6 {
+   gtbecho $0 ${gc.cscborder}³ ${gc.lamers}$[10]_co.1 $[10]_co.2 $[10]_co.3 $[10]_co.4 $[10]_co.5 $[10]_co.6 ${gc.cscborder}³
+  }
+  }
+  gtbecho $0 ${gc.cscborder}ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+  purge _co
+ } else {
+  if ([$0]) {
+   gecho You are not on channel $0
+  } else {
+   if (C) {
+    csc $C
+   } else {
+    gecho No current channel in this window
+   }
+  }
+ }
+ purge _co
+}
+
+################################
+# GemZ easy find Api functions #
+################################
+
+
+
+alias gz.bkgd {
+ switch ($_bkgd) {
+  (-) {@ _bkgd = [\\]}
+  (\\) {@ _bkgd = [|]}
+  (|) {@ _bkgd = [/]}
+  (/) {@ _bkgd = [-]}
+  (*) {@ _bkgd = [-]}
+ }
+ ^set status_notify  [$_bkgd][%F]
+}
+
+alias gz.bytestomegs {
+ ^set float on
+ @ _xm.m = [$0] / 1048576
+ ^set float off
+ @ function_return = mid(0 ${index(. $_xm.m) + 3} $_xm.m)
+ purge _xm
+}
+
+alias gz.chanops {
+ fe ($chanusers($0)) _h.o {
+  if (ischanop($_h.o $0)) {@ _h.r #= _h.r ? [ $_h.o] : _h.o}
+ }
+ @ function_return = _h.r
+ purge _h
+}
+
+alias chanops {@ function_return = gz.chanops($0)}
+
+alias gz.chatstat {
+# Input: <nick>
+# return 0 if no chat
+# rerurn 1 if chat is waiting
+# return 2 if chat is active
+# return 3 if chat is offered
+ @ function_return = 0
+ for (@ _d.i = 0, (_d.c = dccitem($_d.i)), @ _d.i++) {
+  if ((word(0 $_d.c) == [CHAT]) && (word(1 $_d.c) == [$0])) {
+   if (word(2 $_d.c) == [Active]) {@ function_return = 2
+   } else if (word(2 $_d.c) == [Offered]) {@ function_return = 3
+   } else {@ function_return = 1}
+   //break
+  }
+ }
+ purge _d
+}
+
+alias gz.chatwinstat {
+# Input: <nick>
+# return 0 if there isn't a window (regardless of dcc status)
+# return 1 if there is a window (regardless of dcc status)
+ @ function_return = 0
+ for (@ _c.i = 1, (_c.w = winitem($_c.i)), @ _c.i++) {
+  if (_c.w) {
+   if (word(1 $_c.w) == [=$0_Queried]) {
+    @ function_return = 1
+    //break
+   }
+  }
+ }
+ purge _c
+}
+
+alias gz.rows {@ function_return = gz.dimension(row $*)}
+alias gz.cols {@ function_return = gz.dimension(col $*)}
+alias gz.dimension {
+ switch ($0) {
+  (col) {@ _cl.t = 8}
+  (row) {@ _cl.t = 9}
+ }
+ switch ($2) {
+  (r) {@ _cl.mw = 0}
+  (n) {@ _cl.mw = 1}
+  (c) {@ _cl.mw = 3}
+  (q) {@ _cl.mw = 4}
+  (*) {@ _cl.mw = 0}
+ }
+ @ function_return = 0
+ for (@ _cl.i = 1, _cl.w = winitem($_cl.i), @ _cl.i++) {
+  if (word($_cl.mw $_cl.w) == [$1]) {
+   @ function_return = word($_cl.t $_cl.w)
+   //break
+  }
+ }
+ purge _cl
+}
+
+alias gz.exdcc {//dcc $0 $1 "$decode($2)"}
+alias gz.finuh {@ function_return = is_ip($0@$1) ? [$0] ## [@] ## [$1] : fix.umask($0 $1)}
+
+alias gz.finline {
+ @ _w.i = [..................................................................]
+ @ _w.0 = [$0]
+ @ _w.1 = strip( $1)
+ @ _w.2 = strip( $2)
+ @ _w.s = _w.0 - (@_w.1 + @_w.2)
+ if (_w.s < 1) {@ _w.s = 0}
+ @ function_return = [$1] ## left($_w.s $_w.i) ## [$2]
+ purge _w
+}
+
+alias gz.fixbytes {
+ ^set float on
+ if ([$0] < 1000) {@ function_return = [$0] ## [b]
+ } else if ([$0] < 10240) {@ function_return = left(3 ${[$0] / 1024}) ## [k]
+ } else if ([$0] < 102400) {@ function_return = left(2 ${[$0] / 1024}) ## [k]
+ } else if ([$0] < 1022976) {@ function_return = left(3 ${[$0] / 1024}) ## [k]
+ } else if ([$0] < 10485761) {@ function_return = left(3 ${[$0] / 1048576}) ##[M]
+ } else if ([$0] < 104857600) {@ function_return = left(2 ${[$0] / 1048576}) ##[M]
+ } else {@ function_return = left(3 ${[$0] / 1048576}) ##[M]}
+ ^set float off
+}
+
+
+alias gz.fixnum {
+ if (left(1 $0) == [-]) {@ _fn.neg = 1}
+ fec ($0) _fn.rc {@ _fn.r = _fn.rc ## _fn.r}
+ @ _fn.r = strip(- $_fn.r)
+ fec ($_fn.r) _fn.sc {
+  if (_fn.c == 3) {@ _fn.c = 0;@ _fn.scr = _fn.sc ## [,] ## _fn.scr} else {@ _fn.scr = _fn.sc ## _fn.scr}
+  @ _fn.c++
+ }
+ if (_fn.neg) {@ _fn.scr = [-] ## _fn.scr}
+ @ function_return = _fn.scr
+ purge _fn
+}
+
+alias gz.fixpath {
+ fec ($*) _fp.c {if ([$_fp.c]==[\\]) {if (_fp.r) {@ _fp.r #= [/]} else {@ _fp.r = [/]}} else {if (_fp.r) {@ _fp.r #= _fp.c} else {@ _fp.r = _fp.c}}}
+ @ function_return = _fp.r
+ purge _fp
+}
+
+alias gz.getdate {
+ @ _d = stime($time()))
+ @ function_return = [$gz.getmonth($word(1 $_d))]##[/]##[$word(2 $_d)]##[/]##[$right(2 $word(4 $_d))]
+ ^assign -_d
+}
+
+alias gz.getmonth {
+ switch ($0) {
+  (Jan) {@ _m = 1}
+  (Feb) {@ _m = 2}
+  (Mar) {@ _m = 3}
+  (Apr) {@ _m = 4}
+  (May) {@ _m = 5}
+  (Jun) {@ _m = 6}
+  (Jul) {@ _m = 7}
+  (Aug) {@ _m = 8}
+  (Sep) {@ _m = 9}
+  (Oct) {@ _m = 10}
+  (Nov) {@ _m = 11}
+  (Dec) {@ _m = 12}
+ }
+ @ function_return = _m
+ ^assign -_m
+}
+
+alias gz.hasnicklist {
+# takes in $T for window in question
+ if (chanwindow($0)) {
+  for (@ _is.i = 1, _is.w = winitem($_is.i), @ _is.i++) {
+   if (word(0 $_is.w) == chanwindow($0)) {
+    @ function_return = index(N $word(16 $_is.w)) >= 0 ? 1 : 0
+    //break
+ }}}
+ purge _is
+}
+
+alias gz.isoper {@ function_return = O == status_oper ? 1 : gz.localoper}
+
+alias gz.lamers {
+ fe ($chanusers($0)) _h.o {
+  if (!isvoice($_h.o $0) && !ischanop($_h.o $0)) {@ _h.r #= _h.r ? [ $_h.o] : _h.o}
+ }
+ @ function_return = _h.r
+ purge _h
+}
+
+alias gz.nban {
+ @ _nb.u = [$strip(~ $mid(0 $index(@ $1) $1))]
+ @ _nb.u = [$right(8 $_nb.u)]
+ @ _nb.h = [$strip(@ $mid($index(@ $1) $@1 $1))]
+ if (is_ip($1)) {
+  @ function_return = [*!*]## _nb.u ## [@] ## [$mid(0 $rindex(. $_nb.h) $_nb.h).*]
+ } else {
+  if (index(. $1) != rindex(. $1)) {@ function_return = [*!*$fix.umask($_nb.u $_nb.h)]} else {@ FUNCTION_RETURN = [*!*] ## _nb.u ## [@] ## _nb.h}
+ }
+ purge _nb
+}
+
+alias gz.playsnd {if (gz.sounds) {playfile $(snd.$0)}}
+alias gz.randnick {
+ @ _r.c = [abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ_^\\\{\}\[\]`|0123456789-]
+ @ _r.n = mid($rand(62) 1 $_r.c)
+ for (@ _r.l = 1, _r.l < 9, @ _r.l++) {
+  @ _r.n = _r.n ## mid($rand(62) 1 $_r.c)
+ }
+ @ function_return = _r.n
+ purge _r
+}
+alias gz.reverse {
+ fec ($*) _r.c {@ _r.r = _r.c ## _r.r}
+ @ function_return = _r.r
+ purge _r
+}
+
+alias gz.safechan {
+ if (index(# $0) == [0]) {@ _sf.r = [$0]
+ } else if (index(# $0) == [1] && ( (index(+ $0) == [0]) || (index(@ $0) == [0])) ) {
+  @ _sf.r = mid(1 9999 $0)
+ } else { @ _sf.r = [$0] }
+ @ function_return = _sf.r
+ purge _sf.r
+}
+
+
+alias gz.servergroups {
+ for (@ _sg.i = 0, servername($_sg.i), @_sg.i++) {
+  if (!match($servergroup($_sg.i) $_sg.r)) {
+   @ _sg.r #= _sg.r ? [ ] ## servergroup($_sg.i) : servergroup($_sg.i)
+  }
+ }
+ @ function_return = _sg.r
+ purge _sg
+}
+
+alias gz.striplastslash {@ function_return = right(1 $*)==[/] ? left(${gz.strlen($*) - 1} $*) : [$*]}
+alias gz.strlen {@ _t = [$*];@ function_return = @_t;^assign -_t}
+alias gz.stripfw {
+ if ([$0] == [$1]) {
+  @ _wr.r = [$2-]
+ } else {
+  @ _wr.r = [$1-]
+  @ _wr.n = 0
+  fe ($1-) _wr.d {
+   @ _wr.n++
+   if (_wr.d == [$0]) {
+    @ _wr.r = ref(1-${_wr.n - 1} $1-) ## [ ] ## ref(${_wr.n + 1}\-1000 $1-)
+    //break
+   }
+  }
+ }
+ @ function_return = _wr.r
+ purge _wr
+}
+
+
+alias gz.subaway {
+ @ away = 1
+ if ([$1]) {@ away.reason = [$1-]} else {@ away.reason = [$away[$rand($numaway)]]}
+ //away -all $away.reason [Log:$logging] $gemz.str
+ gecho Setting you away. Message logging is \$logging\
+ switch ($0) {
+  (-q) {gecho Quiet Away Reason: $away.reason}
+  (-c) {if (C) {/me $str.away \($away.reason\) [Log:$logging] $gemz.str}}
+  (-n) {
+   if (mychannels()) {
+    /tzmme $str.away \($away.reason\) [Log:$logging] $gemz.str
+   }
+  }
+ }
+}
+
+alias gz.testoper {
+#Idea/inspiration by Blackjac.  Implementation GemZ dependent.
+ _gz.OperTestAddNick $0 $1
+ userhost $0 -cmd if ([$1] == [+]) {
+  @ gt.tn = _gz.OperTestDoNick($0)
+  if (gt.tn) {
+   gtecho $gt.tn ${gc.opernick}$0${cl} ${gc.peren}\(${gc.operuh}$3@$4${gc.peren}\)${cl} is a megamomo (IRCop).
+  } else {
+   gecho ${gc.opernick}$0${cl} ${gc.peren}\(${gc.operuh}$3@$4${gc.peren}\)${cl} is a megamomo (IRCop).
+  }
+ } else {@ _gz.OperTestDoNick($0)}
+ ^assign -gt.tn
+}
+
+alias gz.voices {
+ fe ($chanusers($0)) _h.o {
+  if (isvoice($_h.o $0) && !ischanop($_h.o $0)) {@ _h.r #= _h.r ? [ $_h.o] : _h.o}
+ }
+ @ function_return = _h.r
+ purge _h
+}
+
+alias quiet {
+ if ([$0]) {
+  if (ischanop($N $C)) {
+   //mode $C -v $0
+  }{gecho You are not a channel Operator}
+ }{gecho Usage: //quiet <nick>}
+}
+
+alias tlm {t $last.mesg}
+alias tlsm {t $lastmsmg}
+alias tlsn {t $lastsnot}
+alias tln {t $last.noti}
+
+
+##action plugin module support for GemZ 2.5
+##Format for the plugin file must be one line per //menuitem using
+## the following keyword format
+##"TITLE" TYPE TEXT GOES HERE
+##   Type Keywords are: %ACT, %PUB, %KICK or %CMD
+##   Other Keywords are %nk (nick) %pnk (possesive nick)
+##     and %ch (current channel)
+##   Comment lines must begin with a pound (#)
+##To create a new column in the //submenu, put %new as the second word
+##  followed by a Command keyword
+##%kick must have %nk following it immediately.
+##%cmd must be followed by a valid command... like /gimpkick
+
+alias loadplug {
+ @ pluginsloaded = 1
+ if ([$0] && fexist($0)==[1]) {
+#  makepopup
+  //menuitem popup separator
+  //submenu popup custact "Custom Actions"
+  //submenu popup custkick "Custom Kicks"
+  //submenu popup custcmd "Custom Command"
+  @ _plugfile = open($0 R)
+  while (!eof($_plugfile)) {
+   @ _tmp.p = strip(; $read($_plugfile))
+   @ _tmp.p = [$^(^)_tmp.p]
+   if (left(1 $_tmp.p) == [#]) {
+   } else if (word(1 $_tmp.p) == [%new]) {
+    switch ($word(2 $_tmp.p)) {
+     (%cmd) {//menuitem custcmd -b "$word(0 $_tmp.p)" custout $stripw(%new $_tmp.p)}
+     (%kick) {//menuitem custkick -b "$word(0 $_tmp.p)" custout $stripw(%new $_tmp.p)}
+     (%act) {//menuitem custact -b "$word(0 $_tmp.p)" custout $stripw(%new $_tmp.p)}
+     (%pub) {//menuitem custact -b "$word(0 $_tmp.p)" custout $stripw(%new $_tmp.p)}
+     (*) {}
+    }
+  } else {
+    switch ($word(1 $_tmp.p)) {
+     (%cmd) {//menuitem custcmd "$word(0 $_tmp.p)" custout $_tmp.p}
+     (%kick) {//menuitem custkick "$word(0 $_tmp.p)" custout $_tmp.p}
+     (%act) {//menuitem custact "$word(0 $_tmp.p)" custout $_tmp.p}
+     (%pub) {//menuitem custact "$word(0 $_tmp.p)" custout $_tmp.p}
+     (*) {}
+    }
+   }
+  }
+  @ close($_plugfile)
+  ^assign -_tmp.p;^assign -_plugfile
+ }{gecho No module specifed, or file does not exist}
+}
+
+alias custout {
+ @ _nick = [$strip(@+=\'\" $lastclickline(4))]
+ @ _chan = [$C]
+ @ _input = [$1-]
+ if ([$1]==[%act] || [$1]==[%pub] || [$1]==[%kick] || [$1]==[%cmd]) {
+  fe ($_input) _word {
+   if ([$_word]==[%act]) { @ _output = [$_output]##[/me]
+   } else if ([$_word]==[%pub]) { @ _output = [$_output]##[/say]
+   } else if ([$_word]==[%kick]) { @ _output = [$_output]##[/k]
+   } else if ([$_word]==[%cmd]) {@ _cmd = [true]
+   } else if ([$_word]==[%nk]) { @ _output = [$_output $_nick]
+   } else if ([$_word]==[%nk,]) { @ _output = [$_output $_nick\,]
+   } else if ([$_word]==[%nk.]) { @ _output = [$_output $_nick\.]
+   } else if ([$_word]==[%nk!]) { @ _output = [$_output $_nick\!]
+   } else if ([$_word]==[%pnk]) { @ _output = [$_output $_nick\'s]
+   } else if ([$_word]==[%ch]) { @ _output = [$_output $_chan]
+   } else if (_cmd) { @ _output = [$_output]##[$_word];^assign -_cmd
+   } else @ _output = [$_output $strip(; $_word)]
+  }
+  eval $_output
+  #gecho $_output
+ } else {
+  gecho $_input
+  gecho ERROR in plugin (2nd word not %act, %pub, %kick, %cmd)
+ }
+ ^assign -_output;^assign -_chan;^assign -_input
+}
+
+alias saysend {
+ .send $0-
+ fe ($unparse($0)) _s {
+  xecho -target $_s ${gc.pubbrac}<${gc.spub}$N${gc.pubbrac}>${cl} $1-
+ }
+ ^assign -_s
+}
+
+alias .send quote PRIVMSG $0 :$cntl2mirc(f0 $1-)
+
+# Finish up
+
+if (fexist($EXEDIR/menu.sav) != -1)
+{
+  //load $EXEDIR/menu.sav
+}
+
+^bind rclick parse_command rccheck
+^bind nicklistrclick parse_command rccheck
+^bind ldblclick parse_command ldccheck
+^bind nicklistldblclick parse_command ldccheck
+^bind statusrclick parse_command if (C) {chanmenu $C} else {if (T) {targetmenu $strip(= $T)}}
+
+^makemenu
+

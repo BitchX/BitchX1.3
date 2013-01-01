@@ -1,0 +1,19 @@
+Synopsis:
+   $idle()
+
+Technical:
+   Returns your idle time.  Synonymous with $E.  Present for compatibility
+   with the standard ircII 2.8.2 client.
+
+Practical:
+   This function is used to get your client's idle time.  It should be used
+   in lieu of $E if you intend your script to be compatible with the stock
+   ircII client.  Note that the client's concept of "idle time" is not
+   necessarily the same as your server's (and in fact usually isn't).
+
+Returns:
+   number of seconds since last keypress
+
+See Also:
+   Special_Vars(7)
+

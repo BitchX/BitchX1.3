@@ -1,0 +1,16 @@
+Synopsis:
+   bind <key> bold
+
+Description:
+   This function toggles the current boldface setting.  Due to internal
+   limitations of the client, BOLD is displayed as a B on the input line,
+   regardless of the key it is bound to.
+
+See Also:
+   bind(4) blink, highlight_off, reverse, underline;
+   set(4) bold_video
+
+Other Notes:
+   Boldfaced text can be typed at any time, but it will only be displayed
+   if BOLD_VIDEO is on.
+

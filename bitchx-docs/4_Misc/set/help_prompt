@@ -1,0 +1,11 @@
+Synopsis:
+   set help_prompt [on|off|toggle]
+
+Description:
+   When turned on, the client will prompt for another help file to display
+   after displaying the first.  If off, the client returns to input mode
+   immediately.
+
+See Also:
+   help(1)
+

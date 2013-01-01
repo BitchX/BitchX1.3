@@ -1,0 +1,27 @@
+Synopsis:
+   connect <new server> [[<port>] <existing server>]
+
+Description:
+   This command is used to connect servers to the irc network.  It must be
+   given at least one argument, the name of a remote server to connect to
+   the network.  If only one server is given, it is connected to the
+   client's server on the default port.  Alternately, a specific server
+   and port may be specified.
+
+   Wildcards are permitted in the server names, if they are unambiguous.
+
+Examples:
+   To connect irc.foo.com to your current server:
+      /connect irc.foo.com
+
+   To connect irc.foo.com with irc.bar.com on port 31337 of irc.bar.com:
+      /connect irc.foo.com 31337 irc.bar.com
+
+See Also:
+   die(3); squit(3)
+
+Restrictions:
+   This command is limited to irc operators, for reasons that should be
+   obvious.  Further, both servers must have appropriate C: and N: lines
+   in their configuration to allow the connection.
+

@@ -1,0 +1,9 @@
+Synopsis:
+   unlamenick <nick>
+
+Description:
+   UNLAMENICK removes a nickname from your lamenick list.
+
+See Also:
+   addlamenick(1) lamenicklist(1)
+

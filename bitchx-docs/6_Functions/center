@@ -1,0 +1,24 @@
+Synopsis:
+   $center(<width> <text>)
+
+Technical:
+   This function returns the input text right-justified in a buffer that is
+   precisely ( ((width - strlen(text)) / 2) + strlen(text) ) characters
+   wide.  The width must be given, there is no default.
+
+Practical:
+   This function returns the given text, padded on the left such that it
+   will appear to be "centered" in the width given.  The right side is not
+   padded, only the left.  To force padding on both sides, you must use the
+   width qualifier $[]var.
+
+Returns:
+   input text centered in given width
+
+Examples:
+   $center(15 hello there)               returns "  hello there"
+   $[15]center(15 hello there)           returns "  hello there  "
+
+See Also:
+   Special_Vars(7)
+

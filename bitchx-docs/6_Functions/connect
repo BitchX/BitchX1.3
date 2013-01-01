@@ -1,0 +1,26 @@
+Synopsis:
+   $connect(<host> <port>)
+
+Technical:
+   This function opens a raw TCP connection to the specified remote host on
+   the specified remote port.  It returns a unique file descriptor for the
+   connection that can be used by DCC RAW to communicate with the host.
+
+Practical:
+   This function attempts to open up a TCP socket to the given host on the
+   given port.  DCC RAW is used to read and write data from and to it.
+   This function effectively permits EPIC to act as a client for any
+   TCP service.  In the past, people have used it for direct finger, whois,
+   and simple ftp access.
+
+Returns:
+   file descriptor for connection, or nothing if error
+
+Examples:
+   $connect(127.0.0.1 25)           connect to your local mail server
+   $connect(ftp.neato.org 21)       connect to an EPIC ftp site
+   $connect(0.0.0.0 0)              error (no such host/port)
+
+See Also:
+   dcc(1) close, raw; listen(6); on(5) dcc_raw
+

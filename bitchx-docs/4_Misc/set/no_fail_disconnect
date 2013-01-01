@@ -1,0 +1,14 @@
+Synopsis:
+   set no_fail_disconnect [on|off|toggle]
+
+Description:
+   When this is set ON, the client will not automatically try to reconnect
+   when a write() to a server fails. This is mostly only useful in situations
+   like mine, where you have a dialup static IP where packets are retained
+   when you are disconnected. This means that a person with a static IP can
+   set this ON, disconnect from the ISP, reconnect to the ISP, and never
+   leave irc.
+
+See Also:
+   disconnect(1); discon(1); reconnect(1); server(1)
+   

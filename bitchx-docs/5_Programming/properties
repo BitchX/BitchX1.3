@@ -1,0 +1,11 @@
+Synopsis:
+   properties  
+
+Description:
+   PROPERTIES non-interactive command that creates a notebook 
+   dialog with all the sets, fsets, wsets (for current windw) and
+   csets (for current channel).
+
+See Also:
+   filedialog(5) fontdialog(5) popupmsg(5) 
+

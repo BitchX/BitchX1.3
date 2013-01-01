@@ -1,0 +1,147 @@
+#####################################################################################
+## logger.bx by powuh, Wed Dec  4 20:54:36 EST 2002
+##
+## This is a logger script for BitchX and Epic.  It is fully customizable, so you
+## can log what you want to, where you want to!  I wrote this after finding many
+## flaws in bxlog.bx by dARTh in both log handling, and code syntax.  Hopefully
+## my logger.bx will be a better replacement.
+##
+## Any comments, suggestions, etc can be directed to powuh on EFNet's #BitchX
+#####################################################################################
+
+@ log.version = [1.0]
+@ log.config.file = [~/.bxlogger.cfg]
+
+if (fexist($log.config.file) == -1) {
+   xecho -b Config file, $log.config.file, not found... Using default values.  Type /logconf to configure!
+   @ logdir = [~/.BitchX/logs];@ logdate = [%m-%d-%y/%H:%M];@ logdir.channels = [$logdir/channels]
+   @ logdir.messages = [$logdir/messages];@ logdir.notices = [$logdir/notices];@ logdir.ctcp = [$logdir/ctcp]
+   @ logdir.dcc = [$logdir/dcc];@ logpublic = 1;@ logprivate = 1;@ lognotices = 1;@ logdccs = 1;@ logctcps = 1
+   }{load $log.config.file}
+
+alias _logger {
+   if (logenable) {
+      if (log.debug) echo _logger $0 > $1-
+      if (fexist($logdir) == -1) {${mkdir($logdir)?[eval xecho -b mkdir failed $logdir]:[]}}
+      if (logsepdirs && fexist($logdir.channels) == -1) {${mkdir($logdir.channels)?[eval xecho -b mkdir failed $logdir.channels]:[]}}
+      if (logsepdirs && fexist($logdir.messages) == -1) {${mkdir($logdir.messages)?[eval xecho -b mkdir failed $logdir.messages]:[]}}
+      if (logsepdirs && fexist($logdir.notices) == -1) {${mkdir($logdir.notices)?[eval xecho -b mkdir failed $logdir.notices]:[]}}
+      if (logsepdirs && fexist($logdir.ctcp) == -1) {${mkdir($logdir.ctcp)?[eval xecho -b mkdir failed $logdir.ctcp]:[]}}
+      if (logsepdirs && fexist($logdir.dcc) == -1) {${mkdir($logdir.dcc)?[eval xecho -b mkdir failed $logdir.ctcp]:[]}}
+      @ :logfh = open($0 W)
+      @ write($logfh [$strftime($logdate)] $stripc($stripansicodes($strip( $1-))))
+      @ close($logfh)
+   }
+}
+
+alias logconf {
+   if ([$0]) switch ($0) {
+      (a)  {@ logenable = ([$1]==[yes])?1:0}
+      (b)  {@ logpublic = ([$1]==[yes])?1:0}
+      (c)  {@ logmessages = ([$1]==[yes])?1:0}
+      (d)  {@ lognotices = ([$1]==[yes])?1:0}
+      (e)  {@ logdccs = ([$1]==[yes])?1:0}
+      (f)  {@ logctcps = ([$1]==[yes])?1:0}
+      (g)  {@ logdir = ([$1])?[$1]:[$logdir]}
+      (h)  {@ logsepdirs = ([$1]==[yes])?1:0}
+      (h1) {@ logdir.channels = ([$1])?[$1]:[$logdir.channels]}
+      (h2) {@ logdir.messages = ([$1])?[$1]:[$logdir.messages]}
+      (h3) {@ logdir.notices = ([$1])?[$1]:[$logdir.notices]}
+      (h4) {@ logdir.dcc = ([$1])?[$1]:[$logdir.dcc]}
+      (h5) {@ logdir.ctcp = ([$1])?[$1]:[$logdir.ctcp]}
+      (i)  {@ logdate = ([$1])?[$1]:[$logdate]}
+      (*)  {xecho -b Invalid switch to /logconf: $0;return}
+   }
+
+   xecho -b
+   xecho -b Logger Configuration:
+   xecho -b   [a] Enable Logging ..................... ${logenable?[yes]:[no]}
+   if (logenable)  xecho -b   [b] Log channel activity ............... ${logpublic?[yes]:[no]}
+   if (logenable)  xecho -b   [c] Log private messages ............... ${logmessages?[yes]:[no]}
+   if (logenable)  xecho -b   [d] Log notices ........................ ${lognotices?[yes]:[no]}
+   if (logenable)  xecho -b   [e] Log DCCs ........................... ${logdccs?[yes]:[no]}
+   if (logenable)  xecho -b   [f] Log CTCPs .......................... ${logctcps?[yes]:[no]}
+   if (logenable)  xecho -b   [g] Log Directory ...................... ${logdir?[$logdir/]:[Not Set]}
+   if (logenable)  xecho -b   [h] Subdirectories by type ............. ${logsepdirs?[yes]:[no]}
+   if (logsepdirs) xecho -b      [h1] Channel log directory .......... ${logdir.channels?[$logdir.channels/]:[Not Set]}
+   if (logsepdirs) xecho -b      [h2] Message log directory .......... ${logdir.messages?[$logdir.messages/]:[Not Set]}
+   if (logsepdirs) xecho -b      [h3] Notice log directory ........... ${logdir.notices?[$logdir.notices/]:[Not Set]}
+   if (logsepdirs) xecho -b      [h4] DCC log directory .............. ${logdir.dcc?[$logdir.dcc/]:[Not Set]}
+   if (logsepdirs) xecho -b      [h5] CTCP log directory ............. ${logdir.ctcp?[$logdir.ctcp/]:[Not Set]}
+   if (logenable)  xecho -b   [i] Log Timestamp Format ............... $logdate \($strftime($logdate)\)
+   xecho -b
+   xecho -b Type /logconf <letter> <value> to configure. Then /logsave to save settings.
+   xecho -b
+}
+ 
+alias logsave {
+   @rename($log.config.file $log.config.file~)
+   @ :savefile = open($log.config.file W T)
+   @ write($savefile @ logenable = $logenable)
+   @ write($savefile @ logpublic = $logpublic)
+   @ write($savefile @ logmessages = $logmessages)
+   @ write($savefile @ lognotices = $lognotices)
+   @ write($savefile @ logdccs = $logdccs)
+   @ write($savefile @ logctcps = $logctcps)
+   @ write($savefile @ logdir = [$logdir])
+   @ write($savefile @ logsepdirs = $logsepdirs)
+   @ write($savefile @ logdir.channels = [$logdir.channels])
+   @ write($savefile @ logdir.messages = [$logdir.messages])
+   @ write($savefile @ logdir.notices = [$logdir.notices])
+   @ write($savefile @ logdir.dcc = [$logdir.dcc])
+   @ write($savefile @ logdir.ctcp = [$logdir.ctcp])
+   @ write($savefile @ logdate = [$logdate])
+   @ close($savefile)
+   xecho -b Saved logger configuration to $log.config.file
+}
+
+alias loghelp {
+   xecho -b
+   xecho -b Logger version $log.version by powuh
+   xecho -b Commands:
+   xecho -b   /loghelp ............ What you are reading now
+   xecho -b   /logconf ............ Logger Configuration
+   xecho -b   /logsave ............ Save current configuration
+   xecho -b
+}
+
+## Private message hooks
+on #-msg 6192 * {if (logmessages) {_logger ${logsepdirs?logdir.messages:logdir}/$tolower($0.log) <$0> $1-}}
+on #-send_msg 6192 * {if (logmessages) {_logger ${logsepdirs?logdir.messages:logdir}/$tolower($0.log) <$N> $1-}}
+
+## Notice hooks
+on #-notice 6192 * {if (lognotices) {_logger ${logsepdirs?logdir.notices:logdir}/$tolower($0.log) -$0\- $1-}}
+on #-send_notice 6192 * {if (lognotices) {_logger ${logsepdirs?logdir.notices:logdir}/$tolower($0.log) =$0= $1-}}
+
+## DCC hooks
+on #-dcc_chat 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) <$0> $1-}}
+on #-send_dcc_chat 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) <$N> $1-}}
+on #-dcc_connect 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) DCC Connect from $0 $1-}}
+on #-dcc_error 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) DCC Error from $0 $1-}}
+on #-dcc_lost 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) DCC Lost from $0 $1-}}
+on #-dcc_request 6192 * {if (logdccs) {_logger ${logsepdirs?logdir.dcc:logdir}/$tolower($0.dcc.log) DCC Request from $0 $1-}}
+
+## Public channel hooks
+on #-public 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) <$0> $2-}}
+on #-public_other 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) <$0> $2-}}
+on #-public_ar 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) <$0> $2-}}
+on #-public_other_ar 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) <$0> $2-}}
+on #-public_notice 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) $0\- $2-}}
+on #-action 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) * $0 $2-}}
+on #-send_public 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($0.log) <$N> $1-}}
+on #-send_action 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($0.log) * $N $1-}}
+on #-leave 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) *** Parted $0 \($2\)}}
+on #-join 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) *** Joined $0 \($2\)}}
+on #-kick 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($2.log) *** $0 was kicked by $1 \($3-\)}}
+on #-topic 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) *** $0 changed topic to $2-}}
+on #-channel_nick 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($0.log) *** $1 is now known as $2}}
+on #-channel_signoff 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($0.log) *** $1 signoff\: $2-}}
+on #-mode 6192 * {if (logpublic) {_logger ${logsepdirs?logdir.channels:logdir}/$tolower($1.log) *** $0 sets mode $2-}}
+
+## CTCP hooks
+on #-ctcp 6192 * {if (logctcps) {_logger ${logsepdirs?logdir.ctcp:logdir}/ctcp.log CTCP from $0\: $2-}}
+on #-ctcp_reply 6192 * {if (logctcps) {_logger ${logsepdirs?logdir.ctcp:logdir}/ctcp.log CTCP $1 reply from $0\: $2-}}
+
+eval xecho -b logger.bx version $log.version by powuh loaded. Type /loghelp for help.
+
+# EOF

@@ -1,0 +1,26 @@
+Synopsis:
+   $isalpha(<text>)
+   $isdigit(<text>)
+
+Technical:
+   These function test whether the first character in the given string is
+   an alphabetical character or a digit.  Only the first character is
+   tested.
+
+Practical:
+   These functions are useful for testing an input string to see whether it
+   is a number or a text string.  One use for this might be to check if it
+   would be suitable input for $iptoname() or $nametoip().  Keep in mind
+   that only the first character is tested, so this isn't a reliable way
+   to see if the entire string is a number.
+
+Returns:
+   "true" or "false" value if first character is a letter or a digit
+
+Examples:
+   $isalpha(hello)         returns true
+   $isalpha(2hello)        returns false
+   $isdigit(123)           returns true
+   $isdigit(2abc)          returns true
+   $isdigit(a123)          returns false
+

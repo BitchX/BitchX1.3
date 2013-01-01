@@ -1,0 +1,15 @@
+Synopsis:
+   save [<options>] [<filename>]
+
+Description:
+   SAVE is used to record the client's current configuration to an
+   external file; if none is specified, the ~/.BitchX/BitchX.sav is used, 
+   or the name of the file specified on the command line. The
+   command does not save some information.
+
+Examples:
+   To save everything:
+      /save 
+
+See Also:
+   Command_Line_Args(7); load(5); stub(5)

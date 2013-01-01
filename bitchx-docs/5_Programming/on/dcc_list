@@ -1,0 +1,27 @@
+Synopsis:
+   on [<modes>]dcc_list [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a /dcc or /dcc list command is issued.
+   The 'banner' of the list can be determined when $0 is "Start", and the
+   end of the list is determined when $0 is "end".
+
+Parameters:
+   $0  - The type of DCC connection
+   $1  - "1" if encryption is on, "0" if its not  (future exp)
+   $2  - Nickname of the peer
+   $3  - Status of connection
+   $4  - $time() when connection established, 0 if not connected.
+   $5  - Size of the file transfer, 0 if not applicable
+   $6  - Number of bytes transfered, 0 if not connected
+   $7  - Description field (usually the full filename)
+
+Examples:
+   To display some extra info about dcc:
+      on -dcc_list "*" {
+         if (([$6]/[$5]*100)>90) { echo File $7 from $2 is almost done! }
+      }
+
+See Also:
+   dcc(1)
+

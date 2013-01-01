@@ -1,0 +1,64 @@
+Synopsis:
+   wait [for] [%<process>]|[-cmd <command>]
+
+Description:
+   WAIT is a convenient means for executing a series of commands and
+   ensuring that those commands are run in the desired sequence.  The
+   command can make the client wait for the completion of server or
+   subprocess output.
+
+   The simplest form is WAIT with no arguments.  When run after a server
+   query, the client will not execute further commands (within an alias;
+   does not apply to the input line) until all server output has been
+   received.
+   
+   If used as /wait for, it will execute the command, and halt until a server
+   reply is detected.
+
+   When waiting on an EXECed subprocess, the client will block until the
+   subprocess has completed.  This effectively disables the the entire
+   client (and can even cause it to ping timeout from the server).
+
+   The last form allows for a series of commands to be executed in no
+   particular order.  This is most useful when a particular command needs
+   to be issued, but subsequent commands don't rely on its contents or
+   timing.
+
+Options:
+   -cmd <commands>   execute the given commands at the end of the alias
+
+Examples:
+   To add a header and footer to a channel's ban list:
+      alias banlist {
+         echo *** Begin ban list for #blah (generated $stime($time()))
+         mode #blah +b
+         wait
+         echo *** End ban list for #blah
+      }
+
+   To run a subprocess, and wait before doing anything else:
+      alias localusers {
+         echo *** Getting list of local users...
+         exec -name who who
+         wait %who
+         echo *** Finished subshell `who' listing
+      }
+
+   The second command will actually finish before the first:
+      alias backwards {
+         wait -cmd echo this appears last
+         echo this appears first
+      }
+
+Other Notes:
+   If multiple WAITs are pending at once, they will all return once the last
+   one is completed, to ensure that no data is lost.
+
+   Using WAIT for server queries is useful.  However, there are often times
+   then it is not the most efficient way to do something.  When possible,
+   hooking server numerics that marks the end of a message is preferred, as
+   it is generally more reliable.
+
+   Using wait(5) or wait(5) for and /redirect is a Bad Thing(tm), so
+   don't do it.
+

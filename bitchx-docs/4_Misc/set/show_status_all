@@ -1,0 +1,14 @@
+Synopsis:
+   set show_status_all [on|off|toggle]
+
+Description:
+   When turned on, the status bars of all visible windows will show all
+   current information regarding that window.  When off, information
+   that is duplicated by multiple windows is only shown in the current
+   window.  For windows on the same server, the nickname and user mode
+   is only shown in the current window.  For all windows, the time is
+   only shown in the current window.
+
+See Also:
+   set(4) status_window
+

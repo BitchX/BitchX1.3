@@ -1,0 +1,47 @@
+Synopsis:
+   $regcomp(<regex pattern>)
+   $regexec(<compiled pattern> <string>)
+   $regerror(<compiled pattern>)
+   $regfree(<compiled pattern>)
+
+Technical:
+   These functions are an interface to "regular expression" pattern matching:
+   $regcomp() is used to "compile" a regular expression.  The return value
+        is suitable for /assigning to an ircII variable.  Note that the
+        return value of this function must be passed to the $regfree()
+        function, to return the allocated resources for the compiled pattern.
+        The compilation could fail: if you believe the compilation failed, you
+        should call $regerror() to fetch the error.
+   $regexec() is used to match a previously compiled pattern against a 
+        text string.  The function returns 1 if the string is matched by the
+        pattern, and 0 if it does not.
+   $regerror() is used to fetch the error code for the most recently 
+        attempted action on a previously compiled pattern.
+   $regfree() is used to return the resources allocated to a compiled
+        pattern.  Attempting to use a compiled pattern after it has been 
+        passed to regfree is an error and may crash the client.  The
+        function returns the FALSE value.
+
+   If you neglect to regfree something that was returned by regcomp,
+   then that will result in a memory leak.  The client cannot control this,
+   and so if you use these functions, it is your duty to keep track of this.
+
+   Passing a value to regexec, regerror, or regfree that was not
+   previously returned from regcomp is an error and may crash the client.
+
+Practical:
+   Well, I can not give you any immediately practical uses for these functions.
+   They are provided mostly for completeness because they were requested and
+   they weren't that difficult to support.
+
+Returns:
+   $regcomp() returns an opaque r-value suitable for passing to the 
+        other three functions.  The return value must be passed later to
+        $regfree().
+   $regexec() returns 0 or 1 depending on whether the match worked or not
+   $regerror() returns the current error condition for a pattern
+   $regfree() returns the false value.
+
+See Also:
+   assign(1); match(6); rmatch(6)
+

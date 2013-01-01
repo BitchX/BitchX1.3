@@ -1,0 +1,16 @@
+Synopsis:
+   $strchr(<chr> <string>)
+   $strrchr(<chr> <string>)
+
+Practical:
+   These functions work like the equivalent C functions. They will search
+   forward through a string looking for the first occurance of the the
+   specified "chr" or reverse.
+
+Returns:
+   returns the rest of the string from the occurance of the "chr"
+
+Examples:
+
+See Also:
+

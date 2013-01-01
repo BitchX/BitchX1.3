@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> parse_command <commands>
+
+Description:
+   This function causes the specified command(s) to be executed when the
+   given key is pressed.  If multiple commands are desired, they may be
+   surrounded with curly braces.  Command-line expando variables ($*, $2,
+   $n-m, etc.) are expanded as if there were no arguments given.
+
+See Also:
+   parsekey(5)
+

@@ -1,0 +1,21 @@
+Synopsis:
+   on [<modes>]unload [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the unload(5) command is issued to unload
+   a packaged script.
+
+Parameters:
+   $0-    the parameters passed to the /package command
+          (NOTE that passing more than one argument to /package may cause
+	  future incompatibilities, and should be avoided at all costs)
+
+Examples:
+   To inform the user that a script is exiting:
+      on ^unload "superscript *" {
+        echo *** SuperScript exiting. To infinity, and lots farther!
+      }
+
+See Also:
+   package(5); unload(5)
+

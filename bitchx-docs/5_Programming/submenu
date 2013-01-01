@@ -1,0 +1,18 @@
+Synopsis:
+   submenu <parent menu name> <new menu name> <options> "Submenu Text"
+
+Description:
+   SUBMENU appends a new submenu to the parent menu given.  A new
+   menu with the new menu name given is created. Possible options:
+        -s = shared
+        -r = right (items appear on the right of the menubar - unimplemented)
+        -b = break (greates a vertical break)
+        -f = framed (PM only - thin line around text)
+   Submenu text is the text that appears on the menu which spawns the new
+   menu.  If a ~ is placed before a charater in the text an accellerator
+   is created for that character.  (i.e. ALT-character will activate that
+   submenu)
+
+See Also:
+   menu(5); menuitem(5); popupmenu(5)
+

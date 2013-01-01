@@ -1,0 +1,10 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> time
+
+Description:
+   This asks another client for its local time of day.  This differs from
+   the TIME command, which queries the server instead of a client.
+
+See Also:
+   time(2); time(6)
+

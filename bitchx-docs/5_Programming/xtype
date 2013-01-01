@@ -1,0 +1,17 @@
+Synopsis:
+   xtype [-literal] <text>
+
+Description:
+   XTYPE works just like TYPE, except that it may also take certain
+   switches.  Currently, there is only one switch for XTYPE.
+
+Options:
+   -current   do not expand key bindings
+
+Examples:
+   To literally insert a control-a instead of having its meaning expanded:
+      xtype -l now inserting a ^A is easy!
+
+See Also:
+   bind(4); type(5)
+

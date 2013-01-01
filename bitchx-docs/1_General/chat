@@ -1,0 +1,20 @@
+Synopsis:
+   chat <nick>
+
+Description:
+   CHAT initiates a direct connection to another client, allowing
+   the users to chat without needing to pass messages through the irc
+   network.  This is a very secure way of communicating on irc, not
+   to mention that it is generally faster than sending messages across
+   the irc network.
+
+   To send a message across the DCC CHAT connection, use MSG as you
+   normally would, but prefix the nickname with a "=".  Additionally,
+   CTCP commands can be sent across a DCC CHAT connection (allowing you
+   to initiate a DCC SEND, for instance), if the remote client is also an
+   EPIC3 (or compatible) client.  See the appropriate help files for more
+   information.
+
+See Also:
+   ctcp(1); msg(1); on(5) dcc_chat, send_dcc_chat
+

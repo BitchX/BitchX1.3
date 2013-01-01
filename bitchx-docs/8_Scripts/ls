@@ -1,0 +1,13 @@
+Synopsis:
+   load ls
+
+Description:
+   This script serves primarily as a working example of how $glob() can be
+   used.  It emulates the Unix ls command, complete with -a and -s flags.
+
+See Also:
+   glob(6); load(5)
+
+Other Notes:
+   This script was written by archon, archon@tamu.edu.
+

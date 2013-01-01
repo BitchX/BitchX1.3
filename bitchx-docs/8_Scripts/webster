@@ -1,0 +1,19 @@
+Synopsis:
+   load webster
+
+Description:
+   This script currently stands as an intellectual exercise.  When webster
+   servers still existed, it connected to one at the University of Indiana
+   and acted as a front-end to it, allowing the user to access the server
+   from the irc client.
+
+   At the time of this writing, there are no widely-known webster servers
+   in existence.
+
+See Also:
+   load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.  The
+   author explicitly allows this script to be distributed as freeware.
+

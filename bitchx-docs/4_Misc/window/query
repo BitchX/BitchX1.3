@@ -1,0 +1,11 @@
+Synopsis:
+   window query <nick>
+
+Description:
+   This sets which nick the current window is in a query with. If <nick> is
+   not in a query, a query is started. If the window already owns a query,
+   that query will be closed in favor of <nick>.
+
+See Also:
+   query(1)
+

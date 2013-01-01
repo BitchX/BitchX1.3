@@ -1,0 +1,27 @@
+Synopsis:
+   dcc send [=]<nick> <file> [<file> ...]  [-port <port>]
+
+Description:
+   DCC SEND offers files to a remote client over DCC.  The remote client
+   must of course acknowledge with a DCC GET in order to begin the file
+   transfer.
+
+   If a DCC CHAT with the remote client already exists, the SEND request
+   can be sent over that connection by prefixing the nickname with a '='.
+   This speeds up the handshake considerably.  Of course, the remote
+   client must be able to deal with CTCP commands sent over DCC.
+
+   A specific local port may be specified for the transfer.  This is useful
+   to users behind a firewall that only permits inbound connections on
+   specific port numbers.
+
+Options:
+   -port   use s specific local port
+
+Examples:
+   To send a file to joebob:
+      /dcc send joebob somefile
+      
+See Also:
+   dcc(1) get; set(4) dcc_block_size
+

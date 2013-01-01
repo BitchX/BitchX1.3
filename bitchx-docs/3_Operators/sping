@@ -1,0 +1,16 @@
+Synopsis:
+   sping <server>|<.>|<-clear>
+
+Description:
+   This form of ping is similar to the Unix ping command.  It tests the
+   relative distance a server is from you on the Internet, which is useful
+   for detecting the source of irc lag or netsplits. Without an arguement,
+   sping will display the server pings it is currently waiting for. A
+   server name of "." will use your current server. The arguement -CLEAR
+   will clear the waiting server ping queue. This command is not restricted
+   to irc operators and should work on ALL irc networks.
+
+See Also:
+   ping(1); rping(3) uping(3)
+
+

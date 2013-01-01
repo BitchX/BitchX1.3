@@ -1,0 +1,21 @@
+Synopsis:
+   $key([<channel>|* [<channel> ...]])
+
+Technical:
+   This function displays the channel key for each channel specified (if
+   any have a key assigned).  If a "*", or no channel, is specified, the
+   current is assumed.  It has no effect for channels that you aren't
+   currently on.
+
+Practical:
+   This function is used to fetch a channel's key.  Any number of channels
+   may be specified, though the output could be confusing if only some
+   actually have a key.  You must be on the channel(s) specified for the
+   function to have any effect.
+
+Returns:
+   list of channel keys for given channels, or empty string if none or error
+
+See Also:
+   chanmode(6)
+

@@ -1,0 +1,18 @@
+Synopsis:
+   set status_oper [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the user
+   has irc operator status (user mode +o).  If the client is not an irc
+   operator, nothing is shown.
+
+   This string is represented as %* in the STATUS_FORMAT string.  It is
+   treated literally inside STATUS_OPER.
+
+Examples:
+   Setting the string displayed when the client has operator status:
+      /set status_oper *
+
+See Also:
+   oper(3); set(4) status_format
+

@@ -1,0 +1,29 @@
+Synopsis:
+   $info(C|O|S)
+
+Technical:
+   This function returns information about how the client was compiled.
+
+Practical:
+   This function is used to fetch information stored in the client at
+   compile time.  It can be used to find out who compiled it, and when;
+   what #define options were enabled; and to get the checksums of the
+   binary.
+
+Returns:
+   requested information
+
+Options:
+   c   user@machine that compiled client, and time of compilation
+   o   compile-time options used
+   s   binary checksums
+
+Examples:
+   $info(c)   might return
+                "Compiled by root@foobar on Fri Jan 3 1997 at 01:56:24 CST"
+   $info(o)   might return "2aefgknvzc"
+   $info(s)   might return "1138232081      989 info.c.sh"
+
+See Also:
+   Compile_Opts(7)
+

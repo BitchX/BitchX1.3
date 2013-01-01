@@ -1,0 +1,30 @@
+Synopsis:
+   load action
+
+Description:
+   This script contains a large set of prepackaged action aliases.  They
+   are mostly for channel amusement, like any use of action.  A variable
+   $gender may be set to M (male) of F (female) to customize possessive
+   actions.  Unless otherwise indicated, actions are sent to the current
+   channel.
+
+     These actions maytake arguemtns, but do not require them:
+       applaud bounce chuckle clap dance giggle grin groan laugh moan
+       nod purr scratch shake shrug sigh sing smile wave wink yawn
+
+     These actions are not meant to receive arguments:
+       bow burp cough cry gasp scream shiver snap sneeze snore whistle
+       wiggle
+
+     These actions should be passed a nickname (or "you") as arguments:
+       comfort cuddle hug kiss love pat poke slap spit thank
+
+     These actions send a message to the given nickname:
+       ping pong
+
+See Also:
+   describe(1); load(5); me(1)
+
+Other Notes:
+   This script was written primarily by Carl von Loesch (lynx).
+

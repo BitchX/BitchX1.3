@@ -1,0 +1,20 @@
+Synopsis:
+   on [<modes>]oper_notice [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This is triggered whenever a global oper notice is received.
+
+Parameters:
+   $0    server the notice came from
+   $1-   body of the message
+
+Examples:
+   To alert the user of global oper notices:
+   on ^oper_notice "*" {
+     beep
+     echo --global notice-- $1-
+   }
+
+See Also:
+   on(5) notice
+

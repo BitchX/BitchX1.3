@@ -1,0 +1,22 @@
+Synopsis:
+   $servergroup(<index>)
+
+Technical:
+   This function associates server group with the given index number, as
+   shown in the client's internal server list.
+
+Practical:
+   This function is used to convert from a server's index number to its
+   group name.  This is useful for determining which IRC network you are
+   connected to and what other possible servers are in the same network.
+
+Returns:
+   name of the group of server, or "Unknown"
+
+Examples:
+   $servergroup(0)               returns group name of default server
+   $servergroup($winserv())      returns group name of current server
+
+See Also:
+   server(1) servnum(6) winserv(6) servername(6) serverport(6)
+

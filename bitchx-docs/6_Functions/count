@@ -1,0 +1,19 @@
+Synopsis:
+   $count(<string> <text>)
+
+Technical:
+   This function counts how many times <string> appears in the text specified
+   by <text>, possibly overlapping. 
+
+Practical:
+   The uses for a function like this are unlimited.  One may be to count how
+   many times a person's nick appears in a public message, for logging
+   purposes.
+
+Returns:
+   number of times <string> is found in <text>
+
+Examples:
+   $count(. one.two.three)          returns 2
+   $count(zz zzzz)                  returns 3
+

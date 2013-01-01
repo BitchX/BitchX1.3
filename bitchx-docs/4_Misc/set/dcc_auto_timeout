@@ -1,0 +1,10 @@
+Synopsis:
+   set dcc_auto_timeout [<seconds>]
+
+Description:
+   This variable determines after how many seconds an offered DCC connection
+   will be automatically closed if the user hasn't accepted.
+
+See Also:
+   dcc(1) close, closeall
+

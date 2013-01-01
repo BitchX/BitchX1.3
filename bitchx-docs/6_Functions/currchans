@@ -1,0 +1,15 @@
+Synopsis:
+   $currchans([<server refnum>])
+
+Technical:
+   Returns the current channels for each window connected to <server refnum>.
+   If <server refnum> is -1, then $lastserver() is assumed. If no arguments
+   are passed, all current channels are returned. This function returns
+   each argument as "<server refnum> <channel>" in double quotes.
+
+Examples:
+   eval echo $currchans(1)    /* returns "1 #epic" "1 #unix" */
+   (assuming there are two windows connected to server 1, with #epic in
+    one window and #unix in the other)
+
+  

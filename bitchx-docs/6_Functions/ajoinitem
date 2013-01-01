@@ -1,0 +1,22 @@
+Synopsis:
+   $ajoinitem(refnum)
+
+Technical:
+   This function will return the channel in your ajoinlist according to the 
+   specified number, starting with 0. 
+
+Practical:
+   BitchX has an autojoin list that given the specified channel will join 
+   on connect. ajoinitem can access this list by specifying a number 
+   (starting with 0). If the number doesn't exist then it will return
+   nothing
+
+Returns:
+   Channel that's in the list. If number doesn't exist then nothing. 
+
+Examples:
+   $ajoinitem(0)           returns #bitchx (#bitchx being the first channel
+			   in the list)
+  
+See Also:
+   ajoin ajoinlist unajoin

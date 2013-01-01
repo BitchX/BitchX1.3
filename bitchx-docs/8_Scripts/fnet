@@ -1,0 +1,32 @@
+Synopsis:
+   load fnet
+
+Description:
+   This script sets a number of aliases and hooks to make the client mimic
+   the look and feel of IRC ForumNet.  The aliases it creates are:
+
+     Alias              Description                                       
+     beep <nick>        set a beep to the given nickname
+     boot <nick>        forcibly remove user from a group
+     commands           list ForumNet commands
+     display <num>      redisplay given number of last messages
+     fset <var>         set or display an internal client variable
+     group <name>       switch to a new group
+     hclear             clear /m history
+     invite <nick>      invite a user to the group
+     m <nick>           send a message to another user
+     motd               read the current message of the day
+     nick <nick>        change to a new nickname
+     nm <nick>          remove moderator status from user
+     pass <nick>        make user a group moderator
+     q                  quit irc
+     status [h|p|s|u]   change group status
+     topic <text>       set a new topic of discussion for the group
+     w [<group>]        lists all groups and users
+     
+See Also:
+   brc(8); load(5)
+
+Other Notes:
+   The name of this script's author is not known.
+

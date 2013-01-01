@@ -1,0 +1,22 @@
+Synopsis:
+   on [#][<mode>]mode_stripped [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is similar to the MODE hook, except it only hooks a single
+   mode change at a time.  This hook relies on MODE_STRIPPER being turned
+   on.  It is mostly useful in scripts that wish to evaluate each
+   individual mode change.
+
+Parameters:
+   $0    nickname of person issuing mode change
+   $1    channel or nickname affected by mode change
+   $2    mode changed
+   $3    argument to the mode (does not apply to all modes)
+
+See Also:
+   mode(1); on(5) mode; set(4) mode_stripper
+
+Other Notes:
+   This hook does not override the MODE hook; rather, they compliment each
+   other.
+

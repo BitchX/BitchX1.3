@@ -1,0 +1,17 @@
+Synopsis:
+   load tls
+
+Description:
+   This is the famous Trace/Links/Stats Beautifier.  It redefines how server
+   output from those commands is displayed, such that it is actually
+   readable!
+
+See Also:
+   links(2); load(5); newformat(8); stats(2); trace(2)
+
+Other Notes:
+   The name of this script's original author is not known.  It was later
+   found and modified by Daniel Cedras (TG).  It has been further modified
+   (syntactically) for use with EPIC 3 by Jeremy Nelson (hop),
+   jnelson@acronet.net.
+

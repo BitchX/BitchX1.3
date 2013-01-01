@@ -1,0 +1,14 @@
+Synopsis:
+   load meta
+
+Description:
+   This script is meant only as a working example of how to bind the
+   function keys (F1, F2, ...) in ircII-EPIC.  Refer to the source code for
+   more information.
+
+See Also:
+   bind(4) meta1_character; load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

@@ -1,0 +1,26 @@
+Synopsis:
+   $filter(<pattern> <word list>)
+   $rfilter(<word> <pattern list>)
+
+Technical:
+   These function are used to filter out any items from the input list that
+   do not match the given word (for $rfilter()) or pattern (for $filter()).
+   If there are no matches, the entire input list is returned.
+
+Practical:
+   These functions are effectively the opposite of the $pattern() and
+   $rpattern() functions.  The pattern functions return items that do match,
+   while the filter functions return those that don't.
+
+Returns:
+   items in input list that do not match given word/pattern
+
+Examples:
+   $filter(*oo* booya blah foobar)             returns "blah"
+   $filter(*oo* blah erf twiddle)              returns "blah erf twiddle"
+   $rfilter(blah b* *oo* *bar)                 returns "*oo* *bar"
+   $rfilter(blah foo* *ya *bar)                returns "foo* *ya *bar"
+
+See Also:
+   pattern(6); rpattern(6)
+

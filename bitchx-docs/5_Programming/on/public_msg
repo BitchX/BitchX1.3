@@ -1,0 +1,25 @@
+Synopsis:
+   on [<mode>]public_msg [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a public message in
+   a channel from someone not actually in the channel.
+
+Parameters:
+   $0    nickname sending message
+   $1    channel sent to
+   $2-   text of message
+
+Examples:
+   To customize how these messages are displayed:
+      on ^public_msg "*" {
+         if ( [$1] == C ) {
+            echo *** \($0\) $2-
+         } {
+            echo *** \($0:$1\) $2-
+         }
+      }
+
+See Also:
+   on(5) public, public_notice, public_notice; msg(1)
+

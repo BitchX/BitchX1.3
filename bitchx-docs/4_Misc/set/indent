@@ -1,0 +1,20 @@
+Synopsis:
+   set indent [on|off|toggle]
+
+Description:
+   When turned on, long lines will be wrapped such that they are indented
+   to the same position as the second word on the first line.  Subsequent
+   wrapping of the same line will be indented to the same place.
+
+   If CONTINUED_LINE is also set, the client will pad the wrapped portions
+   of the line with the CONTINUED_LINE contents, unless CONTINUED_LINE
+   happens to be longer than the indented space.  CONTINUED_LINE will not
+   be truncated in this event; it is either displayed in full, or not at
+   all.
+
+   The client will never indent a line more than one-third the width of
+   the screen when INDENT is enabled.
+
+See Also:
+   set(4) continued_line
+

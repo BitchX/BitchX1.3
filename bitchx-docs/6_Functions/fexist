@@ -1,0 +1,31 @@
+Synopsis:
+   $fexist(<file>)
+
+Technical:
+   This function tests for the existence of the given file.  The function
+   permits tilde-expansion.
+
+Practical:
+   This function is used when you want to see if a particular file exists.
+   This could be useful to make sure a file is present before trying to
+   load it.
+
+Returns:
+   -1   error, unable to access file
+    1   file exists and client has read permission
+
+Examples:
+   $fexist(/etc/passwd)                   probably will return 1
+   $fexist(~/.ircrc)                      probably will return 1 too
+   $fexist(fake_file)                     returns -1
+
+See Also:
+   open(6)
+
+Other Notes:
+   This function never returns 0.  This is worth noting, because the natural
+   tendency will be to check for the return value's existence, not its
+   actual value (meaning it always returns "true", as far as the client's
+   string parser is concerned).  This was done intentionally to match the
+   return values of $fsize().
+

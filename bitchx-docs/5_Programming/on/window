@@ -1,0 +1,16 @@
+Synopsis:
+   on [<modes>]window [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever output to any window matches any
+   existing WINDOW hook.  Extreme care should be taken when using this hook
+   to redefine messages, as an ECHO command inside it will also be hooked
+   by it.
+
+Parameters:
+   $0    reference number of name of the window
+   $1-   text printed to the window
+
+See Also:
+   window(4)
+

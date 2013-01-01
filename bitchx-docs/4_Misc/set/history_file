@@ -1,0 +1,22 @@
+Synopsis:
+   set history_file [<filename>]
+
+Description:
+   If this variable is set, the client will (attempt to) write out the
+   command history to the given file.  It will also read the history from
+   this file.  This has the advantage of keeping the client's memory
+   usage to a minimum, but it can slow performance.
+
+   This feature can be disabled by unsetting the variable, or setting it
+   to "<empty>".  The HISTORY setting must also be disabled to completely
+   disable command history.
+
+See Also:
+   bind(4) backward_history, forward_history, shove_to_history;
+   history(4); set(4) history
+
+Other Notes:
+   Setting HISTORY_FILE to /dev/null is not recommended, as the behavior
+   is, at best, undefined, due to the various ways different Unixes handle
+   reads from and writes to the device.
+

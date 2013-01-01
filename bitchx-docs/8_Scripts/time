@@ -1,0 +1,22 @@
+Synopsis:
+   load time
+
+Description:
+   This script fetches the current date and time from either a server or
+   the client's local host.  It can also get the local host's uptime.  The
+   information is then saved in appropriately-named variables for later
+   use.
+
+     Alias         Description                                            
+     /datetime     get day, month, date, and time from local host
+     /servertime   get day, month, date, and time from current server
+     /uptime       get uptime for local host
+
+See Also:
+   load(5); time(2)
+
+Other Notes:
+   This name of script's original author is not known.  It has been updated
+   to take advantage of EPIC features by Jeremy Nelson (hop),
+   jnelson@acronet.net.
+

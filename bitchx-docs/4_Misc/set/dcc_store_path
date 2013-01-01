@@ -1,0 +1,13 @@
+Synopsis:
+   set dcc_store_path [<path>]
+
+Description:
+   This sets the default directory to store files retrieved with DCC GET.
+   Naturally, the client must have write permissions in the chosen
+   directory for it to work properly (the client will not warn if it has
+   insufficient access).  The default is to save the file to the current
+   directory.
+
+See Also:
+   cd(4); dcc(1) get
+

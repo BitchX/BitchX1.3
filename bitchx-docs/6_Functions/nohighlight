@@ -1,0 +1,24 @@
+Synopsis:
+   $nohighlight(<string>)
+
+Technical:
+   This function returns <string> with all highlight characters escaped.
+   All ^B, ^V, ^_, ^O, ^C, and ^[ characters will be replaced by an inverse
+   of their control character, to remove all highlighting.
+
+Practical:
+   This is a very useful function, which has had many forms in scripts for
+   a long time. It is especially good to mask out ^C and ANSI color codes
+   in order to make for color-free output, or in a public message hook to
+   immune yourself from ANSI-bombs that may mess up a terminal.
+
+Returns:
+   <string> with no parseable highlight characters, except the reverse used
+   to show the control character.
+
+Examples:
+   $nohighlight(this is a test)           Returns "this BisB a VtestV"
+
+See Also:
+   stripansi(6); tr(6)
+

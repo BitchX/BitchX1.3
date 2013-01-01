@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]wallop [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a WALLOPS message
+   (a message sent to all irc operators).
+
+Parameters:
+   $0    nickname of the message sender
+   $1    a '+' if the sender is an operator, '-' if not, 'S' if a server
+   $2-   text of message
+
+See Also:
+   wallops(3)
+

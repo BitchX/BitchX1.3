@@ -1,0 +1,11 @@
+Synopsis:
+   on [<modes>]hook [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the HOOK command is issued with the
+   appropriate arguments.  Its sole purpose is to be hooked by HOOK.  It
+   is useful for avoiding alias recursion.
+
+Parameters:
+   $0-   text to hook
+

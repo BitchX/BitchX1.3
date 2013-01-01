@@ -1,0 +1,115 @@
+Synopsis:
+   exec [<shell commands>]
+   exec -direct <commands>
+   exec -name <name> <shell commands>
+   exec -out <process id|shell commands>
+   exec -msg <nickname|channel> <process id|shell commands>
+   exec -notice <nickname|channel> <process id|shell commands>
+   exec -in <process id> <text to send to process>
+   exec -window <process id|shell commands>
+   exec -<signal> <process id>
+   exec -close <process id>
+
+Description:
+   EXEC allows you to spawn other processes from within your client,
+   which are naturally treated as child processes.  For example, if you
+   wished to check your email without suspending your client (or
+   quitting irc), you could simply EXEC your favorite mail program.
+
+   Processes can be given unique names, allowing them to be referred to
+   more intuitively than trying to figure out its process id number. 
+   Processes can also accept any signal normally available through use
+   of the Unix "kill" command (letting you kill, suspend, etc. any
+   process that accepts such a signal).  Process identifiers begin with
+   a "%".  Thus, a process named "mail" with pid 0 could be referred to
+   as either "%mail" or "%0".
+
+   EXEC can take several different flags, each of which allow you to
+   manipulate the subprocess in different ways.  At the most basic
+   level, the only argument you really need to give is the external
+   program to run.  If no arguments are given at all, a list of any
+   currently running processes is returned.
+
+   When using the -OUT, -MSG, or -NOTICE flags, output can be sent to
+   the target upon startup of the subprocess, or redirected to it after
+   it's already running by using its process id.
+   
+   Another flag of note, -CLOSE, can be used to shut down renegade
+   subprocesses that simply won't go away (i.e. with their own quit
+   command, with the KILL signal, etc.).  This actually just severs the
+   link between the subprocess and the client, so it will die on its
+   own the next time it tries to send data to the client.
+   
+   Something to remember when worried about a shell processing arguments
+   is the -DIRECT flag, which executes the commands without spawning a
+   shell. This can cut down on security risks, and save some memory.
+
+Options:
+   -direct     executes commands without spawning a shell
+   -name       give the subprocess a logical name
+   -out        send subprocess output to your current channel
+   -msg        send subprocess output to a nick or channel with MSG
+   -notice     send subprocess output to a nick or channel with NOTICE
+   -in         send a text string to the specified subprocess
+   -window     redirect subprocess output to another window
+   -<signal>   send SIG<signal> to the subprocess
+   -close      forcibly kill the subprocess and its children
+
+Examples:
+   (Assume that the process used with these examples is the Unix mail
+   program.)
+
+   To start a process:
+      /exec mail
+
+   To start a process without a shell interfering:
+      /exec -direct mail
+        
+   To start a process and give it a human-readable name:
+      /exec -name mail mail
+
+   To send the output of a new subprocess to your current channel:
+      /exec -out mail
+
+   To send the output of a running subprocess to JoeBob with a MSG:
+      /exec -msg joebob %mail
+
+   To send the output of a new subprocess to #blah with a NOTICE:
+      /exec -notice #blah mail
+
+   To send a text string (command) to a running subprocess:
+      /exec -in %mail ?
+
+   To send a running subprocess the KILL signal:
+      /exec -kill %mail
+
+   To forcibly close down a stubborn subprocess that just won't die:
+      /exec -close %mail
+      
+Aliases:
+   When using EXEC with the -IN flag, the functionality is identical to
+   using MSG to send a message to a process.  See MSG for more
+   information.
+
+See Also:
+   msg(1); set(4) exec_protection, notify_on_termination, security, shell,
+   shell_flags, shell_limit
+
+Restrictions:
+   Use of external programs from within irc can sometimes be dangerous
+   if you don't know what you're doing.  The danger doesn't necessarily
+   lie in the external programs themselves, but rather in any lack of
+   knowledge about them you may have.  When all else fails, don't use a
+   command if you don't know what it does.
+
+   You can explicitly limit your ability to use EXEC in several ways. 
+   If EXEC_PROTECTION is set to ON, ircII-EPIC will not permit EXEC to
+   be used from within any ON hook.  If SECURITY has the 1 bit set, the
+   client will only permit EXEC to be used interactively; using it from
+   within aliases is not allowed.  For real security, you can #define
+   RESTRICTED at compile time, which will completely disable EXEC.
+
+Other Notes:
+   The available signals that may be sent to a process will vary from system
+   to system.
+

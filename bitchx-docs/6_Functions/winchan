@@ -1,0 +1,22 @@
+Synopsis:
+   $chanwin(<window refnum/name>|<channel>)
+   $winchan(<window refnum/name>|<channel>)
+
+Technical:
+   These functions are identical. They return one of either a window refnum
+   or a channel name based on the arguments passed.
+
+Returns:
+   window refnum where <channel> resides if <channel> was passed
+     or
+   name of the current channel in <window refnum/name> if a window was passed
+
+Examples:
+   /window refnum 2;/join #epic
+   eval echo $winchan(2)                   /* returns #epic */
+   eval echo $winchan(#epic)               /* returns 2 */
+
+Other Notes:
+   These functions were once separate, but caused much confusion based on
+   their name in early versions of EPIC4.
+

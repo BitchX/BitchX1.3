@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> end_of_line
+
+Description:
+   This function moves the cursor to the last character on the input line.
+   This position may not be currently visible, due to the manner in which
+   EPIC handles input line wrapping.
+
+See Also:
+   bind(4) beginning_of_line
+

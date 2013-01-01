@@ -1,0 +1,8 @@
+Synopsis:
+   loadtcl <file>
+
+Description:
+   LOADTCL allows for commands contained in external files to be executed.
+   In this case the files contain TCL commands which you want to have
+   executed or loaded in the client.
+

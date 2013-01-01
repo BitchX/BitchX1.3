@@ -1,0 +1,16 @@
+Synopsis:
+   $getsets(<mask>)
+
+Technical:
+   This function returns the names of all SET(4) variables matching <mask>.
+
+Returns:
+   space-separated list of the names of all /set variables matching the
+   wildcard <mask>
+
+Example:
+   $getsets(*tab*)                         /* returns "TAB TAB_MAX"
+
+See Also:
+   set(4)
+

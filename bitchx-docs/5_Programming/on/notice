@@ -1,0 +1,19 @@
+Synopsis:
+   on [<modes>]notice [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a NOTICE from another
+   client.
+
+Parameters:
+   $0    nickname of message sender
+   $1-   text of message
+
+See Also:
+   notice(1); on(5) encrypted_notice, msg, send_notice
+
+Restrictions:
+   The client does not permit any automated messages to be sent in response
+   to a NOTICE.  Any attempt will result in an error.  The whole point of
+   this is to prevent loops between clients.
+

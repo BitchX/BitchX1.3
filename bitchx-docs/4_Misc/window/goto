@@ -1,0 +1,10 @@
+Synopsis:
+   window goto <number>
+
+Description:
+   This switches the current window to window <number> from the top of the
+   screen.
+
+See Also:
+   window(4) back, last, next, previous, refnum, swap
+

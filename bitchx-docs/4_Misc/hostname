@@ -1,0 +1,29 @@
+Synopsis:
+   hostname <address>
+
+Description:
+   This command has two related, though distinct, purposes.  The first is
+   mostly of interest to users whose ip addresses may change mid-session,
+   or those who are behind a firewall.  It allows the user to specify the
+   hostname or ip address to use for DCC connections.
+
+   The second use is only of interest to users on machines with multiple
+   network interfaces, such as multi-homed sites.  It allows the user to
+   force the client to bind to a particular network address that the host
+   has.  If no address is given, the client uses the address for the
+   host's primary network interface.  A default hostname or ip address
+   may be set in the IRCHOST environment variables.  The client must
+   reconnect to a server for the setting to take effect.
+
+Aliases:
+   IRCHOST is equivalent in function to HOSTNAME.
+
+See Also:
+   Environment(7); dcc(1); reconnect(1)
+
+Other Notes:
+   The client may not bind to addresses that the current host does not
+   specifically handle; the client does no sanity checking for such host
+   names or ip addresses, and irc servers will ignore them.  The client
+   must reconnect to a server before the setting will take effect.
+

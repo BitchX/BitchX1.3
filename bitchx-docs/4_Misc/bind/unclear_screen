@@ -1,0 +1,9 @@
+Synopsis:
+   bind <key> unclear_screen
+
+Description:
+   This function un-clears a /clear command or a /bind <key> clear_screen.
+
+See Also:
+   bind(4) clear_screen; clear(4)
+

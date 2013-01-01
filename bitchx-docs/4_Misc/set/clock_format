@@ -1,0 +1,10 @@
+Synopsis:
+   set clock_format <text>
+
+Description:
+   This determines the format of the status bar clock. It is unset by default,
+   and yields the traditional behavior until is given a value.
+ 
+See Also:
+   set(4) clock_24hour, status_format
+

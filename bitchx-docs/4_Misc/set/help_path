@@ -1,0 +1,15 @@
+Synopsis:
+   set help_path [<directory>]
+
+Description:
+   This variable, if set, contains the path to the top-level help directory
+   for ircII-EPIC.  The path may be relative or absolute; absolute is
+   recommended.
+
+See Also:
+   help(1)
+
+Restrictions:
+   Unlike LOAD_PATH, and most other "path" settings, the HELP_PATH may
+   only contain a single directory, not a list to search through.
+

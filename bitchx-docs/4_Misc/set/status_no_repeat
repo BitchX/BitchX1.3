@@ -1,0 +1,11 @@
+Synopsis:
+   set status_no_repeat [on|off|toggle]
+
+Description:
+   When turned on, this inhibits the client's normal behavior of repeating
+   the last character in the status bar to the end.  This can be simulated
+   by setting the last character in the status bar to a space.
+
+See Also:
+   set(4) status_format
+

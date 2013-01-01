@@ -1,0 +1,14 @@
+Synopsis:
+   on [<modes>]send_dcc_chat [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a message to another
+   client across a DCC CHAT connection.
+
+Parameters:
+   $0    nickname of recipient of message sent
+   $1-   text of message sent
+
+See Also:
+   dcc(1) chat; msg(1); on(5) dcc_chat
+

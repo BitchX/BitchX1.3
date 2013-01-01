@@ -1,0 +1,57 @@
+Synopsis:
+   userhost [<nickname> [<nickname> ...] [-cmd <command>]]
+
+Description:
+   This queries the server for the address (user@hostname) of the given
+   nicknames.  Any number of nicknames can be specified.  If no nickname
+   is given, the user's is used (this is one way for users to verify
+   what address the irc server thinks they have).
+
+   USERHOST also allows its output to be used as the input for other
+   commands, using the -cmd flag.  When using -cmd, at least one nickname
+   is required.  The command can be anything, and multiple commands may
+   be used by surrounding them in curly braces.
+   
+   Also, if all specified nicknames are on common channels with the client,
+   /userhost will get the address from an internal list, and never query the
+   server. You are still 100% guaranteed to get the right user@host, but
+   the AWAY and OPER flags won't always be accurate. If your script depends
+   on /userhost for the AWAY and OPER flags, you can use -direct to always
+   query the server.
+
+   USERHOST passes the following arguments to -cmd:
+     $0 - nickname
+     $1 - a '+' if the user is an irc operator, a '-' otherwise
+     $2 - a '+' if the user is marked as away, a '-' otherwise
+     $3 - username
+     $4 - hostname
+
+Options:
+   -cmd      take the output from /userhost as input to other commands
+   -direct   force /userhost to query the server
+
+Examples:
+   To get the userhosts of JoeBob and Jimbo:
+      /userhost joebob jimbo
+
+   To use their userhost output as another command's input in a script:
+      userhost joebob jimbo -cmd {
+         echo $0 is $3@$4
+         if ( [$1] == [+] ) echo $0 is an irc operator
+         if ( [$2] == [+] ) echo $1 is away
+      }
+
+Aliases:
+   HOST is identical in operation to USERHOST.
+
+See Also:
+   userip(2); Expressions(7)
+
+Other Notes:
+   The server will only permit 5 nicknames at a time for this command.
+   When more than 5 are given, the client will split the command up and
+   issue separate queries as needed.  However, most servers enable their
+   flood protection after receiving 5 of the same kind of command within
+   a short time period.  This means that the user should expect a delay
+   in response if more than 25 nicknames are specified.
+

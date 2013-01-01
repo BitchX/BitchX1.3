@@ -1,0 +1,32 @@
+Synopsis:
+   $open(<file> R|W)
+
+Technical:
+   This functions allows the client to open an arbitrary file for reading or
+   writing.  Write mode appends to the file.  The function returns a file
+   descriptor for the open file; the file descriptor is an integer.  Tilde-
+   expansion is permitted.
+
+Practical:
+   The $open() function is the doorway to external file access from within
+   the client (aside from EXECing a process).  Assuming the file has the
+   appropriate permissions, it allows you to open the file for read or
+   write access (but not both).  Write access only appends to the file, so
+   you'll need to use $unlink() or $rename() if you want to start fresh.
+
+Returns:
+   file descriptor, or nothing if error
+
+Options:
+   R   open file for reading
+   W   open file for writing
+
+Examples:
+   $open(~/.ircrc W)                 open your .ircrc for writing
+   $open(~/.irclog R)                open your logfile for reading
+   $open(/etc/passwd W)              will probably fail
+
+See Also:
+   close(6); randread(6); read(6); rename(6); unlink(6);
+   write(6); writeb(6)
+

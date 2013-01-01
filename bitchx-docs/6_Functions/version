@@ -1,0 +1,40 @@
+Synopsis:
+   $version([<server>])
+
+Technical:
+   This function returns the given server's version class.  It may accept
+   either a server name or a server number from the client's internal server
+   list.  It only functions properly for servers that the client is
+   currently, or has previously, connected to.  If a server is not given,
+   the current is assumed.
+
+Practical:
+   This function is mainly useful for determining, in general, the type of
+   server you're on.  It does not return the full server version.  Rather,
+   it returns the class, or major revision number, of the server.
+
+Returns:
+    2.5        a 2.5.x server
+    2.6        a 2.6.x server
+    2.7        a 2.7.x server
+    2.8        a 2.8.x server
+   u2.8        a 2.8.x server, Undernet (mu/me)
+    2.9        a 2.9.x server
+   u2.9        a 2.9.x server, Undernet
+    2.10       a 2.10.x server
+   u3.0        a 3.0.x server, Undernet
+   Unknown     version could not be determined
+
+Examples:
+   $version(2)                  get version for server #2
+   $version(irc.foobar.com)     get version for server "irc.foobar.com"
+
+See Also:
+   version(2)
+
+Other Notes:
+   Some non-Undernet servers may nonetheless return "u2.8" as their class.
+   This only means that the server in question is aware of Undernet's extra
+   numeric replies.  These servers usually have ".me" in their version
+   string.
+

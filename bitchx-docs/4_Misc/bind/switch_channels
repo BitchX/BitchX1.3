@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> switch_channels
+
+Description:
+   This function changes the current channel in the current window.  It
+   can be used to cycle through all channels in the window.  However, it
+   will only switch to channels that are not already being directed to
+   another window.
+
+See Also:
+   join(1)
+

@@ -1,0 +1,18 @@
+Synopsis:
+   bind <key> refresh_inputline
+
+Description:
+   This function causes the client to redraw the input line.  It is mostly
+   only useful when another process sends data to the client's tty, which
+   sometimes corrupts the display of the input line (but not the actual
+   contents).
+
+   This command is mostly deprecated, as REFRESH_SCREEN takes care of the
+   input line, as well as the rest of the screen.  It is only really useful
+   for times when it may not be wise to refresh the rest of the screen,
+   such as if there were special ANSI escape sequences in the display
+   window or status bar.  This is rarely the case, though.
+
+See Also:
+   bind(4) refresh_screen
+

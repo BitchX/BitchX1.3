@@ -1,0 +1,15 @@
+Synopsis:
+   unajoin <channel>
+
+Description:
+
+   UNAJOIN will remove a AJOIN channel from the list. These are
+   saved using SAVE command. 
+
+Examples:
+   /unajoin #bitchx
+
+See Also:
+   ajoin(1); ajoinlist(1); JOIN_NEW_WINDOW(5);
+
+

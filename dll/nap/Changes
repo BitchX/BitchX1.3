@@ -1,0 +1,98 @@
+
+02-01-00
+	* added support for opennap server commands.
+	* added support for opennap soundex searching. This means we can
+          search for something which may be spelled incorrectly or where we 
+	  don't know the exact spelling.  /nsound is the command. It is used
+	  exactly like /nsearch
+	* added support for opennap mime-type searching. When specifying a
+	  type, all other params are ignored, except max_results.
+		/nsearch -type video matrix
+		
+01-17-00 
+	* gratitious change to napster windows client involving the md5
+          checksum. Seems we need to send the filesize at the end of the
+	  md5. "md5-filesize"
+	* Added /nload -load which will load a ~/.BitchX/shared.dat. This
+	  file is in the same format as the linux client.
+	* Added /nload -save which will save/overwrite the shared.dat.
+	* firewall get's are fixed.
+	* removed SO_LINGER on a file send. why should we wait for the other
+          end to catch up.
+
+01-11-00 0.7
+	* when a file get returns "FILE NOT SHARED" we need to use += on the
+	  read
+	* Changed the queued get to actually queue the file instead of
+	  deleting the request.
+	* Changed socket's to SO_LINGER. Maybe this'll fix firewall get's.
+
+12-20-99 0.6c
+	* md5 only calculated on 300k. do NOT include the id3v1 or id3v2 tag. 
+	  Also it seems that MusicMatch uses id3v2 (lame piece of shit, why
+	  make something so complicated as id3v2), So we have to skip the
+	  id3v2 header while calculating it. Also noticed was that a file
+	  had BOTH id3v1 and id3v2 headers. Like, give us a break. Use one 
+	  or the other, not both.
+
+12-19-99
+	* void noticed that /nscan was not working. Turns out my
+	  nap_current_channel and njoin routines were a little screwy. njoin
+	  should not "remove" the channel from our internal list.
+	* fudd helped me find a problem with file sends.. needed to be a
+	  little less optimistic about when data is available for reading.
+	* added /necho command. accepts a -x arg, which places text without
+	  the prompt.
+	* found another possible coredump problem in filesends.
+	* added auto-reconfigure dataport.
+	* colorized speed of connection in the names and scan list. Also
+	  joins and parts. bright green is fastest, dark grey is unknown.
+	
+12-15-99
+	* found/fixed firewall sends. IT should work as long as the other
+	  end is okay. It does seem however that on occasion the other end
+	  fails and odd errors will pop up.
+	* found the send limit numerics.
+	* found remove file numeric.
+	* added support for data port misconfigurations.
+	* modified tab_completion() so that tab key will work for nmsg.
+	* fixed lost sockets.
+	* fixed download coredump.
+	* made certain /set's send the appropriate napster command.
+	* merged all the admin commands into /nadmin
+	* added several functions for scripting. 
+		$mp3time(seconds) pretty prints the time.
+		$nonchan(chan) returns if we are on the specified channel
+		$nonchannel(chan [nick]) returns ALL nicks or just nick
+		$napconnected() returns the server/port
+		$ntopic(chan) topic for the channel
+		$ncurrent() returns the current "client" channel
+		$nhotlist([nick]) returns the whole hotlist or whether 
+			nick is online
+		$nraw(# string) will send "raw" commands to the server.
+		$md5(# [size]) will md5 checksum a open file # using 300000
+			as the default size or whatever you specify.
+			@f = open(filename R)
+			@md = md5(f)
+			close(f)
+	* started adding firewall download support. (does this even work ??)
+	
+12-13-99
+	* Fixed more cores.
+	* Found more numerics... Almost complete.
+	* Found "resume" semantics..
+	* Added "hooks" for scripting.
+	* Whois info is updated with number of file sends/gets
+	* Added channel save between connects. We now re-join any channels we
+	  were in when the server dumps us.
+	* Fudd found a problem when the filesend does not complete, but a
+	  msg saying it did, appears	
+	* Should compile for cygwin now as well.
+	* new commands added. /nemail, /ndataport, /nlinespeed etc.
+		?? should these be removed in favour of the /set's
+
+12-12-99
+	* Server connection errors detected earlier.
+	* Server read error caught.
+	* Hotlist fixes.
+

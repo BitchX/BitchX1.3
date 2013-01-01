@@ -1,0 +1,20 @@
+Synopsis:
+   $iscurchan(<channel name>)
+
+Technical:
+   This function returns '1' if the input channel name is the current channel
+   on any window connected to the current server.
+
+Practical:
+   This function was intended to allow more flexibility for testing the
+   current channel in an ON hook.
+
+Returns:
+   '1' if <channel name> is a current channel, else returns '0'
+
+Examples:
+   Instead of:
+      /on ^send_public * {if ([$0] == C) {...} {...}}
+   Try doing:
+      /on ^send_public * {if (iscurchan($0)) {....} {...}}
+

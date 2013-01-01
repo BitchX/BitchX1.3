@@ -1,0 +1,17 @@
+Synopsis:
+   load stat
+
+Description:
+   This script supplies a single command, /stat.  It essentially does the
+   same thing as LUSERS, except it returns the information in a somewhat
+   more useful form.  It will return information for any server given, or
+   the current if used with no arguments.
+
+See Also:
+   load(5); lusers(2)
+
+Other Notes:
+   This script was originally written by Twilight1, pda@engr.engr.uark.edu.
+   It has been modified for use with EPIC by Jeremy Nelson (hop),
+   jnelson@acronet.net.
+

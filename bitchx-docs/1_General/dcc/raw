@@ -1,0 +1,27 @@
+Synopsis:
+   dcc raw <fd> <host> <message>
+
+Description:
+   DCC RAW is a raw socket interface for ircII-EPIC.  It allows the client
+   to control arbitrary TCP connections with a remote host on any port
+   desired.
+
+   The actual connection is established with the $connect() function.  It
+   makes the connection and returns a file descriptor that is used by DCC
+   RAW to control the connection.  The file descriptor will always be a
+   number (generally a small one).  Incoming data from the remote host may
+   be hooked with ON DCC_RAW.
+
+Examples:
+   To send a message to blah.foo.com over an existing raw DCC connection:
+      /dcc raw 6 blah.foo.com This is a sample message
+
+See Also:
+   connect(6); listen(6); on(5) dcc_raw
+
+Other Notes:
+   The applications for DCC RAW are endless.  Since it allows the client
+   connect to any arbitrary host on any arbitrary port, a little creative
+   use of the scripting language can turn ircII-EPIC into a client for
+   most any remote service.
+

@@ -1,0 +1,47 @@
+                         NEW USER INFORMATION ABOUT IRC    
+
+++ This file is for users new to irc.  Its intention is to briefly ++
+++  describe what irc is all about.  It is not a command summary.  ++
+++  Please refer to /help 7 introduction to get started with the ++
+++                   various BitchX/EPIC commands.                 ++
+
+Irc stands for Internet Relay Chat.  It is a networked, real-time, online
+chat system.  Its popularity has grown enormously since its invention
+more than 7 years ago, and shows no signs of stopping anytime soon.
+There are currently upwards of 30 irc "networks" scattered around the
+Internet, serving every corner of the globe; do not expect everyone to
+speak your own native language.  At any given time, there are usually
+upwards of 60,000 people using the various established irc networks.
+
+The primary means of identification on irc is currently the nickname.
+All users have a nickname.  Your nickname can be changed with the /nick
+command.  No two users on the same irc network may use the same nickname
+at the same time.  For all intents and purposes, nicknames are NOT owned.
+Anyone can use any nickname they like, including your favorite if you
+aren't already using it on irc, and irc operators are under no obligation
+whatsoever to "get it back" for you.  For this reason, it is recommended
+that you use the /whois command if you are unsure if a nickname is someone
+you know or not.
+
+It is important to recognize the nature of irc.  Not everyone you meet
+will be friendly and good-natured.  Just like in real life, you will meet
+jerks, and other types you may not care to associate with.  You may meet
+people who will try to deceive you.  In particular, you may run across
+someone who will ask you to issue some commands.  USE CAUTION in these
+situations.  If you don't know what the command does, don't do it.  If
+the command involves the /on or /exec commands, don't do it unless you
+are sure you know what you are doing.  If all else fails, ask an irc
+operator or a help channel (such as #irchelp) for help.
+
+One final note on commands.  The various BitchX commands can be
+abbreviated (to the shortest possible unambiguous string).  For example,
+/na would run the /names command.  This is mentioned because,
+occasionally, you will run across pranksters trying to get new users to
+type /sign or something similar (/sign is an abbreviation of /signoff).
+As previously mentioned, use caution whenever anyone asks you to use a
+command you are unfamiliar with or uncertain about.
+
+Lastly, if you have not already done so, please read /help 7 etiquette
+and /help 7 introduction.  The former describes the basic accepted
+behavior on irc, while the latter is a beginning command rundown.
+

@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> delete_to_previous_space
+
+Description:
+   This function deletes everything to the left of the cursor until a
+   space is found.  If the character immediately before the cursor is
+   whitespace of some kind, it does nothing.
+
+See Also:
+   bind(4) delete_previous_word
+
+Other Notes:
+   The function deletes up to the space, but not including the space.
+

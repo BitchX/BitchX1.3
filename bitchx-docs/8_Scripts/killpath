@@ -1,0 +1,21 @@
+Synopsis:
+   load killpath
+
+Description:
+   This script primarily redefines how KILL messages (operator and server
+   kills) are displayed.  It filters out most of the generally unimportant
+   information (i.e. the kill path) to make the message more readable.
+
+See Also:
+   kill(3); kpstat(8); load(5); on(5) 436, server_notice
+
+Other Notes:
+   This script has been maintained and modified by numerous people over the
+   years.  The original was by YeggMan.  Matthew Green (phone) modified it
+   for compatibility with the then-new ircII 2.2.x clients, and Nicolas
+   Pioch (Nap), pioch@poly.polytechnique.fr, made modifications for the
+   then-new 2.7.x series of servers.  Ian Frechette (Daemon) later
+   simplified it, and Jeremy Nelson (hop), jnelson@acronet.net, further
+   simplified it for EPIC, such that it now has more lines of comments and
+   credits than actual code.
+

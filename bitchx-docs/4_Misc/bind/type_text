@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> type_text
+
+Description:
+   This function inserts its arguments into the input buffer.  It works
+   essentially like the TYPE command.  The setting of INSERT_MODE will
+   affect how the text is inserted.
+
+See Also:
+   set(4) insert_mode; type(5)
+

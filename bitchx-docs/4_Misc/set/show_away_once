@@ -1,0 +1,11 @@
+Synopsis:
+   set show_away_once [on|off|toggle]
+
+Description:
+   When turned on, this setting causes the client to suppress AWAY messages
+   from a client when the same one is received more than once.  However, if
+   the remote client changes its away message, it will be displayed again.
+
+See Also:
+   away(1)
+

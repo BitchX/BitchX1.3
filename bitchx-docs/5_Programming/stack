@@ -1,0 +1,32 @@
+Synopsis:
+   stack push|pop|list alias|assign|on|set [<item>]
+
+Description:
+   STACK is a convenient mechanism for storing current aliases, variables,
+   and hooks in a stack.  New aliases, variables, or hooks with the same
+   names or scopes can be created without disturbing the stacked ones.
+   Those that are stacked can be restored at any time (clobbering any
+   current settings in favor of the saved ones).
+
+   There are three commands currently available to STACK.  The first, push,
+   pushes an item onto a stack bearing its name.  The second, pop, removes
+   the most recent pushed item off its stack.  The last, list, shows the
+   contents of the named stack.
+
+Examples:
+   To push the current WHO hook onto the stack:
+      stack push on who
+
+   To pop the most recently pushed $foo variable off its stack:
+      stack pop assign foo
+
+   To list the current alias stack:
+      stack list alias
+
+See Also:
+   alias(5); assign(5); on(5)
+
+Bugs:
+   STACK LIST works, but not quite as one would expect.  Instead of listing
+   each individual alias, variable, or hook separately, all are clumped
+   together.  Their order is correct, but the output may be confusing.

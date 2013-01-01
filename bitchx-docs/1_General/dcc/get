@@ -1,0 +1,24 @@
+Synopsis:
+   dcc get [=]<nick> [<file>]
+
+Description:
+   DCC GET initiates a file transfer with a remote client that has offered
+   the client a DCC SEND.  Naturally, a remote client must have already
+   send the client a DCC SEND request in order for the client to start a
+   DCC GET with it.  If the DCC request comes over an existing DCC CHAT
+   connection, a '=' must be prepended to the nickname.
+
+   The client need not specify the name of the file to get.  If multiple
+   files are offered by the same remote client, the oldest SEND request
+   is processed first.
+
+Examples:
+   To accept a SEND from joebob:
+      /dcc get joebob
+
+   To accept all files offered to you by DCCbot:
+      /dcc get DCCbot *
+
+See Also:
+   dcc(1) rename, resume, send; set(4) dcc_store_path
+

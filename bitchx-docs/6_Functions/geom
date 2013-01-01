@@ -1,0 +1,18 @@
+Synopsis:
+   $geom()
+
+Technical:
+   Returns the number of columns wide and the number of lines high that
+   your current screen is.
+
+Practical:
+   This function is mostly useful by providing the screen width.  This
+   could be used by a script to determine how wide it should format its
+   output.
+
+Returns:
+   X Y    "X" is screen's column width, "Y" is screen's line height
+
+See Also:
+   winsize(6)
+

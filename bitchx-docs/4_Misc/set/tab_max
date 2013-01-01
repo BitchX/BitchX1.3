@@ -1,0 +1,15 @@
+Synopsis:
+   set tab_max [<number>]
+
+Description:
+   This setting limits the number of tab characters allowed to be displayed
+   in any single message.  If more tabs than the specified number are
+   present in a message, only the specified number are displayed; the rest
+   are replaced with Is.
+
+   If this variable is set to 0 (zero), all tabs are displayed, no matter
+   how many.  This setting has no effect if TAB is turned off.
+
+See Also:
+   set(4) tab
+

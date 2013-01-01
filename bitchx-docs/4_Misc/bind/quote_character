@@ -1,0 +1,8 @@
+Synopsis:
+   bind <key> quote_character
+
+Description:
+   This function quotes, or escapes, the next key entered.  It overrides
+   the key's normal default meaning and forces it to insert itself into
+   the input buffer.
+

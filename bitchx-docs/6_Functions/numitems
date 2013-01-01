@@ -1,0 +1,18 @@
+Synopsis:
+   $numitems(<array>)
+
+Technical:
+   This function is used to show how many items are currently defined in
+   the given array.
+
+Practical:
+   This function shows how many items are in an array.  This is quite
+   useful, because the number it returns is the next available item number
+   in the array.
+
+Returns:
+   number of items in array, or empty string if array doesn't exist
+
+See Also:
+   Arrays(7); setitem(6)
+

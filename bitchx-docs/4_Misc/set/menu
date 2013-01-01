@@ -1,0 +1,11 @@
+Synopsis:
+   set menu [<menu name>]
+
+Description:
+   When defined, the client will display the specified menu (assuming it
+   has been loaded) on screen.  Only one menu may be displayed at a time.
+   The ENTER_MENU key function is used to enter the menu.
+
+See Also:
+   Menus(7); bind(4) enter_menu; mlist(4); mload(4)
+

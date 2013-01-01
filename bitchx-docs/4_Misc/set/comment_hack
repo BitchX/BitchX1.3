@@ -1,0 +1,19 @@
+Synopsis:
+   set comment_hack [on|off|toggle]
+
+Description:
+   This variable determines how the client will handle C-style comments in
+   loaded scripts.  When turned on, it causes the client to only recognize
+   such comments when they start at the beginning of a line.  When off,
+   the comments may begin anywhere.
+
+   This feature is present primarily to retain compatibility with scripts
+   designed for older clients.  See the COMMENT help file for details.
+
+See Also:
+   comment(5)
+
+Other Notes:
+   This setting replaces the compile-time #define of the same name that is
+   present in versions of EPIC prior to 3.001.
+

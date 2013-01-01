@@ -1,0 +1,12 @@
+Synopsis:
+   popupmenu  <menu name>
+
+Description:
+   POPUPMENU creates a popup menu with the contents of the menu name
+   given.  The contents of the menu are created with the commands:
+   menu, menuitem and submenu. 
+
+See Also:
+   menu(5) menuitem(5) submenu(5) lastclickline(6)
+   lastclickx(6) lastclicky(6)
+

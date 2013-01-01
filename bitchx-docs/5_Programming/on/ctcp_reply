@@ -1,0 +1,34 @@
+Synopsis:
+   on [<modes>]ctcp_reply [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a CTCP reply from
+   another client.  Note that the client doesn't necessarily need to send
+   any CTCP messages to receive a "reply".
+
+Parameters:
+   $0    nickname of user sending reply
+   $1    CTCP command being replied to
+   $2-   actual reply to CTCP command (varies, depends on $1)
+
+Examples:
+   To customize the appearance of CTCP reply strings:
+      on ^ctcp_reply "*" {
+         echo *** Reply from $0 for CTCP $1 request: $2-
+      }
+
+See Also:
+   ctcp(1); on(5) ctcp
+
+Restrictions:
+   Automatic replies (MSGs, CTCPs, NOTICEs, etc.) to the sender with this
+   hook are explicitly prohibited.  The protocol disallows it, and the
+   client will do everything in its power to prevent it.  Any attempt will
+   result in an error message.
+
+Bugs:
+   There is no way (from within this hook) to know who the actual target
+   of the reply is.  This could be a problem, since it is trivial to send
+   bogus replies, and there is no way to tell if the client, or a channel,
+   was the target.
+

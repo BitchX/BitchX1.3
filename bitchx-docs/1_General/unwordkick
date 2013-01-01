@@ -1,0 +1,15 @@
+Synopsis:
+   unwordkick [<#chan>|*] word(s)
+
+Description:
+   Removes a word(s) kick from your banned word list. 
+
+Examples:
+      /unwordkick * too lame
+      /unwordkick #channel sexx
+
+See Also:
+   showword(1) addword(1)
+
+Restrictions:
+   This could possibly get you in trouble in some cases. Use with caution.

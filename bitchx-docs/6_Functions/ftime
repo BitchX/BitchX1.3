@@ -1,0 +1,18 @@
+Synopsis:
+   $ftime(<file>)
+
+Technical:
+   This function gets the last modified time (mtime) of a file, and returns
+   it in seconds since the epoch.
+
+Returns:
+   when the file was last modified
+   
+Example:
+   eval echo $stime($ftime(/usr/local/bin/irc))
+
+   "Tue Oct 21 23:30:54 1997"
+
+See Also:
+   fexist(6); fsize(6)
+

@@ -1,0 +1,10 @@
+Synopsis:
+   window push [<refnum>]
+
+Description:
+   This pushes the current (or specified) window onto the window stack.
+   The same window may be pushed onto the stack more than once.
+
+See Also:
+   window(4) pop, stack
+

@@ -1,0 +1,13 @@
+Synopsis:
+   on [<modes>]notify_signoff [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client detects that a nickname on its
+   internal NOTIFY list has signed off from irc.
+
+Parameters:
+   $0    nickname that signoff was detected for
+
+See Also:
+   notify(1); on(5) notify_signon
+

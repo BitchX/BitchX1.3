@@ -1,0 +1,22 @@
+Synopsis:
+   load english
+
+Description:
+   This script is esentially the English-speaker's version of the DEUTSCH
+   script.  It contains an number of key bindings for simple actions.  Each
+   of these bindings begins with the META2_CHARACTER (usually ^W).
+
+     Key       Action     |  Key       Action     |  Key       Action     
+     meta2-a   *applaud*  |  meta2-f   *frown*    |  meta2-l   *laugh*
+     meta2-A   *gasp*     |  meta2-g   *grin*     |  meta2-r   *purr*
+     meta2-b   *blush*    |  meta2-G   *giggle*   |  meta2-s   *sigh*
+     meta2-B   *bow*      |  meta2-h   *hug*      |  meta2-S   *shrug*
+     meta2-c   *cry*      |  meta2-k   *kiss*     |  meta2-y   *yawn*
+     meta2-C   *cough*    |
+
+See Also:
+   bind(4) meta2_character; commander(8); deutsch(8); load(5)
+
+Other Notes:
+   The name of this script's author is not known.
+

@@ -1,0 +1,12 @@
+Synopsis:
+   banstat [<channel>] [<match>]
+
+Description:
+   BANSTAT will display the bans on the current channel or the specified  
+   channel. A pattern to match can also be specified.
+
+Examples:
+   /banstat #bitchx
+
+See Also:
+   on bans_header on bans_list on bans_footer

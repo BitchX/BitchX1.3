@@ -1,0 +1,37 @@
+Synopsis:
+   $aliasctl(alias|assign get|set|match <lval> [<rval>])
+
+Technical:
+   This function allows low-level manipulation of aliases and assigns.
+   The noun of the action is either "alias" or "assign".  The verb is
+   either "get", "set", or "match".  The "lval" must a valid variable name.
+   The "rval" is used only if the verb is "set", and is any sequence of
+   octets.
+
+   * The "GET" verb allows you to retrieve the value of an alias or assign
+     named by "lval".
+   * The "SET" verb allows you to set the value of an alias or assign named
+     by "lval" to "rval".
+   * The "MATCH" verb allows you to retrieve the list of all same-level
+     variable names that begin with "lval" (ie, command completion).
+     Wildcards are not allowed, but the simple use of a single asterisk is
+     allowed to match all assigns or aliases.
+
+Practical:
+   You would use this function if you needed to get the text value of an
+   alias.  For completeness, you can use this to get the value of an
+   assign, even though you can (obviously) get that value by $-referencing
+   it.  You can set the value of an assign (comparable to using ASSIGN),
+   and you can set the value of an alias (comparable to using ALIAS).  You
+   can get the list of aliases or assigns that "begin" with a certain
+   string, but it doesn't descend arrays (a period).
+
+Examples:
+   $aliasctl(alias get join)            returns current value of alias "join"
+   $aliasctl(alias set join //channel)  sets an alias called "join"
+   $aliasctl(assign match foo)          returns all vars starting with "foo"
+   $aliasctl(alias match foo.)          returns all aliases of "foo" struct
+
+See Also:
+   assign(5); alias(5); edit(8)
+

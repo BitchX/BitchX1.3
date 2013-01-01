@@ -1,0 +1,13 @@
+Synopsis:
+   set mode_stripper [on|off|toggle]
+
+Description:
+   When turned on, the client can make use of the MODE_STRIPPED hook.
+   This essentially breaks down complex mode changes into single mode
+   changes, making each individual mode change easier to process and
+   act upon.  This only affects the display of the modes, and it does
+   not interfere with the MODE hook.
+
+See Also:
+   mode(1); on(5) mode_stripped
+

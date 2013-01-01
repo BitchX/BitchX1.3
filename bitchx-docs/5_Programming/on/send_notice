@@ -1,0 +1,14 @@
+Synopsis:
+   on [<modes>]send_notice [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a NOTICE message to a
+   channel or another client.
+
+Parameters:
+   $0    nickname or channel the NOTICE is sent to
+   $1-   text of message sent
+
+See Also:
+   notice(1); on(5) notice
+

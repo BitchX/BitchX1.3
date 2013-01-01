@@ -1,0 +1,29 @@
+Synopsis:
+   $jot(<start> <stop>)
+
+Technical:
+   This script is used to obtain a series of integers, from the first input
+   to the second.  Negative numbers are permitted, and the series may be
+   ascending or descending.
+
+Practical:
+   This function is used to generate a number range.  One popular use for
+   this is in conjunction with $chr(), allowing a range of ascii characters
+   to be returned (which then might be stripped from another string, etc.).
+
+Returns:
+   * number range from start to stop
+   * if less than 2 arguments, empty string
+   * if more than 2 arguments, first argument
+   * if non-digits entered, 0 (zero)
+
+Examples:
+   $jot(2 6)             returns "2 3 4 5 6"
+   $jot(3 -2)            returns "3 2 1 0 -1 -2"
+   $jot(4)               returns ""  (empty string)
+   $jot(4 6 8)           returns "4"
+   $jot(a 4)             returns "0"
+
+See Also:
+   chr(6); isdigit(6)
+

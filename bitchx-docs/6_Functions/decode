@@ -1,0 +1,34 @@
+Synopsis:
+   $encode(<text>)
+   $decode(<text>)
+
+Technical:
+   Given any input, $encode() will return a unique string that can serve as
+   an lvalue (a variable name that can be ASSIGNed to.)  Use $decode() to
+   retrieve the original text.  The $encode() function is case-preserving.
+
+Practical:
+   The $encode() function is used to convert an arbitrary text string into
+   a string suitable for use in variable or alias names.  This might be
+   used to set up a hash table keyed with nick!user@host patterns.  The
+   $decode() function does just the opposite, converting a string returned
+   by $encode() to the original string.
+
+Returns:
+   encode: encoded string
+   decode: decoded string
+
+Examples:
+   $encode(hello there)               returns "GIGFGMGMGPCAHEGIGFHCGF"
+   $decode(GIGFGMGMGPCAHEGIGFHCGF)    returns "hello there"
+   $decode($encode(hello there))      returns "hello there"
+
+See Also:
+   assign(5)
+
+Other Notes:
+   You should not trust $encode() to return any specific string.  You may
+   only trust that it is unique given the input string, and that you may
+   use the return value as an lvalue.  Any other use of $encode() should be
+   considered an error.
+

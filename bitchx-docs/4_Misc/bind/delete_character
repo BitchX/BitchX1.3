@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> delete_character
+
+Description:
+   This function deletes the character currently under the cursor, then
+   shifts any text to the right of the cursor one space to the left.
+
+See Also:
+   bind(4) backspace
+

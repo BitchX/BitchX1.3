@@ -1,0 +1,17 @@
+Synopsis:
+   mlist <menu name> [<menu name> ...]
+
+Description:
+   This command is used to list the contents of the specified menu.  More
+   than one menu may be listed at once.  If the menu name contains spaces
+   (which they are allowed to), the name must be surrounded by double
+   quotes (").
+
+See Also:
+   Menus(7); bind(4) enter_menu; mload(4); set(4) menu
+
+Bugs:
+    MLIST does not react well if a specified menu name has not been
+    loaded (or does not otherwise exist).  For this reason, special care
+    must be taken when listing menu names with spaces in them.
+

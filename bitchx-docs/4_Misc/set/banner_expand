@@ -1,0 +1,20 @@
+Synopsis:
+   set banner_expand [on|off|toggle]
+
+Description:
+   If this is ON, the value of set(4) banner will be evaluated every time
+   it is displayed.
+
+Practical:
+   This is useful if you like to display the current time ($Z) in your
+   banner.
+
+Example:
+   /set banner_expand ON
+   /set banner $Z ***
+   
+   9:00PM *** CTCP PING from MrFoo detected
+
+See Also:
+   set(4) banner
+

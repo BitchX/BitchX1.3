@@ -1,0 +1,20 @@
+Synopsis:
+   $chops(<num> <text>)
+
+Technical:
+   This function chops <num> characters from the end of <text>.
+
+Practical:
+   It is an excellent shortcut for mid(6) expressions starting at the first
+   character of <text>.
+
+Returns:
+   <text> with <num> characters removed from the end
+
+Examples:
+   $chop(5 abcdef)          /* returns "a" */
+   $chop(2 fnord)           /* returns "fno" */
+
+See Also:
+   left(6); right(6); mid(6)
+

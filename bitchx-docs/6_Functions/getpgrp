@@ -1,0 +1,13 @@
+Synopsis:
+   $getpgrp()
+
+Technical:
+   Gets the current process group id of the client, similar to the Unix
+   system call.
+
+Returns:
+   current process group id
+
+See Also:
+   getuid(6); getgid(6); getlogin(6)
+

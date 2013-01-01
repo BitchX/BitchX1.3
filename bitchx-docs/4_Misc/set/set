@@ -1,0 +1,19 @@
+Synopsis:
+   set [<variable> [<value>]]
+   set [-]<variable>
+
+Description:
+   This command is used to set the value of one of EPIC's numerous internal
+   variables.  These variables affect all aspects of the client's behavior,
+   from enabling special text highlighting to enforcing strict security
+   features.
+
+   If no value for the given variable is specified, the current value is
+   displayed.  The client will display all matching variables if the given
+   is ambiguous.  If no variable name is given, all variables and their
+   values are displayed.  If the variable name is preceded by a hyphen
+   (-), the variable is unset, giving it no value.
+
+See Also:
+   New_User(7); on(5) set
+

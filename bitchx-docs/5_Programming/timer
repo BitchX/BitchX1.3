@@ -1,0 +1,53 @@
+Synopsis:
+   timer [-refnum <num|name>] [-repeat <times>] <seconds> [<action>]
+   timer -delete [all]|[<num>]
+ 
+Description:
+   This command allows the client to store arbitrary commands scheduled
+   for execution at some specified number of seconds in the future. Any
+   number of timers may be set, and any number of commands may be used
+   in a timer.  Timers with multiple commands must have those commands
+   surrounded by curly braces.
+
+   All timers are assigned a reference number to distinguish them from
+   each other.  A specific reference number may be specified, though the
+   number may not be one that is already in use, and it must be either a
+   non-negative integer or a string of no more than 10 characters (longer
+   strings will be silently truncated).  The reference number or name is
+   also used to delete a timer.  Using the TIMER command with no
+   arguments will display the list of pending timers.
+
+   When used with -repeat, the timer will only expire after running through
+   <times> number of times.
+
+Options:
+   -delete <num>|all    delete the numbered timer, or all timers
+   -list                same as using no arguments; lists all timers
+   -refnum <num|name>   set a timer with the given reference number or name
+   -repeat <times>      cycle through the timer <times> times before expiring
+   -update              re-assign the timer with new values
+   -window <windesc>    specifies in which window the timer should go off
+   
+Examples:
+   To create a reminder that X Files will be on in 10 minutes:
+      timer 600 {
+         beep
+         echo *** X Files is on!
+         echo *** Why are you still on irc?!
+      }
+
+   To assign a specific refnum to that timer:
+      timer -ref 103 600 { ... }
+      timer -ref foo 600 { ... }
+
+   This timer's reference name will be truncated to "foobarbooy":
+      timer -ref foobarbooya 45 { ... }
+
+   To delete all pending timers:
+      timer -d all
+
+Other Notes:
+   EPIC attempts to keep track of which server and window each timer was
+   started from.  Each timer will be reverted back to that window and server
+   when it expires.
+

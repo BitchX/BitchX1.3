@@ -1,0 +1,19 @@
+Synopsis:
+   set status_channel [<text>]
+
+Description:
+   This variable sets the format of the current channel name in the status
+   bar of the current window.  If the client is not on a channel in the
+   current window, nothing is displayed.
+
+   This string is represented by %C in the STATUS_FORMAT string.  The %C
+   will expand to the current channel name in the STATUS_CHANNEL string
+   before being placed in STATUS_FORMAT.
+
+Examples:
+   Customizing the channel name display in the status bar:
+      /set status_channel Chan: %C
+
+See Also:
+   join(1); set(4) status_format; window(4) channel
+

@@ -1,0 +1,5 @@
+This is a total rip-off of the eggdrop blowfish implementation. Some
+versions of tcl will have trouble encrypting strings with a ";" in them, so
+use quotes...
+
+By-Tor

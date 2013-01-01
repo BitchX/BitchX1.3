@@ -1,0 +1,28 @@
+Synopsis:
+   redirect <nick>|*|<channel>|%<process>|=<nick> <command>
+
+Description:
+   This lets you send the output of any command to another user or
+   channel.  You can even send the output to a running subprocess (a
+   pipeline, in a sense).  Redirecting output across a DCC connection
+   is allowed.  A "*" may be specified as the target, which is
+   interpreted as your current channel.  Like MSG and NOTICE, multiple
+   targets are permitted; separate them with commas.
+
+   There is an implicit WAIT built into the REDIRECT command, meaning the
+   client will send all of the output of the command to the target before
+   it does anything else.  See WAIT for more information.
+
+Examples:
+   To send the output of a WHOIS to channel #blah:
+      /redirect #blah whois foobar
+
+   To send the output of a USERHOST to a running subprocess:
+      /redirect %finger userhost foobar
+
+   To send the current topic to JoeBob and JimBob:
+      /redirect joebob,jimbob topic #blah
+
+See Also:
+   msg(1); wait(5)
+

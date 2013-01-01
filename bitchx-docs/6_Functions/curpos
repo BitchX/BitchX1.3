@@ -1,0 +1,11 @@
+Synopsis:
+   $curpos()
+
+Technical:
+   Returns the offset of the cursor to the current window's input buffer.
+
+Practical:
+   There aren't many practical, everyday uses for this function.  One might
+   use it to indicate when the user is nearing the end of the input line
+   while typing (sort of like the bell on a typewriter).
+

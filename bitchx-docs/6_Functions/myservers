@@ -1,0 +1,21 @@
+Synopsis:
+   $myservers([<arguments>])
+
+Technical:
+   This function is used to retrieve a list of irc servers your client is
+   currently connected to. If given any arguments, returns a list of refnums
+   to all open servers.
+
+Practical:
+   This function shows all of the servers you're currently connected to.
+   It's mostly useful for accounting purposes, though the output could
+   be used to modify the client's internal server list.
+
+Returns:
+   list of servers currently connected to
+   or
+   list of refnums to those servers
+
+See Also:
+   mychannels(6)
+

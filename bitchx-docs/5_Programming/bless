@@ -1,0 +1,49 @@
+Synopsis:
+   bless
+
+Technical:
+   The bless command allows an asynchronous atomic scope (eg, inside an
+   on), to gain access to the local variables of an enclosing scope.
+   Care must be taken to make sure that this command is only executed in a
+   situation where this is an enclosing scope to gain access to.
+
+   Normally when an "atomic scope" is invoked (an "atomic scope" is by
+   definition an alias (or alias function) invocation or any asynchronous
+   event (an on, a timer, a wait -cmd, a queue)), a new 
+   stack frame is created and access to any local variables in previous
+   stack frames is not allowed (because there is no guarantee just what 
+   exactly is in the scope below us, so accessing their variables could be
+   disastrous.)  However, in some cases, there is reasonable assurance that
+   an atomic asynchronous scope will in fact be executed synchronously, and 
+   that the previous stack is well-known, and that access to the local
+   variables in that stack is desirable.  The semantics of this are straight-
+   forward.  The enclosing (outer) scope must take some action to ensure that
+   it will not "end", thus ending its stack frame, until the enclosed (inner)
+   scope is done manipulating its local variables.  This is most often done
+   by a wait command in the enclosing scope.  The enclosed scope then 
+   would do a bless, and it would gain access to the local variables of
+   the enclosing frame.  
+
+   In general, this is re-entrant safe.  That is to say, the client keeps
+   track of each stack as it is locked by wait, and matches it up with
+   the each bless request, so that no matter how many times wait
+   may be nested, it will be correctly matched up with each bless.
+
+Practical:
+   This is best demonstrated with an example:
+
+	alias uh 
+	{
+		^local blahblah
+		wait for {
+			^userhost $* -cmd {
+				bless
+				push blahblah $3@$4
+			}
+		}
+		return $blahblah
+	}
+
+See Also:
+   wait(1); on(1); timer(1); queue(1)
+

@@ -1,0 +1,21 @@
+Synopsis:
+   $split(<chars> <text>)
+
+Technical:
+   This function converts each specified character found in the input text
+   to a space.
+
+Practical:
+   This function is mostly useful for parsing lines of input that contain
+   a particular character as a delimiter.
+
+Returns:
+   input text with characters swapped
+
+Examples:
+   $split(: a:b:c)            returns "a b c"
+   $split(,. a,b.c)           returns "a b c"
+
+See Also:
+   tr(6)
+

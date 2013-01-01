@@ -1,0 +1,12 @@
+Synopsis:
+   window skip [on|off]
+
+Description:
+   This determines wether the current window is skipped or not. A skipped
+   window is ignored in bind(4) next_window and bind(4) previous_window.
+   The only way to switch to a window with this status is with a window(4)
+   goto or window(4) refnum.
+
+See Also:
+   window(4) goto, refnum, swap
+

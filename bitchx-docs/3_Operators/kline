@@ -1,0 +1,13 @@
+Synopsis:
+   kline [<seconds>] <user@host>,<user@host> :<comment>
+
+Description:
+   KLINE is used to ban a client from the irc server.  It works
+   similarly to a KILL, except that a reason must be given (even if it
+   is meaningless or flat-out wrong). Multiple user@host may be specified
+   using comma's. The ":" specify's the comment. If a "seconds" arguement
+   is given, then this becomes a timed KLINE.
+
+Restrictions:
+   This command is limited to irc operators.  
+

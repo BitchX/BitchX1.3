@@ -1,0 +1,9 @@
+Synopsis:
+   nochat <nick>
+
+Description:
+   NOCHAT removes the request for direct connection to another client.
+
+See Also:
+   ctcp(1); msg(1); on(5) dcc_chat, send_dcc_chat
+

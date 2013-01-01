@@ -1,0 +1,22 @@
+Synopsis:
+   load mudlike
+
+Description:
+   This script is meant to make people failiar with MUDs feel more at home
+   on irc.  It enables COMMAND_MODE, meaning a command must be used for
+   everything, including talking to the currrent channel or query.  It sets
+   a number of hooks to make the client feel like a MUD.  In addition, the
+   following aliases are provided:
+
+     Alias    Description                                                 
+     /'       sends a message to the current channel or query
+     /emote   same as ME
+     /say     same as ME, but formed as if in 3rd person
+     /tell    same as MSG
+
+See Also:
+   load(5); set(4) command_mode
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

@@ -1,0 +1,14 @@
+Synopsis:
+   ban [<channel> <pattern> <nick>] 
+
+Description:
+   BAN will attempt to ban either a nick or a anyone matching the specified
+   pattern. If the nick is not found in the channel, the server will be
+   queryed for a match.
+
+Examples:
+   /ban fudd
+   /ban #warez1 fizzle_b
+   /ban #bitchx *idt*
+
+See Also:

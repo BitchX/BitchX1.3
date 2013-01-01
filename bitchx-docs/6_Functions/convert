@@ -1,0 +1,23 @@
+Synopsis:
+   $convert(<ip address|hostname>)
+
+Technical:
+   This function does a DNS lookup on the given address.  For an IP address,
+   it attempts to find the corresponding Internet hostname.  For a hostname,
+   it attempts to find the corresponding IP address.
+
+Practical:
+   This function does effectively the same thing as $iptoname() and
+   $nametoip().  It is mostly useful when you want to convert an address,
+   but you aren't sure if the input will be an IP address or not.
+
+Returns:
+   IP address or hostname corresponding to input, or nothing on error
+
+Examples:
+   $convert(some.school.edu)       returns IP address for "some.school.edu"
+   $convert(192.168.1.1)           returns hostname for "192.168.1.1"
+
+See Also:
+   iptoname(6); nametoip(6)
+

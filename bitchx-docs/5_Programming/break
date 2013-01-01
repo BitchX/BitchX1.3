@@ -1,0 +1,16 @@
+Synopsis:
+   break
+
+Description:
+   Break, like its C counterpart, breaks out of a loop.
+
+Examples:
+   @loop = 0
+   while (0==0) {                      /* endless loop? */
+     @loop++
+     if (loop==20) break
+   }                                   /* loop only made 20 iterations */
+
+See Also:
+   alias(5); continue(5); return(5); for(5); while(4) until
+

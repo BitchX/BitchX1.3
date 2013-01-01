@@ -1,0 +1,15 @@
+Synopsis:
+   $ischanvoice(<nick> <channel>)
+
+Technical:
+   This function tells wether or not the user <nick> has voice status on the
+   channel specified by <channel>.
+   
+Returns:
+   1   user has voice
+   0   user does not have voice
+  -1   undetermined
+
+See Also:
+   ischanop(6)
+

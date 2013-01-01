@@ -1,0 +1,14 @@
+Synopsis:
+   set beep [on|off|toggle]
+
+Description:
+   When turned off, this suppresses any audible beeps the client may try
+   to use.  Any ^G processed by the client will be printed as a G.
+   This setting will override the BEEP_ON_MSG and BEEP_WHEN_AWAY settings,
+   and will effectively disable the BEEP command.
+
+   If on, the client will audibly display all beeps normally.
+
+See Also:
+   beep(4); set(4) beep_max, beep_on_msg, beep_when_away
+

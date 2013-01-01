@@ -1,0 +1,16 @@
+Synopsis:
+   set highlight_char [bold|inverse|underline|<string>]
+
+Description:
+   This setting determines how "highlighted" messages are to be displayed.
+   Messages from a user are tagged to be highlighted when the IGNORE
+   command is used, and the user's nick!user@host pattern is prepended
+   with a '+'.
+
+   The highlight character may be any of "bold", "inverse", or "underline",
+   or any arbitrary string.  Typically the string will contain some ANSI
+   escape sequence that will do its own highlighting of the text.
+
+See Also:
+   ignore(1); set(4) display_ansi
+

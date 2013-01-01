@@ -1,0 +1,11 @@
+Synopsis:
+   set beep_when_away [<number>]
+
+Description:
+   This variable specifies the number of times the client should beep
+   when it is marked away and receives an incoming MSG.  The variable
+   must be unset to disable this feature.
+ 
+See Also:
+   beep(4); set(4) beep, beep_max, beep_on_msg
+

@@ -1,0 +1,14 @@
+Synopsis:
+   awaylog [<level>]
+
+Description:
+   AWAYLOG allows you to specify what type of msgs will be logged while
+   your away.
+
+Examples:
+      /awaylog -msg
+
+See Also:
+   set(4) lastlog, lastlog_level, log, logfile; window(4) lastlog_level,
+   log, logfile
+

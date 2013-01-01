@@ -1,0 +1,9 @@
+irc commands:
+	!q2 <server>[:port] - queries a quake2 server
+	!qw <server>[:port] - queries a quakeworld server
+	!q3a <server>[:port] - queries a quake3 server
+
+normal commands:
+	/QBX <on|off> - enables or disables qbx
+
+any suggestions or questions email pod@caro.net

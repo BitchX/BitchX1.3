@@ -1,0 +1,387 @@
+  ircII 2.8 + BitchX Documentation
+  Patrick J. Edwards, pje120@cs.usask.ca
+  Tue Feb 13 13:50:47 GMT 1996
+ 
+ 
+  1.  Introduction
+ 
+  BitchX is a new and exciting IRC client being written by Colten
+  Edwards <http://mailto:edwac@sk.sympatico.ca>. It includes many new
+  features that IRCists have been asking for. The sources are based on
+  ircii-Plutotium and ircii-EPiC to create a new and distictive IRC
+  client. Heres a small list of the cool features you get with BitchX:
+ 
+ 
+  o  When run under Linux, BitchX has an added bonus of being in full
+     color.
+ 
+  o  Friends, Shit, and Bot Lists built in.
+ 
+  o  Built in Link Looking, incase your into split servers.
+ 
+  o  Millisecond accuracy on a ping.
+ 
+  o  Several new functions for scripters to use, and a few new
+     variables.
+ 
+  o  Extended set of DCC commands and options, like auto-getting,
+     queues, public offers, and graphical displays.
+ 
+  o  A more logical command set, like /W for /WHO and /WI for /WHOIS.
+ 
+  o  Mass functions, like mass ban, mass op, etc.
+ 
+  o  And tons of other commands, like /RESET and /MESG, incase your not
+     very popular on IRC.
+ 
+ 
+  You may be thinking great. But I get all that functionality from a
+  script, or you maybe thinking BitchX is a script. Well, read on for
+  more of an explanation of what BitchX is all about.
+ 
+ 
+  First of all, its not a script. Secondly, when you load up a script
+  say Phoenix or LiCe it takes a long time to load. Plus you probably
+  have other scripts that you load. For example I used to load up to
+  100k of scripts. That 100k would take up alot of memory, and was slow
+  loading, and slow executing. BitchX doesn't have this problem. It has
+  all these commands loaded hard-coded into the syetem, and the
+  executable approximately the same size.
+ 
+ 
+  The bottom line is IRC load fast, it does everything fast, in less
+  memory.
+ 
+ 
+  Well, if you have read up to this point, and are thinking BitchX is a
+  good thing, you can get it from The BitchX Homepage
+  <http://www.cs.usask.ca/undergrads/pje120/bitchx/>.
+ 
+ 
+ 
+ 
+  2.  New commands
+ 
+ 
+ 
+  2.1.  Fixed/Changed Commands
+ 
+  These commands existed before in ircII, but now are either fixed or
+  changed in some way. Likely, in a better, more natural way.
+ 
+     D  Can be used for DESCRIBE.
+ 
+     I  see INVITE.
+ 
+     INVITE
+        Now works like this, /I nick1 nick2 to the current channel, and
+        /I nick1 #channel1 nick2 channel2.
+ 
+     IG <nick>
+        Ignore lamer by user@host.
+ 
+     IGH <nick>
+        Ignore lamer's whole host.
+ 
+     NIG <nick>
+        Unignore lamer.
+ 
+     J <channel>
+        For JOIN.
+ 
+     L channel
+        For PART. If no argument is given the current channel is left.
+ 
+     M <nick or channel>
+        For MSG.
+ 
+     N channel
+        For NAMES. If no argument is given the current channel is used.
+ 
+     T string
+        For TOPIC. If no argument is given it shows the topic on the
+        current channel.
+ 
+     SC channel
+        For NAMES. If no argument is given the current channel is used.
+ 
+     W channelmask
+        Does a WHO. If no arguments are given it does a WHO on the
+        current channel.
+ 
+     WI nick
+        Does a WHOIS. If no arguement is given, a WHOIS is done on your
+        nick.
+ 
+     WII nicknick
+        Simular to WI.
+ 
+     WW nick
+        Does a WHOWAS.
+ 
+     DIRLM
+        Directs last message to the current channel.
+ 
+     DIRLN
+        Directs last notice to the current channel.
+ 
+ 
+  2.2.  Mass Commands
+ 
+  These are for doing mass operations on a channel.
+ 
+     MOP channel pattern
+        Mass op. Does a /MODE channel +o on all people.
+ 
+     MD channel pattern
+        Mass deop. Does a /MODE channel -o on all people.
+ 
+     MK channel <pattern> reason
+        Mass kick on non-ops matching pattern.
+ 
+     MB channe pattern
+        Mass ban all non-ops.
+ 
+     MKB channel <pattern> reason
+        Mass kickban of all non ops matching pattern.
+ 
+     MUB channel pattern
+        Mass unban.
+ 
+     BOOT
+        See MULTI.
+ 
+     MULTI channel nick1 nick2 ... nickn :reason
+        Kick multiple nicks off the channel with optional reason.
+ 
+ 
+  2.3.  Ban/Unban/Kick/Unkick Commands
+ 
+  Should you havethe chance to become an op on a popular channel, you
+  might need a few of these.
+ 
+     K channel <nick> reason
+        Kick nick from channel.
+ 
+     KB
+ 
+     BK
+ 
+     FUCKchannel <nick> reason
+        Kick and Ban nick from channel.
+ 
+     B
+ 
+     BAN channel <nick>
+        Ban nick from channel.
+ 
+     SB
+ 
+     SBAN channel <nick>
+        Ban nick's entire site from channel.
+ 
+     SK channel <nick> reason
+        Site Kick and Ban nick.
+ 
+     DBAN
+ 
+     UB channel nick-pattern
+        If no arguements are given all bans on the channel will be
+        removed.
+ 
+ 
+  2.4.  List Commands
+ 
+  Frequently, you may find people that you trust alot on IRC, these are
+  you friends. But even more frequently you'll find people on IRC are
+  annoying, so annoying that they deserve to be shitlisted. That's what
+  this whole section is about.
+     BOT <nick> <channel>
+        Add user as a bot to a channel. Channel can be a *.
+ 
+     UNBOT <nick> <channel>
+        Remove nick from the bot list.
+ 
+     ADDUSER <nick> <channel> level autoop prot passwd
+        Add nick to your personal friends list on channel. Level,
+        autoop, prot, and passwd are all optional, and default to
+        nothing, except Level, which defaults to 40. The following are
+        for the level.
+ 
+        25 Enable ctcp invite and whoami.
+ 
+        50+
+           Ops channel ops and and unbans.
+ 
+        90+
+           Disable flood protection, plus Kick and Deop.
+ 
+        Autoop values are:
+ 
+        0  No ops.
+ 
+        1  10 second delay before oping.
+ 
+        2  instant autoop.
+ 
+        other
+           does nothing.
+ 
+        Note that the user is not saved until a SAVELIST is issued.
+ 
+     UNUSER <nick>
+        Deletes a user from the user list.
+ 
+     ADDSHIT <nick> <channel> <level> reason
+        Adds a user to the shit list.
+ 
+     UNSHIT <nick>
+        Removes a user from the shit list.
+ 
+     USERLIST
+        Displays all users in the friends list.
+ 
+     SHITLIST
+        Displays all users in the shit list.
+ 
+     BOTLIST
+        Displays all users in the bot list.
+ 
+     SAVELIST
+        Save the shit, friends, and bot lists. This saves the
+        information to the $(CTOOLZ_DIR)/BitchX.sav file.
+ 
+     SAVEA
+        Saves information to the .ircrc over writing it.
+ 
+ 
+  2.5.  Miscellaneous Commands
+ 
+  2.6.  DCC Commands
+ 
+ 
+ 
+ 
+  3.  New SET commands
+ 
+  Along with the new IRC there are new options you can set.
+ 
+     ANNOY_KICK on|off
+        Kick people for using bold, inverse, or beep on protected
+        channels.
+ 
+     AOP on|off
+        Set on if you want to automatically op people.
+ 
+     AUTOCK on|off
+        Kicks people who send /xdcc * send.
+ 
+     AUTO_NSLOOKUP on|off
+        Sets whether IP numbers are looked up on a /JOIN or /WHOIS.
+ 
+     AUTO_REJOIN 0|1|2|3|4|5
+        Sets how you should auto rejoin if kicked from a channel. The
+        channel key is remebered.
+ 
+        0  off.
+ 
+        1  rejoin normally.
+ 
+        2  rejoin with a newuser name (the person's who kicked you).
+ 
+        3  rejoin with a random nick name.
+ 
+        4  rejoin with a random user name.
+ 
+        5  rejoin with a random user name and nick name.
+ 
+     CHECK_BEEP_USERS on|off
+ 
+ 
+ 
+  4.  New functions
+ 
+  Firstly the new functions:
+ 
+     $annoy(text)
+        Inserts random ^B, ^V, ^_, and makes random letters capitals.
+ 
+     $cluster(hostname)
+        Makes aa.bb.cc into *.bb.cc format.
+ 
+     $cool(text)
+        Makes ThInGs lOoK LiKe tHiS.
+ 
+     $eleet(text)
+        Increases your eleetness.
+ 
+     $getkey(channel)
+        Shows the channel key.
+ 
+     $stripansi(text)
+        Strips ansi sequences from text.
+ 
+     $uptime()
+        Display up time in Days, Hours, Minutes, Seconds.
+ 
+     $open(file RW|R|W T|B)
+        Opens a file descriptor.
+ 
+ 
+     $read(number)
+        Reads from a file returning text.
+ 
+     $write(number args)
+        Write args to a file.
+ 
+     $eof(number)
+        Returns if EOF of file or not.
+ 
+     $close(number)
+        Closes a file.
+ 
+     $rename(oldfile newfile)
+        Renames a file.
+ 
+     $rot13(text)
+        Rot 13's text.
+ 
+     $rmdir(dirname)
+ 
+     $unlink()
+ 
+     bcopy()
+ 
+     $check_user()
+ 
+     $check_shit()
+        compat ctoolz null function.
+ 
+     $readlog()
+        Read msg log file.
+ 
+     remlog()
+        Removes msg log file.
+ 
+     $which(filename)
+ 
+  And the new variables:
+ 
+     $E Shows idle time.
+ 
+     $F Time online.
+ 
+     $J Shows which version of IRC is in use.
+ 
+     $X Userhost.
+ 
+     $Y Real name.
+ 
+New status line variables:
+        %D Show dcc percentage done on status line.
+ 
+        %^ Show number of recieved messages while away on status line.
+ 
+ 
+ 
+  5.  The Future of BitchX

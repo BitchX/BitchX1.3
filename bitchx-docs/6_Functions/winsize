@@ -1,0 +1,24 @@
+Synopsis:
+   $winsize([<window>])
+
+Technical:
+   This returns the height, in lines, of the specified window, not including
+   the status line or the input line.  It may be given either a window name
+   or a window number.  If no window is specified, the current is assumed.
+
+Practical:
+   This function is mainly useful for aliased commands that generate a lot
+   of output.  Since the height of the window is known, the script can page
+   the output a window at a time.
+
+Returns:
+   number of lines in window, or nothing if window does not exist
+
+Examples:
+   $winsize(1)                 returns size of window #1
+   $winsize(main)              returns size of window "main"
+   $winsize()                  returns size of current window
+
+See Also:
+   geom(6); window(4) size
+

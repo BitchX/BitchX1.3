@@ -1,0 +1,38 @@
+Synopsis:
+   on [<modes>]ctcp [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a CTCP message,
+   whether directly or one sent to a channel it is on.
+
+Parameters:
+   $0    nickname of CTCP message sender
+   $1    target of CTCP (client's nickname or channel name)
+   $2    type of CTCP
+   $3-   arguments to CTCP command, if any
+
+Examples:
+   To customize the normal CTCP message:
+      on ^ctcp * "*" {
+         if ( [$1] == C ) {
+            echo *** $0 sent a CTCP $2 to $1${[$3] ? [: $3-] : []}
+         } {
+            echo *** $0 sent you a CTCP $2${[$3] ? [: $3-] : []}
+         }
+      }
+
+See Also:
+   ctcp(1); on(5) ctcp_reply
+
+Restrictions:
+   Automatic replies from within this hook are limited by the irc protocol.
+   Since a CTCP is really just a PRIVMSG, the client may only automatically
+   reply with NOTICEs, not MSGs.  Any attempt to send a MSG or CTCP from
+   within this hook will result in it automatically being converted to a
+   NOTICE (or CTCP REPLY).
+
+Other Notes:
+   The client's default behavior of automatically responding to certain CTCP
+   messages cannot be suppressed with this hook.  To prevent the client from
+   replying to CTCPs, use IGNORE.
+

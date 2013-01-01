@@ -1,0 +1,47 @@
+Synopsis:
+   load brc
+
+Description:
+   This script will give the client the look and feel of the BITNET Relay
+   Chat program (BiRC).  While it makes every attempt to mimic BiRC, some
+   BiRC features simply have no equivalent on irc (the appropriate error
+   message willl be returned).
+
+     Alias       Description
+     /c          same as CHANNEL (JOIN)
+     /contact    same as ADMIN
+     /getop      do a WALLOPS for help (depricated)
+     /h          view this document
+     /i <x>      invite last MSG sender to specified channel
+     /ign <X>    ignore specified user with level ALL
+     /irchelp    same as HELP
+     /lcl        same as WHO with -s switch
+     /m          same as MSG
+     /na         same as NAMES with -pub switch
+     /ni         same as NICK
+     /rates      same as STATS, type l
+     /st         same as /r
+     /sw         same as NAMES
+     /t          same as TOPIC
+     /unignore   ignore specified user with level NONE
+     /users      same as LUSERS
+     /w          same as WHO
+     /whoi       same as WHOIS
+
+   The following BiRC commands are unavailable, either because they are not
+   necessary, or because they have no meaning on irc: OPN, REGISTER, RULES,
+   SE, SIGNON, SINCE, and TL.  Other BiRC commands have identical
+   equivalents in the client, and thus are undocumented here.
+
+See Also:
+   admin(2); fnet(8); help(1); join(1); load(5); lusers(2); msg(1);
+   names(2); nick(1); stats(2); topic(1); wallops(2); who(2); whois(2)
+
+Restrictions:
+   The /getop alias probably won't work, since normal users are not allowed
+   to use WALLOPS anymore.
+
+Other Notes:
+   This script was written by Ruben R. Olsen (Gnarfer), rubenro@viggo.blh.no.
+   Current version is 1.00, patchlevel 9.
+

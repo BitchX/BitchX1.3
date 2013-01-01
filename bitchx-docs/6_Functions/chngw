@@ -1,0 +1,21 @@
+Synopsis::
+   $chngw(<index> <word> <text>)
+
+Technical:
+   This function returns its input text, with the given word replacing the
+   word pointed to by the index.  Words are counted from 0 (zero).
+
+Practical:
+   This function changes a single word in a list of words to another word.
+   This might be useful for changing a user's permission bits in a variable
+   that holds a script's access levels.
+
+Returns:
+   text with new word inserted
+
+Examples:
+   $chngw(2 blah foo bar booya)          returns "foo bar blah"
+
+See also:
+   insertw(6); remw(6); splice(6)
+

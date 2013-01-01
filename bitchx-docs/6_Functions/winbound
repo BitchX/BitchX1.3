@@ -1,0 +1,26 @@
+Synopsis:
+   $winbound(<channel name>/<window name>/<window refnum>)
+
+Technical:
+   If the first argument refers to a channel, the function returns the window
+   refnum that the channel is bound to (if any). If the argument refers to
+   a window, the channel bound to that window is returned (if any).
+
+Practical:
+   This can be used to determine wether a channel is already bound, as to not
+   bind it twice.
+
+Returns:
+   channel name, if argument refers to a window
+   window refnum, if argument is a channel
+   nothing, if channel/window is not bound
+
+Examples:
+   /window refnum 2 bind #epic
+   eval echo $winbound(2)                           /* returns "#epic" */
+   eval echo $winbound(#epic)                       /* returns 2 */
+
+Other Notes:
+   If a given window name looks like a channel, the window name takes
+   precedence.
+

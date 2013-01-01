@@ -1,0 +1,25 @@
+Synopsis:
+   $uname(<description>)
+
+Technical:
+   This function returns system information about the machine on which EPIC
+   is running, similar to the uname(2) system call.
+
+Returns:
+   the string <description> parsed according to the following table:
+
+   Any instance of         will be replaced with
+ ------------------------------------------------------------------
+   %m                      The "machine" (architecture)
+   %n                      The "Node" (hostname)
+   %r                      The "Release" of the operating system
+   %s                      The "Name" of the operating system
+   %v                      The "Version" of the operating system
+   %a                      The logical value of "%s %n %r %v %m"
+   %%                      A single %
+
+Examples:
+   $uname(This machine (%n) is a %m running %s %r)
+     in one case could return:
+   This machine (paradigm) is a i686 running Linux 2.2.0
+

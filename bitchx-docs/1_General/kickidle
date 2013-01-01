@@ -1,0 +1,22 @@
+Synopsis:
+   kickidle [<channel>] 
+
+Description:
+   This command "kicks" idle users off the current or specified channel.
+   It will not kick unless /addidle is turned on for the channel. It will
+   not kick ops.
+
+Examples:
+   To kickidle on channel #blah:
+      /kickidle #blah
+
+   To kick foobar out of your current channel:
+      /kickidle
+
+See Also:
+    addidle(1); unidle(1); showidle(1);
+
+Restrictions:
+   KICK is limited to channel operators (users with channel mode +o; see
+   MODE for more information) on the specified channel.
+

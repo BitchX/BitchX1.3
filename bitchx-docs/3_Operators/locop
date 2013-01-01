@@ -1,0 +1,19 @@
+Synopsis:
+   locop <message>
+
+Description:
+   This command sends the given message to everyone on the server who has
+   user mode +w turned on.  If you are not an operator, you will probably
+   receive an error message when using this command.
+
+See Also:
+   mode(1); msg(1); notice(1); on(5) wallop
+
+Restrictions:
+   This command is limited to irc operators.
+
+Other Notes:
+   The existence of this command is not guaranteed.  It is easily abused by
+   over-zealous operators, and some networks have it disabled completely.
+   It is yet another example of a good idea gone to waste due to abuse.
+

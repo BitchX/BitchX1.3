@@ -1,0 +1,19 @@
+Synopsis:
+   load list
+
+Description:
+   This script is comprised of a single alias, /showlist.  It takes a list
+   of words for arguments (any number is allowed), and prints them to the
+   current window one at a time.
+
+   This is evidently some sort of intellectual exercise, or proof of
+   concept script.  It certainly isn't the best way to do what it does,
+   but it does serve as a good example of how to run through an argument
+   list without using recursion.
+
+See Also:
+   load(5)
+
+Other Notes:
+   The name of this script's author is not known.
+

@@ -1,0 +1,22 @@
+Synopsis:
+   load deutsch
+
+Description:
+   [This script is for German users.]  Hier ist nix sinnvolles drin, nur
+   eine kleine Sammlung von Tastenbelegungen, die mit META2_CHARACTER
+   erreichbar ist. META2 ist per default auf ^w gelegt (CTRL-W).
+
+     Key       Action                  |  Key       Action                
+     meta2-f   *fauch*                 |  meta2-R   rehi <letzter joiner>!
+     meta2-g   *grins*                 |  meta2-s   *seufz*
+     meta2-G   *gaehn*                 |  meta2-S   *schmoll*
+     meta2-k   *kicher*                |  meta2-t   *troest*
+     meta2-l   *lach*                  |  meta2-T   tach <letzter joiner>!
+     meta2-M   moin <letzter joiner>!  |
+
+See Also:
+   bind(2) meta2_character; commander(8); english(8); load(5)
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

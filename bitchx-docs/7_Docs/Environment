@@ -1,0 +1,40 @@
+Environment Settings Relevant to BitchX                                   
+
+Numerous environment variables are recognized by .  Environment variables are
+various settings that describe your login process on a Unix system.  How they
+are set mainly depends on the command shell you use.
+
+ * For csh and tcsh shells:
+      setenv variable "value"
+
+ * For bash, ksh, and zsh shells:
+      export variable="value"
+
+ * For sh (a true Bourne shell) and ash shells, and Bourne-like shells:
+      variable="value"
+      export variable
+
+ * For the rc and es shells (Plan 9 descendants):
+      variable='value'
+
+For all shells (except rc and es), either single quotes (') or double quotes
+(") may be used.  For all shells, the case of the variable is significant.
+Environment variables are, by convention, in all uppercase, and BitchX is no
+exception.  The following variables are used by BitchX:
+
+   IRCNICK     default nickname when connecting to a server
+   IRCNAME     any lunacy you want instead of your real name
+   IRCHOST     default local host name to use on multihomed hosts
+   IRCSERVER   default server list, space delimited, serv:port:pass ok
+   IRCPORT     default server port to connect to
+   IRCUMODE    initial user mode (does not work on all servers)
+   IRCPATH     same as LOAD_PATH setting
+   IRCRC       alternate startup file (in lieu of ~/.ircrc)
+   IRC_SERVERS_FILE  same as compile-time SERVERS_FILE, specifies a file
+                     to get a list of servers from
+
+BitchX also uses the TERM and HOME variables, which are usually set when you
+login to your Unix system.  All environment variables are available for
+use inside BitchX as normal variables, assuming another variable of the same
+name does not exist.
+

@@ -1,0 +1,69 @@
+Synopsis:
+   list [<switch> [<arg>] [<switch> [<arg>] ...]] [<channel>]
+
+Description:
+   This is used to list the channels that currently exist (i.e. that have
+   one or more client on them) on the network.  The output will include
+   the channel name (usually; see below), the number of users on that
+   channel, and the channel's current topic.
+
+   If an exact channel name is given, only information about that channel
+   is returned.  If a '*' is used as the channel name, the current
+   channel is used.  Otherwise, the client will request the entire list
+   of channels.
+
+   The client can search for specific channels or channels with certain
+   characteristics.  If a glob pattern is given for the channel name, all
+   channels matching that pattern are shown.  The list can be limited to
+   channels with only a certain number of users, those with a topic set,
+   or those that are private or public.  Multiple switches may be used at
+   once.
+
+   LIST output is affected by channel modes.  If a channel has mode +p,
+   then its name will be masked in the list output.  However, it can
+   still be displayed normally if the exact channel name is known.  If
+   the channel has mode +s, then it will not appear in any LIST output,
+   whether the exact name is known or not.  These limitations only apply
+   to users not on the channels in question (i.e. a user on a +s channel
+   can list that channel normally).
+
+Options:
+   -min <n>   shows channels with no less than n users
+   -max <n>   shows channels with no more than n users
+   -public    shows public channels only
+   -private   shows private channels only
+   -topic     shows channels with a topic set
+   -all       overrides any previous -public or -private switch
+   -wide      shows name and size using as little space as possible:
+       -name     sort list by channel name
+       -users    sort list by number of users per channel
+                
+Examples:
+   To show channels with 3 to 15 users:
+      /list -min 3 -max 15
+
+   To show public channels with "help" in the name:
+      /list -public #*help*
+
+   To get a concise listing of channels with over 30 users, sorted by name:
+      /list -min 30 -wide -name
+
+   To see how Undernet's LIST works (and see below):
+      /quote list help
+
+See Also:
+   on(5) list, widelist
+
+Other Notes:
+   Unless a specific channel name is given, the client will request the
+   entire channel list and filter it locally.  This is noteworthy because
+   large networks can easily have upwards of 2,000 channels at any given
+   moment.  Parsing such a large list will greatly slow the client.
+
+   This can be circumvented on the Undernet, and networks that use recent
+   Undernet server code.  The protocol LIST command (which is not the same
+   as the client's internal LIST command) on such servers has been
+   expanded to allow for server-side filtering.  EPIC does not natively
+   support this protocol enhancement, so the command "/quote list" must be
+   used.  Use "/quote list help" for the exact syntax.
+

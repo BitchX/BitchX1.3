@@ -1,0 +1,16 @@
+Synopsis:
+   set verbose_ctcp [on|off|toggle]
+
+Description:
+   When turned on, this will cause the client to display a message whenever
+   it receives a CTCP message, saying what kind it is and who is it from.
+   If turned off, the user will not be informed when the client receives a
+   CTCP request.
+
+See Also:
+   ctcp(1); on(5) ctcp
+
+Other Notes:
+   This setting may not work properly if the default CTCP action is changed
+   or suppressed with the CTCP hook.
+

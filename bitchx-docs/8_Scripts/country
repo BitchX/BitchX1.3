@@ -1,0 +1,36 @@
+Synopsis:
+   load country
+
+Description:
+   This script is used for converting between a country's (official) name
+   and its ISO country code.  It can convert in either direction, and can
+   convert to a country name based on an email address.  Everything is
+   done through a single alias, /country.  The basic syntax is:
+
+     /country [<switch>] <nickname|country|isometric>
+
+   The default behavior is for the script to try to guess what type of
+   input it has been given.  The default is a nickname.  If it cannot find
+   anyone on irc with that nickname, it checks the length of the input.
+   If it is longer than 3 (three) characters, a country name is assumed.
+   If all else fails, it tries an isometric code.  Several switches are
+   available to force the client to do a particular type of lookup
+   (instead of guessing).
+
+     Flag   Purpose                                                       
+      -c    assume input is definitely a country name
+      -f    skips userhost lookup used in nickname searches
+      -i    assume input is definitely an ISO code
+      -n    ignored (historical feature)
+
+   For convenience, 2 additional aliases are provided; /lcountry is the
+   same as /country -c, and /lcode is the same as /country -i.
+
+See Also:
+   load(5); userhost(2)
+
+Other Notes:
+   This script was originally written by Daniel Cedras (TG).  It has been
+   largely rewritten by Jeremy Nelson (hop), jnelson@acronet.net, to take
+   advantage of EPIC's features.
+

@@ -1,0 +1,28 @@
+Synopsis:
+   on [<modes>]exec_exit [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever an EXECed process exits.
+
+Parameters:
+   $0    process number or name of the EXECed process
+   $1    signal that killed the process, or 0 (zero) if it exited normally
+   $2    exit code (usually zero, unless $1 is non-zero)
+
+Examples:
+   To display when a process exits:
+      on ^exec_exit "*" {
+         if ( [$2] ) {
+            echo *** Process '$0' exited with code $2 \(signal $1\)
+         } {
+            echo *** Process '$0' exited normally
+         }
+      }
+
+See Also:
+   exec(5); on(5) exec, exec_errors, exec_prompt
+
+Other Notes:
+   The available signals that may be sent to a process will vary from system
+   to system.
+

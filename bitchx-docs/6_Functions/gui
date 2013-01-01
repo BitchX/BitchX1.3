@@ -1,0 +1,19 @@
+Synopsis:
+   $gui()
+
+Technical:
+   Returns true if the client is a GUI client.
+
+Practical:
+   If this function returns true, the client is a GUI client.  Either
+   Presentation Manager, GTK or any other GUIs that get added. This function
+   is here to allow scripts to know whether the client they are being run 
+   on have the necessary functionality to execute graphical functions.
+
+Returns:
+   > 0   client is a GUI client
+     0   client is not a GUI client
+
+See Also:
+   Special_Vars(7)
+

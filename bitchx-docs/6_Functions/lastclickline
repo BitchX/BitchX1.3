@@ -1,0 +1,27 @@
+Synopsis:
+   $lastclickline(<option>)
+
+Technical:
+   This function shows text on the last line clicked by the mouse,  
+   or some derivitive of it based on the option passed.
+   Possible options:
+        0 - Entire line clicked on without color codes.
+        1 - Entire line with color codes (unimplemented same as 0)
+        2 - (unimplemented same as 0)
+        3 - Returns the word clicked on in the text.
+        4 - Attempts to find a nick in the text clicked on.
+
+Returns:
+   Text string based on what was last clicked on.
+
+Examples:
+   For a line like this: "<NuKe> Who is nuke@host.com" when nuke@host.com is
+   the text that was clicked on:
+
+        lastclickline(0)        "<NuKe> Who is nuke@host.com"
+        lastclickline(3)        "nuke@host.com"
+        lastclickline(4)        "nuke"
+
+See Also:
+   lastclickx(6) lastclicky(6)
+

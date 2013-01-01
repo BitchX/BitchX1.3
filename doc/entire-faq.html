@@ -1,0 +1,1594 @@
+
+<HTML>
+<HTML>
+<HEAD>
+</HEAD>
+<BODY BGCOLOR="#FFFFFF">
+<TITLE>BitchX FAQ</TITLE>
+
+
+<table border=0 cellpadding=0 cellspacing=0 width=100%>
+
+	<tr>
+	<td bgcolor='c7cde3'><b>Entire BitchX FAQ</b></td>
+	</tr>
+
+	<tr>
+	<td bgcolor='dddddd'>
+<b>[FAQ Section 1 :: <b>General Information]</b></b>
+<br><br>
+<i><b>What is BitchX?</b></i><br>
+<code>BitchX is a VERY heavily modified ircII client.<br />
+<br />
+It includes many things such as built in CDCC (XDCC) offering, built in flood protection, etc.<br />
+<br />
+It is easier to script things in BitchX because unlike plain, vanilla ircII, half the script does not have to be devoted to changing the appearance of ircII.<br />
+<br />
+All in all, its the BEST out there!<br />
+</code>
+<br><br>
+<i><b>Where can I get BitchX?</b></i><br>
+<code><B>This is very important so pay attention.  Due to recent problem with DNS poisoning and hacked website content pointing to false release site FTP servers for BitchX, we have taken up new measures to insure that the source you are getting is in fact legitimate.  All files will be signed by the FTP site admin Rob Andrews.  His public key block is available on pgp.mit.edu and certserver.pgp.com as sin@bitchx.org.  It is also available to be downloaded from <a href="ftp://ftp.bitchx.org/pub/BitchX/gpgkeys/sin.asc">here</a></b><br />
+<br />
+For more information about GPG go to http://www.gnupg.org/<br />
+<br />
+All official release source and binaries should have a matching .md5 and a .sig file in the directory.  MD5 is not insurance that the file is good.  Please use the GPG key to insure that you have legitimate source at all times when possible because MD5 checksums will be phased out on June 1, 2003.<br />
+<br />
+The main ftp site is ftp://ftp.bitchx.org/ or ftp://ftp.BitchX.com/<br />
+<br />
+Should you have troubles connecting to these sites you may<br />
+go to ftp://ftp.cyberpunkz.org/<br />
+<br />
+Primary release site is located in Denver, CO. @ 209.151.95.59. This site does not permit passive ftp connections.  The Atlanta mirror @ 204.214.92.161 does allow passive connections.<br />
+<br />
+Daily snapshots of the CVS repository are posted to the FTP site and mirrors under /pub/BitchX/cvs-snapshot/  There is a 30 day history of snapshots from the repository kept in the history/ directory.<br />
+<br />
+New binaries of the CVS based code are posted as major changes and fixes are merged into the repository under /pub/BitchX/cvs-binaries/<br />
+<br />
+You can also visit the website at http://www.bitchx.org/<br />
+<br />
+BitchX is available in source or binary packages.  TCL enabled binaries as well as standard binaries are posted for both release and CVS based code.  Please check the ftp site login information for details on where to find the correct source or binary distro for your operating system and platform.<br />
+<br />
+BitchX is also available via CVS:<br />
+CVS can be obtained from ftp://ftp.cvshome.org/pub<br />
+<br />
+<br />
+<b>Primary CVS Repository</b><br />
+bash$ export CVSROOT=:pserver:anonymous@rhetoric.terahertz.net:/cvs/bitchx<br />
+bash$ cvs login (password is blank, just hit enter)<br />
+bash$ cvs co BitchX<br />
+<br />
+Should you have troubles logging into the primary CVS server we have created a secondary cvs server that is updated once daily at 6am EST from the primary repository.<br />
+<br />
+<b>Secondary CVS Repository</b><br />
+bash$ export CVSROOT=:pserver:anonymous@cvs.cyberpunkz.org:/cvs/bitchx<br />
+bash$ cvs login (password is blank, just hit enter)<br />
+bash$ cvs co BitchX<br />
+<br />
+If you have already done a checkout, just type<br />
+bash$ cd BitchX/ ; cvs update</code>
+<br><br>
+<i><b>What OS does BitchX work on?</b></i><br>
+<code>BitchX now works with almost all UNIX OS's and Windows 32-bit. <br />
+<br />
+Here is the list of OSes that BitchX is reported to work on:<br />
+<br />
+                Windows 95/98/NT/2K/ME/XP<br />
+                BSDI<br />
+                SunOS<br />
+                Linux (All)<br />
+                HP-UX<br />
+                OSF/1 (DEC Alpha)<br />
+                FreeBSD<br />
+                NetBSD<br />
+                OpenBSD<br />
+                DEC Unix<br />
+                Ultrix<br />
+                AIX<br />
+                IRIX<br />
+                Mac OS X (Jaguar)<br />
+OS/2<br />
+<br />
+If you need binaries for any of these OS's, just go to the <a href="http://www.bitchx.org/download.php">FTP</a> site, or ask in #BitchX for them. If your operating system is not listed, chances are that the source will compile with little to no modifications.  You should always attempt to compile the binary on your own system for compatibility purposes.  <br />
+<br />
+If compiling on a unlisted operating system it's normally best to run configure with no flags (unless  you're compiling it to install in your home directory - then you should probably set the prefix).  Unsupported platforms will not need TCL to be compiled since there is most likely not a tcl.o for that platform.<br />
+<br />
+If all else fails first attempt to ask on the BitchX questions forum.  The forums give you access to a number of people who use the client and are working on problems or have solutions for questions you might have already posted to the users.</code>
+<br><br>
+<i><b>Installing BitchX with source</b></i><br>
+<code>This portion of the FAQ assumes you are running a GNU compliant operating system.  We'll post instruction below for those of you using other systems.<br />
+<br />
+tar zxvf ircii-pana-xx-xx.tar.gz<br />
+cd BitchX/<br />
+./configure (you can do ./configure --help to see more options)<br />
+gmake (or make if so named as long as its the GNU version of make)<br />
+<br />
+if you are root:<br />
+gmake install<br />
+<br />
+if you are a normal user:<br />
+gmake install_local<br />
+<br />
+For those of you not using a GNU compliant version of tar please note that you must use gunzip to decompress the file before running tar to extract the source for BitchX.<br />
+<br />
+Also, users on FreeBSD systems please note that you should not use the system version of 'make' even if it does seem to compile the source correctly.  Please use 'gmake' instead.<br />
+<br />
+Solaris users:  BitchX has been know to have issues on Solaris up to the recent release version 9.  If your system does not have the GNU make, gcc, and other GNU utilities you could note the created binary to segfault or end up using quite a bit of memory. You can download all the gnu tools you would need to compile BitchX on solaris from, http://www.sunfreeware.com/<br />
+<br />
+One last note for everyone.  After you have completed compiling the binary and if it wasn't done during the compile/install you might wish to strip the binary.  If you're unsure what this means don't worry about it.</code>
+<br><br>
+<i><b>Installing BitchX binaries</b></i><br>
+<code>All you really need is the BitchX binary.<br />
+<br />
+Simply grab the appropriate binary for your OS, unzip and untar it. (tar -zxvf BitchX-1.0c19-YourOS-x.x-arch.tar.gz), then move the unpacked binaries to somewhere in your path... /usr/local/bin might be a good place, and chmod +x each binary.<br />
+<br />
+$ mv BitchX scr-bx wserv /usr/local/bin/<br />
+$ chmod +x /usr/local/bin/BitchX /usr/local/bin/scr-bx /usr/local/bin/wserv<br />
+<br />
+Then, simply type BitchX to start the client!</code>
+<br><br>
+<i><b>Other files BitchX uses</b></i><br>
+<code>BitchX.reasons  Random kick messages, for /kick without a reason.<br />
+BitchX.quit     Random quit messages, for doing /quit without an argument.<br />
+BitchX.help     The help file for BitchX (/bhelp).</code>
+<br><br>
+<i><b>I heard rumors that BitchX has backdoors, is this true?</b></i><br>
+<code>This is completely untrue.  Any 'backdoors' that have been found in earlier versions of BitchX are unintentional and a part of the normal program development process.  They are, of course, fixed as soon as they are discovered.<br />
+<br />
+The rumor about an intentional backdoor was started around 1996 or 97 by an Undernet IRC operator on the BugTraq mailing list and was completely misguided.<br />
+<br />
+More recent rumors that BitchX was backdoored are also false in light of the fact that on two occasions there were DoS attacks which resulted in the "poisoning" of legitimate DNS servers for bitchx.org which caused the redirection of persons to false sites claiming to be ftp.bitchx.org.<br />
+<br />
+The compiled binary itself was not affected by the trojan however the configure script included in the source tarball was tainted.<br />
+<br />
+The only legitimate IP addresses for BitchX FTP sites are as follows.<br />
+<br />
+ftp.bitchx.com: 204.214.92.161, 207.35.37.5, 209.151.95.36<br />
+ftp.bitchx.org: 209.151.95.59, 204.214.92.161<br />
+<br />
+If you find a bug please use this faq site to submit the bug with complete information.  You may also upload a compressed file with the core file and all other vital information such as OS, commandline options used, and as much detail as possible included to ftp.bitchx.org in the top level incoming directory.</code>
+<br><br>
+<i><b>What is the FAQ?</b></i><br>
+<code>FAQ stands for Frequently Asked Questions for those of you who don't know what it means.  We tell everyone to read the FAQ before coming to IRC to ask questions for a reason.<br />
+<br />
+In this document you will find nearly every possible way to answer a question related to the BitchX IRC Client.  By using the search functions on this site you can quickly find key words to questions and issues you might have.  However this doesn't always produce the results you might want so we still say, if you don't read the complete document and come to IRC asking questions that are covered here, don't be suprised if you are ignored or told to go read the FAQ.<br />
+<br />
+We answer far too many questions on IRC; wasting our time to chat and enjoy ourselves while people haven't at least been kind enough to read the texts we have placed online to answer nearly every possible question they may have related to the setup and management of the client.<br />
+<br />
+This is the most complete faq for BitchX ever produced and it constantly evolves as new questions and answers are filtered from the Forums website here.<br />
+<br />
+Also, before asking questions on IRC you should take the time to register at http://www.cyberpunkz.org on the forums website and ask your questions there first.  You will find if you search the questions there that it's very possible someone else has already answered on the forums or will give you a more complete answer than you would find on IRC or even in the FAQ in some cases.<br />
+<br />
+RTFM: read the fsck`n manual.  we provided it for a reason.  take the time to respect our personal time by reading before you ask questions.</code>
+<br><br>
+<i><b>How do I validate my source code or binary is from BitchX.Org?</b></i><br>
+<code>While MD5 checksums are good for some purposes it has come to my attention lately that with machines being compromised and persons being determined to alway attempt to trojan source code for malicious purposes, that we have to take the extra time to insure that sources being released are able to be validated by a much more secure source. <br />
+<br />
+As of Monday April, 14th 2003. All current binaries, tcl.o, and the current version of the released source code for BitchX have been signed by myself as the FTP Site Admin using GNU Privacy Guard. <br />
+<br />
+My public keyblock can be found at <a href="ftp://ftp.bitchx.org/pub/BitchX/gpgkeys/sin.asc">ftp://ftp.bitchx.org/pub/BitchX/gpgkeys/sin.asc</a> and through pgp.mit.edu. <br />
+<br />
+Rob Andrews (BitchX FTP Site Administrator) <sin@bitchx.org> <br />
+Key fingerprint = A722 0C2F 5A65 9357 DB71 09B9 4802 C4DE 42D1 F77C <br />
+KeyID = 42D1F77C <br />
+<br />
+CVS source code is not signed. CVS binaries however will be signed by me at all times. Please read the login messages on the FTP site for announcements of changes or other news that might not be posted here. <br />
+<br />
+If you do not know how to use GNU Privacy Guard please see their website at <a href="http://www.gnupg.org/">www.gnupg.org</a> for help topics and more.<br />
+<br />
+Rob Andrews <br />
+sin@EFnet #BitchX <br />
+sin@bitchx.org</code>
+<br><br>
+<i><b>Getting help after the FAQ.</b></i><br>
+<code>Q&A Forums at <a href="http://www.cyberpunkz.org">www.cyberpunkz.org</a><br />
+<br />
+Internal help systems are /bhelp and /ehelp<br />
+<br />
+command line help: BitchX -h<br />
+<br />
+Last resort: EFnet IRC #BitchX<br />
+<br />
+We say last resort because setup and install questions are completely covered in this FAQ.  There is no reason at all for anyone to come to IRC asking questions about installing or setting up and running BitchX.<br />
+<br />
+Unless you run into an install error or something of the like which is not covered in this FAQ or on the Forums website, the IRC channel should be thought of as the absolute last place to ask your question.  We are not a technical support channel and we don't get paid to answer your questions so we won't be in any hurry to answer you if you haven't taken the time to use the systems for help we have provided.<br />
+</code>
+<br><br>
+<b>[FAQ Section 2 :: <b>Useful Features]</b></b>
+<br><br>
+<i><b>CDCC/XDCC</b></i><br>
+<code>BitchX offers built in support for public file offering called CDCC. As this is not what is normally used by mIRC & ircII scripts, which for the most part use XDCC, BitchX will recognize XDCC requests as CDCC requests. /CDCC &lt;command&gt; will give you a list of options, and /CDCC without an argument will give you a list of arguments/commands you can use.</code>
+<br><br>
+<i><b>BitchX in a terminal window under X.</b></i><br>
+<code>Lately, there have been a lot of requests for help with getting color and function keys working in XWindows in the channel. Before you ask for help in the channel, please make sure that you have obtained the xterm variant called <a href="http://www.rxvt.org/">rxvt</a>, and the font <a href="http://personal.nbnet.nb.ca/mudhoney/fonts/vga11x19.pcf">vga11x19</a>. When you start rxvt, run it with the options "-bg black -fg white -fn vga11x19". If you do not have vga11x19, get it!  Meanwhile, use the vga font as a substitute.  If your function keys don't work, you may need to add this to ~/.bitchxrc:<br />
+<br />
+                /bind meta3-1 chelp<br />
+                /bind meta3-2 CHANNEL_CHOPS<br />
+                /bind meta3-3 CHANNEL_NONOPS<br />
+                /bind meta3-4 CDCC_PLIST<br />
+                /bind meta3-5 DCC_PLIST<br />
+                /bind meta3-6 DCC_STATS<br />
+<br />
+Those are the default BitchX function key bindings and should work as such.<br />
+<br />
+For more fonts and help on installing them, check out <a href="http://linux.org.mt/article/ttfonts">http://linux.org.mt/article/ttfonts</a>.<br />
+<br />
+For help with gtkBitchX, see section 5 of this FAQ.</code>
+<br><br>
+<i><b>BitchX toggles</b></i><br>
+<code>BitchX has a built-in toggle menu to turn on and off commonly used features of the client.<br />
+<br />
+To see this menu, type /toggle.<br />
+<br />
+To turn something off or on, type /toggle [name]<br />
+<br />
+Below are a list of toggles in bold.  These are current as of 1.0c19.<br />
+<br />
+<b>auto_nslookup</b><br />
+<b>ctcp_flood_protection</b><br />
+<b>beep</b><br />
+<b>pubflood</b><br />
+<b>flood_protection</b><br />
+<b>kickflood</b><br />
+<b>dcc_autoget</b><br />
+<b>flood_kick</b><br />
+<b>msglog</b><br />
+<b>llook</b><br />
+<b>deopflood</b><br />
+<b>joinflood</b><br />
+<b>auto_whowas</b><br />
+<b>verbose_ctcp</b><br />
+<b>nickflood</b><br />
+<b>cloak</b><br />
+<b>operview</b><br />
+<b>shitlist</b><br />
+<b>kick_ops</b><br />
+<b>annoy_kick</b><br />
+<b>userlist</b><br />
+<b>hacking</b><br />
+<b>nick_completion</b><br />
+<b>auto_rejoin</b><br />
+<b>aop</b><br />
+<b>auto_away</b><br />
+<b>auto_reconn</b><br />
+<b>bitch</b><br />
+<b>dcc_fast</b><br />
+<b>kick_if_ban</b><br />
+<b>ftp_grab</b><br />
+<b>mircs</b><br />
+<b>http_grab</b><br />
+<b>display_ansi</b><br />
+<b>timestamp</b><br />
+<b>log</b><br />
+</code>
+<br><br>
+<i><b>How do I show the topic of the channel in a status bar at the top of my term in BitchX?</b></i><br>
+<code>type the following commands...<br />
+<br />
+/window split on<br />
+/window set * status_format3 %C %+ %-<br />
+<br />
+<br />
+<br />
+     - Contributed by |Rain|</code>
+<br><br>
+<i><b>BitchX windowing (/window)</b></i><br>
+<code>BitchX has the ability to create windows which you can use for different purposes.<br />
+<br />
+Example: /window new double on hide channel #BitchX<br />
+<br />
+/window new (create a new split window)<br />
+/window new hide (create a new hidden window)<br />
+/window kill (gets rid of current window)<br />
+/window double [on|off] (turns on or off double status bar)<br />
+/window channel [#channel] (Join #channel in current window)<br />
+/window bind [#channel] (Binds #channel to current window)<br />
+/window unbind [#channel] (Unbinds #channel from current window)<br />
+/window level [level] (Only show LEVEL messages in window)<br />
+/window move [number] (Move current window to window number [number])<br />
+/window size [lines] (Sets current window to # lines)<br />
+/window swap [window] (Swap to window number [window])<br />
+/window next (Move to the next window)<br />
+/window previous (Move to the previous window)<br />
+/window balance (Balances the displayed windows)<br />
+/window fixed [on|off] (Turns window sizing options on/off)<br />
+/window hide_others (Hides all windows except the current one)<br />
+/window log [on|off] (Turns on/off logging for current window)<br />
+/window server [servername] (Connect to a new server in current window)<br />
+/window discon (Disconnect window from a server)<br />
+/window show [num] (Makes window [num] visible, also a way to swap back to the top window of a splitted window)<br />
+/window split [on|off] (Turn on/off the thrid status line on top of screen (topic))<br />
+/window show_all (Makes all hidden windows visible)<br />
+/window grow [#] (Grow a split window by # of lines)<br />
+/window shrink [#] (Shrink a split window by # of lines)<br />
+/window back (Will swap you back one window, or to the lower window in a split window screen)<br />
+<br />
+Available window levels are listed below, along with what they catch:<br />
+<br />
+CRAP (anything that doesn't fix in other levels, like whois, who, etc)<br />
+WALLS (IRCop /wallop messages)<br />
+SNOTES (Server Notices)<br />
+USERLOG1,2,3,4 or 5 (???)<br />
+KILL (Kill messages)<br />
+KICKUSER (Kick messages)<br />
+TOPIC (Topic messages)<br />
+PUBLIC (Public channel messages)<br />
+WALLOPS (Channel WALLOP messages)<br />
+ACTIONS (/me type actions)<br />
+BEEP (Any text with ^G BEEP character)<br />
+MODEUSER (User mode changes)<br />
+MODECHAN (Channel mode changes)<br />
+PARTS (Channel parts)<br />
+JOIN (Channel joins)<br />
+HELP (Any type of help messages)<br />
+MSGS (/msg type messages)<br />
+NOTES (????)<br />
+DCC (DCC messages)<br />
+TCL (Messages from the TCL subsystem)<br />
+INVITES (Invitations to other channels)<br />
+NOTIFY (Notify messages, ie: user is online, etc)<br />
+NOTICES (/notice type messages)<br />
+OPNOTES (IRCop Notifications)<br />
+CTCP (CTCP messages, ie: ping, version, etc)<br />
+SEND_MSG (Sent /msg's to other users)<br />
+KICK (Channel kicks)<br />
+DEBUG (Internal Debug messages, when /set debug 1)<br />
+<br />
+<br />
+[window shortcuts]:<br />
+     ^W- - Shrinks current window 1 line<br />
+     ^W+ - Grows current window 1 line<br />
+     ^Wm - Moves current window down 1 line<br />
+     ^Wl - Lists current windows<br />
+     ^Wk - Kills current window<br />
+     ^Wh - Hides current window<br />
+     ^Wb - Balances window sizes<br />
+     ^Wn - Swaps to next window<br />
+     ^Wp - Swaps to previous window<br />
+      /# - Shows window number (1-4)<br />
+<br />
+<br />
+</code>
+<br><br>
+<i><b>How do I change the length of nickname displayed by who and scan commands?</b></i><br>
+<code>The length of nickname is controlled by a number of FSET variables:<br />
+<br />
+/FSET WHO %Y$[10]0 %W$[15]1%w %c$[3]2 %w$3%R@%w$4 ($6-)<br />
+/FSET NAMES_BOTCOLOR %K[%C$0%G$[15]1%K]<br />
+/FSET NAMES_OPCOLOR %K[%C$0%n%B$[15]1%K]<br />
+/FSET NAMES_VOICECOLOR %K[%Mv%B$[15]1%K]<br />
+/FSET NAMES_SHITCOLOR %K[%C$0%n%R$[15]1%K]<br />
+/FSET NAMES_FRIENDCOLOR %K[%C$0%Y$[15]1%K]<br />
+/FSET NAMES_NICKCOLOR %K[%B $[15]1%K]<br />
+<br />
+Either run the above commands and /save to change permanently ( remembering to have ^load BitchX.formats in your .bitchxrc file ) or alternatively put the above commands in a file in your .BitchX folder and load it interactively with /load <nameofscript><br />
+<br />
+--<br />
+Submitted by BinGOs (chris@bingosnet.co.uk) on Wed Sep 24 1:59:30 MDT 2003<br />
+Submission approved by tilt on Wed Oct 1 4:00:40 MDT 2003</code>
+<br><br>
+<i><b>BitchX and TCL</b></i><br>
+<code>Yes! BitchX supports TCL scripts.<br />
+<br />
+You need to download the OS specific tcl.o from <a href="ftp://ftp.bitchx.org/">ftp.bitchx.org</a> and put it in your source directory, modify the Makefile, and recompile.<br />
+<br />
+Most TCL scripts will run out-of-the-box on BitchX, although some need modifications to work.<br />
+<br />
+Why isn't tcl.c public?  Cause we don't want it to be! =)<br />
+<br />
+If you need  tcl.o for an operating system not currently supported, ask an op in #BitchX on EFnet and we'll see what we can do.</code>
+<br><br>
+<b>[FAQ Section 3 :: <b>BitchX for Windows 95/98/NT/2K/ME/XP]</b></b>
+<br><br>
+<i><b>Where can I get BitchX for Windows 95/98/NT?</b></i><br>
+<code>To get BitchX for Windows, you need to go to <a href="http://www.bitchx.org/download.php">http://www.bitchx.org/download.php</a> and look for the Precompiled i386 Win 95/98/NT version.  Alternativley you could try ftp://ftp.bitchx.org/.  The latest version of BitchX for Windows is 1.0c11 unless you are running Cygwin.<br />
+<br />
+If you are running Cygwin on your Windows machine you can download the source and compile it under your Cygwin shell.<br />
+<br />
+If you choose this option you would compile it the same way as on a UNIX system since Cygwin is a simulated UNIX environment.<br />
+<br />
+For information about Cygwin go to http://www.cygwin.com/<br />
+<br />
+You could also join #BitchX on EFNet and type "/ctcp #BitchX cdcc list" to see if anyone is offering it.</code>
+<br><br>
+<i><b>BitchX environment variables under Windows.</b></i><br>
+<code>The variables that you can set under Windows are pretty the same as those you set under Unix.<br />
+<br />
+In DOS/the Windows command line, type "set VARIABLE=<value>" to set these.  You can also set them in NT (XP, 2000, etc) in your "My Computer" properties under Advanced>Environment Variables.<br />
+<br />
+HOME                 - Your home directory.<br />
+IRCNICK              - Your nickname.  As usual, overridden by a commandline argument.<br />
+IRCUSER              - Your username.<br />
+IRC_HOST, IRCHOST    - Virtual hostname.  See section 6 for details.<br />
+IRCNAME              - Real name or GECOS field.<br />
+IRCSERVER            - Server(s) separated by spaces to use, in the format irc.host.com:port[:password]<br />
+IRCPORT              - Default port to look for an IRC server on.  The standard (and BitchX's default) is port 6667.<br />
+IRCUMODE             - Default usermode.<br />
+IRCRC                - Where to look for .ircrc.<br />
+<br />
+<br />
+By popular demand, here is an example batch file for windows, it sets some various env variables and then starts BitchX, lines preceded with REM are comments:<br />
+@ECHO OFF<br />
+<br />
+REM This is your realname.<br />
+SET IRCNAME=BitchX for Windows User<br />
+<br />
+REM This is a list of servers to connect to, separated by a ":". If the first<br />
+REM one can't be connected to, then the next one is used, and so on.<br />
+SET IRCSERVER=irc.primenet.com:irc.cs.cmu.edu:irc.mindspring.com<br />
+<br />
+REM This is your username or ident.<br />
+SET IRCUSER=WinBXuser<br />
+<br />
+REM This is your nickname.<br />
+SET IRCNICK=WinBitchX<br />
+<br />
+REM This is your usermode.<br />
+SET IRCUMODE="+iw"<br />
+<br />
+REM REM This is the vhost you want to use, if applicable.<br />
+REM SET IRCHOST="WinBitchX.com"<br />
+<br />
+REM This is the name/path of the BitchX executable to run.<br />
+REM -c #BitchX (joins #BitchX on startup)<br />
+REM -l bx-rc (load bx-rc on startup)<br />
+BitchX -c #BitchX -l bx-rc<br />
+</code>
+<br><br>
+<i><b>Can I still use ~/.bitchxrc in Windows?</b></i><br>
+<code>NO! The Windows equivilant to UNIX's "~/.bitchxrc" is "bx-rc" placed in the $HOME directory.  You can still use the same commands in here though.<br />
+There is an example .bitchxrc by power called "example-.bitchxrc" located in the 'doc' directory in your BitchX folder.<br />
+<br />
+</code>
+<br><br>
+<i><b>How can I set my own quit messages in Windows?</b></i><br>
+<code>In the ~/bx-conf directory there is a file called "BitchX.quit" with a<br />
+huge list of quit messages, I think they were created by BlackJac.<br />
+Delete all these and put a few or just one of your own in.  Or, if you don't have that, go into BitchX and type "/set default_reason <quit msg>" or just create the "BitchX.quit" file.<br />
+NOTE: There is also a file called "BitchX.kck" this contains random kick messages.</code>
+<br><br>
+<i><b>How do I load a script?</b></i><br>
+<code>In BitchX type "/load /path/to/script" if the script is in your $HOME<br />
+directory then just type "/load ~/scriptname.bx" or if you want the<br />
+script to load everytime you start BitchX then add this to your .bitchxrc<br />
+<br />
+This command loads the Cypress script by void and codelogic<br />
+<br />
+^load ~/cyp/cyp.bx<br />
+<br />
+Note: Some scripts like cypress have a required place to be unpacked.  In the case of cypress the above directory location is the only place where it will load and then run properly from.  Please read the docs with your script if any at all.</code>
+<br><br>
+<b>[FAQ Section 4 :: <b>PMBitchX (OS/2)]</b></b>
+<br><br>
+<i><b>What is PMBitchX, and where do I get it?</b></i><br>
+<code>      PMBitchX is an OS/2 Graphical User Interface (GUI) port of the original<br />
+      BitchX by panasync.  Many of the GUI enhancements are based on the OS/2<br />
+      client OpenChat.  The current features are: multiwindows, resizeable<br />
+      windows, font's configurable, scriptable pulldown menus, full BitchX<br />
+      script compatibility, floatable nicklist window, properties notebook,<br />
+      file font and popup dialogs, and multimedia enhancements (sound).<br />
+<br />
+      You can obtain the latest version from<br />
+      www.BitchX.org or ftp.BitchX.org<br />
+<br />
+</code>
+<br><br>
+<i><b>How do I change my default irc nickname and username?</b></i><br>
+<code>     These are set by environment variables, the four most important variables<br />
+      are IRCNICK, IRCNAME, USER and HOME.  If you are using BETA 3 and up the<br />
+      installation program should have set these for you.  Otherwise you will<br />
+      have to put these variables in your CONFIG.SYS, or edit the PMBITCHX.CMD<br />
+      file and use that to start your IRC session.<br />
+<br />
+</code>
+<br><br>
+<i><b>How do I load the nick list?</b></i><br>
+<code>     At the input prompt type /loaddll nicklist, and then type /nl to activate<br />
+      the nicklist window.  In the current version of the nicklist plugin, run<br />
+      /nl only once, because the second time you run /nl it should close the<br />
+      window, but it does not do it correctly so you won't be able to get the <br />
+      nicklist back.<br />
+<br />
+</code>
+<br><br>
+<i><b>There are no menus, what do I do?</b></i><br>
+<code>At the input prompt type /load bxmenu.bx, this will load the default <br />
+      PMBitchX script adding all the functionality most users desire.<br />
+<br />
+</code>
+<br><br>
+<i><b>How can I load a script and/or plugins at startup?</b></i><br>
+<code>      Go to the HOME directory pointed to by the HOME environment variable, and<br />
+      create a file called bx-rc, this is the equivalent to .bitchxrc in UNIX.<br />
+      In that file enter the commands to load the dll's and scripts you desire.<br />
+<br />
+</code>
+<br><br>
+<i><b>The UNIX filenames don't work in PMBitchX, what is wrong?</b></i><br>
+<code>Due to filename restrictions on FAT systems the BitchX filenames have<br />
+      been shortened for OS/2 and Windows 9x/NT.<br />
+<br />
+</code>
+<br><br>
+<b>[FAQ Section 5 :: <b>gtkBitchX (X Windows)]</b></b>
+<br><br>
+<i><b>What is gtkBitchX, and where do I get it?</b></i><br>
+<code>gtkBitchX is a port of PMBitchX to X/Windows using the gtk (Gimp Toolkit) windowing library.  It includes all the features of PMBitchX, except in a UNIX environment.<br />
+<br />
+The source code for gtkBitchX is included in the distributed source for BitchX.<br />
+<br />
+You can get gtkBitchX from www.bitchx.org, ftp.bitchx.org or on #BitchX EFNet, do this: /ctcp #bitchx cdcc list<br />
+<br />
+</code>
+<br><br>
+<i><b>What is needed to compile gtkBitchX from scratch?</b></i><br>
+<code>   To compile gtkBitchX from scratch you will need the following: GTK 1.2.0,<br />
+      ZVT from gnome-libs 1.0.12, imlib 1.9.4 and pthreads.  glibc 2.1 or<br />
+      higher is recommended if on Linux.<br />
+<br />
+As a small side note, on more modern systems, gnome does not store it's include files in the same place as they did before gnome-2, so there is a slight trick you may have to do, if you get a weird string of errors such as this: gtkbitchx.c:6:25: zvt/zvtterm.h: No such file or directory, what you have to do is: ln -s /usr/include/gnome-1.0/zvt BitchX/include/zvt, or whereever your distrobution puts it usaly is /usr/include/gnome-1.0, this will be fixed in c20</code>
+<br><br>
+<i><b>It looks like normal BitchX, shouldn't it have menus?</b></i><br>
+<code>  The GUI features are scripted.  There is a file called menu.bx in the doc<br />
+      directory in the package (~/BitchX/doc).  To get the menus copy menu.bx<br />
+      into your home directory and type /load ~/menu.bx in BitchX.<br />
+<br />
+</code>
+<br><br>
+<i><b>Characters look strange. How do I fix it?</b></i><br>
+<code>   Install a vga compatible font such as vga.pcf and then do this:<br />
+      /set DEFAULT_FONT vga | /save | /window font vga <br />
+<br />
+   If that doesn't work, do this:<br />
+      /EVAL XECHO -r $chr(27)(U</code>
+<br><br>
+<i><b>How do I paste?</b></i><br>
+<code> When menu.bx is loaded there are paste options on the BitchX pulldown<br />
+      menu and also on the popup menu.  Or you use the command /pmpaste.<br />
+<br />
+</code>
+<br><br>
+<i><b>I am writing a script and want to use the gtk features, where do I look for information?</b></i><br>
+<code> There are doc's in the BitchX-docs project (~/BitchX/bitchx-docs) which<br />
+      will give you the info needed, to view them in gtkBitchX type /ehelp.<br />
+<br />
+</code>
+<br><br>
+<i><b>After installing gtkBitchX I run console BitchX and some keys don't work, what's going on?</b></i><br>
+<code> You are probably loading menu.bx in your .bitchxrc.  Since gtkBitchX (and<br />
+      menu.bx) make use of key bindings that don't exist in console BitchX <br />
+      problems can occur.  Remove the ^load menu.bx from your .bitchxrc when <br />
+      using console BitchX. <br />
+<br />
+</code>
+<br><br>
+<i><b>How do I detach and reattach to a IRC session without using screen?</b></i><br>
+<code>In most cases people will tell you to use screen when possible.  We would agree that screen would be more suited for most users.<br />
+<br />
+While in your IRC session if you type /detach, BitchX will be put in the backround and you can disconnect from your shell and return later to resume your IRC session.<br />
+<br />
+To resume your IRC session simply type 'scr-bx' and it will reattach you to your screened off IRC session.<br />
+<br />
+Also note: In some cases if a machine is rebooted while you have a session backrounded, you might need to use 'scr-bx -w' to wipe all the old sessions so that you don't have a conflict later when attempting to reattach to your running sessions.  Each session when put into the backround will have an identifier file placed in your home directory under .BitchX/screen/<br />
+<br />
+example:  63366.ttyp1.subzero<br />
+<br />
+If you have multiple BitchX IRC sessions running you would simply use 'scr-bx 63366' and it would reconnect to that particular IRC session.</code>
+<br><br>
+<i><b>How do I list channels on a network.</b></i><br>
+<code>By default doing /list returns an error message due to most networks having a large number of channels.<br />
+<br />
+If you wish to bypass this you can /list -YES<br />
+<br />
+You can list by specific channels doing: /list -name *channel*<br />
+<br />
+Remember, channels that are +s will not show up in this listing so you won't always see ALL channels with a string matching your specific text.</code>
+<br><br>
+<i><b>How do I turn colors off in BitchX?</b></i><br>
+<code>This command will turn off the ability to see colors that are not standard.  <br />
+<br />
+(note: This does not change or disable the standard colors of the BitchX client)<br />
+<br />
+/set mircs off</code>
+<br><br>
+<b>[FAQ Section 6 :: <b>Commonly asked questions]</b></b>
+<br><br>
+<i><b>What is bxglobal, and where do I get it?</b></i><br>
+<code>Unless you are root, you won't have to worry about bxglobal. BitchX runs fine without it.  What is it?  Nothing more than a global .bitchxrc.<br />
+<br />
+</code>
+<br><br>
+<i><b>What are ~/.bitchxrc and ~/.ircrc, and how are they different?</b></i><br>
+<code>.bitchxrc and .ircrc are both startup files written in the scripting language.  They are both loaded up by BitchX automatically.  What are the differences?<br />
+<br />
+~/.ircrc is loaded by all ircII-based clients, and you should only put things compatible with basic ircII scripting in it.<br />
+<br />
+~/.bitchxrc is loaded only by BitchX, and you should put all BitchX-specific scripting in here.<br />
+<br />
+So that you are clear:  ~/ means your home directory.  You cannot place this file in another location an expect it to work unless you issue the -l or -L command line argument.  For more info about the command line options use the -h switch to show you a list of options you can pass to BitchX when starting it up.<br />
+<br />
+Please note: for BitchX to load the .bitchxrc or .ircrc file they cannot be executable.  chmod 644 .bitchxrc or .ircrc so that BitchX will load them correctly.<br />
+<br />
+Note that if the only client you run is BitchX, the above is purely aesthetic and you may do whichever you wish.  However, if you run any other ircII client, putting BitchX-specific scripting in ~/.ircrc may cause you problems.</code>
+<br><br>
+<i><b>What are the color codes in BitchX? How do I use them?</b></i><br>
+<code>%K - Dark Gray<br />
+%k - black<br />
+%G - bold green<br />
+%g - dark green<br />
+%Y - yellow<br />
+%y - brown<br />
+%C - bold cyan<br />
+%c - cyan<br />
+%B - bold blue<br />
+%b - blue<br />
+%P and %M - bold purple/magenta<br />
+%p and %m - and purple/magenta<br />
+%R - bold red<br />
+%r - red<br />
+<br />
+ %n - null color (will nullify colors before it)<br />
+<br />
+%0 %1 %2 %3 %4 %5 %6 %7 %8 %9   - background colors<br />
+<br />
+%F flashing foreground<br />
+<br />
+%U underline text.<br />
+<br />
+To set color in formatting and status (/set FORMAT_* and /set STATUS_*), you don't need to do anything special.  To use colors in echo, say, etc., try using /eval echo $cparse("%Bblue%n") and so forth.  <i>Note for scripters: the BitchX version of $cparse() REQUIRES the quotes, whereas the EPIC version does not.</i><br />
+<br />
+For a complete list of formats in BitchX type /fset<br />
+<br />
+This will output a list of all current formats that you can modify from within the client.  If you wish for these settings to be saved you should create a file that you load on startup that sets your formats.</code>
+<br><br>
+<i><b>How do I script in BitchX?</b></i><br>
+<code>To script, you should have at least some experience using the client so you know how things SHOULD react, etc, etc.  There is no designated  "guide" to scripting, just look at the scripts that come with the BitchX source, or ircII scripts that you already have/can get.<br />
+<br />
+On the second question. First of all, try looking in BitchX.help (/bhelp). If it's not in there, try the base ircII help file. Also, look in scripts and see if you can try figure out the syntax/arguments a particular command  should have. Check and see whether it is a script defined function. Try reading the script to see whether it is defined in there.  If you're too lazy to do that you might try /load'ing the script and comparing the /load'ed script's output with that of the default output.<br />
+(/eval echo $func(args) and /command).  If it's definitely an "undocumented feature", e.g. you can't find out what its' use is, ask in the channel, someone may be able to help.</code>
+<br><br>
+<i><b>What are the environment variables I can set before starting BitchX?</b></i><br>
+<code>This depends on which unix shell you run. For sh based shells, you would simply use:<br />
+        bash:~$ export VARIABLE="value"<br />
+<br />
+and for csh based shells:<br />
+        > setenv VARIABLE="value"<br />
+<br />
+        Variable        Value<br />
+        IRCSERVERS      "server:port server2:port2 server3:port3" <br />
+        IRCNICK         "nickname"<br />
+        IRCNAME         "hi, I'm no longer too lame to read BitchX.doc!"<br />
+        IRC_HOST        "virtual hostname here" (see sec. 3.7 for details)<br />
+<br />
+</code>
+<br><br>
+<i><b>Can I spoof/change my hostname with BitchX?</b></i><br>
+<code>Spoofing: NO.  BitchX is not, and never has been, a spoofer.<br />
+<br />
+Virtual hosts:  Yes.  There are multiple ways that BitchX can bind to legitimate IP addresses that are already configured for your system.  You can choose what hostname you want by starting BitchX with the -H <hostname> option, or setting the environment variable IRCHOST.  From within BitchX, you can do /irchost or /hostname without any arguments and BitchX will automatically attempt to list the hostnames your machine thinks that it's configured for, although sometimes this will fail.  Adding an argument will tell it which hostname/IP to bind to.<br />
+<br />
+If you do not know if your shell has virtual hosts on it, try listing them.  If that doesn't work, but you still think it has hostnames on it, ask your administrator.  DO NOT ASK IN #BitchX.  If you are your own administrator and still do not know if you can use virtual hosts,  I suggest that you read some books, or hire someone that knows something. :)</code>
+<br><br>
+<i><b>How do I make BitchX join a channel automatically?</b></i><br>
+<code>Simple.<br />
+<br />
+/ajoin #channel<br />
+/save<br />
+<br />
+BitchX will then join that channel after connecting to a server.<br />
+<br />
+TIP: To remove /ajoin channels, simply use /unajoin #channel, and then /save once again.<br />
+<br />
+TIP#2: To add channels to your ajoin list with keys, simply use /ajoin #channel channelkey<br />
+<br />
+BUG: There is currently a bug in Section 8 which you should be aware of in case ajoin isn't "working" when you are /kill'd by an operator on a network.</code>
+<br><br>
+<i><b>Explaining the status bar</b></i><br>
+<code>On the right-hand side, you see: [U:a:S:b:h], this gives you a quick look at some of the options that are turned ON and off in BitchX. An uppercase letter means the option is on, while a lowercase letter means the option is off.<br />
+        U=userlist, a=autoop S=shitlist b=bitch h=hacking.<br />
+<br />
+        When you join a channel, you see something like:<br />
+        [O/35 N/128 I/4 V/0 F/0], this gives you a quick overview of the status of the people in the channel.<br />
+        O = number of ops in the channel<br />
+        N = number of non-ops in the channel<br />
+        I = number of IRCOps in the channel<br />
+        V = number of voiced users in the channel<br />
+        F = number of people on your friend's list in the channel</code>
+<br><br>
+<i><b>Adding users using /adduser</b></i><br>
+<code>/adduser nick #channel friend,i_ops<br />
+/cset * aop on<br />
+/set aop on<br />
+/save<br />
+<br />
+i_ops will perform the desired action immediately upon the user joining a channel.   I_OPS doesn't actaually mean give the user OPS on the channel.<br />
+<br />
+Examples of this would be:<br />
+OPS,I_OPS would instantly give OPS to a user<br />
+VOICE,I_OPS would instantly give VOICE to a user (NOT OPS)<br />
+<br />
+more than one #channel may be specified by separating each channel by a comma:<br />
+/adduser nick #channel1,#channel2,#etc friend,i_ops<br />
+<br />
+To add a user for all channels, use a * for the channel.<br />
+<br />
+Available user flags (/bhelp userlevels):<br />
+<br />
+BAN -        Bans offender who bans a protected user<br />
+BOT -        Creates a bot entry in userlist(/addbot replacement)<br />
+DCC -        Allows a users dcc to auto-get regardless of whether /set dcc_autoget is Off or On<br />
+DEOP -       Deops offender who deops a protected user<br />
+FLOOD -      AllowS Flood checking to be turned off on a user<br />
+INVITE -     Allows a user to invite themself to a channel your in via CTCP<br />
+I_OPS -      Allows a user to be instantly opped upon joining a channel they are protected in (NOT RECOMMENDED)<br />
+KICK -       Kicks offender who bans/kicks protected user<br />
+OPS -        Allows a user to be opped via CTCP/deleyed ops<br />
+PBAN -       When a user is banned from a channel they are protected on, they are automatically un-banned<br />
+PINVITE -    When a user is kicked from a channel they are protected on, they are automatically re-invited back<br />
+REOP -       When a user is deopped from a channel they are protected on, they are automatically re-opped<br />
+UNBAN -      Allows a user to remotely unban his/herself via CTCP<br />
+VOICE -      Auto-voice on join<br />
+FRIEND -     Combination of: VOICE,OPS,UNBAN,INVITE<br />
+MASTER -     Combination of: VOICE,OPS,BAN,UNBAN,INVITE,DCC,FLOOD<br />
+OWNER -      Combination of: MASTER,KILL,DIE,BOT<br />
+<br />
+Shitlist levels:<br />
+     1 -          Deop user at all times<br />
+     2 -          Kick user when they join the channel<br />
+     3 -          Ban/Kick user when they join the channel<br />
+     4 -          Ban user at all times<br />
+     5 -          Perm ignore ALL from user<br />
+<br />
+<br />
+To remove users on your /userlist type /unuser nick|nick!ident@host #channel</code>
+<br><br>
+<i><b>How can I change the version reply?</b></i><br>
+<code>/fset format_version Hi, this is my new version reply.<br />
+<br />
+You can easily change nearly all the responses that BitchX gives. Type /fset for a complete list of format's that you can change. You can use either % color codes (see section 6, this is preferred), ANSI color codes, or ^C color codes in most of the formats.</code>
+<br><br>
+<i><b>How can I turn on time stamping?</b></i><br>
+<code>Easy..<br />
+/toggle time_stamp<br />
+or.<br />
+/set timestamp on<br />
+then <br />
+/save<br />
+</code>
+<br><br>
+<i><b>Can I play audio CD's in BitchX?</b></i><br>
+<code>Yes, you can.  Before you compile BitchX, modify the Makefile and turn on the CDROM features.<br />
+<br />
+Use the following commands in BitchX to control the cdplayer:<br />
+/cdplay   /cdpause   /cdstop   /cdvol   /cdlist   /cdeject<br />
+<br />
+</code>
+<br><br>
+<i><b>What do setupterm/tgetent/tputs errors during compile mean?</b></i><br>
+<code>All this means is that you need to install the ncurses package from <a href="http://www.gnu.org/software/ncurses/ncurses.html">http://www.gnu.org/software/ncurses/ncurses.html</a>.<br />
+<br />
+If you are using an os that supports packaging systems (.rpm, .deb) then be sure to install not only ncurses, but also ncurses-devel.<br />
+<br />
+Re-run ./configure and you should be set.</code>
+<br><br>
+<i><b>Does BitchX support IPV6?</b></i><br>
+<code>Yes.  For certain it is supported under Linux and FreeBSD.  In FreeBSD you can use the ports version of BitchX and specify that you wish to use IPV6 by doing 'cd /usr/ports/irc/bitchx/ && make WITH_IPV6=yes && make install clean' and it will build and install BitchX with IPV6 support.<br />
+<br />
+FreeBSD users be aware: When you compile the port version with IPV6 enabled the IPV4 connections do not work.  It would be advised to not build from the port and use the CVS version then apply the patches from the c19 port which apply to IPV6.  If you don't know which files or how to do this stick to the port and enjoy.<br />
+<br />
+Under Linux, after you unpack the tarball you would 'cd BitchX/ && ./configure --enable-ipv6 && make && make install'.<br />
+<br />
+For users of FreeBSD that wish to use the current CVS version of BitchX (1.0c20) the patches for 1.0c19 in the port directory apply cleanly and can allow you to build BitchX with IPV6 support with the same steps as with Linux by replacing 'make' with 'gmake'.<br />
+<br />
+Other operating systems that support IPV6 support for BitchX have not been reported at this time.  If you have patches for other operating systems to help BitchX support IPV6 please feel free to post a notice at http://www.cyberpunkz.org/ under the BitchX forum.<br />
+<br />
+To connect to IPv6 servers by IP, follow the address with a ,<br />
+<br />
+example: /connect 2001:510:0:13::,<br />
+</code>
+<br><br>
+<i><b>How do I set my own list of IRC servers?</b></i><br>
+<code>In your home directory create a file called .ircservers<br />
+<br />
+In that file you would create the list of servers as follows:<br />
+<br />
+irc.mindspring.com<br />
+irc.vrfx.com<br />
+irc.he.net<br />
+<br />
+etc...<br />
+<br />
+Servers can be optionally followed by any of port, password and nick, using the format:<br />
+<br />
+server:port:password:nick<br />
+</code>
+<br><br>
+<i><b>How do i protect ops like me from being kicked at mirc colors?</b></i><br>
+<code>/set kick_ops off will protect ops from not being kicked when they do annoying things that my BitchX kick.<br />
+/set annoy_kick on will kick on CAPS and mirc colors on channel except those protected.<br />
+<br />
+--<br />
+Submitted by Petre Daniel dnai@Undernet#BitchX (dani@linux.zone.ro) on Sat Dec 21 10:22:57 EST 2002<br />
+Submission approved by tilt on Sat Dec 21 13:13:19 EST 2002</code>
+<br><br>
+<i><b>How does BitchX's /timer work?</b></i><br>
+<code>Usage:<br />
+/timer [-del #] [-ref #] [-rep #] &lt;delay&gt; &lt;command&gt;<br />
+- To delete an active timer, type /timer -del &lt;refnum&gt;<br />
+- To make a timer loop indefinately, type /timer -rep -1 &lt;delay&gt; &lt;command&gt;<br />
+<br />
+Note &lt;delay&gt; is in seconds.<br />
+<br />
+Example:<br />
+To make a timer to "/msg nick hi" every 10 seconds, you would:<br />
+/timer -rep -1 10 /msg nick hi<br />
+<br />
+to delete that timer, use /timer by itself to list active timers,<br />
+get the RefNum of the timer you want to delete, and use /timer -del #<br />
+</code>
+<br><br>
+<i><b>How do I autoop someone?</b></i><br>
+<code>/set aop on <br />
+/cset <channel> aop on<br />
+/set userlist on<br />
+/cset <channel> userlist on<br />
+/adduser <nick> [optionally add '-ppp' for dynamic IPs] <channel> OPS,I_OPS (cannot have a password set)<br />
+<br />
+Useful things to read:  /bhelp userlevels, /bhelp adduser, and /bhelp ctcp<br />
+<br />
+Read carefully. :)<br />
+</code>
+<br><br>
+<i><b>DCC Settings (Autoget, download paths, etc)</b></i><br>
+<code>To autoget dcc sends, type /toggle dcc_autoget<br />
+To set your DCC download path, type /set dcc_dldir /path/to/dir<br />
+<br />
+If you want to automatically rename files downloaded with the same<br />
+name as a file that is already in your DCC_DLDIR path, type /set dcc_autorename on<br />
+<br />
+To resume DCC downloads, type /set dcc_autoresume ON<br />
+<br />
+To limit the size of files, in bytes, that you will automatically get,<br />
+you can type /set dcc_max_autoget_size 2000000 - This will set your max<br />
+autoget filesize to 2MB.<br />
+<br />
+To limit the number of simultaneous DCC GETs you can have at one time,<br />
+you can /set dcc_get_limit # - Where # is the max you want to have.  Set<br />
+this to 0 to have unlimited (the default)<br />
+<br />
+You can force the port DCC will use, in newer versions of BitchX, by<br />
+using /set dcc_force_port port_num  - Where port_num is the port you <br />
+want to use for DCC SENDs and DCC GETs.<br />
+<br />
+If you are behind a firewall/NAT, you can set your DCC IP address by<br />
+using /set dcc_use_gateway_addr YES<br />
+<br />
+For a complete list of all DCC /set variables, type /set dcc and it<br />
+will give you a list of all variables beginning with dcc* that you <br />
+are able to set.<br />
+<br />
+As always, don't forget to /save after you make changes.<br />
+</code>
+<br><br>
+<i><b>How can I make BitchX create a new window for each channel I join?</b></i><br>
+<code><pre><br />
+BitchX will allow you to easily create new hidden windows for each channel you join.<p>The ability to do so is already built into the client. Follow the steps below.<br />
+1. Add the following two lines to your <b>.bitchxrc</b>:<p>	<font color=blue>set join_new_window on<p>	set join_new_window_type new hide swap last double on</font><p>   The first line turns the feature on. The second line configures the features BitchX<p>   will use when creating each new window.<p>2. Add the following line to your <b>.bitchxrc</b> (optional):<p>	<font color=blue>set window_destroy_part on</font><p>   This will kill the current window when you leave the channel in it.<p>3. Add the following line to your <b>.bitchxrc</b> (optional):<p>	<font color=blue>bind ^x parse_command window next</font><p>   This will allow you to press ^x (ctrl+x) to switch between each channel window.<br />
+The next time you start BitchX, each channel will go into its own window.</pre><br />
+<font face=verdana size=-1>--<br>Submitted by BlackJac on Mon Apr 7 17:18:33 EDT 2003</font></code>
+<br><br>
+<i><b>How do I switch channels when I only have one window?</b></i><br>
+<code>^X (control-X)<br />
+<br />
+<br />
+--<br />
+Submitted by By-Tor (you@better.accept.this.powuhbitch) on Fri Apr 11 11:15:14 EDT 2003<br />
+Submission approved by power on Fri Apr 11 16:59:17 EDT 2003</code>
+<br><br>
+<i><b>How do I do actions in private message and actions in queries? What's a query!?</b></i><br>
+<code>To send an action in private message, type the following:<br />
+/describe nick text<br />
+example:<br />
+/describe dovee laughs<br />
+<br />
+A query is something that you start to send messages to a person without typing msg.  <br />
+To start a query type:<br />
+/query nick<br />
+example:<br />
+/query dovee<br />
+<br />
+To end a query type:<br />
+/query<br />
+<br />
+To send an action in a query, type the following:<br />
+/qme text<br />
+example:<br />
+/qme laughs</code>
+<br><br>
+<i><b>oops messaging can be helpful for mis-messaging someone</b></i><br>
+<code>when you talk in message to more then one person it can get confusing.  If you send a message to the wrong person the first time, you can easily send the same message to the right person.<br />
+<br />
+To use this command, type the following:<br />
+/oops nick<br />
+<br />
+Example:<br />
+/msg dove Hey how you doing?!<br />
+<br />
+WOOPS!  sent that to the wrong person<br />
+<br />
+/oops dovee<br />
+<br />
+The user dovee will get the message, "Hey how you doing?!"</code>
+<br><br>
+<i><b>How do I remove bold from my nick completion colon?</b></i><br>
+<code>Alot of people don't like the bold colon which is standard for BitchX nick completion. To change it, type simply:<br />
+<br />
+/fset format_nick_comp $0:$1-<br />
+<br />
+Followed by:<br />
+<br />
+/save</code>
+<br><br>
+<i><b>auto ignore disable</b></i><br>
+<code>I talk to someone who just types fast... how do I stop my client from auto-ignoring them?<br />
+<br />
+Make sure you unignore them...<br />
+/tig *<br />
+Then turn off your auto-ignore feature...<br />
+/set flood_prot off<br />
+<br />
+And for something completely not documented. <--(Thanks BlackJac)<br />
+You are able to turn off auto ignore for individual users<br />
+/addnoflood nickname<br />
+To review the list of people on this list just type the command alone...<br />
+/addnoflood<br />
+To delete the people off this list... we will add this later when we figure it out!<br />
+<br />
+</code>
+<br><br>
+<i><b>How can i auth to X service on Undernet?</b></i><br>
+<code>using this small tweak in your .bitchxrc file:<br />
+<br />
+on -connect "Undernet" {<br />
+/msg x@channels.undernet.org login USERNAME PASSWORD<br />
+/umode +iwx<br />
+}<br />
+<br />
+this will authenthicate you with USERNAME and PASSWORD on Undernet network but you can adjust the "Undernet" network name to another or just to "*" for all :)<br />
+then you can change your mode to USERNAME.users.undernet.org on Undernet or another thing on other networks.<br />
+<br />
+<br />
+--<br />
+Submitted by Petre Daniel (dani@linux.zone.ro) on Tue May 13 21:05:46 EDT 2003<br />
+Submission approved by power on Sun May 25 22:47:32 EDT 2003</code>
+<br><br>
+<i><b>How do I change timestamps to display in 24 hour format?</b></i><br>
+<code>/set TIMESTAMP_STRING [%H:%M]<br />
+<br />
+see strftime(3) for more options</code>
+<br><br>
+<i><b>DCC Chat</b></i><br>
+<code>to start a dcc chat with someone type <br />
+/dcc chat nick<br />
+<br />
+if you recieve a dcc chat request you have two options<br />
+you can type:<br />
+/chat or /nochat<br />
+-OR-<br />
+you can type:<br />
+/dcc chat nickname<br />
+<br />
+once you have established the dcc chat session, to reply to dcc msgs<br />
+you can type:<br />
+/msg =nick<br />
+<br />
+to make it stay as your active at your chat input, you can type:<br />
+/query =nick<br />
+<br />
+to end a dcc session do the following, you can type:<br />
+/dcc close chat nick (/dcc close TYPE nick)<br />
+-OR-<br />
+/dcc close #number  (make sure you have the pound sign)<br />
+<br />
+<br />
+<br />
+TIP1 - to list the TYPE, NICK, and NUMBER of dcc you have established type /dcc by itself.<br />
+<br />
+TIP2 - The difference between dcc chat messages and regular messaging is the '=' sign before the nickname... there should be no space between the two.<br />
+<br />
+<br />
+</code>
+<br><br>
+<i><b>SSL Connection</b></i><br>
+<code>Connect to an irc server using SSL by typing:<br />
+/server -ssl server</code>
+<br><br>
+<i><b>How do I lock a topic?</b></i><br>
+<code>aside from looking in /bhelp to find out your answer.<br />
+<br />
+To lock or unlock a topic:<br />
+<br />
+/tlock #channel on<br />
+<br />
+/tlock #channel off<br />
+<br />
+Your BitchX client (while op'd) will maintain the last topic that was set.</code>
+<br><br>
+<i><b>How do I bind keys (binding)?</b></i><br>
+<code>You will already have noticed that when you press the RETURN key, the message you have typed is sent to the current channel, or the command you have typed is obeyed. This is because the RETURN key is bound to the internal BitchX function SEND_LINE<br />
+<br />
+type /bind to see list of bindings in your client<br />
+<br />
+type /bind ControlKey BitchX_Function<br />
+and /save <br />
+the next time you start bitchx your bind will work....<br />
+<br />
+Here is a complete list of BIND'able functions: (little hard to read)<br />
+<br />
+Function Name	Description<br />
+AUTOREPLY	types the nick of the last person to msg you<br />
+AUTOREPLY_BACK	(commented out; a no-op)<br />
+BACKSPACE	delete left one charater in the input buffer<br />
+BACKWARD_CHARACTER	move left one charater in the input buffer<br />
+BACKWARD_HISTORY	replace the input buffer with the previous string from your input history<br />
+BACKWARD_WORD	move left to a space<br />
+BEGINNING_OF_LINE	move left to the start of the line<br />
+BLINK	insert the blink attribute (control-F)<br />
+BOLD	insert BOLD (control-b) to toggle bold on/off<br />
+CDCC_PLIST	display the offerlist to current channel<br />
+CHANNEL_CHOPS	shows ops on the current channel (see USER)<br />
+CHANNEL_NONOPS	shows non-ops on the current channel (see USER)<br />
+CHANGE_TO_SPLIT	switch server to one on the other side of a netsplit<br />
+CHELP	print the help index<br />
+CLEAR_SCREEN	clear the current window<br />
+COMMAND_COMPLETION	attempts to complete the current command based on what you've typed so far, so /cle might expand to /CLEAR for example<br />
+CPU_SAVER	who knows?<br />
+DCC_PLIST	show active DCC transfer status<br />
+DCC_STATS	show accumulated DCC transfer stats<br />
+DELETE_CHARACTER	delete under the cursor<br />
+DELETE_NEXT_WORD	delete word forward<br />
+DELETE_PREVIOUS_WORD	delete word backward<br />
+DELETE_TO_PREVIOUS_SPACE	delete bigword backward<br />
+END_OF_LINE	move to the end of input line<br />
+ENTER_DIGRAPH	enter an 8-bit character I think<br />
+ERASE_LINE	clear the whole input line<br />
+ERASE_TO_BEG_OF_LINE	delete to the start of the line<br />
+ERASE_TO_END_OF_LINE	delete to the end of the line<br />
+FORWARD_CHARACTER	move forward one character<br />
+FORWARD_HISTORY	replace the input line with the next item from your history<br />
+FORWARD_WORD	move forward one word<br />
+HIGHLIGHT_OFF	insert the highlight off character (control-o) tht cancels all highlight modes (bold, underline, flash)<br />
+IGNORE_NICK	inserts a command /ig , where is the last nick to send you a message. Press return if you want to keep the command, or delete it as if you had typed it by mistake...<br />
+JOIN_LAST_INVITE	join the channel to which you were most revently /INVITEd<br />
+META1_CHARACTER	<br />
+META2_CHARACTER	<br />
+META3_CHARACTER	<br />
+META4_CHARACTER	<br />
+META5_CHARACTER	<br />
+META6_CHARACTER	<br />
+META7_CHARACTER	<br />
+META8_CHARACTER	<br />
+META9_CHARACTER	<br />
+META10_CHARACTER	<br />
+META11_CHARACTER	<br />
+META12_CHARACTER	<br />
+META13_CHARACTER	<br />
+META14_CHARACTER	<br />
+META15_CHARACTER	<br />
+META16_CHARACTER	<br />
+META17_CHARACTER	<br />
+META18_CHARACTER	<br />
+META19_CHARACTER	<br />
+META20_CHARACTER	<br />
+META21_CHARACTER	<br />
+META22_CHARACTER	<br />
+META23_CHARACTER	<br />
+META24_CHARACTER	<br />
+META25_CHARACTER	<br />
+META26_CHARACTER	<br />
+META27_CHARACTER	<br />
+META28_CHARACTER	<br />
+META29_CHARACTER	<br />
+META30_CHARACTER	<br />
+META31_CHARACTER	<br />
+META32_CHARACTER	<br />
+META33_CHARACTER	<br />
+META34_CHARACTER	<br />
+META35_CHARACTER	<br />
+META36_CHARACTER	<br />
+META37_CHARACTER	<br />
+META38_CHARACTER	<br />
+META39_CHARACTER	<br />
+NEW_BEGINNING_OF_LINE	same as beginning_of_line but also sets the internal extended_handled variable.<br />
+NEW_SCROLL_BACKWARD	scroll the window half a screen backwards<br />
+NEW_SCROLL_END	scroll to the end (the most recent part) of the current window<br />
+NEW_SCROLL_FORWARD	scroll half a page down towards the end of the current window<br />
+NEXT_WINDOW	move to the next window<br />
+NICK_COMPLETION	the nick completion character<br />
+NOTHING	key bound to this are silently ignored<br />
+PARSE_COMMAND	not sure what this does<br />
+PREVIOUS_WINDOW	cycle through windows<br />
+QUIT_IRC	leave BitchX without any prompt or warning<br />
+QUOTE_CHARACTER	the next character you type is inserted literally<br />
+REFRESH_INPUTLINE	redraw the input buffer<br />
+REFRESH_SCREEN	refresh the entire screen<br />
+REVERSE	insert the reverse video command character (contreol-v)<br />
+SCROLL_BACKWARD	scroll the window half a screen backwards<br />
+SCROLL_END	scroll to the ens of the window"<br />
+SCROLL_FORWARD	scroll forwards half a screen in the current window<br />
+SCROLL_START	scroll to the start of the scrollback buffer in the current window<br />
+SELF_INSERT	insert the key typed<br />
+SEND_LINE	return: do the line!<br />
+SHOVE_TO_HISTORY	save the current line in the history<br />
+STOP_IRC	suspend BitchX (use fg to get it back; STOP_IRC is not always available<br />
+SWAP_LAST_WINDOW	swap the current window with the last hidden one in the list<br />
+SWAP_NEXT_WINDOW	swap the current window with the next hidden one<br />
+SWAP_PREVIOUS_WINDOW	swap the current window with the next hidden one<br />
+SWITCH_CHANNELS	talk to another channel in the same window<br />
+TAB_MSG	inserts /msg nick at the start of the buffer<br />
+TAB_MSG_BACK	autoreply<br />
+TOGGLE_CLOAK	ctcp cloaking on or off; this will give a message like CTCP Cloaking is now [Off] when you press the key (Delete on the arrowpad by default). With CTCP cloacking on, people don't get replies from you for ctcp requests like ping, version and finger.<br />
+TOGGLE_INSERT_MODE	witch between insert and overtype mode<br />
+TOGGLE_STOP_SCREEN	stop scrolling I think"<br />
+TRANSPOSE_CHARACTERS	swap the character under the cursor with the one to its left<br />
+TYPE_TEXT	in a script, this makes text appear in the input buffer. In input, it's already there, so you don't see anything.<br />
+UNCLEAR_TEXT	undoes the effect of clear!<br />
+UNDERLINE	inserts control-_, the underline start/stop character<br />
+UNSTOP_ALL_WINDOWS	resume scrolling everywehre<br />
+WHOLEFT	show who was disconnected by a netsplit in all your current channels<br />
+WINDOW_BALANCE	make the split screen windows be equally sized<br />
+WINDOW_GROW_ONE	make the current window larger<br />
+WINDOW_HELP	show the window help index<br />
+WINDOW_HIDE	hide the current window; text will continue to accumulate in the hidden window with no indication that it's there.<br />
+WINDOW_KILL	close (kill) the current window; does not part any channels.<br />
+WINDOW_LIST	list your windows<br />
+WINDOW_MOVE	swap this window with some other one<br />
+WINDOW_SHRINK_ONE	make the current window smaller<br />
+WINDOW_SWAP_1	<br />
+WINDOW_SWAP_2	<br />
+WINDOW_SWAP_3	<br />
+WINDOW_SWAP_4	<br />
+WINDOW_SWAP_5	<br />
+WINDOW_SWAP_6	<br />
+WINDOW_SWAP_7	<br />
+WINDOW_SWAP_8	<br />
+WINDOW_SWAP_9	<br />
+WINDOW_SWAP_10	<br />
+YANK_FROM_CUTBUFFER	insert the last text you deleted<br />
+</code>
+<br><br>
+<i><b>relm fun! (relay and repeat)</b></i><br>
+<code>/REL	Usage: /rel? -command # nick- command is one of the following: -kick, -wall, -notice, -msg, -wallop, -topic, -kill, -kboot, -ansi and -list- If the list supports more than one saved message then # can be from 0-9- nick can be a nick or a channel. If left off, then current channel isassumed															<br />
+/RELC	Usage: /relc- Displays the last CTCP command issued															<br />
+/RELCR	Usage: /relcr- Displays the last CTCP reply message received															<br />
+/RELCRT	Usage: /relcrt- Changes the topic to the last CTCP reply message															<br />
+/RELCT	Usage: /relct- Changes the topic to the last CTCP command issued															<br />
+/RELD	Usage: /reld- Displays the last DCC msg recieved.															<br />
+/RELDT	Usage: /reldt- Sets the topic to the last DCC message recieved.															<br />
+/RELI	Usage: /reli- Shows the last invite message received															<br />
+/RELIT	Usage: /relit- Changes the topic to the last invite message received															<br />
+/RELM	Usage: /relm <nick|channel>- Redirects last received message to <nick|channel>If invoked with -l, the last 10 messages received are listed-l # will display message number #															<br />
+/RELMT	Usage: /relmt <nick|channel>- Changes the topic to the last received message															<br />
+/RELN	Usage: /reln <nick|channel>- Redirects last received notice to <nick|channel>If invoked with -l, the last 10 messages received are listed-l # will display message number #															<br />
+/RELNT	Usage: /relnt- Changes the topic to the last notice received															<br />
+/RELS	Usage: /rels <nick|channel>- Redirects last received server notice to <nick|channel>If invoked with -l, the last 10 messages received are listed-l # will display message number #															<br />
+/RELSD	relay_help															<br />
+/RELSDT	relay_help															<br />
+/RELSM	Usage: /relsm <nick|channel>- Redirects last sent message to <nick|channel>															<br />
+/RELSMT	Usage: /relsmt- Changes the topic to the last message issued by you															<br />
+/RELSN	Usage: /relsn <nick|channel>- Redirects last sent notice to <nick|channel>															<br />
+/RELSNT	Usage: /relsnt- Changes the topic to the last notice issued by you															<br />
+/RELST	Usage: /relst- Displays the last topic issued by you															<br />
+/RELSTT	Usage: /relstt- Changes the topic to the last topic issued by you															<br />
+/RELSW	Usage: /relsw- Sorry, no help is available for this command yet															<br />
+/RELSWT	Usage: /relswt- Sorry, no help is available for this command yet															<br />
+/RELT	Usage: /relt- Displays the current topic in the current channel															<br />
+/RELTT	relay_help															<br />
+/RELW	Usage: /relw- Displays the last wallop message received															<br />
+/RELWT	Usage: /relwt- Changes the topic to the last wallop message received			</code>
+<br><br>
+<i><b>Starting BitchX with alternate options</b></i><br>
+<code>Not that we think you are stupid and that you couldn't have just typed at your prompt:<br />
+<br />
+dove:/usr/home/dove$ BitchX --help<br />
+<br />
+But here are the different options that you can start BitchX with... you can get the same list from typing BitchX --help<br />
+<br />
+Usage: BitchX [switches] [nickname] [server list]<br />
+  The [nickname] can be at most 15 characters long<br />
+  The [server list] is a whitespace separate list of server name<br />
+  The [switches] may be any or all of the following<br />
+   -H <hostname>        uses the virtual hostname if possible<br />
+   -N do not auto-connect to the first server<br />
+   -A do not display the startup ansi<br />
+   -c <channel> joins <channel> on startup. don't forget to escape the # using <br />
+   -b           load .bitchxrc  or .ircrc after connecting to a server<br />
+   -p <port>    default server connection port (usually 6667)<br />
+   -f           your terminal uses flow controls (^S/^Q), so BitchX shouldn't<br />
+   -F           your terminal doesn't use flow control (default)<br />
+   -d           runs BitchX in "dumb" terminal mode<br />
+   -q           does not load ~/.ircrc<br />
+   -r file      load file as list of servers<br />
+   -n nickname  nickname to use<br />
+   -a           adds default servers and command line servers to server list<br />
+   -x           runs BitchX in "debug" mode<br />
+   -Z           use NAT address when doing dcc.<br />
+   -P           toggle check pid.nickname for running program.<br />
+   -v           tells you about the client's version<br />
+   -i           ignores the autojoin list entries.<br />
+   -l <file>    loads <file> in place of your .ircrc<br />
+   -L <file>    loads <file> in place of your .ircrc and expands $ expandos<br />
+   -B           force BitchX to fork and return you to shell. pid check on.<br />
+<br />
+<br />
+<br />
+</code>
+<br><br>
+<i><b>How do I make my client do things when it connects to a server? (bitchxrc)</b></i><br>
+<code>BitchX gives you the option of adding a file to your client configuration in the HOME directory.  Create a file called .bitchxrc<br />
+<br />
+touch .bitchxrc  (or however you create files)<br />
+<br />
+At this point, your BitchX irc client will start reading entries out of this file and executing commands.  The commands should be entered one line at a time, or using parenthesis for longer alias lines.<br />
+<br />
+Some example syntax to enter into your .bitchxrc is as follows:<br />
+<br />
+/join #channel<br />
+/msg nickname message<br />
+<br />
+You can also substitute the / with a ^ <br />
+<br />
+Any command you execute in BitchX could be executed in this file... with the exception of commands that are executed before the client connects (e.g. connection to irc servers, etc...)<br />
+<br />
+<br />
+</code>
+<br><br>
+<i><b>How do I turn off the automatic listing of all users in a given channel as I enter the channel?</b></i><br>
+<code>Set the variable SHOW_CHANNEL_NAMES to off with this command:<br />
+<br />
+/set SHOW_CHANNEL_NAMES OFF<br />
+<br />
+<br />
+<br />
+--<br />
+Submitted by Scott (hotscott@pair.com) on Wed Aug 27 12:40:40 EDT 2003<br />
+Submission approved by dovee on Mon Sep 8 16:47:15 EDT 2003</code>
+<br><br>
+<i><b>How can I paste without mouse on terminal ?</b></i><br>
+<code>You can use /paste <br />
+if you want to paste more rows use /paste 1-5<br />
+1 is first row you choose last.<br />
+<br />
+--<br />
+Submitted by freeman (ntt@bk.ru) on Mon Aug 25 18:22:48 EDT 2003<br />
+Submission approved by dovee on Mon Sep 8 16:47:27 EDT 2003</code>
+<br><br>
+<i><b>How can I disable the clock at the status bar ?</b></i><br>
+<code><br />
+Question: How can I disable the clock at the status bar ? <br />
+<br />
+/wset STATUS_FORMAT <br />
+<br />
+(change this line and get rid of the [%T]<br />
+<br />
+/save<br />
+<br />
+<br />
+<br />
+<br />
+Thanks for asking Leslie, but ask your questions in http://forum.bitchx.org next time :)<br />
+</code>
+<br><br>
+<i><b>identd and BitchX</b></i><br>
+<code><br />
+identd is an application BitchX uses (like screen) but it is not supported by BitchX.<br />
+<br />
+To change what your ident says is going to be a configuration of the identd application that you chose to run.<br />
+<br />
+(win32 port does handle ident requests)<br />
+<br />
+(FAQ entry idea: kreca)<br />
+<br />
+</code>
+<br><br>
+<i><b>Client connecting to another server... although im already connected... how do I do to stop it?</b></i><br>
+<code>I see this happening<br />
+<br />
+<br />
+< dovee > hey mhackah... you ALMOST got your nick back<br />
+< dovee > hehe<br />
+< shattah > tiredly.<br />
+&#8729;ö&#8729; Connection closed from irc.arcti.ca: Unknown error: 0<br />
+&#8729;ö&#8729; Use /Server to connect to a server<br />
+&#8729;ö&#8729; Connecting to port 6667 of server irc.arcti.ca [refnum 1]<br />
+< einride > someone here ever setup pppd for dialin?<br />
+< BlueDevil > hi birdy<br />
+< einride > and made it work<br />
+<br />
+type this to get rid of those messages<br />
+/server -irc.server<br />
+<br />
+example:<br />
+/server -irc.arcti.ca<br />
+<br />
+(thank you shattah)<br />
+</code>
+<br><br>
+<i><b>List of channels I am ajoin'ing (ajoin help)</b></i><br>
+<code>Assuming that you typed /save after you /ajoin'd a channel... <br />
+<br />
+you will find the list of ajoined channels in your ~/.BitchX/BitchX.sav<br />
+<br />
+Assuming that you created a .bitchxrc to /ajoin channels...<br />
+<br />
+you will find the list of ajoined channels in your .bitchxrc<br />
+<br />
+(spanished asked! don't blame me!)</code>
+<br><br>
+<i><b>My Backspace key doesn't work, keeps toggling cloak</b></i><br>
+<code>To fix this problem:<br />
+<br />
+/bind ^? BACKSPACE<br />
+<br />
+/save<br />
+<br />
+This issue can sometimes be addressed as well by fixing options in your terminal client.<br />
+<br />
+SecureCRT Example: In securecrt under the session options catagory called 'Mapped Keys' you need to check the 'Backspace sends delete' box and then click ok.<br />
+<br />
+Other terminal clients have options or keymapping that addresses this issue as well.  We'll try to post more fixes for other terminal clients as we get them.</code>
+<br><br>
+<i><b>How do you correct whois on Quakenet</b></i><br>
+<code>If Quakenet is showing the auth incorrectly when you /whois<br />
+<br />
+e.g. Will ITF is authed as<br />
+<br />
+Try "/fset 330 %G|%n $3 is authed as $4" then "/save"<br />
+<br />
+Thanks to BinGOS for this.<br />
+<br />
+--<br />
+Submitted by Will (will@will.me.uk) on Sun Oct 5 9:33:26 MDT 2003<br />
+Submission approved by sin on Wed Oct 8 10:30:07 MDT 2003</code>
+<br><br>
+<i><b>Setting up SecureCRT and similar terminal clients.</b></i><br>
+<code>When setting up your SecureCRT client to connect to a remote system which you plan to use BitchX to chat on IRC you might wish to take notice of the following.<br />
+<br />
+SecureCRT ships with several different Keymaps.  Under the Emulation options you should set the terminal to vt100 and check the ANSI color box.<br />
+<br />
+Also select the alternate keyboard emulation as well.  Set it to custom then to the far right click the '...' box and go to C:\Program Files\SecureCRT\keymaps (or where ever you installed your SecureCRT client on your PC) and select CRiSP.key as your default.<br />
+<br />
+This keymap allows you to use page up and down as well as your home and end keys the way BitchX is meant to use them.</code>
+<br><br>
+<i><b>Can I telnet from BitchX?</b></i><br>
+<code>Erm.. sort of?  We will be using a DCC Chat session to accomplish this.<br />
+<br />
+You will need to type:<br />
+/do quote privmsg $N :$chr(1)DCC CHAT CHAT $iplong(127.0.0.1) 9001 $chr(1)<br />
+<br />
+and answer the chat request from yourself. <br />
+<br />
+In the above example, you would be connecting to 127.0.0.1 port 9001.  Please bear in mind that this is a scripting solution and that this sort of telnetting is probably pretty broken for normal use.  You'd be better off investigating the use of <a href="http://www.gnu.org/software/screen/">screen</a> if you want to run multiple things in a terminal window.</code>
+<br><br>
+<i><b>Why don't my settings ever save?</b></i><br>
+<code>After you have made any type of change using /set, /cset, /toggle, etc... always remember to use '/save' to save all settings so they will be the same next type you reload the client.<br />
+<br />
+Also note: when you create aliases they will not save.  You must either add them to your .bitchxrc or you can create a separate file for your aliases and have it loaded from .bitchxrc</code>
+<br><br>
+<i><b>Will BitchX work on OS X ?</b></i><br>
+<code>Yes, BitchX 1.0c18 or greater should compile just fine on the initial release of OS X (10.0.1), tho a replacement teminal might be required, as the one that ships with OS X lacks certain flow control features that BitchX uses, GLterm is a great replacement for term.app http://www.pollet.net/GLterm/ (thanks for telling me about it paul). If you find and issues with BitchX on OS X, please e-mail me, tilt@bitchx.org, so i can address them, and hopefully fix them before the next release.<cr><hr><br />
+<img src=http://www.bitchx.org/~tilt/osx-ss.png></code>
+<br><br>
+<i><b>Can I connect to more than one irc network/server at once?</b></i><br>
+<code>Yes. BitchX includes multi-server support.<br />
+<br />
+/window new hide swap last server irc.efnet.org<br />
+<br />
+Will join Efnet in a new (hidden) window.<br />
+<br />
+To join a new server in an existing window, switch to the window and:<br />
+<br />
+/server +irc.efnet.org<br />
+<br />
+If you regularily use mutiple servers then you should organize your ~/.ircservers file into server groups.<br />
+<br />
+For example,<br />
+<br />
+[Efnet]<br />
+irc.homelien.no<br />
+irc.easynews.com<br />
+[Openprojects]<br />
+irc.openprojects.net<br />
+<br />
+and turn server groups on in BitchX:<br />
+/set server_groups on<br />
+/save<br />
+<br />
+This will ensure that when a server connection fails, BitchX cycles through servers in the same group.<br />
+<br />
+Note: Auto-join now also supports multiple networks. Simply /ajoin #channel -g Efnet<br />
+</code>
+<br><br>
+<i><b>How do I get my nickname on IRC back?</b></i><br>
+<code>Since there are still some networks out there that do not allow nickname registration there was a handy builtin called orignick added to BitchX.<br />
+<br />
+Simply /orignick yournick<br />
+<br />
+BitchX will attempt every 5 seconds to regain your nickname.  You can change the value of the timer by doing /set orignick_time and setting a value in seconds for orignick to use.<br />
+<br />
+You can also tell orignick to stop trying to grab the nick by doing /orignick -<br />
+</code>
+<br><br>
+<i><b>How does the AIM plugin for BitchX work?</b></i><br>
+<code>Currently the AIM plugin for BitchX compiles and loads up just fine.  However due to the fact that AIM changes how their protocol works so often there hasn't been an update to the plugin for some time which means that it currently does not work.<br />
+<br />
+We'll post info later on if this problem is fixed.</code>
+<br><br>
+<i><b>OK, I've turned on timestamps... now how do I change what's timestamped?</b></i><br>
+<code><br />
+By default, only actions, public chatter and messages from others are timestamped.  This is controlled by the corresponding display formats - a %@ in a display format will be replaced with a timestamp when timestamps are turned on.<br />
+<br />
+Eg, to add a timestamp to channel joins, you would modify the JOIN display format:<br />
+<br />
+First, get the existing format:<br />
+<br />
+/fset JOIN<br />
+<br />
+BitchX answers with:<br />
+..........................JOIN $G %C$1 %K[%c$2%K]%n has joined $3<br />
+<br />
+Then add a %@ to the start:<br />
+<br />
+/fset JOIN %@$G %C$1 %K[%c$2%K]%n has joined $3<br />
+<br />
+If you want to make it permanent, put that last /fset line into your ~/.bitchxrc startup script.<br />
+</code>
+<br><br>
+<i><b>My BitchX screen is all trashed!!  What do I do?</b></i><br>
+<code>In the case that you find your irc session with a bunch of unreadable characters there are a couple ways to reset this without having to kill the client or /quit blindly.<br />
+<br />
+do /detach<br />
+in your shell type reset<br />
+If the characters are still messed up logout then back in.<br />
+scr-bx<br />
+<br />
+This should reset the irc session.<br />
+<br />
+If you are using screen it is best to follow the method above and back completely out of screen is many cases.  While in some cases doing a 'reset' will work, there are a greater number of times that it fails.<br />
+<br />
+Another method to try is first typing '/clear', then hitting control-l, which redraws the screen.<br />
+<br />
+This is a known issue and has been submitted as a bug to be looked into.<br />
+</code>
+<br><br>
+<i><b>Changing Channels</b></i><br>
+<code>Press CTRL-X.</code>
+<br><br>
+<i><b>How do I hide all the JOINS/PARTS/QUITS messages</b></i><br>
+<code>In large channels (1000+ users) sometimes the JOIN/PARTS/QUITS messages turns to be more SPAM than anything useful.<br />
+<br />
+/ignore #channel JOINS PARTS QUITS<br />
+<br />
+--<br />
+Submitted by icarus (icarus523@fastmail.fm) on Tue Feb 17 5:57:01 MST 2004<br />
+Submission approved by ice-man on Sat Feb 28 16:26:02 MST 2004</code>
+<br><br>
+<i><b>DCC Send behind nat</b></i><br>
+<code>First make sure you're using the latest version of BitchX, currently that is BitchX 1.20cvs.<br />
+Then make sure you're able control the firewall/gateway to forward a port to your computer.<br />
+<br />
+Then type this in BitchX<br />
+/set DCC_USE_GATEWAY_ADDR ON<br />
+/set DCC_FORCE_PORT &lt;num&gt;<br />
+<br />
+then forward &lt;num&gt; to your internal ip in the firewall.<br />
+<br />
+If you're not able to control the firewall to forward a certain port, forget about being able to do dcc sends.<br />
+<br />
+//kreca</code>
+<br><br>
+<b>[FAQ Section 7 :: <b>Scripting in BitchX]</b></b>
+<br><br>
+<i><b>I  write my own script, how do I promote it?</b></i><br>
+<code>After a long time of being down <a href="http://scripts.bitchx.org/">scripts.bitchx.org</a> has returned with a whole new group of scripts and a user submission system which allows script creators a chance to post their scripts and have control over releases and updates of their own scripts from now on.  Check that site often as it is constantly changing and being added onto.<br />
+<br />
+There are also scripts at the official FTP site under /pub/scripts/ which happen to be an archive left over from fudd's site.  Thanks fudd!<br />
+<br />
+You can announce your script at <a href="http://www.cyberpunkz.org/">www.cyberpunkz.org</a> in the scripts forum also.<br />
+<br />
+</code>
+<br><br>
+<i><b>Where can I get help with scripting?</b></i><br>
+<code>If you want to get some help with minor scripting problems you run into.  We suggest you type <br />
+/ehelp 5<br />
+<br />
+read that, then you can post question on forum.bitchx.org<br />
+<br />
+OR<br />
+<br />
+read that, then you can go to #bitchx on efnet and see if<br />
+any scripters are around to answer your questions</code>
+<br><br>
+<i><b>How do I automatically authenticate with Q on Quakenet?</b></i><br>
+<code>In the .bitchxrc file add the following lines:-<br />
+<br />
+on ^connect "*quakenet*" {<br />
+^msg Q@CServe.quakenet.org AUTH <authname> <password><br />
+}<br />
+<br />
+where <authname> is your Q authname and <password> is your password :)<br />
+<br />
+<br />
+<br />
+--<br />
+Submitted by BinGOs (chris@bingosnet.co.uk) on Wed Aug 20 10:32:56 EDT 2003<br />
+Submission approved by dovee on Mon Sep 8 16:47:48 EDT 2003</code>
+<br><br>
+<i><b>Is there an FServe Script for BitchX?</b></i><br>
+<code>Yes there is a dcc fserv script for BitchX available now.<br />
+<br />
+Please check <a href="http://scripts.bitchx.org/">scripts.bitchx.org</a> for the fserv script created by powuh for BitchX.   This script possibly may run on epic however at the time of this posting there is no information to this end available.</code>
+<br><br>
+<i><b>Where can I get help on a bug?</b></i><br>
+<code>If there is nothing in this faq that pertains to you.  Please let us know about it!<br />
+<br />
+Create an account on bugs.bitchx.org and submit your bugs there.<br />
+<br />
+This is not a forum for questions.  This is for legitimate bugs that you have discovered!<br />
+<br />
+Please review already discovered bugs ... if your bug is not there... try to recreate your bug and post it.<br />
+<br />
+Thanks in advance :)</code>
+<br><br>
+<b>[FAQ Section 8 :: <b>Known bugs and issues]</b></b>
+<br><br>
+<i><b>About this section of the FAQ.  (Please read)</b></i><br>
+<code>This portion of the FAQ will contain information known regarding bugs in the BitchX IRC client and how to correct or work around a known problem until an official patch or upgrade to the code is made in the CVS tree.<br />
+<br />
+Things you will not see here are how to actually exploit the client or information about where you can find out about an example of how to exploit the client.<br />
+<br />
+Each submission to this section should have a notation of what version of the client is affected, operating system, and any technical information which could be helpful to the users.<br />
+<br />
+As we reorganize the FAQ, certain information may be moved to this section of the site or be referenced to from another portion of the site.</code>
+<br><br>
+<i><b>Rejoin on /kill does not work</b></i><br>
+<code>This issue has been resolved in the CVS version of BitchX-1.0c20 as of the beginning of April 2003.</code>
+<br><br>
+<i><b>Segfault when loading script in BitchX compiled with gcc3.2</b></i><br>
+<code>The code optimiser in gcc versions 3.2 and 3.2.1 produces buggy code in some circumstances - this causes BitchX compiled with these versions of gcc (which are included in recent versions of Mandrake and Red Hat) to crash when script files formatted in a certain way are loaded.  This also extends to the ~/.bitchxrc startup script.<br />
+<br />
+The bug is not exploitable.<br />
+<br />
+To solve the issue, your should upgrade to the latest gcc version 3.3 snapshot, in which the optimiser has been fixed.<br />
+<br />
+If this is not possible for you, a workaround is to execute the following sequence in the BitchX/ source directory, assuming a bash shell:<br />
+<br />
+CFLAGS="-fno-strength-reduce -O2 -g" ./configure<br />
+make clean<br />
+make<br />
+make install<br />
+</code>
+<br><br>
+<i><b>Channel-specific logging is unuseable</b></i><br>
+<code>Channel-logging (/cset log on) is currently sufficiently broken to be unuseable.<br />
+<br />
+Workaround:<br />
+<br />
+Use Window-specific logging instead (/window logfile and /window log on), or install a logging script like bxlog.<br />
+</code>
+<br><br>
+<i><b>fo shizzle</b></i><br>
+<code>to fizzle_b</code>
+<br><br>
+</td>
+</tr>
+</table>
+</CENTER>
+<BR><BR><BR>
+
+<font size='1'>
+$Id: bitchx-faq version 5 by power
+</font>
+
+</BODY>
+</HTML>

@@ -1,0 +1,12 @@
+Synopsis:
+   window move <number>
+
+Description:
+   This moves the current window the specified number of positions down
+   the screen.  If the specified number would move the window off the
+   screen, it is "wrapped" back to the top.
+
+   For example, assume there are 3 windows on the screen, and the current
+   one is the topmost window.  Moving it by 1 would place it in the middle,
+   swapping position with the window that was in the middle.
+

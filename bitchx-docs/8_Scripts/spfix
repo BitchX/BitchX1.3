@@ -1,0 +1,19 @@
+Synopsis:
+   load spfix
+
+Description:
+   THis script contains a simple function that returns the input string
+   with the first word stripped off, preserving any whitespace that
+   precedes the second word.  This is necessary, because clients compiled
+   with the STRIP_EXTRANEOUS_SPACES option will normally strip out the
+   extra whitespace, which not everyone likes.  The function is called
+   $spfix(), and may be given a string of any length.  Refer to the source
+   code for more information.
+
+See Also:
+   Compile_Opts(7); info(6); load(5)
+
+Other Notes:
+   This function was written by James Sneeringer (CrowMan), jvs@ocslink.com,
+   regardless of what the source code says. ;)
+

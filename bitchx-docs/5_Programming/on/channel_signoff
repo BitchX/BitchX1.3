@@ -1,0 +1,30 @@
+Synopsis:
+   on [<modes>]channel_signoff [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes someone signoff from
+   irc.  It is not hooked when the client itself signs off.
+
+Parameters:
+   $0    the channel the signoff was observed on
+   $1    the nickname of the person leaving irc
+   $2-   signoff message
+
+Examples:
+   To distinguish signoffs from one channel to another:
+      on ^channel_nick "*" {
+         if ( [$0] == C ) {
+            echo *** Signoff by $1 \($2-\)
+         } {
+            echo *** Signoff by $1 from $0 \($2-\)
+         }
+      }
+   
+See Also:
+   on(5) quit, signoff; quit(1)
+
+Other Notes:
+   This hook is not triggered by the client exiting irc.  Use the QUIT hook
+   to perform an action when the client quits.  This hook differs from the
+   SIGNOFF hook in that this is triggered for every channel on which the
+   person is observed signing off.

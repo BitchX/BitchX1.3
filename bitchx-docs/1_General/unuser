@@ -1,0 +1,12 @@
+Synopsis:
+   unuser <nick|nick!user@host> <#chan|*>
+
+Description:
+   This command will remove a user from your userlist.
+
+Examples:
+   To remove a user from the userlist
+      /unuser nick *
+      /unuser *!*@*host.com *
+
+

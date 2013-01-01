@@ -1,0 +1,20 @@
+Synopsis:
+   on [<modes>]exec_errors [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever an EXECed process produces output to
+   standard error.
+
+Parameters:
+   $0    process number or name of the EXECed process
+   $1-   a line of the process's output to stderr
+
+Examples:
+   To distinguish process errors from other window output:
+      on ^exec_errors "*" {
+         echo [$0 ERR] $1-
+      }
+
+See Also:
+   exec(5); on(5) exec, exec_exit, exec_prompt
+

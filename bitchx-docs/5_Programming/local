@@ -1,0 +1,23 @@
+Synopsis:
+   local [[-]<variable name>[,<variable name>] [<value>]]
+
+Description:
+   LOCAL creates "local" variables. Local variables are the same as assign(6)
+   variables, except they're primarily for inside one specific alias. Local
+   variables cannot be removed. There are several reasons for this, which are
+   mostly advantages for scripts. A local variable is specific to the alias it
+   was defined in, causing less confusion with multiple variables in multiple
+   aliases. They are less cpu-intensive, making them optimal for recursive
+   functions like for(5). Arrays may also be defined with local.
+
+Examples:
+   To give the local variable $blah a value of "this is a test":
+      local blah this is a test
+
+   To give both $blah and $foo a value:
+      local blah,foo local vars are neat
+
+See Also:
+   Expressions(7); Special_Vars(7); alias(5); assign(5); eval(5);
+   set(4) input_aliases
+

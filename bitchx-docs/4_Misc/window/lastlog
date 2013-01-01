@@ -1,0 +1,17 @@
+Synopsis:
+   window lastlog [<lines>]
+
+Description:
+   Sets the current window's lastlog level to <lines> number of lines.
+
+Examples:
+   To only be able to scroll back 50 lines:
+      /window lastlog 50
+
+See Also:
+   set(4) lastlog, lastlog_level; window(4) level
+
+Other Notes:
+   This used to be the default behavior of set(4) lastlog until recently
+   when set(4) lastlog was made global.
+

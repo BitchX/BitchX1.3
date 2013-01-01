@@ -1,0 +1,48 @@
+Server List Format in BitchX                                             
+
+There are several ways to set a predefined list of servers for EPIC to use.
+In general, though, they all use the same basic format:
+
+   server:port:password:nickname
+
+The server is the name of the server to connect to.  The port is the port
+number on the server's host to connect on.  The password is only required
+for servers that require one to connect.  The nickname is the nick to use
+once connected to the server.  Only the server name is required.  The
+remaining parameters may be specified as needed.  For example, to ignore
+the password and nickname parameters:
+
+   server:port
+
+As parameters on the end are omitted, the colons separating them too are
+omitted.  However, if a parameter in the "middle" is left out, but one that
+comes after it is specified, the colons are required.  If you only wanted
+to give a server and nickname:
+
+   server:::nickname
+
+A list of servers can exist in several forms.  The primary list is hardcoded
+into the client.  It is usually overridden by a systemwide irc servers file
+(usually called ircII.servers).  Any number of server definitions may be
+specified, separated by whitespace (newline, space, tab).  A typical server
+file might look like:
+
+   irc.foobar.com
+   irc.blah.net:6668
+   irc.cia.gov:31337:cl00bie:Mr_Prez
+
+The system server list may be overridden by your IRCSERVER environment
+variable, which may contain a space-delimited list of servers:
+
+   export IRCSERVER="irc.foobar.com irc.cia.gov:31337::Mr_Prez"
+
+Finally, a list of servers may also be specified on the command line:
+
+   irc Mr_Prez irc.foobar.com irc.cia.gov:31337:secret-password
+
+As well a list of servers can be placed in the file ~/.ircservers which will
+augment the IRCSERVER variable or the built-in list of servers.
+
+See Also:
+   Command_Line(7); Environment(7); server(1)
+

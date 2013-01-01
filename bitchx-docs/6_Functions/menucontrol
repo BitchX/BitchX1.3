@@ -1,0 +1,20 @@
+Synopsis:
+   $menucontrol(<menuname> <refnum> <text|check> <param>)
+
+Technical:
+   This function modifies shared menus on the fly.  Either changing
+   the item text or the check status. The menuname is the name of the
+   menu where the item you wish to change is located.  The refnum is
+   the refnum you passed when creating the menuitem.  The third 
+   parameter is either "check" or "text" depending whether you want
+   to change the menu's check status or text.  If you choose "text"
+   param is the new menu item text.  If you choose check then param
+   is either 1 or 0.  Where 1 is check active and 0 is check inactive.
+
+Returns:
+	0 - on failure
+        1 - on success
+
+See Also:
+   menu(4) menuitem, submenu
+

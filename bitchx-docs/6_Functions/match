@@ -1,0 +1,31 @@
+Synopsis:
+   $match(<pattern> <word list>)
+   $rmatch(<word> <pattern list>)
+
+Technical:
+   The $match() function searches through a word list and returns the index
+   to the word that best matches the given pattern.  Its opposite is the
+   $rmatch() function, which tries to match a pattern with a list of words.
+   The index counts from 1.
+
+Practical:
+   These functions are generally most useful for automated processes.  For
+   instance, one could try to match a person's address with a predefined
+   list of address patterns to see if the client should automatically
+   accept channel invitations or DCC CHAT requests.  Because they return
+   the index to the best match, and not the matching item, they are mostly
+   useful for boolean-type comparisons.
+
+Returns:
+    0   no matches found
+   >0   index to best match in list
+
+Examples:
+   $match(*oo* blah foo booya)                              returns 2
+   $match(*oo* blah fubar erf)                              returns 0
+   $rmatch(joebob!jbriggs@drivein.com *.com *jbriggs@*)     returns 2
+   $rmatch(joebob!jbriggs@drivein.com *.net *jimbob*)       returns 0
+
+See Also:
+   filter(6); pattern(6); rfilter(6); rpattern(6)
+

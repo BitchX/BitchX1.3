@@ -1,0 +1,13 @@
+Synopsis:
+   $getenv(<variable>)
+
+Technical:
+   This function returns the <variable> from the shell's environment.
+
+Practical:
+   This function is especially useful when a /set or /assign variable
+   conflicts with an environment variable.
+
+Returns:
+   Value of <variable> in the environment.
+

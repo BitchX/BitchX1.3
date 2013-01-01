@@ -1,0 +1,139 @@
+Europa v0.01
+Copyright (c) 1999, Ed Schlunder <zilym@asu.edu>
+
+This is Free Software licensed under the GNU GPL. Please see COPYING for
+details.
+
+WARNING - YOUR MILEAGE MAY VARY. USE AT YOUR OWN RISK. AUTHOR IS NOT
+RESPONSIBLE FOR ANY DAMAGES INCURRED THROUGH THE USE OF THIS PACKAGE.
+
+SUMMARY
+--------------------------------------------------------------------------
+Europa is a BitchX (popular irc client) plugin to provide easy access to
+an SQL knowledgebase. This is helpful for use in help channels where
+common questions repeatedly come up.
+
+BACKGROUND
+--------------------------------------------------------------------------
+For the past 2-3 years, we've been answering people's questions about Linux
+in the EFnet IRC channel #linuxinfo. Jeremy Tregunna wrote a bot
+in Perl called 'Penguin' that stored tons of keyword/answers pairs in
+a database so that channel operators could store commonly asked question
+answers in. When a Linux newbie came in and asked a question already
+answered several times before in prior conversations, we simply ask
+Penguin to please explain the keyword associated with the question, saving
+us a lot of typing time.
+
+I've always admired the Penguin bot a lot and wished I could run one
+myself. However, I don't have access to any IRC servers that allow bots. 
+This led to the developement of Europa, a BitchX plugin that listens to
+channels you are chatting on and automatically responds when it sees
+someone giving it a command. This lets you chat on IRC as a normal user
+like you've always done, but also have a nice SQL knowledgebase available
+at your (and your friends) finger tips.
+
+REQUIREMENTS
+--------------------------------------------------------------------------
+Europa currently only support MySQL (http://www.mysql.com/) for the
+database backend. You will need to have MySQL already installed
+and working to use Europa.
+
+To use Europa, you need to be using BitchX (http://www.bitchx.org/). In
+addition, to compile Europa, you will need a copy of the BitchX source
+code extracted as ../BitchX (relative to Europa's directory).
+
+INSTALLATION
+--------------------------------------------------------------------------
+1. Extract the Europa source code and the BitchX source code:
+   gzip -cd europa-xxx.tar.gz | tar xvf -
+   gzip -cd BitchX-1.0c13.tar.gz | tar xvf -
+
+   These should be extracted this way so that the Europa makefile can
+   access the BitchX include files (see Makefile to see what I mean).
+
+2. Compile and install BitchX
+   cd BitchX/
+   less INSTALL
+
+3. Create a database for Europa to use on your mysql server:
+   mysql mysql -u root -p
+     create database europa;
+     insert into user values('%','europa',password('APASSWD'),'N','N','N','N','N','N','N','N','N','N','N','N','N','N','N');
+     insert into db values('%','europa','europa','Y','Y','Y','Y','N','N','N','N','N','N');
+     exit
+
+   mysqladmin reload -u root -p
+   mysql europa -u root -p < knowledgebase.sql
+
+4. Edit europa.h to match your settings, should be self explanatory.
+
+5. Compile the Europa source code:
+   make
+
+6. Copy the resulting europa.so file to your ~/.BitchX/plugins/ directory,
+   or alternatively you could put it in your system wide BitchX plugins
+   directory (/usr/local/lib/bx/plugins/ on my system).   
+
+7. Start up BitchX. Do a "/loaddll europa.so" and you should see
+   Europa load and connect to your SQL knowledgebase.
+
+   You may want to add the command "LOADDLL europa.so" to your
+   ~/.BitchX/BitchX.sav file so that Europa loads automatically everytime
+   you start BitchX.
+
+USING EUROPA
+--------------------------------------------------------------------------
+Now that you've got it running, what can you do? Join a channel with
+some people on it. You may want to start another IRC session so you
+can talk to yourself (Europa can only see public commands from other
+clients, someone tell me how to fix that ;-). Suppose the client running
+Europa has the nick "jonny" and your second session has the nick "jon".
+A typical chat might look like:
+
+<jon> jonny: explain winnt
+<jonny> jon: Windows NT is a fully 32-bit operating system for the i386 and 
+          Alpha hardware playforms with superb multi-tasking and server
+          functionality.  Written by Microsoft Corporation 
+	  (http://www.microsoft.com/).
+<jon> jonny: forget winnt
+<jonny> jon: winnt forgotten...
+<jon> jonny learn winnt Windows NT is a 32-bit operating system for the i386
+        and Alpha architectures with superb multitasking and server 
+	functionality (yeah, uh-huh, and pigs fly)... See 
+        http://www.microsoft.com/ and 
+        http://www.cnn.com/TECH/computing/9907/15/nt-mare.idg/
+<jonny> jon: winnt learned, thanks...
+
+Public command reference:
+NICK: explain KEYWORD
+NICK: forget KEYWORD
+NICK: learn KEYWORD ANSWER TEXT
+NICK: shutup
+  -- europa disables saying anything to others
+NICK: hello
+  -- europa turns back on and talks again
+
+And thus is the gist of using Europa. Also, Europa installs a new
+irc command "/explain USER KEYWORD" which lets you send a private
+message to a specific user containing the answer to KEYWORD. You
+could also do "/explain #CHANNEL KEYWORD" to send it to a channel 
+you are currently on publically.
+
+I haven't implemented "/forget KEYWORD" or "/learn KEYWORD ANSWER" yet,
+sorry.
+
+FUTURE PLANS
+--------------------------------------------------------------------------
+I'd really like to redo Europa in Java and implement some natural
+language processing capabilities in it. You can see some of my 
+experimenting with interfacing C to Java in the corba/ directory.
+
+Processing text in C is not particularly easy to do in a safe manner.
+Doing AI stuff is even harder to do without a nice garbage collector
+taking care of memory management for you. Normally, I depise Java for
+just about every project due to its closed sourced nature and buggy Linux
+support. But this is one case where it might be a good choice, we'll see.
+
+You can see my previous NLP work in the cse476/ folder. If you actually
+figure out what the code is doing in there, you'll understand why a
+garbage collector would be really nice for this and why C isn't.

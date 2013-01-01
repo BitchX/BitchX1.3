@@ -1,0 +1,19 @@
+Synopsis:
+   set dcc_sliding_window [<number>]
+
+Description:
+   This implements a simplified version of the traditional sliding window
+   algorithm for DCC SENDs.  The client keeps <size> packets ready to
+   send at all times, which can speed up DCC file transfers a great deal
+   over slow network connections.  No special support is required by the
+   receiving client.
+
+   The size is measured in 2k blocks, and is set by default at 2 (4k).
+   No error correction is even attemted by the client, rather it relies
+   completely on TCP to keep things straight. The feature can effectively be
+   disabled by setting it to 1.
+
+See Also:
+   dcc(1) list
+
+

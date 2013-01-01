@@ -1,0 +1,19 @@
+Synopsis:
+   $mychannels(<server refnum>|<#window refnum>|<window name>)
+
+Technical:
+   This function is used to retrieve a list of channels you are currently
+   on.
+
+Practical:
+   This function shows what channels you're on in your current window.
+   This is mostly useful for accounting purposes.
+
+Returns:
+   which channels the user is currently on, depending on the server specified
+   in the arguments as either a server refnum, a window refnum (must be
+   prefixed with a '#'), or a window name.
+
+See Also:
+   myservers(6)
+

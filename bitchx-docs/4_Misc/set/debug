@@ -1,0 +1,32 @@
+Synopsis:
+   set debug [<level>]
+
+Description:
+   When turned on, this variable enables various degrees of debugging
+   while the client is running.  It is useful for seeing precisely where
+   a particular alias or function is failing, what variables are being
+   assigned what values, etc.  There are three general classes of debug
+   output, each assigned a unique number.
+
+      Bit  Value   Purpose
+       0     1     displays all commands executed, including aliases
+       1     2     displays all actual alias and variable substitutions
+       2     4     displays all function calls and their return values
+
+   Multiple classes may be displayed at once by adding the desired
+   values together.  A setting of 0 (zero) turns off debugging.
+
+Examples:
+   To show all commands executed and alias expansion:
+      /set debug 3
+
+   To show everything:
+      /set debug 7
+
+See Also:
+   set(4) hold_mode
+
+Other Notes:
+   This command can generate a lot of output, so setting HOLD_MODE on is
+   recommended.
+

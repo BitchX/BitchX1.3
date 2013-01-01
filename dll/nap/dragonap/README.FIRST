@@ -1,0 +1,24 @@
+
+
+This source was written in my spare time and was intended for immediate
+release....originally.  There were some issues with the fact that napster may
+become rather ugly if little green trolls start writing hacks and bots for
+napster.  But whatever, open source is your friend.  This release is probably
+against the wishes of many, very sorry.  I'm sure the napster product will
+survive just fine.  With the release of gnap I figured what the hell, I'll send
+out what I had been working on as well.  Lets see what happens.
+
+Feel free to use any of this code as a base/example.
+If you use any of the code, simply give credit where its due.
+
+*Please make note that *NONE* of this code is complete.  If you dont code C
+then you're fucked.  This is intended for developers only.  I do not plan
+on completing a client at the current time.  This is what I have, and
+where I left off.
+
+Released 11-30-99.
+
+All source by Drago (drago@0x00.org).  Email if you have any questions/comments.
+
+Another open source napster clone can be found at http://gnap.soundforge.net 
+Information and the official napster software can be found at http://www.napster.com

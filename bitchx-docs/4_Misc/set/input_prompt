@@ -1,0 +1,21 @@
+Synopsis:
+   set input_prompt [<string>]
+
+Description:
+   This setting allows the user to add a custom string the the beginning
+   of the input line (for display purposes).  Much like the various Unix
+   shells, the prompt can contain any string desired.
+
+   It is generally used for displaying information about the current
+   target (such as a channel or queried nickname).  Any variables used in
+   the prompt are re-evaluated after each command issued from the input
+   prompt.
+   
+   Also note that any special highlight character (^B, ^C, etc) may be used
+   in this setting.
+
+   To disable the input prompt, unset the variable.
+
+See Also:
+   Special_Vars(7)
+

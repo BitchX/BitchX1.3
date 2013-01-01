@@ -1,0 +1,15 @@
+Synopsis:
+   load multi
+
+Description:
+   This script is meant to remove the need for the Multi program.  All it
+   does is randomly switch characters of its input to upper or lowercase.
+   The /varcase alias sends the output to the current channel or query,
+   while /varcasemsg sends it in a MSG to someone.
+
+See Also:
+   load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

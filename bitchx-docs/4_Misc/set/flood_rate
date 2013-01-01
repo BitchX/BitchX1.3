@@ -1,0 +1,14 @@
+Synopsis:
+   set flood_rate [<number>]
+
+Description:
+   This variable sets the message rate (per second) that will trigger the
+   FLOOD hook, if the total message count exceeds the FLOOD_AFTER setting
+   at the given rate.  Thus, if messages from a remote client outpace the
+   FLOOD_RATE for at least FLOOD_AFTER messages, the FLOOD hook is caught.
+   If FLOOD_RATE is larger than FLOOD_AFTER, the client will not trigger
+   the hook until at least FLOOD_RATE messages have been received.
+
+See Also:
+   on(5) flood; set(4) flood_after, flood_users, flood_warning
+

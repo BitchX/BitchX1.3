@@ -1,0 +1,10 @@
+Synopsis:
+   set nd_space_max [<number>]
+
+Description:
+   This variable sets how many non-destructive spaces may appear in one line
+   of output.
+
+See Also:
+   set(4) tab_max
+

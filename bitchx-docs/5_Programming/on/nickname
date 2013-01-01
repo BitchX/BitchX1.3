@@ -1,0 +1,24 @@
+Synopsis:
+   on [<modes>]nickname [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes a nickname change.
+   It only hooks once per nick change, not once per channel.
+
+Parameters:
+   $0    old nickname
+   $1    new nickname
+
+Examples:
+   To distinguish the client from another user:
+      on ^nickname "*" {
+         if ( [$0] == N ) {
+            echo *** Your nickname is now $1
+         } {
+            echo *** $0 has changed nicks to $1
+         }
+      }
+
+See Also:
+   nick(1); on(5) channel_nick
+

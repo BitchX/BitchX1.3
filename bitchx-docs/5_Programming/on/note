@@ -1,0 +1,20 @@
+Synopsis:
+   on [<modes>]note [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a NOTE.
+
+Parameters:
+   $0    nickname of message sender
+   $1    time the message was send (accurate +/- 60 seconds)
+   $2-   text of message
+
+Examples:
+   To customize the display of irc NOTEs:
+      on ^note "*" {
+         echo V%$0%V $2- \($1\)
+      }
+
+See Also:
+   note(4)
+

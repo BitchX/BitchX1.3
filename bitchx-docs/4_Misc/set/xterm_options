@@ -1,0 +1,12 @@
+Synopsis:
+   set xterm_options [<options>]
+
+Description:
+   The contents of this variable are passed to the xterm program.  An xterm
+   is started when the client tries to create a new window while running
+   under X.  Refer to the WINDOW and WINDOW CREATE help files for further
+   reference.
+
+See Also:
+   window(4) create
+

@@ -1,0 +1,29 @@
+Synopsis:
+   $iptoname(<ip address>)
+   $nametoip(<hostname>)
+
+Technical:
+   These functions are used to convert an IP address to a hostname, and vice
+   versa.   The $iptoname() function returns the hostname associated with
+   the given IP address, and $nametoip() does the opposite.
+
+Practical:
+   These functions are used to convert between IP addresses and Internet
+   hostnames.  Obvious reasons aside, they are mostly useful when you know
+   which of the two the input will be.  They return nothing if the address
+   could not be converted, or if the input was invalid.  The $convert()
+   function should be used if the input is known to vary.
+
+Returns:
+   iptoname: hostname for the given IP address
+   nametoip: IP address for the given hostname
+
+Examples:
+   $iptoname(127.0.0.1)         probably returns "localhost"
+   $nametoip(localhost)         probably returns "127.0.0.1"
+   $iptoname(localhost)         error, input is not an IP address
+   $nametoip(127.0.0.1)         error, input is not a hostname
+
+See Also:
+   convert(6)
+

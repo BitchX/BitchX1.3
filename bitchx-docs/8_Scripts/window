@@ -1,0 +1,21 @@
+Synopsis:
+   load window
+
+Description:
+   This script provides some Emacs-like key bindings for manipulating
+   client windows.
+
+     Key       Function                                                   
+     meta2-0   kill the current window
+     meta2-1   kill all windows except the current one
+     meta2-2   open a new window
+     meta2-+   increase window size by 1 line (also: meta2-z)
+     meta2--   decrease window size by 1 line (also: meta2-^z)
+     meta2-=   balance the size of all visible windows
+
+See Also:
+   load(5); window(4)
+
+Other Notes:
+   The name of this script's author is not known.
+

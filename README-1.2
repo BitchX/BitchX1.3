@@ -1,0 +1,119 @@
+BitchX-1.2-Final Readme file by Dan Mashal <dan408@bitchx.ca>
+======================================================
+
+BitchX is an IRC (Internet Relay Chat) client by Colten Edwards aka
+panasync@efnet. BitchX was originally based on ircII 2.8, but is currently
+based on the ircii-EPIC4 releases by Jeremy Nelson.
+
+BitchX was originally started as a script by Trench and HappyCrappy
+for the popular UNIX IRC client ircII. Around Christmas of 1994 the
+script was patched directly into the client by panasync. 
+
+As of 12/31/2012 we are releasing BitchX-1.2-final. 
+18 years of BitchX and we're not nearly done yet.
+
+Fixes:
+1) Compilation errors on gcc4
+2) IPV6 support on BSD
+3) ANSI output in terminal emulators
+4) cygwin compilation errors
+
+
+New features:
+
+1) Built in SASL support. See: http://github.com/BitchX/BitchX1.2/wiki
+2) tcl.c now included with BitchX - Does not work great.
+3) /NAMES and /SCAN
+-------------------
+
+The formatting of /NAMES and /SCAN output has been substantially reworked.
+The old /FSETs NAMES_BOTCOLOR, NAMES_FRIENDCOLOR, NAMES_NICKCOLOR,
+NAMES_OPCOLOR, NAMES_SHITCOLOR and NAMES_VOICECOLOR have been replaced
+with these new /FSETs:
+
+....................NAMES_NICK %B$[10]0
+................NAMES_NICK_BOT %G$[10]0
+.............NAMES_NICK_FRIEND %Y$[10]0
+.................NAMES_NICK_ME %W$[10]0
+...............NAMES_NICK_SHIT %R$[10]0
+....................NAMES_USER %K[ %n$1-%K]
+.............NAMES_USER_CHANOP %K[%C$0%n$1-%K]
+..............NAMES_USER_IRCOP %K[%R$0%n$1-%K]
+..............NAMES_USER_VOICE %K[%M$0%n$1-%K]
+
+The NAMES_NICK formats control how the nick itself is displayed, depending
+on the status of the nick as recognised by BitchX (the priority order is
+NAMES_NICK_ME > NAMES_NICK_BOT > NAMES_NICK_FRIEND > NAMES_NICK_SHIT >
+NAMES_NICK).  The NAMES_USER formats control how the overall entry appears in
+the /NAMES or /SCAN line, depending on the channel status of the nick (the
+priority order is NAMES_USER_CHANOP > NAMES_USER_VOICE > NAMES_USER_IRCOP >
+NAMES_USER).
+
+You'll need to update any scripts or custom formats that altered the old
+formats.  If you just use the defaults, the main difference you'll see is
+that your own nick is now shown in white, and voiced users are shown with
+the '+' sent by the server instead of the 'v'.  You can go back to the old
+look by setting these formats:
+
+/FSET NAMES_NICK_ME %B$[10]0
+/FSET NAMES_USER_VOICE %K[%Mv%n$1-%K]
+
+Also, the NAMES header and NAMES_FOOTER formats are now called with $3 set
+to the total number of nicks in the channel, and $4 to the mask given to
+/SCAN (if any).
+
+/SCAN now supports a new sort flag "-stat", which sorts the output by
+channel status (chanops, then halfops, then voices, then the riff-raff).
+
+4) /HOP and /DEHOP
+---------------
+
+New commands /HOP and /DEHOP have been added, to give and remove halfop
+status (on servers that support it).
+
+5) PLUGINS
+-------
+
+The "scan" plugin has been removed - its functionality is now built-in,
+accessed by /scan -stat (see above). If you want this to be the default,
+just set this alias (the double-slash is REQUIRED):
+
+/ALIAS SCAN { //SCAN -STAT }
+
+
+A special thanks to panasync.
+
+Links:
+======
+
+http://www.bitchx.ca/			<-- New official BitchX web site
+http://www.github.com/BitchX		<-- github repos with the latest code
+http://bitchx.svn.sourceforge.net/ 	<-- svn repo
+http://www.bitchx.org/			<-- Old official BitchX web site
+http://www.bitchx.ca/scripts		<-- The official BitchX script web site
+http://www.bitchx.ca/faq		<-- FAQ Website
+http://github.com/BitchX		<-- Report bugs here
+http://www.bitchx.org/forum		<-- Forums
+http://we.got.net/~brian/		<-- Another BitchX script site (fudd's)
+
+For persons interested in becoming involved in the new project please visit
+#BitchX on freenode or EFNet.
+
+Contacts:
+========
+
+       Lead developers: caf, flashback, panasync
+      Lead cheerleader: VICODAN
+Readme File Maintainer: VICODAN
+     Fedora Maintainer: VICODAN
+       FAQ Maintainers: sin, powuh, dovee, kreca, fudd, Xavier, tilt, venoma, shattah
+                        ice-man, IRule, rain, novalogic, MHacker, caf, VICODAN
+       Web Maintainers: VICODAN, panasync
+      Lists Maintainer: No more mailing lists as of right now.
+    Scripts Maintainer: VICODAN
+    
+======================================================================
+
+    After reading this PLEASE read the FAQ http://www.bitchx.ca/faq
+
+======================================================================

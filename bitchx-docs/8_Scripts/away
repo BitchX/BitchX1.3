@@ -1,0 +1,20 @@
+Synopsis:
+   load away
+
+Description:
+   This script is a replacement of sorts for the standard AWAY command.  It
+   works just like the builtin command, externally, but it doesn't actually
+   interact with the server.  Instead, wwhen the client is marked away, it
+   sends the specified away message to any client sending it a message, via
+   CTCP.  It is smart enough to only send the away message once per person.
+
+See Also:
+   away(1); ctcp(1); load(5)
+
+Restrictions:
+   Due to protocol restrictions (and the client's enforcement of them), the
+   away message is only sent in response to a MSG, not a NOTICE.
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

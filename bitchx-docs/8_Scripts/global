@@ -1,0 +1,19 @@
+Synopsis:
+   load global
+
+Description:
+   This script is loaded automatically when the client first starts.  At
+   the time of this writing, it automatically loads 2.8SCRIPT, BASICAL, and
+   LOCAL.  It also sets the following aliases:
+
+     Alias   Description                                                  
+     /d+     sets DISPLAY on
+     /d-     sets DISPLAY off
+
+See Also:
+   2.8script(8); basical(8); load(5); local(8)
+
+Other Notes:
+   This script has been butchered over the years to the point that no one
+   person deserves sole credit for its creation.
+

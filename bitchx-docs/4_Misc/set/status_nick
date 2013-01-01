@@ -1,0 +1,15 @@
+Synopsis:
+   set status_nick [<text>]
+
+Description:
+   This variable determines how the %N (current nick) expando in the
+   STATUS_FORMAT is displayed. The default is %N, which is simply the
+   current nick.
+
+Examples:
+   Customizing the display of the current nick:
+      /set status_nick [You Are %N]
+
+See Also:
+   set(4) status_format
+

@@ -1,0 +1,24 @@
+Synopsis:
+   window scratch <on|off>
+
+Description:
+   When a window is defined as being a scratch window, it is accessed very
+   differently. Scratch windows do not scroll, and allow direct line-by-line
+   accessing. To allow this, a new flag has been added to xecho: -line.
+
+Examples:
+   To create a scratch window, and add some text to it:
+      /window new scratch on fixed on discon
+              /* creates a non-movable, non-serverable scratch window */
+      /xecho -window <refnum> -line 1 This is in the scratch window.
+
+See Also:
+   xecho(5)
+
+Other Notes:
+   Scratch windows don't deal with being resized very gracefully. It is
+   suggested that you do /WINDOW NEW SCRATCH ON FIXED ON so that it can't be
+   resized on you. Scratch windows are best not bound to a server, always use
+   window(4) discon. Scratch windows have no scrollback, due to their
+   direct accessing.
+

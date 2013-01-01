@@ -1,0 +1,16 @@
+Synopsis:
+   wiln 
+
+Description:
+   The WILN command is used to retrieve detailed information about the 
+   nickname that last noticed you.
+
+Examples:
+   To get information on user who last noticed you:
+      /wiln
+
+See Also:
+   who(2); whowas(2) whois(2)
+
+Restrictions:
+   If nobody has noticed you, an error is produced.

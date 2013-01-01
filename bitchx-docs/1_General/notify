@@ -1,0 +1,41 @@
+Synopsis:
+   notify [[-]<nickname> [[-]<nickname> ...]]
+   notify <+|->
+
+Description:
+   The NOTIFY command lets you specify a list of nicknames to watch for,
+   and will notify you any time a specified nickname signs on or signs off
+   IRC.  A "signoff" message will be generated if the person changes his
+   or her nickname, so keep this in mind.
+
+Options:
+   -   When used alone, this will clear your notify list.  When used with
+         a nickname, it will remove that nick from the list.
+   +   This will display any nicks on your notify list who are signed on.
+
+Examples:
+   To add your friends scuba and diver to your notify list:
+      /notify scuba diver
+
+   To remove your ex-friend buddha from your notify list:
+      /notify -buddha
+
+   To clear your notify list:
+      /notify -
+
+   To show your friends that are current logged on irc:
+      /notify +
+
+See Also:
+   ison(2); notify(6); set(4) notify_handler
+
+Restrictions:
+   Everyone asks, so here's a formal answer before you ask.  No, you cannot
+   specify a nick!user@host mask to notify, nor can you specify wildcards.
+   NOTE allows for this functionality, but not all servers enable it.
+
+Bugs:
+   If you redefine the numeric 303 hook, be careful!  NOTIFY absolutely
+   depends on this numeric, and redefining the default behavior will
+   probably trash your NOTIFY output.
+

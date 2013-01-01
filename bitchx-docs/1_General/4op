@@ -1,0 +1,12 @@
+Synopsis:
+   4op [nick|nick1 nick2 nick3 nick4]
+
+Description:
+   This command will op nick 4 times or 4 nicks. Not generally useful,
+   as it's mostly a vanity command.
+
+Examples:
+   To op a single nick 4 times
+      /4op nick
+
+

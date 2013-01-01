@@ -1,0 +1,20 @@
+Synopsis:
+   on [<modes>]msg [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a MSG from another
+   client.
+
+Parameters:
+   $0    nickname of message sender
+   $1-   text of message
+
+See Also:
+   msg(1); on(5) encrypted_privmsg, notice, send_msg
+
+Restrictions:
+   The client does not permit automated responses to a MSG with another MSG.
+   Such replies may use NOTICE instead.  Any attempt to use MSG within this
+   hook will be automatically converted to a NOTICE.  The whole point of
+   this is to prevent loops between clients.
+

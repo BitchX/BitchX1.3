@@ -1,0 +1,9 @@
+^on ^dcc_connect "? ? ? ? ? ?"
+{
+	@:old_autoget = [$DCC_AUTOGET]
+	^set dcc_autoget off
+	if (fexist($DCC_DLDIR/$4) && $5 > 0)
+		//dcc resume $0
+	^set dcc_autoget $old_autoget
+}
+

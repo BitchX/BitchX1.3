@@ -1,0 +1,22 @@
+Synopsis:
+   on [<modes>]idle [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client's idle time reaches the given
+   value, in minutes.  The idle time is reset when the client is given a
+   command.
+
+Parameters:
+   $0    minutes idle
+
+Examples:
+   To automatically set the client away after being idle for 5 minutes:
+      on ^idle "5" {
+         away I'm not paying attention again...
+      }
+
+Other Notes:
+   Irc servers don't have the same notion of "idle" as the client does.  To
+   most servers, the client only becomes unidle by sending a message to a
+   channel or a person.
+

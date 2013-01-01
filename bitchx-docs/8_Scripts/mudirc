@@ -1,0 +1,21 @@
+Synopsis:
+   load mudirc
+
+Description:
+   This script is a generic MUD interface for ircII-EPIC.  Basically, it
+   opens a new client window and starts a telnet session with the MUD site.
+   Two commands are provided:
+
+     Command                       Description                            
+     /mud [<key>]                  displays current defined MUDs if no key
+                                   | is given, or connets to the MUD with
+                                   | the corresponding key
+     /newmud <key> <host> <port>   defines a new MUD
+
+See Also:
+   load(5); nemesis(8)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.  It
+   was largely derived from the NEMESIS script.
+

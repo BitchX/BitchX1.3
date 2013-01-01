@@ -1,0 +1,14 @@
+Synopsis:
+   set auto_rejoin_delay <seconds>
+
+Description:
+   Automatically waits <seconds> seconds before rejoining a channel when
+   kicked. Will only work if set(4) auto_rejoin is ON.
+
+See Also:
+   join(1); set(4) auto_rejoin; on(5) kick
+
+Other Notes:
+   Many channel operators don't like it if you rejoin too early. It is good
+   netiquette to keep <seconds> above 4.
+

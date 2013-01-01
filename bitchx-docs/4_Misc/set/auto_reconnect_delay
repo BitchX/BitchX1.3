@@ -1,0 +1,16 @@
+Synopsis:
+   set auto_reconnect_delay <seconds>
+
+Description:
+   When you are kill(3)ed or disconnected from a server unexpectedly,
+   the client will automatically reconnect <seconds> seconds after the
+   disconnect.
+
+Bugs:
+   This only reconnects you to the current window, so if a server in a
+   non-current window disconnects, auto_reconnect will fail. This is arguably
+   a bug, and may be fixed sometime in a later version.
+
+See Also:
+   server(1); disconnect(1); kill(3).
+

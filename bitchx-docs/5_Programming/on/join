@@ -1,0 +1,27 @@
+Synopsis:
+   on [<modes>]join [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client joins a channel, or whenever
+   it observes another client joining a common channel.
+
+Parameters:
+   $0    nickname of person joining channel
+   $1    channel joined
+   $2    address of person joining channel (same as $userhost())
+   $3    person joining's channel status (on avalon 2.9 servers),
+         could be either (+o) or (+v)
+
+Examples:
+   To distinguish between the client and other users joining the channel:
+      on ^join "*" {
+         if ( [$0] == N ) {
+            echo *** You have joined channel $1
+         } {
+            echo *** $0 \($2\) has joined channel $1
+         }
+      }
+
+See Also:
+   join(1); userhost(6)
+

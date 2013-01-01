@@ -1,0 +1,15 @@
+Synopsis:
+   load tc
+
+Description:
+   This is another implementation of the classic tabscript.  It operates in
+   essentially the same manner as tabkey; the differences between the two
+   are in the coding itself, and are not really noticeable by the user.
+   Externally, it is completely compatible with tabkey.
+
+See Also:
+   load(5); tabkey(8); tabkey.wc(8)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

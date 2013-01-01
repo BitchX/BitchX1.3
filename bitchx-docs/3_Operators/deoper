@@ -1,0 +1,13 @@
+Synopsis:
+   deoper
+
+Description:
+   This command is used by an irc operator to remove his or her operator
+   status.  That's it.
+
+Aliases:
+   DEOPER has the same effect as setting user mode -o with MODE.
+
+See Also:
+   mode(1); oper(3)
+

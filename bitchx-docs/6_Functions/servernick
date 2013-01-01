@@ -1,0 +1,17 @@
+Synopsis:
+   $servernick(<refnum>)
+
+Technical:
+   This function returns the client's current nickname on a given server.
+
+Practical:
+   This function is good when using multiple servers with possibly different
+   nicks.
+
+Returns:
+   nickname on server <refnum>
+
+Examples:
+   $servernick(0)               always the same as $N
+   $servernick(2)               client's nick on server 2
+

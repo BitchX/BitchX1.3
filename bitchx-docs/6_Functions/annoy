@@ -1,0 +1,18 @@
+Synopsis:
+   $annoy(<text>)
+
+Technical:
+   This function will change given text into random uppercase, lowercase,
+   bold, inverse, and underlined text. 
+
+Practical:
+   $annoy() is exactly how it sounds, annoying. It returns the text given 
+   into uppercase , lowercase, bold, inverse, and underlined text. 
+
+
+Returns:
+   Given text into uppercase , lowercase, bold, inverse, and underlined.
+
+See Also:
+
+   cool(6); cool2(6); eleet(6) 

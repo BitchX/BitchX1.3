@@ -1,0 +1,23 @@
+Synopsis:
+   on [<modes>]dcc_offer [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client offers an outbound DCC.  This
+   could be either a DCC CHAT or a file transfer.
+
+Parameters:
+   $0    person who is being offered the DCC
+   $1    type of DCC being offered
+   $2    filename being offered (if type of DCC is 'SEND')
+   $3-   size of file being offered (if type of DCC is 'SEND')
+           
+Examples:
+   To alert user of bad DCC's:
+      on ^dcc_offer "#*" {
+         echo *** Offering a DCC to an entire channel will not work as
+	 echo     expected. Please direct DCC offers to one person.
+      }
+
+See Also:
+   dcc(1)
+

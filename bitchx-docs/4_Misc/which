@@ -1,0 +1,12 @@
+Synopsis:
+   which <file>
+
+Description:
+   This command attempts to find the location of the given file in the
+   client's LOAD_PATH.  By default, the client should at least contain
+   the user's home directory (as well as an irc directory in it), and the
+   script library included with the client.
+
+See Also:
+   Environment(7); cd(4); set(4) load_pathl which(6)
+

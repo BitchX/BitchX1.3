@@ -1,0 +1,11 @@
+Synopsis:
+   set clock [on|off|toggle]
+
+Description:
+   When turned on, the current time may be displayed in the status bar
+   with the STATUS_CLOCK variable.  If off, STATUS_CLOCK will display
+   nothing.
+
+See Also:
+   set(4) clock_24hour, clock_alarm, status_clock; time(1)
+

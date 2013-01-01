@@ -1,0 +1,15 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> action <action description>
+
+Description:
+   This sends a message to the specified nickname or channel that
+   describes what you are doing.  Instead of telling someone "I'm tired",
+   it lets you send a message saying "YourNick is tired".
+
+Aliases:
+   CTCP ACTION is really just a low-level version of ME (for sending to
+   a channel) and DESCRIBE.
+
+See Also:
+   describe(1); load(5) action, mudlike; me(1); on(4) action, send_action
+

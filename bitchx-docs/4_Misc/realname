@@ -1,0 +1,21 @@
+Synopsis:
+   realname [<text>]
+
+Description:
+   REALNAME is used to set the client's IRCNAME (hence the alias, below).
+   The IRCNAME is an arbitrary text string that is displayed in WHOIS and
+   WHO output.  Typically it contains the user's real name, but it may
+   contain anything the user desires.  Use of this command will override
+   any previous setting to REALNAME, as well as the $IRCNAME environment
+   variable (if set).
+
+Aliases:
+   IRCNAME is functionally equivalent to REALNAME.
+
+See Also:
+   Environment(7); reconnect(1); set(4) realname
+
+Restrictions:
+   This command does not change the IRCNAME on the fly.  The client must
+   disconnect and reconnect to a server before it will take effect.
+

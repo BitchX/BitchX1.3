@@ -1,0 +1,13 @@
+Synopsis:
+   $getlogin()
+
+Technical:
+   Gets the name of the current logged in user, similar to the Unix
+   system call.
+
+Returns:
+   current logged in username
+
+See Also:
+   getuid(6); getgid(6); getpgrp(6)
+

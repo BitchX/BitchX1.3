@@ -1,0 +1,29 @@
+Synopsis:
+   $ischannel(<channel name>)
+
+Technical:
+   This function checks whether the input channel name is a valid channel
+   name.  It does NOT check whether the channel actually exists, only that
+   the name would be legal to use as a channel name.
+
+Practical:
+   This function compares the given channel name against the known server
+   rules for channel names to determine if the server is likely to allow
+   a channel with such a name.  Contrary to common belief, it does not
+   check for the existence of a channel.
+
+Returns:
+   "true" value if channel name is legal, "false" otherwise
+
+Examples:
+   $ischannel(#blah)              returns true
+   $ischannel(&blah)              returns true
+   $ischannel(blah)               returns false
+
+See Also:
+   join(1)
+
+Bugs:
+   This function does not take ircd 2.9's modeless channels (prefixed with
+   a '+') into account when determining the legality of a channel name.
+

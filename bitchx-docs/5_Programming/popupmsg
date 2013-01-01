@@ -1,0 +1,11 @@
+Synopsis:
+   popupmsg "text" <time>
+
+Description:
+   POPUPMSG creates a window with the given text and an "ok" button.
+   Optionally you can specify a time in seconds, where when the time
+   limit expires the window is automatically closed.
+
+See Also:
+   popupmenu(5); properties(5); fontdialog(5) filedialog(5)
+

@@ -1,0 +1,19 @@
+Synopsis:
+   on [<modes>]dcc_chat [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a message across a
+   DCC CHAT connection.
+
+Parameters:
+   $0    nickname of the message sender
+   $1-   message received
+
+See Also:
+   dcc(1) chat; msg(1); on(5) send_dcc_chat
+
+Other Notes:
+   DCC falls outside of the irc protocol, and as such there are no
+   restrictions on automated replies.  This creates the potential for
+   uncontrolled looping, so caution is advised.
+

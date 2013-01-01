@@ -1,0 +1,12 @@
+Synopsis:
+   wordlist
+
+Description:
+   Shows your banned word list along with the channel they are active in. 
+
+Examples:
+      /wordlist
+
+See Also:
+   unwordkick(1) addword(1) showwordkick(1) 
+

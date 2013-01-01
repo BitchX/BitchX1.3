@@ -1,0 +1,29 @@
+Synopsis:
+   $common(<word list> / <word list>)
+   $diff(<word list> / <word list>)
+
+Technical:
+   These functions are exact opposites.  The $common() function finds and
+   returns all words common to both input lists.  The $diff() function
+   funds are returns all words present in only one list.  The two input
+   lists must be separated by a single forward-slash.  Whitespace is not
+   significant.
+
+Practical:
+   These functions might be considered useful for statistical information.
+   For instance, given 2 channels, they could be used to show who is and
+   isn't on both of them.
+
+Returns:
+   common: words in both lists
+   diff:   words not in both lists
+
+Examples:
+   $common(one two three / two three four)     returns "two three"
+   $common(one two / three four)               returns ""  (empty string)
+   $diff(one two three / two three four)       returns "one four"
+   $diff(one two / one two)                    returns ""  (empty string)
+
+See Also:
+   common(6); remws(6); uniq(6)
+

@@ -1,0 +1,8 @@
+Synopsis:
+   dcc stats
+
+Description:
+   DCC STATS displays various information that has been collected during
+   the clients running time on all dcc sends and gets
+
+

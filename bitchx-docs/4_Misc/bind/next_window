@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> next_window
+
+Description:
+   This function causes the client to change the current window to the one
+   immediately below the current one in the window list.  If the current
+   window is the last in the list, the first becomes the current window.
+
+Aliases:
+   This function has the same effect as the WINDOW NEXT command.
+
+See Also:
+   bind(4) previous_window, swap_next_window; window(4) next
+

@@ -1,0 +1,17 @@
+Synopsis:
+   load history-match
+
+Description:
+   This script attempts to emulate the T-Shell's (tcsh) history completion
+   capabilities, ESC-p.  The script binds META2-p to this function (META2
+   is bound to ^X by default).  It allows for both command completion and
+   argument completion from the client's command history.  If multiple
+   matches are found in the history, repeated ^X-p will cycle through each
+   possibility.
+
+See Also:
+   bind(4) meta2_character; history(4); load(5)
+
+Other Notes:
+   This script is believed to have been written by Matthew Green (phone).
+

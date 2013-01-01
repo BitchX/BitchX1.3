@@ -1,0 +1,18 @@
+Synopsis:
+   set mail [<0|1|2>]
+
+Description:
+   This setting affects how the client checks for new mail.  When set to
+   0 (zero), mail checking is disabled.  When set to 1 (one), the client
+   will periodically report how many new messages have arrived since the
+   last check, and the total message count.  When set to 2 (two), the
+   client shows the sender and subject of each new message as well.
+
+See Also:
+   on(5) mail; set(4) status_mail
+
+Other Notes:
+   The client will only search for new mail in the user's mail spool.  The
+   mail spool directory location is hardcoded into the client at compile
+   time.
+

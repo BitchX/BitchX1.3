@@ -1,0 +1,18 @@
+Synopsis:
+   $numonchannel(<channel>|*)
+
+Technical:
+   This function is used to get the number of users on the specified
+   channel.  The client must currently be on the channel for it to work.
+
+Practical:
+   This function is mostly useful for statistical analysis.  One possible
+   might be to trigger a mode change (+i, +l, +m) for the channel when the
+   user count reaches a certain level.
+
+Returns:
+   number of users on given channel, or nothing if error
+
+See Also:
+   onchannel(6)
+

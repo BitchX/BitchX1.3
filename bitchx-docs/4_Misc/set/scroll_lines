@@ -1,0 +1,14 @@
+Synopsis:
+   set scroll_lines [<number>]
+
+Description:
+   This setting offers a compromise of sorts between the available modes
+   of the SCROLL variable.  When the last line of the display contains
+   text, the client will scroll all text upward by the number of lines
+   specified.  The normal behavior uses a setting of 1 (one).  If it is
+   set to 0 (zero), the client automatically turns SCROLL off, and it
+   must be manually enabled again to turn scrolling back on.
+
+See Also:
+   set(4) scroll
+

@@ -1,0 +1,30 @@
+How to use the BitchX/EPIC help system
+
+++ New users should use "/ehelp 7 new_user" before proceeding further. ++
+
+The basic system has not changed from previous releases of the client.
+What has changed is the structure of the helpfiles, and the helpfiles
+themselves.  Helpfiles are now organized in logical groups of commands,
+similar to the Unix manual system.
+
+  Section 1: General Commands           Section 5: Programming BitchX
+  Section 2: Server Queries             Section 6: Builtin Functions
+  Section 3: IRC Operator Commands      Section 7: Documentation
+  Section 4: Miscellaneous Commands     Section 8: Script Library
+
+The implication of this, however, is that HELP can't work the same way
+as it used to.  In order to read a helpfile now, its section number must
+also be given.  Thus, where one previously obtained help on WHOIS with
+"/help whois", one must now use "/help 2 whois".
+
+Another change is the references to related topics in individual helpfiles,
+which is another similarity to Unix man pages.  To better help users ease
+into the new format, all topic references in the "See Also" sections will
+include a Unix-ish section reference, such as "whois(2)".
+
+Also if your familar with a command and you find that it's not listed in
+here, please write a description of it and email it to
+edwards@bitchx.dimension6.com. Your input here, might help someone else.
+
+  ++ If you have not yet read "/ehelp 7 new_user", please do so now. ++
+

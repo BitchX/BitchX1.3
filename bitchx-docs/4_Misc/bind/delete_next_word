@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> delete_next_word
+
+Description:
+   This function deletes text on the input line from the position of the
+   cursor forward to the end of the first word found.  If is it in the
+   middle of a word, that word is truncated.  If it is on whitespace, all
+   text and whitespace to the end of the next word are deleted.
+   
+See Also:
+   bind(4) delete_previous_word
+

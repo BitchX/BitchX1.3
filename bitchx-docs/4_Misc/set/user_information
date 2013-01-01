@@ -1,0 +1,10 @@
+Synopsis:
+   set user_information [<text>]
+
+Description:
+   This setting contains the text returned to a remote client requesting a
+   CTCP USERINFO.  The text may be anything, or nothing at all.
+
+See Also:
+   ctcp(1) userinfo
+

@@ -1,0 +1,38 @@
+Synopsis:
+   say <text>
+
+Description:
+   This command sends the specified text to the current channel.  It has
+   numerous practical uses.  Among others, it allows the user to send a
+   message to a channel even if CMDCHARS is for some reason not set,
+   or is COMMAND_MODE is on.  It it also useful for allowing ALIASes,
+   BINDs, scripts, and the like, to explicitly send a message to the
+   current channel.
+
+   Using the SAY command is functionally equivalent to using the
+   command character with no command.  Of course, the default is to send
+   text to the current channel if no command character is specified at
+   all.
+
+Examples:
+   To send a message to the current channel:
+      /say hello all!
+
+   An alternate way to send a message:
+      / hello all!
+
+   To someone else on irc, your message will appear like this:
+      <your_nick> hello all!
+
+   To you, your message will appear like this:
+      > hello all!
+
+See Also:
+   msg(1); send(5); set(4) command_mode
+
+Restrictions:
+   SAY cannot send a message to any channel other than the current
+   one.  You must switch channels with JOIN (or CHANNEL), or with
+   whatever key is bound to SWITCH_CHANNELS.  Otherwise, use MSG to send
+   the message to a specific destination.
+

@@ -1,0 +1,51 @@
+Synopsis:
+   load commander
+
+Description:
+   This script sets a number of meta-key bindings.  Each key is bound to
+   some commonly-used function.  All of the keys shown are prefixed with
+   the ESC key.
+
+     Key  Description                                                     
+      a   prompts for away message, none will remove away status
+      c   same as NAMES, for current channel
+      d   runs /countrywho alias (depricated)
+      e   prompts for command to EXEC
+      f   joins channel last invited to
+      g   queries last user seen by NOTIFY; clears $STATUS_USER
+      h   runs /localwho (loaded from default LOCAL script)
+      i   invites last MSG recipient to current channel
+      j   same as WHOIS, for last person to join current channel
+      k   leaves current channel and kills its window
+      l   same as LIST (3 user minimum, public, topic set)
+      m   queries last MSG sender; clears $STATUS_USER
+      n   same as NAMES (2 user minimum, public)
+      o   same as WHO with -o switch
+      p   makes current channel private
+      q   same as QUERY; clears $STATUS_USER
+      r   queries last MSG recipient; clears $STATUS_USER
+      s   bound to SWITCH_CHANNELS function
+      t   prompts for new channel topic, none will display current
+      u   same as LUSERS
+      w   same as WHO for current channel (if any)
+      x   same as WHOIS for last MSG recipient
+      y   toggles SCROLL setting
+      z   toggles HOLD_MODE setting
+      ,   same as FLUSH
+     TAB  same as CLEAR
+
+See Also:
+   away(1); bind(4) meta1_character, switch_channels; clear(4); exec(5);
+   flush(2); invite(1); join(1); keybinds(8); list(2); load(5); lusers(2);
+   msg(1); names(2); notify(1); query(1); set(4) hold_mode, scroll,
+   status_user; who(2); whois(2); window(4) kill
+
+Bugs:
+   The /countrywho alias is no longer present in any script distributed with
+   the client.  Thus, ESC-d will fail.
+
+Other Notes:
+   This script assumes that META1_CHARACTER has been bound to the escape
+   key.  If not, use the appropriate meta key.  It was written by Carl von
+   Loesch (lynx).
+

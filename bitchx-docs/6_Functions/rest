@@ -1,0 +1,21 @@
+Synopsis:
+   $rest(<start> <text>)
+
+Technical:
+   The $rest() function returns the given test starting at the position
+   specified by <start>.
+
+Practical:
+   This function is mostly useful when you know you want to always remove
+   the first few characters from an input string, regardless of what they
+   are.
+   
+Returns:
+   <text> with <start> number of characters removed from the front
+
+Examples:
+   $rest(4 foobarfnord)                 returns "arfnord"
+
+See Also:
+   left(6); right(6); mid(6)
+

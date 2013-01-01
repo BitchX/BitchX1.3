@@ -1,0 +1,68 @@
+Synopsis:
+   msg [=]<nickname> <text to send>
+   msg <channel> <text to send>
+   msg %<process id|process name> <text to send>
+
+Description:
+   This command has 3 primary functions; to send a private message to an
+   individual, to send a message to a channel, or to send a message to a
+   running EXEC process (usually a command of some sort).  You can specify
+   multiple recipients for the message by delimiting them with commas (but
+   no spaces), and you may even mix-and-match the types of recipients.
+
+   Additionally, there are 3 special cases for recipients.  If you specify
+   a single comma, ",", the message will go to the last person who sent you a
+   MSG.  If a single period, ".", the message will go to the last person you
+   sent a MSG to.  If you specify an asterisk, "*", the message will go to
+   your current channel.
+
+   Finally, you can make ircII-EPIC beep whenever you receive a private
+   message by setting BEEP_ON_MSG to "msgs".  This is turned off by
+   default.
+
+Examples:
+   To send a private message to your friend Buddha:
+      /msg buddha hi there!
+
+   To send a message to your current channel:
+      /msg #channel how is everyone today?
+
+   To send a message to a running EXECed process with id 2:
+      /msg %2 exit
+
+   To send a message to your friends buddha, booya (with whom you have a
+   DCC CHAT running), and channel #foobar:
+      /msg buddha,=booya,#foobar see you later!
+
+   To send a message to an EXECed process named "mail":
+      /msg %mail x
+
+Aliases:
+   When sending a message to your current channel, MSG has the same effect
+   as the SAY command.
+
+See Also:
+   dcc(1) chat; exec(5); load(5) nicks; notice(1); on(5) msg, public_msg,
+   send_msg; query(1); say(1); send(5); set(4) beep_on_msg
+
+Restrictions:
+   The IRC protocol explicitly prohibits any client from sending any
+   automated response to a MSG other than a NOTICE, and ircII-EPIC
+   enforces this policy.
+
+   The special cases for private MSG recipients, ",", ".", and "*", may
+   not be specified with any other recipients (i.e. in a comma-delimited
+   list), they must be used alone.  Attempting to do so will cause the
+   client to not interpret them and assume they are literal nicknames,
+   which will return a "No such nick/channel" error message.
+
+   You may not send a message to any channel that is +n unless you are
+   currently on it (and if it is +m, you must have +v or +o status).  See
+   MODE for more information.
+
+   Recent +CS servers (mostly used on EFnet) now restrict the number of
+   people you may simultaneously send a MSG to.  The maximum is 20 people,
+   though local operators will be warned if there are more than 10, in an
+   attempt to curb irc "spams".  The /th servers are knows to behave in a
+   similar manner.
+

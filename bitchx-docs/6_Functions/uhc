@@ -1,0 +1,21 @@
+Synopsis:
+   $uhc(<broken nick!user@host>)
+
+Technical:
+   This function finishes a partially-complete nick!user@host.
+
+Practical:
+   It can be used to make a matching nick!user@host in an alias that doesn't
+   know what part of the nick!user@host was written.
+
+Returns:
+   completed nick!user@host
+
+Examples:
+   $uhc(nick)                       returns "nick!*@*"
+   $uhc(user@host.com)              returns "*!user@host.com"
+   $uhc(*.host.com)                 returns "*!*@*.host.com"
+
+See Also:
+   deuhc(6); match(6); userhost(6)
+

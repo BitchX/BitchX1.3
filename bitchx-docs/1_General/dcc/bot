@@ -1,0 +1,13 @@
+Synopsis:
+   dcc bot <nick>
+
+Description:
+   DCC BOT initiates a direct connection to another client, allowing
+   the users to chat without needing to pass messages through the irc
+   network.  This is a very secure way of communicating on irc, not
+   to mention that it is generally faster than sending messages across
+   the irc network. A BOT connection is differant from a CHAT connection.
+
+See Also:
+   ctcp(1); msg(1); on(5) dcc_chat, send_dcc_chat
+

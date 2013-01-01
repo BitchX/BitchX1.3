@@ -1,0 +1,18 @@
+Synopsis:
+   $delarray(<array>)
+
+Technical:
+   This function removes all items in an array created with $setitem(),
+   having the effect of deleting the array.
+
+Practical:
+   This function deletes an array.  Generally this is most useful when
+   cleaning up after a script.
+
+Returns:
+   -1   error, array does not exist
+    0   array deleted successfully
+
+See Also:
+   Arrays(7); delitem(6); setitem(6)
+

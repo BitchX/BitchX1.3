@@ -1,0 +1,48 @@
+Synopsis:
+   whois [<server|nickname>] [<nickname>[,<nickname>[,...]]]
+
+Description:
+   The WHOIS command is used to retrieve moderately detailed information
+   about the nickname(s) specified.  This will always include the user's
+   nickname, address (user@hostname), real name (IRCNAME), and the server
+   that user is on.  It may also show what channels the user is on (if
+   any, and if they aren't +p/+s) and whether the user is +o/+v in any of
+   those channels, whether the user is away, and if the user is an irc
+   operator.
+
+   WHOIS may be used on multiple nicknames at once, provided they are
+   delimited with commas.  If a server name is specified, that server will
+   be queried instead of the client's current server.  If no arguments are
+   given, the WHOIS will be performed on the client itself.
+
+   The command can also display the queried user's idle time (amount of
+   time since the client last did anything on the server).  This is only
+   displayed if the user is on the same server as the client, or if the
+   user's server is queried.  When querying for idle time, a single
+   nickname may be given in place of a server, in which case that user's
+   server will be queried.
+
+Examples:
+   To get information on users JoeBob, ToeJam, and JuneBug:
+      /whois joebob,toejam,junebug
+
+   To get information on the same people from server irc.foo.com:
+      /whois irc.foo.com joebob,toejam,junebug
+
+   To get the idle time for user JoeBob:
+      /whois joebob joebob
+
+See Also:
+   who(2); whowas(2)
+
+Restrictions:
+   In WHOIS output, only channels that are not +p or +s are shown, unless
+   the client happens to be on one of those channels.
+
+Other Notes:
+   In addition to idle time, some servers also return the time the user
+   signed on to irc.
+
+   If you query a remote server for WHOIS information, there is no reliable
+   way to "wait" for the data to come back (i.e. WAIT will be useless).
+

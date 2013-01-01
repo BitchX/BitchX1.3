@@ -1,0 +1,24 @@
+Synopsis:
+   sleep <seconds>
+   pause <seconds>
+
+Description:
+   This suspends the client for the specified number of seconds.  During
+   this time, the client does absolutely nothing; it quite literally goes
+   to sleep.  In general, it is most useful in non-interactive automated
+   scripts, and even these cases are fairly rare.
+
+   The only external difference between SLEEP and PAUSE is that SLEEP
+   blocks.  The client stops everything until it is done sleeping.  PAUSE,
+   however, only pauses execution of the current code block.  This allows
+   the client to stop processing an alias temporarily without locking the
+   whole client up.
+
+   There are other commands more suited to the tasks that SLEEP is
+   often used for.  To wait a specified period of time before executing a
+   command, use TIMER.  To wait indefinitely for a command or server query
+   to complete, use WAIT.
+
+See Also:
+   timer(5); wait(5); usleep(5)
+

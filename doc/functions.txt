@@ -1,0 +1,1106 @@
+BitchX function doc.  
+Last updated: 9/10/98 by power <power@power.zepa.net>
+
+This is not a complete function manual.  For all functions
+please look in ../bitchx-docs/6_Functions/
+
+
+
+Function: $left()
+Usage:    $left(number text)
+Returns:  the <number> leftmost characters in <text>.
+Example:  $left(5 the quick brown frog) returns "the q"
+
+Function: $getkey()
+Usage:    $getkey(channel)
+Returns:  the channel key if there is one.
+Example:  $getkey(#BitchX) should return nothing ;)
+
+Function: $right()
+Usage:    $right(number text)
+Returns:  the <number> rightmost characters in <text>.
+Example:  $right(5 the quick brown frog) returns " frog"
+
+Function: $mid()
+Usage:    $mid(start number text)
+Returns:  the <start>th through <start>+<number>th characters in <text>.
+Example:  $mid(3 4 the quick brown frog) returns " qui"
+Notes:     the first character is numbered zero.
+
+Function: $rand()
+Usage:    $rand(max)
+Returns:  A random number from zero to max-1.
+Example:  $rand(10) might return any number from 0 to 9.
+
+Function: $srand()
+Usage:    $srand(seed)
+Returns:  Nothing.
+Side effect: seeds the random number generater.
+Notes:     the argument is ignored.
+
+Function: $time()
+Usage:    $time()
+Returns:  The number of seconds that has elapsed since Jan 1, 1970, GMT.
+Example:  $time() returned something around 802835348 at the time I wrote
+          this comment.
+
+Function: $stime()
+Usage:    $stime(time)
+Returns:  The human-readable form of the date based on the <time> argument.
+Example:  $stime(1000) returns what time it was 1000 seconds from the epoch.
+Notes:    $stime() is really useful when you give it the argument $time(),
+          ala $stime($time()) is the human readable form for now.
+
+Function: $tdiff()
+Usage:    $tdiff(seconds)
+Returns:  The time that has elapsed represented in days/hours/minutes/seconds
+          corresponding to the number of seconds passed as the argument.
+Example:  $tdiff(3663) returns "1 hour 1 minute 3 seconds"
+
+Function: $index()
+Usage:    $index(characters text)
+Returns:  The number of leading characters in <text> that do not occur
+          anywhere in the <characters> argument.
+Example:  $index(f three fine frogs) returns 6 (the 'f' in 'fine')
+          $index(frg three fine frogs) returns 2 (the 'r' in 'three')
+
+Function: $rindex()
+Usage:    $rindex(characters text)
+Returns:  The number of leading characters in <text> that occur before the
+          *last* occurance of any of the characters in the <characters>
+          argument.
+Example:  $rindex(f three fine frogs) returns 12 (the 'f' in 'frogs')
+          $rindex(frg three fine frogs) returns 15 (the 'g' in 'frogs')
+
+Function: $match()
+Usage:    $match(pattern list of words)
+Returns:  if no words in the list match the pattern, it returns 0.
+          Otherwise, it returns the number of the word that most
+          exactly matches the pattern (first word is numbered one)
+Example:  $match(f*bar foofum barfoo foobar) returns 3
+          $match(g*ant foofum barfoo foobar) returns 0
+Notes:    it is possible to embed spaces inside of a word or pattern simply
+          by including the entire word or pattern in quotation marks. (")
+
+Function: $rmatch()
+Usage:    $rmatch(word list of patterns)
+Returns:  if no pattern in the list matches the word, it returns 0.
+          Otherwise, it returns the number of the pattern that most
+          exactly matches the word (first word is numbered one)
+Example:  $rmatch(foobar f*bar foo*ar g*ant) returns 2
+          $rmatch(booya f*bar foo*ar g*ant) returns 0
+Notes:    It is possible to embed spaces into a word or pattern simply by
+          including the entire word or pattern within quotation marks (")
+
+Function: $userhost()
+Usage:    $userhost()
+Returns:  the userhost (if any) of the most previously recieved message.
+Notes:    $userhost() changes with every single line that appears on your
+          screen, so if you want to save it, you will need to assign it to
+          a variable.
+
+Function: $strip()
+Usage:    $strip(characters text)
+Returns:  <text> with all instances of any characters in the <characters>
+          argument removed.
+Example:  $strip(f free fine frogs) returns "ree ine rogs"
+Notes:    it can be difficult (actually, not possible) to remove spaces from
+          a string using this function.  To remove spaces, simply use this:
+             $tr(/ //$text)
+          Actually, i recommend not using $strip() at all and just using
+             $tr(/characters//$text)
+          (but then again, im biased. >;-)
+
+Function: $encode()
+Usage:    $encode(text)
+Returns:  a string, uniquely identified with <text> such that the string
+          can be used as a variable name.
+Example:  $encode(fe fi fo fum) returns "GGGFCAGGGJCAGGGPCAGGHFGN"
+Notes:    $encode($decode(text)) returns text (most of the time)
+          $decode($encode(text)) also returns text.
+
+Function: $decode()
+Usage:    $decode(text)
+Returns:  If <text> was generated with $encode(), it returns the string
+          you originally encoded.  If it wasnt, you will probably get
+          nothing useful in particular.
+Example:  $decode(GGGFCAGGGJCAGGGPCAGGHFGN) returns "fe fi fo fum"
+Notes:    $encode($decode(text)) returns "text"
+          $decode($encode(text)) returns "text" too.
+          Yes.  $decode(plain-text) does compress the data by a factor of 2.
+          But it ignores non-ascii text, so use this as compression at your
+          own risk and peril.
+
+Function: $ischannel()
+Usage:    $ischannel(text)
+Returns:  If <text> could be a valid channel name, 1 is returned.
+          If <text> is an illegal channel name, 0 is returned.
+Example:  $ischannel(i_am_not_on_this_channel) returns 0
+          $ischannel(#i_am_not_on_this_channel) returns 1
+Notes:    Contrary to popular belief, this function does NOT determine
+          whether a given channel name is in use!
+
+Function: $ischanop()
+Usage:    $ischanop(nick channel)
+Returns:  1 if <nick> is a channel operator on <channel>
+          0 if <nick> is not a channel operator on <channel>
+                  * O R *
+          if you are not on <channel>
+Notes:    Contrary to popular belief, this function can only tell you
+          who the channel operators are for channels you are already on!
+Boo Hiss: This should be $ischanop(channel nick <nick...nick>)
+          and return a list (1 1 ... 0), which would allow us to
+          call is_chanop() without ripping off the nick, and allow
+          us to abstract is_chanop() to take a list. oh well...
+          Too late to change it now. :/
+
+Function: $word()
+Usage:    $word(number text)
+Returns:  the <number>th word in <text>.  The first word is numbered zero.
+Example:  $word(3 one two three four five) returns "four" (think about it)
+
+Function: $winnum()
+Usage:    $winnum()
+Returns:  the index number for the current window
+Notes:    returns -1 if there are no windows open (ie, in dumb mode)
+
+Function: $winnam()
+Usage:    $winnam()
+Returns:  the current window name if any.
+
+Function: $connect()
+Usage:    $connect(host port)
+Returns:  the socket number to use for read/write.
+
+Function: $listen()
+Usage:    $listen(port)
+Returns:  the port allocated for the RAW_LISTEN
+
+Function: $toupper()
+Usage:    $toupper(string)
+Returns:  the upper case string.
+
+Function: $tolower()
+Usage:    $tolower(string)
+Returns:  the lower case string.
+
+Function: $curpos()
+Usage:    $curpos()
+Returns:  returns current position in window buffer
+
+Function: $mychannels()
+Usage:    $channels()
+Returns:  the channels you are currently in
+
+Function: $servers()
+Usage:    $servers()
+Returns:  the list of servers.
+
+Function: $pid()
+Usage:    $pid()
+Returns:  the pid of the process
+
+Function: $ppid()
+Usage:    $ppid()
+Returns:  the parent pid of the process.
+
+Function: $strftime()
+Usage:    $strftime(time format)
+Returns:  the formatted time str for time. if time is omitted then current
+          time is used. man strftime for the format specs.
+
+Function: $idle()
+Usage:    $idle()
+Returns:  the idle time.
+
+Function: $before()
+Usage:    $before(chars string of text)
+Returns:  the part of "string of text" that occurs before the
+          first instance of any character in "chars"
+Example:  $before(! hop!jnelson@iastate.edu) returns "hop"
+
+Function: $after()
+Usage:    $after(chats string of text)
+Returns:  the part of "string of text" that occurs after the
+          first instance of any character in "chars"
+Example:  $after(! hop!jnelson@iastate.edu)  returns "jnelson@iastate.edu"
+
+Function: $leftw()
+Usage:    $leftw(num string of text)
+Returns:  the left "num" words in "string of text"
+Example:  $leftw(3 now is the time for) returns "now is the"
+
+Function: $rightw()
+Usage:    $rightw(num string of text)
+Returns:  the right num words in "string of text"
+Example:  $rightw(3 now is the time for) returns "the time for"
+
+Function: $midw()
+Usage:    $midw(start num string of text)
+Returns:  "num" words starting at word "start" in the string "string of text"
+Example:  $midw(2 2 now is the time for) returns "the time"
+Notes:    The first word is word #0.
+
+Function: $notw()
+Usage:    $notw(num string of text)
+Returns:  "string of text" with word number "num" removed.
+Example:  $notw(3 now is the time for) returns "now is the for"
+Notes:     The first word is numbered 0.
+
+Function: $restw()
+Usage:    $restw(num string of text)
+Returns:  "string of text" that occurs starting with and including
+          word number "num"
+Example:  $restw(3 now is the time for) returns "time for"
+Notes:    the first word is numbered 0.
+ 
+Function: $remw()
+Usage:    $remw(word string of text)
+Returns:  "string of text" with the word "word" removed
+Example:  $remw(the now is the time for) returns "now is time for"
+ 
+Function: $insertw()
+Usage:    $insertw(num word string of text)
+Returns:  "string of text" such that "word" is the "num"th word
+          in the string.
+Example:  $insertw(3 foo now is the time for) returns "now is the foo time for"
+Notes:    the first word is numbered 0.
+ 
+Function: $chngw()
+Usage:    $chngw(num word string of text)
+Returns:  "string of text" such that the "num"th word is removed
+          and replaced by "word"
+Example:  $chngw(3 foo now is the time for) returns "now is the foo for"
+Notes:    the first word is numbered 0
+ 
+Function: $common()
+Usage:    $common (string of text / string of text)
+Returns:  Given two sets of words seperated by a forward-slash '/', returns
+          all words that are found in both sets.
+Example:  $common(one two three / buckle my two shoe one) returns "one two"
+Notes:    returned in order found in first string.
+
+Function: $diff()
+Usage:    $diff(string of text / string of text)
+Returns:  given two sets of words, seperated by a forward-slash '/', returns
+          all words that are not found in both sets
+Example:  $diff(one two three / buckle my three shoe)
+          returns "one two buckle my shoe"
+
+Function: $pattern()
+Usage:    $pattern(pattern string of words)
+Returns:  given a pattern and a string of words, returns all words that
+          are matched by the pattern
+Example:  $pattern(f* one two three four five) returns "four five"
+ 
+Function: $filter()
+Usage:    $filter(pattern string of words)
+Returns:  given a pattern and a string of words, returns all words that are
+          NOT matched by the pattern
+Example:  $filter(f* one two three four five) returns "one two three"
+ 
+Function: $rpattern()
+Usage:    $rpattern(word list of patterns)
+Returns:  Given a word and a list of patterns, return all patterns that
+          match the word.
+Example:  $rpattern(jnelson@iastate.edu *@* jnelson@* f*@*.edu)
+          returns "*@* jnelson@*"
+ 
+Function: $rfilter()
+Usage:    $rfilter(word list of patterns)
+Returns:  given a word and a list of patterns, return all patterns that
+          do NOT match the word
+Example:  $rfilter(jnelson@iastate.edu *@* jnelson@* f*@*.edu)
+          returns "f*@*.edu"
+
+Function: $copattern()
+Usage:    $copattern(pattern var_1 var_2)
+Returns:  Given a pattern and two variable names, it returns all words
+          in the variable_2 corresponding to any words in variable_1 that
+          are matched by the pattern
+Example:  @nicks = [hop IRSMan skip]
+          @userh = [jnelson@iastate.edu irsman@iastate.edu sanders@rush.cc.edu]
+          $copattern(*@iastate.edu userh nicks)
+          returns "hop IRSMan"
+
+Function: $beforew()
+Usage:    $beforew(pattern string of words)
+Returns:  the portion of "string of words" that occurs before the
+          first word that is matched by "pattern"
+Example:  $beforew(three one two three o leary) returns "one two"
+
+Function: $tow()
+Usage:    $tow(pattern string of words)
+Returns:  the portion of "string of words" that occurs up to and including
+          the first word that is matched by "pattern"
+Example:  $tow(panasync BitchX by panasync is cool)
+          returns "BitchX by panasync"
+
+Function: $afterw()
+Usage:    $afterw(number words)
+Returns:  the string after the word being matched
+
+Function: $fromw()
+Usage:    $fromw(pattern word1 ?word2? ... ?wordN?)
+Returns:  the string starting with the word being matched
+Example:  $fromw(asf asdf asf asdf) returns "asf asdf"
+
+Function: $splice()
+Usage:    $splice(variable start length)
+Returns:  APPEARS to return a list of words starting with word "start"
+          of the variable, of length "length"
+Example:  assign cres.data.1 Cres... nuttin' but a smooth 100% /dev/zero
+          $splice(cres.data.1 4 3) returns "smooth 100% /dev/zero"
+Notes:    Not sure, but I think the first word is zero (thats pretty
+          standard)
+
+Function: $numonchannel()
+Usage:    $numonchannel(channel)
+Returns:  the number of users on a channel. if channel is omitted then the
+          current channel is used.
+
+Function: $onchannel()
+Usage:    $onchannel(channel) * OR * $onchannel(nick)
+Returns:  sorted list of nicks (channel) or if the nick is on channel
+          If no args, sorted list of nicks for current channel is returned.
+          Current channel is also used for (nick) test.
+
+Function: $channelnicks()
+Usage:    $channelnicks(channel)
+Returns:  chops in a comma separated list.
+
+Function: $chops()
+Usage:    $chops(channel)
+Returns:  chops in a space separated list.
+
+Function: $nochops()
+Usage:    $nochops(channel)
+Returns:  nops in a space separated list.
+
+Function: $key()
+Usage:    $key(channel)
+Returns:  channel key or "*" if none.
+
+Function: $revw
+Usage:    $revw(words)
+Returns:  reverses the words.
+Example:  $revw(this rules) returns "rules this"
+
+Function: $reverse()
+Usage:    $reverse(words)
+Returns:  reverses the chars in the words.
+Example:  $reverse(this rules) returns "selur siht"
+
+Function: $strstr()
+Usage:    $strstr(needle haystack)
+Returns:  a list of words from the first "needle" in "haystack" to the end
+          of "haystack"
+Example:  $strstr(needle there is a needle in this haystack)
+          returns "needle in this haystack"
+
+Function: $jot()
+Usage:    $jot(val1 val2 ?step?)
+Returns:  list of #'s from val1 to val2 by options ?step?, decreasing OR
+          increasing
+Example:  $jot(9 5 2) returns "9 7 5"
+
+Function: $shift()
+Usage:    $shift(var)
+Notes:    removes the first word from $var
+Returns:  the word removed from $var
+
+Function: $unshift()
+Usage:    $unshift(var <arg1> [arg2 arg3 ... argN])
+Returns:  the value of the var after the unshift
+Example:  assign cres.data.1 nuttin' but a smooth 100% /dev/zero
+          $unshift(cres.data.1 Cres... ) returns
+          "Cres... nuttin' but a smooth 100% /dev/zero"
+
+Function: $tdiff2()
+Usage:    $tdiff2(timestr)
+Returns:  like tdiff but with d, h, m, s
+Example:  $tdiff(1234) returns 20m 34s
+
+Function: $winchan()
+Usage:    $winchan(#channel <server refnum|server name>)
+Returns:  The refnum of the window where the channel is the current channel
+          on the server refnum or server name.
+          returns -1 on error
+
+Function: $crypt()
+Usage:    $crypt(password seed)
+Returns:  a 13-char encrypted string when given a seed and password. 
+          Returns zero (0) if one or both args missing. Additional
+          args ignored.
+Notes:    Password truncated to 8 chars. Spaces allowed, but password
+          must be inside "" quotes.
+
+Function: $pad()
+Usage:    $pad(N string of text goes here)
+Returns:  a padded string of text, either left or right. Final length is
+          N chars.
+Notes:    if N is negative, it'll pad to the right
+          if N is positive, it'll pad to the left
+Example:  $pad(20 letters) returns "             letters"
+
+Function: $uniq()
+Usage:    $uniq (string of text)
+Returns:  Given a set of words, returns a new set of words with duplicates
+          removed.
+Example:  $uniq(one two one two) returns "one two"
+
+Function: $sar()
+Usage:    $sar([g][r]/<search>/<replace>/<text>)
+Technical:
+          This function searches for the given search string in the given
+          text, and replaces if with the replacement text, if a match is
+          found.  The field delimiter may be any character; the first
+          character found that is not a 'g' or 'r' is used.
+Practical:
+          This is the general purpose search-and-replace function.  It allows
+          you to look for any arbitrary text substring in any text string, and
+          replace it with another arbitrary substring.  Any of the strings may
+          consist of variables to expand at runtime.
+Options:
+          g    replace all matches, not just the first
+          r    assume text is a variable name; assign return value to variable
+Examples:
+          @ foo = [foobarblah]
+          $sar(/oo/ee/booyamon)              returns "beeyamon"
+          $sar(/oo/ee/foofoo)                returns "feefoo"
+          $sar(g/oo/ee/foofoo)               returns "feefee"
+          $sar(r/oo/ee/foo)                  returns and sets $foo to
+                                             "feebarblah"
+
+Function: $push()
+Usage:    $push(var word1 word2 ... wordN)
+Returns:  The value of $var with the given words appended to it (the var
+          need not previously exist)
+Example:  $push(newvar this is a new variable) returns "this is a new
+          variable", provided $newvar does not exist.
+
+Function: $pop()
+Usage:    $pop(varname)
+Returns:  The value removed from varname.
+Notes:    This function removes the LAST "word" in $varname
+
+Function: $center()
+Usage:    $center(width string)
+Returns:  Returns the string centered in "width" chars
+Notes:    The string is truncated from the right, so the returned length
+          is NOT "width".
+Example:  $center(30 BitchX) returns "            BitchX"
+
+Function: $split()
+Usage:    $split(splitstring stringtosplit)
+Returns:  a list composed of "stringtosplit" split using "splitstring"
+Example:  $split(a abacadaeaf) returns " b c d e f"
+
+Function: $chr()
+Usage:    $chr(num [num2] ... [numN])
+Returns:  the ascii char(s) the given "num(s)"
+Example:  $chr(120 121 122) returns "xyz"
+
+Function: $ascii()
+Usage:    $ascii(char [char2] ... [charN])
+Returns:  the ASCII value of the given chars
+Note:     the arguments of $ascii() are NOT whitespaced.
+Example:  $ascii(xyz) returns "120 121 122"
+
+Function: $which()
+Usage:    $which(filename)
+Returns:  the absolute path of any file in ~/.BitchX
+Example:  $which(BitchX.help) returns (on my box)
+          "/home/by-tor/.BitchX/BitchX.help"
+
+Function: $isalpha()
+Usage:    $isalpha(char)
+Returns:  1 or 0 if char alpha or not
+Example:  $isalpha(6) returns 0
+
+Function: $isdigit()
+Usage:    $isdigit(digit)
+Returns:  1 or 0 if digit is a digit or not
+Example:  $isdigit(4) returns 1
+
+Function: $isnum()
+Usage:    $isnum(num)
+Returns:  1 or 0 if num is a number or not
+Example:  $isnum(44) returns 1
+
+Function: $open()
+Usage:    $open(filename mode)
+Returns:  File handler # for the opened file, if successful. Nothing if
+          unsuccessful.
+Example:  $open($ctoolz_dir/BitchX.quits R) returns a # (should, if it
+          exists.
+Notes:    Possible flags are R and W from what I know...
+
+Function: $close()
+Usage:    $close(filenum)
+Returns:  0 or -1, if closing the file handler "filenum" was successful or
+          unsuccessful, respectively.
+Example:  $close(99999999999999) returns -1 (hopefully)
+
+Function: $writeb()
+Usage:    $writeb(filenum text)
+Returns:  The number of chars written to filenum
+Example:  $open(pfft W) returns 10
+          $writeb(10 pfft) returns 4
+
+Function: $read()
+Usage:    $read(filenum bytes)
+Returns:  text read from the file opened by file handler "filenum"
+Example:  (none)
+
+Function: $eof()
+Usage:    $eof(filenum)
+Returns:  0 or 1 depending on if the next char in the file is an EOF
+Example:  $open(pfft R) returns 10
+          $eof(10) returns 0
+
+Function: $iptoname()
+Usage:    $iptoname(quad.dotted.ip)
+Returns:  the hostname for the given IP
+Example:  $iptoname(127.0.0.1) returns localhost
+
+Function: $nametoip()
+Usage:    $nametoip(hostname)
+Returns:  the dotted quad IP address for hostname
+Example:  $nametoip(localhost) returns 127.0.0.1
+
+Function: $convert()
+Usage:    $convert(IP or hostname)
+Returns:  either the reverse lookup of a given IP or the IP of a hostname
+Example:  $convert(127.0.0.1) returns localhost
+          $convert(localhost) returns 127.0.0.1
+
+Function: $unlink()
+Usage:    $unlink(words)
+Returns:  appears to return the # of words
+Example:  $unlink(1 2 3) return 3
+
+Function: $rename()
+Usage:    $rename(oldname newname)
+Returns:  0 or -1 depending upon the success of the rename
+Example:  $rename(/etc/passwd /etc/mypasswd) returns 0 if you are root ;)
+
+Function: $rmdir()
+Usage:    $rmdir(dir)
+Returns:  1 if unsuccessful, 0 if successful (dont ask me why ;)
+Example:  $rmdir(.BitchX) returns 1
+
+Function: $utime()
+Usage:    $utime()
+Returns:  the current uptime in the UNIXTIME format (seconds since 1970)
+          plus 100,000'ths of a second
+Example:  $uptime() returned "869015766 424919" when i write this
+
+Function: $stripansi()
+Usage:    $stripansi(text)
+Returns:  "text" stripped ansi codes (the ^[)
+Example:  $stripansi([0,10mfdsa) returns "[[0,10mfdsa"
+
+Function: $stripansicodes()
+Usage:    $stripansicodes()
+Returns:  "text" stripped of ALL ansi codes, including the #s and format codes
+Example:  $stripansicodes([0,10mfdsa) returns "fdsa"
+
+Function: $stripmirc()
+Usage:    $stripmirc(text)
+Returns:  "text" stripped of mirc color codes
+Example:  $stripmirc(10ddf4asdf) returns "ddfasdf"
+
+Function: $servername()
+Usage:    $servername(num)
+Returns:  the name of the server "num" in your servers list
+Example:  $servername(0) returns "irc.emory.edu" on my machine
+
+Function: $lastserver()
+Usage:    $lastserver()
+Returns:  the server reference number of the last (and/or current) server
+          you connected to
+Example:  $lastserver() returns 0 on my box
+
+Function: $winquery()
+Usage:    $winquery(querynick)
+Returns:  the window refnum with a query matching the querynick, or -1 if none.
+Example:  $winquery(panasync) returns -1
+
+Function: $winserv()
+Usage:    $winserv(refnum)
+Returns:  the server reference number of the server for the window referenced
+          by refnum, or the current window if not specified. If "refnum" does
+          not exist, it returns -1.
+Example:  $winserv() returns 0 (referencing irc.emory.edu)
+
+Function: $numwords()
+Usage:    $numwords(string of words)
+Returns:  the number of words in the arguments
+Example:  $numwords(count these words) returns 3
+
+Function: $strlen()
+Usage:    $strlen(string)
+Returns:  the length of the string given
+Example:  $strlen(this is a string) returns 16
+
+Function: $fexist()
+Usage:    $fexist(file)
+Returns:  returns 1 if file exists, -1 otherwise
+Example:  $fexist(/usr/local/bin/BitchX) returns 1
+
+Function: $fsize()
+Usage:    $fsize(file)
+Returns:  the size of "file" or -1 if it doesnt exist
+Example:  $fsize(/usr/local/bin/BitchX-72) returns 786628
+
+Function: $info()
+Usage:    $info()
+Returns:  some crap about BitchX i have no idea what it means
+Example:  $info() returns BitchX+adegikltz in bX72+tcl1.0 (tcl 8.0b2)
+
+Function: $geom()
+Usage:    $geom()
+Returns:  the geometry of the current window
+Example:  $geom() returns "79 24" on my box
+
+Function: $pass()
+Usage:    $pass(word1 word2)
+Returns:  does a char by char comparison of word2 to word1 and returns every 
+          char of word2 that appears in word1
+Example:  $pass(green yellow) returns "e"
+          $pass(yellow green) returns "ee"
+
+Function: $uptime()
+Usage:    $uptime()
+Returns:  the current uptime for bX
+Example:  $uptime() returns "0d 0h 31m 6s" when i made this
+
+Function: $eleet()
+Usage:    $eleet(text)
+Returns:  "text" parsed through bX's "eleet" text parser
+Example:  $eleet(this is ereet text) returns "+h15 15 3r33+ +3x+"
+
+Function: $cool()
+Usage:    $cool(text)
+Returns:  "text" parsed through bX's "cool" text parser
+Example:  $cool(this is cool text) returns "ThIs iS CoOl tExT"
+
+Function: $cool2()
+Usage:    $cool2(text)
+Returns:  "text" parsed through bX's "cool2" text parser
+Example:  $cool2(this is cool2 text) returns "THiS iS CooL2 TeXT"
+
+Function: $annoy()
+Usage:    $annoy(text)
+Returns:  "text" parsed through bX's "annoy" text parser
+Example:  $annoy(this is annoy text) returns random annoy text ;)
+
+Function: $checkshit()
+Usage:    $checkshit(userhost channel)
+Returns:  if given a hostmask matching your shitlist, returns the shitlist
+          level and channels its active for
+Example:  $checkshit(*!*@* #mirc) returns "4 #mirc" ;)
+
+Function: $checkuser()
+Usage:    $checkuser(userhost channel)
+Returns:  if given a hostmask matching one on your userlist, returns the 
+          level, aop protect level, etc
+Example:  $checkuser(novalogic!nova@ra1.randomc.com #bitchx) returns
+          51 1 1 *nova@*.randomc.com #bitchx
+
+Function: $checkbot()
+Usage:    $checkbot(userhost channel)
+Returns:  if given a hostname matching one on your bot list, returns the
+          pertinent info ...
+Example:  $checkbot(PimpBot!rush@nic.cerf.net #yyz) returns
+          3 3 *rush@nic.cerf.net #yyz
+
+Function: $getinfo()
+Usage:    $getinfo(nick)
+Returns:  the info set by $setinfo() for a valid nick on your userlist
+Example:  $getinfo(panasync) returns "the coder for bitchx!"
+
+Function: $setinfo()
+Usage:    $setinfo(nick info)
+Returns:  0 or 1 depending on the success of the command
+Notes:    "nick" must be on your userlist
+Example:  $setinfo(panasync the coder for bitchx!) returns 1
+
+Function: $rot13()
+Usage:    $rot13(text)
+Returns:  the "text" encoded with ROT13 coding
+Example:  $rot13(asdf) returns "nfqs"
+
+Function: $flash()
+Usage:    $flash(num)
+Returns:  the "flash" string referenced by num
+Example:  $flash(3) returns "**XB00"
+
+Function: $repeat()
+Usage:    $repeat(num text)
+Returns:  the "text" repeated "num" times
+Example:  $repeat(10 a) returns "aaaaaaaaaa"
+
+Function: $epic()
+Usage:    $epic()
+Returns:  1 if its an epic client, 0 if not
+Example:  $epic() returns 1
+
+Function: $winsize()
+Usage:    $winsize(refnum)
+Returns:  the window size of the window referenced by refnum
+Example:  $winsize(1) returns 22
+
+Function: $lastnotice()
+Usage:    $lastnotice(refnum)
+Returns:  the last notice recieved or nothing if none
+Example:  $lastnotice(10) returns
+          "10:19pm |By-Tor| ~by-tor@by-tor.com |By-tor| yo"
+
+Function: $lastmessage()
+Usage:    $lastmessage(refnum)
+Returns:  the last message recieved or nothing if none
+Example:  $lastmessage(10) returns
+          10:19pm |By-Tor| ~by-tor@by-tor.com |By-tor| yo
+ 
+Function: $sort()
+Usage:    $sort(words and/or numbers)
+Returns:  sorts stuff first numerically then alphabetically
+Example:  $sort(9 4 1 6 g n r f) returns "1 4 6 9 f g n r"
+
+Function: $notify()
+Usage:    $notify(on/off/serv #)
+Returns:  various info about NOTIFY list
+Example:  $notify() returns current notify list
+          $notify(on serv 0) returns who is currently ON server #5
+
+Function: $numsort()
+Usage:    $numsort(words and/or numbers)
+Returns:  sorts stuff first alphabetically the numerically
+Example:  $numsort(asdf abdr c d 1 2 3 e) returns "abdr asdf c d e 1 2 3"
+
+Function: $glob()
+Usage:    $glob(path/mask)
+Returns:  the list of files in path which match "mask" using glob type
+          matching
+Example:  $glob(/*lin*) should return vmlinuz if you are ereet and run linux
+
+Function: $mkdir()
+Usage:    $mkdir(dir)
+Returns:  0 if the mkdir was successful, 1 if not
+Example:  $mkdir(/usr) returns 1 (unsuccessful)
+
+Function: $umask()
+Usage:    $umask()
+Returns:  Sets the default umask for file creation
+Example:  
+
+Function: $help()
+Usage:    $help(help)
+Returns:  the bX /bhelp for "help"
+Example:  $help(help) returns:
+          "[ì] Help on Topic: help"
+          "   Usage: /BHelp <Topic|Index>"
+          "     Topic - This gives help on <Topic>"
+          "     Index - This shows the list of commands supplied in BitchX"
+
+Function: $isuser(nick userhost)
+Usage:    $isuser(nick userhost)
+Returns:  given a nick (or *) and a user@host (any wildcard form), the
+          corresponding userlist information if a match is found.
+Example:  $isuser(* edwards@*.sympatico.ca) returns
+          "USER 100 1 1 *edwards@*.sympatico.ca #bitchx" on my machine
+
+Function: $isban()
+Usage:    $isban(channel ban)
+Returns:  1 if the ban matches a shitlist ban entry (3 or 4), 0 if not
+Example:  $isban(#bitchx *!*@*mirc*) returns 1 ;)
+
+Function: $banonchannel()
+Usage:    $banonchannel(channel ban)
+Returns:  0 if the ban does not exist on the channel, 1 if it does
+Example:  $banonchannel(#bitchx *!*@*mirc*) returns 1 ;)
+
+Function: $isop()
+Usage:    $isop(channel nick)
+Returns:  1 if the nick is an op in both your userlist for the channel AND an
+          op on the channel, 0 otherwise.
+Example:  $isop(#bitchx panasync) returns 1
+
+Function: $isvoice()
+Usage:    $isvoice(channel nick)
+Returns:  1 if the nick is +v, 0 if not.
+Example:  $isvoice(#bitchx panasync) returns 0
+
+Function: $randomnick()
+Usage:    $randomnick()
+Returns:  a random nick
+Example:  $randomnick() returned "tqfftjg" one time
+
+Function: $cparse()
+Usage:    $cparse(text)
+Returns:  "text" with the ANSI codes substituted for the ANSI parse vars.
+Example:  /do echo $cparse("%Rthis is bright red")
+
+Function: $getreason()
+Usage:    $getreason(text)
+Returns:  a random reason from BitchX.reasons
+Notes:    you MUST use some argument for this, or it returns nothing.
+Example:  $getreason(asdf) returned
+          "When faith is lost, when honor dies, The man is dead!"
+
+Function: $chmod()
+Usage:    $chmod(file numeric-mode)
+Returns:  0 if a successful, -1 if not
+Example:  $chmod(.BitchX/BitchX.quits 666) returns 0 and sets the permissions
+          of the file to "666" or "-rw-rw-rw-"
+
+Function: $twiddle()
+Usage:    $twiddle(arg)
+Returns:  the expanded variable "arg"
+Example:  $twiddle(~) returns "/home/by-tor"
+          $twiddle($HOME) returns "/home/by-tor"
+
+Function: $uhost()
+Usage:    $uhost(nick)
+Returns:  the user@host of nick
+Notes:    it is CASE SENSITIVE
+Example:  $uhost(mr_bill) returns fat@greased.up.pig.org =]
+
+Function: $numdiff()
+Usage:    $numdiff(num1 num2)
+Returns:  the difference of num1 and num2
+Example:  $numdiff(5 4) returns "1"
+
+Function: $winvisible()
+Usage:    $winvisible(winnum)
+Returns:  1 of the window is visible, 0 if not and -1 if it does not exist
+Example:  $winvisible(1) returns 1
+          $winvisible(0) returns 1
+          $winvisible(11111111111111111111) returns -1
+
+Function: $mircansi()
+Usage:    $mircansi(text with lame mirc color codes)
+Returns:  the given text with ANSI color substituted for mirc color
+Example:  $mircansi(3asdf) returns the same color as $cparse(%gasdf)
+
+Function: $winrefs()
+Usage:    $winrefs()
+Returns:  the window numbers in the order they were last active, from current
+          to last
+Example:  $winrefs() returned "3 2 1" when i used it
+
+Function: $getenv()
+Usage:    $getenv(var)
+Returns:  the environment variable "var"
+Notes:    do NOT use a $
+Example:  $getenv(HOME) returns "/home/by-tor"
+
+Function: $gethost(nick)
+Usage:    $gethost(nick)
+Returns:  the user@host of the given nick
+Notes:    NOT case sensitive
+Example:  $gethost(piker) returns loser@efnet.opers.org :)
+
+Function: $aliasctl()
+Usage:    $aliactl(alias|assign get|set|match <lval> [<rval>])
+Notes:    This function allows low-level manipulation of aliases and assigns.
+          The noun of the action is either "alias" or "assign".  The verb is
+          either "get", "set", or "match".  The "lval" must a valid variable
+          name. The "rval" is used only if the verb is "set", and is any
+          sequence of octets.
+
+          * The "GET" verb allows you to retrieve the value of an alias or
+          assign named by "lval".
+          * The "SET" verb allows you to set the value of an alias or assign
+          named by "lval" to "rval".
+          * The "MATCH" verb allows you to retrive the list of all same-level
+          variable names that begin with "lval" (ie, command completion).
+          Wildcards are not allowed, but the simple use of a single asterisk
+          is allowed to match all assigns or aliases.
+Example:  $aliasctl(alias get join) returns current value of alias "join"
+          $aliasctl(alias set join //channel) sets an alias called "join"
+          $aliasctl(assign match foo) returns all vars starting with "foo"
+          $aliasctl(alias match foo.) returns all aliases of "foo" struct
+
+Function: $statsparse()
+Usage:    $statsparse(status vars)
+Returns:  the status vars expanded, formatted and everything :)
+Example:  $statsparse(%M) returns "mail: 7" when i ran it
+
+Function: $absstrlen()
+Usage:    $absstrlen(text)
+Returns:  the absolute length of text, which is how long it would be on your
+          screen
+Example:  $absstrlen($cparse(%Fasdf)) returns 4, where
+          $strlen($cparse(%Fasdf)) returns 12
+
+Function: $findw()
+Usage:    $findw(word string of text)
+Returns:  the index of the first occurrence of "word" in the string of text
+Notes:    the first word is index 0
+Example:  $findw(word there is a word in here somewhere) returns 3
+
+Function: $countansi()
+Usage:    $countansi(text)
+Returns:  the number of ansi-color related chars in the string
+Example:  $countansi($cparse(%B)) returns 11
+
+Function: $longip()
+Usage:    $longip(dotted.quad.ip)
+Returns:  the "long" form of the given IP
+Example:  $longip(127.0.0.1) returns 2130706433
+
+Function: $status()
+Usage:    $status(winref# statusline#)
+Returns:  The Status line # of the window
+Example:  /eval echo $status(0 1)
+
+Function: $getvar()
+Usage:    $getvar(alias)
+Returns:  The given alias
+Example:  /eval echo $getvar(kb)
+
+Function: $openserver()
+Usage:    $openserver(servername port)
+Returns:  File descriptor or -1
+
+Function: $closeserver()
+Usage:    $closeserver(number_of_open_socket)
+Returns:  The socket number
+
+Function: $readserver()
+Usage:    $readserver(socket_num)
+Returns:  -1 if socket returns an error or it doesn't exist
+          or
+          the passed socket number plus any info read from the socket
+
+Function: $writeserver()
+Usage:    $writeserver(socket_num text)
+Returns:  Length written or -1, Never returns 0
+Note:     "\n" is appended to the end.
+
+Function: $addtabkey()
+Usage:    $addtabkey(nick array)
+Returns:  nothing
+
+Function: $gettabkey()
+Usage:    $gettabkey(direction array)
+Returns:  The tabkey list
+Example:  /eval echo $gettabkey(1)
+
+Function: $umode()
+Usage:    $umode(server_number)
+Returns:  returns the umode on that server or current server if no number given
+
+Function: $bcopy()
+Usage:    $bcopy(num num)
+Returns:  1 on error, 0 on success
+Note:     Binary copy a file.  Takes two numbers.  Both have to be open 
+          file descriptors from $open()
+
+Function: $cluster()
+Usage:    $cluster(host)
+Returns:  proper string for a ban
+Example:  $cluster(power@power.zepa.net)
+
+Function: $channelmode()
+Usage:    $channelmode(#chan1 #chan2 #chan3)
+Retuens:  channel modes of the specified channels on the current window
+
+Function: $translate()
+Usage:    $translate()
+Example:  $translate(/ //text)
+Note:     translates characters in a str
+          See $tr() also.
+
+Function: $server_version()
+Usage:    $server_version(open_server_number)
+Returns:  Server version, or "Unknown"
+
+Function: $trunc()
+Usage:    $trunc(num_of_digits number)
+Returns:  number truncated to num_of_digits
+Example:  /do echo $trunc(5 7819263864) returns 7819263864.00000
+
+Function: $country()
+Usage:    $country(CA) or $country(hostname)
+Returns:  country of origin.
+Example:  /eval echo $country(ca)
+          /eval echo $country(ppp713.iameleet.kw)
+
+Funtion:  $line()
+Usage:    $line(number)
+Returns:  The line number in your scroll back buffer, line 1 being the 
+          last line said in the window.
+Example:  /eval echo $line(4)
+
+Function: $longcomma()
+Usage:    $longcomma(number)
+Returns:  The number given formatted with commas.
+Example:  /eval echo $longcomma(10000) returns 10,000.
+
+Function: $dccitem([number] [#number])
+Usage:    For dccitem: $dccitem(dcc_item_number)
+          For socketnum: $dccitem(#dcc_socket_number)
+Returns:  Information based on the passed dcc number or socket number.
+		$0 type
+		$1 nick
+		$2 status
+		$3 start time
+		$4 start posistion (for resume/reget resend)
+		$5 bytes received
+		$6 bytes sent
+		$7 filesize
+		$8 filename
+		$9 socket number of this connection
+		$10 server
+Example:  /eval echo $dccitem(4) returns info on open dcc #4.
+          /eval echo $dccitem(#7) returns into on open dcc socket #7.
+
+Function: $winitem(num)
+Usage:    $winitem(num) for info on window 'num'.
+		$0 refnum
+		$1 name or <none>
+		$2 server num
+		$3 current chan or <none>
+		$4 query nick or <none>
+		$5 waiting channel or <none>
+		$6 <none> openirc has menu name
+		$7 1=visible 0=non-visible
+		$8 num of columns
+		$9 num of rows
+		$10 reserved
+		$11 reserved
+		$12 reserved
+		$13 reserved
+		$14 reserved
+		$15 logfile name or <none>
+		$16 L=logging on - "" always a part of string
+		$17 n=nicklist
+		$18 reserved
+		$19 reserved
+		$20+ window level
+Example:  /eval echo $winitem(1) returns:
+	    1 <none> 0 #BitchX <none> <none> <none> 1 79 25 <none> <none>
+            <none> <none> <none> <none> "" "" <none> <none> NONE
+
+Function: $chanmode(#chan num)
+Usage:    $chanmode(#chan num) - 'num' can be one of 0=normal, 1=bans,
+          2=ban whoset time, 3=exemptions for TS4.
+Example:  /do echo $chanmode(#BitchX 1) returns "*!*@*.aol.com"
+          /do echo $chanmode(#BitchX 2) returns "*!*@*.aol.com power 7812"
+
+Function: $channicks(#chan sort_type)
+Usage:    $channicks(#chan sort_type) - 'sort_type' can me one of:
+          0=normal, 1=none, 2=nick, 3=host, 4=time, 5=ip (if available)
+Example:  /eval echo $channicks(#BitchX) returns nicks on #BitchX
+          /eval echo $channicks(#BitchX 3) returns nick on #BitchX
+            sorted by host.
+
+Function: $topic(#channel)
+Usage:    $topic() or $topic(#channel)
+Example:  /eval echo $topic() returns topic on current channel.
+          /eval echo $topic(#BitchX) returns topic on #BitchX.
+

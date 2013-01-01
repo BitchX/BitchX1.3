@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> meta4_character
+
+Description:
+   This key function is identical to the other meta functions, except that
+   it is sticky.  This means that every character typed after the META4
+   key will execute the META4 version of those keys.  The key is unstuck
+   when the META4 key is entered again (an on/off switch of sorts).
+
+See Also:
+   bind(4) meta1_character
+

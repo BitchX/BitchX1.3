@@ -1,0 +1,16 @@
+Synopsis:
+   bind <key> blink
+
+Description:
+   This function toggles the current blink setting.  Due to internal
+   limitations of the client, BLINK is displayed as an F on the input line,
+   regardless of the key it is bound to.
+
+See Also:
+   bind(4) highlight_off, reverse, underline, bold;
+   set(4) blink_video
+
+Other Notes:
+   Blinking text can be typed at any time, but it will only be displayed
+   if BLINK_VIDEO is on.
+

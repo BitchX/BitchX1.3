@@ -1,0 +1,27 @@
+Synopsis:
+   $notify([on|off serv <server number>])
+
+Technical:
+   This function provides an interface to the client's internal NOTIFY
+   list.  If no arguments are passed, a list of all nicknames on the list
+   is returned.  If the ON command is used, only those nicknames that are
+   currently present on the given server are shows; if the OFF command is
+   used, those not on irc are shown.
+
+Practical:
+   This function works in a similar manner as the NOTIFY command, except
+   it has a return value.  This allows script to more easily manipulate
+   the information.
+
+Returns:
+   nickname list
+
+Examples:
+   /notify hop crowman archon sheik
+   $notify()                            shows current notify list
+   $notify(on serv 2)                   shows who is on server #2
+   $notify(off serv 5)                  shows who is not on server #5
+
+See Also:
+   notify(1)
+

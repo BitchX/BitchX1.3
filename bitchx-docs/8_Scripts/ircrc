@@ -1,0 +1,13 @@
+Synopsis:
+   load ircrc
+
+Description:
+   This script is really just a booter file for loading the EVENTS and MSD
+   scripts.  That's it.
+
+See Also:
+   events(8); load(5); lynx_ircrc(8); msg(8); troy(8)
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

@@ -1,0 +1,29 @@
+Synopsis:
+   $afterw(<word> <text>)
+   $beforew(<word> <text>)
+
+Technical:
+   These functions return their input string, minus all words up to the
+   given word ($beforew()) or following the given word ($afterw()).  They
+   are analogous to $after() and $before(), operating on whole words
+   instead of characters.  They search only for the first occurrence of the
+   given word.
+
+Practical:
+   These return the part of the input text that is before or after the
+   first instance of the given word.  This is probably most useful for
+   internal parsing inside scripts; a variable might hold certain
+   parameters, of which only certain ones might be useful at a particular
+   time.  If the given word does not appear in the input text, nothing
+   is returned.
+
+Returns:
+   afterw:  input list after first instance of given word
+   beforew: input list before first instance of given word
+
+Examples:
+   $afterw(foobar one two foobar my shoe)    returns "my shoe"
+   $afterw(booya one two foobar my shoe)     returns ""  (empty string)
+   $beforew(foobar one two foobar my shoe)   returns "one two"
+   $beforew(booya one two foobar my shoe)    returns ""  (empty string)
+

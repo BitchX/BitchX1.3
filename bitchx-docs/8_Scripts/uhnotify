@@ -1,0 +1,15 @@
+Synopsis:
+   load uhnotify
+
+Description:
+   This script compliments NOTIFY, in that it adds the address of any user
+   that a signon is detected for.  It does rely on USERHOST (hence its
+   name), so the response time may be slightly delayed.
+
+See Also:
+   load(5); notify(1); usernost(2)
+
+Other Notes:
+   This script was written by Matthew Green (phone), mrg@mame.mu.oz.au.  The
+   author has explicitly placed it in the public domain.
+

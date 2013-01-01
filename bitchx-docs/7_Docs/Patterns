@@ -1,0 +1,31 @@
+Pattern Matching                                                            
+
+Literally, any string is a pattern.  In general, though, a pattern is a
+string intended to match, or be matched by, one or more other strings.  The
+pattern will usually contain one or more wildcards, but it doesn't need to.
+
+The following wildcard characters are supported:
+
+   *  matches zero or more characters
+   %  matches zero or more characters, except spaces
+   ?  matches exactly one character
+   
+Assuming we have a variable $foo set to "hello there":
+
+   hello*                            /* pattern matches */
+   hello%                            /* pattern does not match */
+   hello%?%                          /* pattern matches */
+   h?llo?th?r?                       /* pattern matches */
+
+Patterns may also contain multiple "branches".  Each branch is tested when
+a match attempt is made.  Branches are formed with the \\[ \\] construct.
+For example:
+
+   \\[foo bar\\]blah                 /* matches "fooblah" and "barblah" */
+
+The branching construct may be used anywhere that wildcards are used,
+including the various pattern matching functions, and in hook events.
+
+See Also:
+   Expressions(7); match(6); on(4); pattern(6); rmatch(6); rpattern(6)
+

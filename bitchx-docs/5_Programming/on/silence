@@ -1,0 +1,14 @@
+Synopsis:
+   on [<modes>]silence [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a reply from the
+   server from a SILENCE command.
+
+Parameters:
+   $0    a '+' if a pattern was added, '-' if one was removed
+   $1    the pattern silenced (or unsilenced)
+
+See Also:
+   silence(1)
+

@@ -1,0 +1,35 @@
+Synopsis:
+   dcc close <type> <nick> [<arguments>]
+
+Description:
+   DCC CLOSE closes an unwanted DCC connection, or cancels a pending one.
+   The type, nickname, and parameters required are the same as those
+   shown in DCC LIST output.  If no arguments are specified, the oldest
+   DCC record for the given type and nick is closed.
+
+   When DCC CLOSE is used on a pending incoming connection (one that has
+   not yet been established), it is treated as a rejected connection, and
+   a message to that effect is send back to the remote client.  Note that
+   for an incoming SEND, the client actually records it as a GET, since
+   from a local perspective, the client will be getting something from
+   the remote client.
+   
+   DCC CLOSE can also accept the flag '-all' or an asterisk, '*', as either
+   the type or the nickname.  This will work as a wildcard, closing all DCC's
+   from that type or nickname.
+
+Examples:
+   To close an existing DCC CHAT connection with joebob:
+      /dcc close chat joebob
+
+   To reject an incoming DCC SEND connection from joebob:
+      /dcc close get joebob
+
+   To close all DCC CHAT connections:
+      /dcc close chat *
+         or
+      /dcc close chat -all
+
+See Also:
+   dcc(1) closeall, list, rename; on(5) dcc_lost
+

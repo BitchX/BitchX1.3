@@ -1,0 +1,29 @@
+Synopsis:
+   uping <nickname|channel>
+
+Description:
+   UPING is used to determine (roughly) how long messages from your side of
+   the network to the recipient's take to arrive.  In a sense, it allows
+   you to measure how fast or slow the network is relative to you.
+
+Examples:
+   To see how far away your friend booya is from you:
+      /uping booya
+
+   To see how far away everyone in channel #blah is:
+      /uping #blah
+
+Aliases:
+   This command is identical to CTCP PING.
+
+See Also:
+   ctcp(1) ping
+
+Restrictions:
+   This command makes use of CTCP (client-to-client protocol), which is not
+   part of the IRC protocol.  Most modern IRC clients understand CTCP, but
+   not all do, while others might not support the same CTCP commands that
+   ircII-EPIC supports.  If you receive an error of some sort, then the
+   client on the receiving end is unable to properly handle your CTCP
+   message.
+

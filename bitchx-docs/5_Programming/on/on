@@ -1,0 +1,129 @@
+Synopsis:
+   on [<modes>]<hook> [<serial#>] [-|^]<match> [{ <action> }]
+
+Description:
+   The ON command is what truly gives ircII-EPIC its versatility.  It sets
+   a hook that allows any arbitrary type of message be acted upon.  This
+   allows for a high degree of automation with the client, as well as a
+   high degree of customization.
+
+   Each hook can have a set of modes associated with it.  There are 6
+   (six) types of modes, and each one has a specific, unique purpose.  The
+   hook name is prefixed with these modes.  The first 3 (three) control
+   the output of the hook.
+
+     +   The noisy mode.  This causes the client to display everything
+         | the hook is doing.  It will display what event has been hooked,
+         | and by what specific data.  This mode is really only useful for
+         | script debugging.
+     -   The quiet hook.  This suppresses display of the gory details of
+         | the event hooked.
+     ^   The silent mode.  This works similarly to '-', except it will
+         | completely suppress the default output of the event.  Only ECHO
+         | (and XECHO) will cause it to display anything.  This is most
+         | often used to redefine how an event message looks.
+    ?    The ambiguous mode.  This mode is special because the override level
+         | is not determined when the on is registered, but is determined
+         | separately each time the on is executed.  When you use this noise
+         | level, the "noise" level is always the same as the SILENT level
+         | (as if you had used '^'), but it will not automatically suppress the
+         | client's default action as using '^' would.  The action of the on is
+         | taken as an anonymous function: it may return a value with the
+         | /return command.  If the return value of the action is 1 (one), then
+         | the default action WILL be suppressed (as though you had used ^),
+         | but if the return value is 0 (zero) then the default action will NOT
+         | be suppressed (as though you had used -).
+
+   Only one of the above three modes may be used per hook.  If none are
+   used, the client defaults to a setting somewhere between noisy and quiet.
+   It will display what it has hooked, but nothing else unless specifically
+   coded to do so.
+
+     &   The local mode.  Hooks with this mode will only be triggered for
+         | events originating on the current server.  If the event is not
+         | local, the client will fall back to other set hooks, or failing
+         | that, the default behavior.
+     @   The exclusively local hook.  This is the same as '&', except the
+         | client will not fall back on other hooks if the event is not
+         | local.
+
+   Only one of the above two modes may be used per hook.  The last mode
+   controls the order in which like hooks are triggered.
+
+     #   The serial hook.  This allows the given hook to be assigned a
+         | unique serial number (see Synopsis).  Thus, if multiple hooks of
+         | the same type are defined, the order in which they are triggered
+         | can be defined.  Refer to Serial_Numbers for more information.
+
+   Each of the above sets of modes may be combined with the others (though
+   only one from each set may be used per hook).
+
+   The text matched for the hook is also rather versatile.  In the match
+   string, any wildcard may be used.  The match must be surrounded by
+   quotation marks (unless it is a single word).  If double quotes (") are
+   used, the match string is evaluated when the hook is defined.  If single
+   quotes (') are used, the match string is taken literally and evaluated
+   each time the event is hooked.  This allows for variable matches to be
+   used.  Additionally, the match string may be prepended with its own
+   mode.
+
+     -   This isn't really a mode, per se.  Rather, it is used to remove
+         | any hook with the same match string.  If no match string is
+         | given, all hooks for th given event are removed.
+     ^   The exclusion mode.  This causes the client to do nothing when
+         | the hook is triggered with the given match.  It is effectively
+         | the same as only using a COMMENT in the action, or some other
+         | noop command.
+
+   The last part of a hook is the action.  This defines what the client is
+   supposed to do when a hook is triggered.  The action can be just about
+   anything the user wishes.  The syntax works basically the same as with
+   ALIAS.  Braces are only required for multiline actions.  Also, as with
+   aliases, hook actions can receive and use numeric expandos (representing
+   the full event arguments hooked). Also a special "return next" in the
+   action will cause the next hook of the type to be executed or if it's the
+   last/only hook executing, the default action will run.
+
+   Also, if this command is given with either none or a single argument, it
+   will list all currently defined hooks matching the argument.
+
+Examples:
+   To redefine the default JOIN message:
+      on ^join "*" {
+         echo B*>*B $0 \($2\) has joined $1 [$Z]
+      }
+      on ^channel_synch "#bitchx *" { 
+	 echo this and next hook will exec, but the default will not. $*
+         return next
+      }
+      on ^channel_synch "*" {echo 2 $*;return}
+
+
+
+   To show a special message (quietly) for local users joining a channel:
+      on -&join "*" {
+         echo B*>*B VLOCALV $0 \($2\) has joined $1 [$Z]
+      }
+
+   To suppress channel messages from users from certain sites:
+      assign ignore_em *@*.msn.com *@*.aol.com *@*.goodnet.com
+      on -join ^'% % $ignore_em'
+
+   To remove all hooks for a particular event:
+      on join -
+
+   To show an additional message for a certain site, after the default:
+      on #-join 10 "% #blah %" {
+         echo V***V Oh great, yet another person has joined $1
+      }
+
+See Also:
+   Etiquette(7); Expressions(7); Programming(7); Serial_Numbers(7);
+   Server_Numerics(7); alias(5); echo(5); hook(5); xecho(5)
+
+Other Notes:
+   ON allows for a great deal of automation of client activities.  This can
+   be a bad thing if abused.  For instance, using it to automatically send
+   a greeting to anyone joining a channel is usually considered bad form.
+   Let common sense dictate when an automated response is appropriate.
+

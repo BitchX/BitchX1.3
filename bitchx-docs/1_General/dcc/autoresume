@@ -1,0 +1,6 @@
+BSynopsis:B
+   _dcc_ autoresume
+
+BDescription:B
+   DCC AUTORESUME toggles on/off the dcc autoresume of files that exist and
+   autoget is on.

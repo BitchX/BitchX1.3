@@ -1,0 +1,29 @@
+Synopsis:
+   $splice(<variable name> <index> <count> [<text>])
+
+Technical:
+   This function removes words from within a string, and then optionally
+   replace them with something else.  It requires that a variable name be
+   given, not an actual variable (meaning the '$' is omitted).  If no
+   replacement text is given, the words are simply removed.  The index
+   counts from zero.
+
+Practical:
+   This function is useful for changing parts of a string without
+   rewriting the whole thing.  Used in conjunction with the matching
+   functions, it can serve as a search-and-replace function that operates
+   on whole words ($sar() operates on individual characters).
+
+Returns:
+   text removed from string
+
+Examples:
+   @ foo = [one two three four five]
+   $splice(foo 1 3 foo bar blah)       returns "two three four"
+   $splice(foo 0 2)                    returns "one foo"
+   $splice(foo 2 1)                    returns "five"
+   echo $foo                           shows "bar blah", end result
+
+See Also:
+   sar(6)
+

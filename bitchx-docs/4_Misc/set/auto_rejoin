@@ -1,0 +1,18 @@
+Synopsis:
+   set auto_rejoin [on|off|toggle]
+
+Description:
+   When turned on, this will cause the client to try to automatically
+   rejoin any channel it is kicked out of.  It will correctly rejoin
+   channels that have a channel key set, provided that key has not
+   changed between the kick and the rejoin attempt.
+
+   If turned off, the client behaves normally when kicked from a channel.
+   
+See Also:
+   join(1); mode(1); on(5) kick
+
+Other Notes:
+   This setting should be turned off if the client has loaded a script
+   that tries to handle automatic rejoins itself.
+

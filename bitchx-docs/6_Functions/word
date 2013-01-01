@@ -1,0 +1,31 @@
+Synopsis:
+   $word(<index> <list>)
+   $notw(<index> <list>)
+
+Technical:
+   The $word() function returns the single word in the given list that has
+   the given index in the list, counting from 0 (zero).  Its counterpart,
+   $notw(), does exactly the opposite, returning the entire string, minus
+   the indexed word (again counting from 0).
+
+Practical:
+   These functions are useful when you need to get (or hide) whatever word
+   is in a particular position in a string of words.  It's mostly useful
+   when you know that you always (or never) want the Xth word in the list,
+   regardless of what it is.
+
+Returns:
+   word: indexed word
+   notw: string without indexed word
+
+Examples:
+   $word(2 foo bar blah)                  returns "blah"
+   $word(4 foo bar blah)                  returns nothing
+   $word(-1 foo bar blah)                 returns nothing
+   $notw(2 foo bar blah)                  returns "foo bar"
+   $notw(4 foo bar blah)                  returns "foo bar blah"
+   $notw(-1 foo bar blah)                 returns "foo bar blah"
+
+See Also:
+   leftw(6); restw(6); rightw(6)
+

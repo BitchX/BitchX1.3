@@ -1,0 +1,145 @@
+<jEkS> isban <ban> [channel]
+<jEkS> matchban <nick!user@host> [channel]
+<jEkS> isvoice <nickname> <channel>
+<jEkS> onchan <nickname> <channel>
+<jEkS> chanbans <channel>
+<jEkS> getchanhost <nickname> <channel>
+<jEkS> onchansplit <nick> <channel>
+<jEkS> chanlist <channel>
+<jEkS> getchanmode <channel>
+<jEkS> maskhost <nick!user@host>
+<jEkS> ctime <unixtime>
+
+[Jeks(dcc)] .tcl return [expr 1 + 1]
+
+<jEkS> :/set bot_tcl_command 1/0
+ForChannelOps #channel -minlevel -maxlevel command
+ForChannelNOps #channel -minlevel -maxlevel command
+inAway (if your away return 1)
+
+[noob(dcc)] this is how the raw server data is handles
+[noob(dcc)] and if the raw numeric is specified
+[noob(dcc)] i.e.
+
+[noob(dcc)] proc RAW_KICK { level } \
+[noob(dcc)] {
+[noob(dcc)] Echo [TopChannel] "blah" \[\04FunScript\04\]
+[noob(dcc)] }
+[noob(dcc)] proc RAW_303 { level } \
+[noob(dcc)] {
+[noob(dcc)] Echo "this that the other thing" blah
+[noob(dcc)] }
+[noob(dcc)] then when the server replys a 303
+[noob(dcc)]  /echo (blue)blah(blue) this that the other thing
+[noob(dcc)] via proc name
+[noob(dcc)] TCL's sockets are shitty
+[noob(dcc)] SockCreate socketname function blah blah
+
+[noob(dcc)] proc PARTY {} \
+[noob(dcc)] {
+[noob(dcc)] set nErrCode [catch {SockCreate party "party " 1093 1 13}]
+[noob(dcc)] if { $nErrCode == 0 } \
+[noob(dcc)] {
+[noob(dcc)]                 global party
+[noob(dcc)]                 set party "ON"
+[noob(dcc)] Echo [MyNick] "Partyline Socket created..." PARTY!
+[noob(dcc)] SockListen party 3
+[noob(dcc)] if { $nErrCode != 0 } \
+[noob(dcc)] {
+[noob(dcc)] Echo [MyNick] "Can't listen with socket party" PARTY!
+[noob(dcc)] } else \
+[noob(dcc)] {
+[noob(dcc)] Echo [MyNick] "Partyline now active with socket party. To
+disable
+          type /noparty" PARTY!
+[noob(dcc)] }
+[noob(dcc)] }
+[noob(dcc)] } else \
+[noob(dcc)] {
+[noob(dcc)] Echo [MyNick] "Can't create socket" PARTY!
+[noob(dcc)] }
+[noob(dcc)] Complete
+[noob(dcc)] }
+[noob(dcc)] as u see... an alias is proc NAME(all caps)
+[noob(dcc)] it will listen to a socket at port 1093
+[noob(dcc)] if its able to create the socket sucsessfully it returns a 1
+[noob(dcc)] i mean it sets nerrcode to 0
+[noob(dcc)] otherwise it says cant listen with socket
+[noob(dcc)] and when u type /pass
+[noob(dcc)] it exicutes that proc
+[noob(dcc)] and u are then listening to port 1093
+[noob(dcc)] and the socket name is party
+[noob(dcc)] for every connection u would need this...
+[noob(dcc)] a onACCEPT
+[noob(dcc)] proc onACCEPT_party { name nErrCode } \
+[noob(dcc)] {
+[noob(dcc)] global last
+[noob(dcc)] set last ""
+[noob(dcc)] global user
+[noob(dcc)] incr user
+[noob(dcc)]         global user_$user
+[noob(dcc)]         set user_$user "1"
+[noob(dcc)]         set  $name party
+[noob(dcc)] Echo [MyNick] "hmm $name connected to partyline server1"
+[noob(dcc)] SockAccept "user_$user" $name
+[noob(dcc)]  if { $nErrCode != 0} { Echo [MyNick] "Problem with SockAccept "
+}
+[noob(dcc)] Echo [MyNick] "\01A new user joined the partyline.  This is user
+          $user\01"
+[noob(dcc)]         PostMsg "PAR user_$user@[SockRemoteIP $name] joined the
+          partyline!"
+[noob(dcc)]         SockSendT user_$user "\04Current commands are:\n"
+[noob(dcc)]         SockSendT user_$user ".\02me\02 <text> - action on
+          partyline\n"
+[noob(dcc)]         SockSendT user_$user ".\02nick\02 <nick> - change
+          partyline ID\n"
+[noob(dcc)]         SockSendT user_$user ".\02quit\02 <reason> - left on
+          partyline\n"
+[noob(dcc)]         SockSendT user_$user ".\02MSG\02 <nick> <text> - Sends a
+          msg to nick\n"
+[noob(dcc)]         SockSendT user_$user ".\02WHOM\02 - Tells you who is
+          connected\n"
+[noob(dcc)]         SockSendT user_$user ".\02DIE\02 <pass> - Kills the
+          partyline\n"
+[noob(dcc)]         SockSendT user_$user ".\02PING\02 - Checks for lag\n"
+[noob(dcc)]         SockSendT user_$user ".\02BOOT\02 <pass> <nick> - Kicks
+a
+          nick off the partyline\n"
+[noob(dcc)]         SockSendT user_$user "*** \04if u have more command
+ideas
+          try \02noob@america.com\02\04 *** \n"
+[noob(dcc)]         SockSendT user_$user "If you want to exit... Type .quit
+          reason to quit. Type .help for all commands. \n"
+[noob(dcc)]         SockSendT user_$user "\02Type \".nick <NewNick>\", Must
+be
+          within 9 letters.\n"
+[noob(dcc)]         Complete
+[noob(dcc)] }
+[noob(dcc)] that changes the sepcific's socket to its own socketname
+[noob(dcc)] that way u can have more then 1 connection at your port
+[noob(dcc)] and a SockClose
+[noob(dcc)] and a SockCloseAll
+[noob(dcc)] will be needed
+[noob(dcc)] a [SockLine $name] would be the last text recieved from socket
+          $name
+
+[_jeks_(~jeks@msiw34.msi.se)] then you should check out
+          ftp://ftp.neosoft.com/pub/tcl/NEW there is a file called
+          tcl7.5p1plus.patch.gz .. use that..
+[_jeks_(~jeks@msiw34.msi.se)] then you can add a Tcl_InitIndependant (or
+          sumthing) to make the bin completly independant from any tcl libs
+          installed on the system..
+[_jeks_(~jeks@msiw34.msi.se)] great if you want to make a bin distrib.. then
+          it doesn't care wether tcl is installed or not..
+
+          you could mail liotta@hotmail.com ..!
+
+2. kwak (Sep 25 23:42): abnout the [ircii args] function, I
+   think I need it to send to the tcl interpreter instead of the
+   screen, or maybe there should be a parameter to it.. like [ircii
+   -console args] to put it to screen.. Cause If I need a var it can't
+   be done.. like "/tcl set ircii-setlist [ircii set]  it only puts to
+   screen not to the var.. it is very important that it does.
+3. kwak (Sep 25 23:43): cause then you can put some params from
+   ircii to the tcl.. like "/tcl set color1 [ircii eval echo ${C1}] or
+   whatever..

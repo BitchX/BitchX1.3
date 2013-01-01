@@ -1,0 +1,7 @@
+Synopsis:
+   dcc autooverwrite
+
+Description:
+   DCC AUTOOVERWRITE toggles on/off the dcc auto-overwrite of files that 
+   exist and autoget is on.
+

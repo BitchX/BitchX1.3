@@ -1,0 +1,26 @@
+Synopsis:
+   load tabkey
+
+Description:
+   This is the original TAB script.  It binds the TAB key such that it can
+   be used to cycle through a list of the most recent nicknames that have
+   sent or received MSGs from the client.  The following bindings and
+   aliases are provided:
+
+     Key     Function                                                     
+     TAB     cycle through nickname list
+     ^r      cycle nick list in reverse order
+     ^x-^x   delete current nickname from TAB list
+
+     Alias       Description                                              
+     /addnick    adds any number of nicknames to the TAB nick list
+     /nicklist   shows nicknames on the TAB nick list
+
+See Also:
+   load(5); msg(1); tabkey.wc(8); tc(8)
+
+Other Notes:
+   The original author of this script is not known.  It has seen updates and
+   modifications by Ian Frechette (Daemon), frechett@spot.colorado.edu, and
+   Chetnik, s902211@yallara.cs.rmit.oz.au.
+

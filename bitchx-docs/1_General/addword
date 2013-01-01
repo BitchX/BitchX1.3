@@ -1,0 +1,17 @@
+Synopsis:
+   addword [<#chan>|*] word(s)
+
+Description:
+   Adds word(s) to your banned word list. Anyone saying this word(s) in the
+   channel will be kicked.
+
+Examples:
+      /addword * too lame
+      /addword #channel sexx
+      /addword #channel this*is*lame
+
+See Also:
+   showword(1) unwordkick(1)
+
+Restrictions:
+   This could possibly get you in trouble in some cases. Use with caution.

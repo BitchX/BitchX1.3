@@ -1,0 +1,16 @@
+Synopsis:
+   userip [<nickname> [<nickname> ...] [-cmd <command>]]
+
+Description:
+   This queries the server for the user@ip of the given nicknames. This
+   command is functionally identical to the userhost(2) command, except
+   it returns the user's ip address and not a hostname. Also note that this
+   command is Undernet-specific and is NOT supported by most IRC networks.
+
+Options:
+   -cmd      take the output from /userip as input to other commands
+   -direct   force /userip to query the server
+
+See Also:
+   userhost(2)
+

@@ -1,0 +1,25 @@
+Synopsis:
+   $which(<file> [<dir>[:<dir> ...]])
+
+Technical:
+   This function returns the full pathname of the specified filename.  The
+   function will search the client's current LOAD_PATH for the file.  In
+   addition, a list of colon-delimited directories may be specified, which
+   will be searched if the file is not found in the LOAD_PATH.
+
+Practical:
+   This function tries to find the location of a particular file.  This
+   makes it suitable for LOAD and STUB commands, allowing a file to be
+   loaded, even if its exact location is not known.
+
+Returns:
+   the canonical path of the file, or nothing if it isn't found
+
+Examples:
+   $which(some_file)           shows full path of file
+   $which(does_not_exist)      returns nothing, file dies not exist
+   $which(some_file /bin)      search in /bin for some_file too
+
+See Also:
+   load(5); set(4) load_path; stub(5); which(4)
+

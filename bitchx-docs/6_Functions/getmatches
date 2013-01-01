@@ -1,0 +1,22 @@
+Synopsis:
+   $getmatches(<array> <pattern>)
+   $getrmatches(<array> <string>)
+
+Technical:
+   This functions operate in a manner similar to $matchitem() and
+   $rmatchitem(), except that they return a list of all items that match
+   the input pattern or string, not just the best match.  Item numbers
+   are returned, not the actual array contents.
+
+Practical:
+   The $getmatches() function is used to retrieve all items in the given
+   array that match the given pattern.  Similarly, $getrmatches() is used
+   to retrieve all items that match the given string.
+
+Returns:
+   list of item numbers corresponding to matches
+
+See Also:
+   Arrays(7); matchitem(6); rmatchitem(6); igetmatches(6);
+   igetrmatches(6); gettmatch(6)
+

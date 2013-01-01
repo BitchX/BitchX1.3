@@ -1,0 +1,20 @@
+Synopsis:
+   set hold_mode [on|off|toggle]
+ 
+Description:
+   When turned on, this setting causes the client to pause the held window
+   after each screenful of data, unless there is interaction by the user.
+   If the user does not issue a command of some sort within one screenful,
+   EPIC will buffer all further incoming messages.  An issued command or a
+   simple carriage return will cause the display to advance another
+   screenful, and so on, until the display is up to date again.
+
+See Also:
+   set(4) hold_mode_max, status_hold; window(4) hold_mode, new
+
+Other Notes:
+   When using multiple ircII windows, the setting of HOLD_MODE does not
+   change the current HOLD_MODE of any windows.  Rather, it refers to the
+   default mode for any new windows.  The WINDOW HOLD_MODE command must
+   be used to hold and unhold individual windows.
+

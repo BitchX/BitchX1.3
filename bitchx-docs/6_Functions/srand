@@ -1,0 +1,20 @@
+Synopsis:
+   $srand(<seed>)
+
+Technical:
+   This function seeds the random number generator used by $rand().
+
+Practical:
+   This function is used to help truly randomize the client's random number
+   generator.  In general, a larger seed will produce more unpredictable
+   results (which is good).
+
+Returns:
+   empty string
+
+Examples:
+   $srand($time())             a very large seed
+
+See Also:
+   rand(6)
+

@@ -1,0 +1,14 @@
+Synopsis:
+   set bold_video [on|off|toggle]
+
+Description:
+   This setting controls how boldfaced text is displayed in the input line
+   and the display window.  If it is turned on, the BOLD key function
+   (usually ^B; Control-B) will toggle boldfacing on and off.  If off, it
+   will strip out all BOLDs In the displayed text, effectively disabling
+   boldfacing.
+
+See Also:
+   bind(4) blink, bold, highlight_off, reverse, underline;
+   set(4) blink_video, bold_video, reverse_video, underline_video
+

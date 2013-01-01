@@ -1,0 +1,18 @@
+Synopsis:
+   set status_overwrite [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the
+   client is in overwrite mode in the input line.  If the client is not
+   in overwrite mode (i.e. is in insert mode), nothing is displayed.
+
+   This string is represented as %O in the STATUS_FORMAT string.  The
+   expando is treated literally inside STATUS_OVERWRITE.
+
+Examples:
+   Customizing the string indicating the client is in overwrite mode:
+      /set status_overwrite (Overwrite)
+
+See Also:
+   bind(4) toggle_insert_mode; set(4) status_format
+

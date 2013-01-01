@@ -1,0 +1,24 @@
+Synopsis:
+   on [<modes>]send_action [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a CTCP ACTION to a
+   channel or to another person.
+
+Parameters:
+   $0    target of the ACTION (nickname or channel)
+   $1-   text of message sent
+
+Examples:
+   To display separate messages for public and private actions:
+      on ^send_action "*" {
+         if ( rmatch($0 #* &* +*) ) {
+            echo * $0: $N $1-
+         } {
+            echo *> $0: $N $1-
+         }
+      }
+
+See Also:
+   ctcp(1) action; describe(1); me(1); on(5) action
+

@@ -1,0 +1,26 @@
+Synopsis:
+   load guh
+
+Description:
+   This script consists of a trio of functions, primarily aimed at fetching
+   information about other clients.  Each relies on a server query, so they
+   may not return the requested information immediately.
+
+   The first is $whatchan().  It takes a single nickname as its argument,
+   and uses WHOIS to try to return a list of channels that nickname is on.
+
+   The second is $is_on().  It also takes a single nickname as its argument.
+   If the nickname is currently on irc, it returns that nickname; it returns
+   nothing if it is not in use.
+
+   The last is $uh().  It takes an arbitrary number of nicknames as its
+   arguments, and uses them as the input arguments for a USERHOST call.  It
+   returns the output from USERHOST, usually a list of addresses, one per
+   nickname.
+
+See Also:
+   ison(2); load(5); userhost(2); whois(2)
+
+Other Notes:
+   These functions were written by Jeremy Nelson (hop), jnelson@acronet.net.
+

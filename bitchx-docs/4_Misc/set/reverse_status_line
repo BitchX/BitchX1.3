@@ -1,0 +1,10 @@
+Synopsis:
+   set reverse_status_line [on|off|toggle]
+
+Description:
+   When turned on, this setting will cause the client to display the status
+   bar in reversed text, making it stand out more clearly.
+
+Other Notes:
+   This setting is not affected by the INVERSE_VIDEO setting.
+

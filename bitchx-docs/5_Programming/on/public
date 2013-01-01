@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]public [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a regular public message is sent to the
+   client's current channel by someone else also on the channel.
+
+Parameters:
+   $0    nickname sending message
+   $1    channel sent to
+   $2-   text of message
+
+See Also:
+   on(5) public_msg, public_notice, public_other, send_public; say(1)
+

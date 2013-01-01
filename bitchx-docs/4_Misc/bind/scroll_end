@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> scroll_end
+
+Description:
+   This function is used to end the lastlog scrollback mode.
+   
+See Also:
+   bind(4) scroll_backward, scroll_forward, scroll_start; lastlog(1);
+   set(4) hold_mode, scroll
+

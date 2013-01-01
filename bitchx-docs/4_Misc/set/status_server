@@ -1,0 +1,18 @@
+Synopsis:
+   set status_server [<text>]
+
+Description:
+   This variable contains the string displayed in the status bar when the
+   client is connected to a server in the current window.  If the client
+   is not connect to a server in the current window, nothing is shown.
+
+   This string is represented by %S in the STATUS_SERVER string.  If the
+   expando is used inside STATUS_SERVER, it expands to the server name.
+
+Examples:
+   Customizing the current server indicator:
+      /set status_server Server: %S
+
+See Also:
+   set(4) status_format; server(1)
+

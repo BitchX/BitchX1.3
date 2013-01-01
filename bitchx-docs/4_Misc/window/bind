@@ -1,0 +1,19 @@
+Synopsis:
+   window bind <channel|chan1,chan2>
+
+Description:
+   This binds the specified channel(s) to the client's current window.  This
+   means that all channel traffic for the channel(s) will now be dumped to
+   this window.  This is useful if you join a channel in one window, but
+   then wish to put it in another window. NOTE. This command is differant
+   than the ircII/epic commands in that we accept multiple comma separated
+   channels for binding to a window.
+
+   BIND does not require that the client already be on the channel to
+   be bound, and it will not join the channel if it is not already on it.
+   Use WINDOW CHANNEL to join the channel.  Also note that leaving the
+   channel does not unbind it from the window; WINDOW UNBIND must be used.
+
+See Also:
+   window(4) channel, unbind
+

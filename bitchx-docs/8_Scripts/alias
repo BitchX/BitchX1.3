@@ -1,0 +1,41 @@
+Synopsis:
+   load alias
+
+Description:
+   This script is a collection of simple, useful aliases.  Some require
+   arguments to work, others don't.  Most are shortcuts to frequently-used
+   commands.
+
+     Alias          Description                                           
+     /"             same as QUOTE
+     /alarm <x>     sets an alarm for the given time
+     /chops         list channel operators on current channel
+     /clock <x>     turn clock on or off
+     /h+            turn master HOLD_MODE on
+     /h-            turn master HOLD_MODE off
+     /ia            invite last MSG recipient to current channel
+     /la            same as LASTLOG
+     /lf <x>        sets new log file
+     /ma <x>        send MSG to most recent MSG recipient
+     /mr <x>        send MSG to most recent MSG sender
+     /nf            same as NOTIFY
+     /no            same as NOTICE
+     /oops <x>      resend a misdirected message to the correct person
+     /protect       set current channel mode to +in
+     /shields_up    ignores MSGs and NOTICEs from last sender of a MSG
+     /talkto <x>    start query in new window
+     /unalias <x>   removes an alias
+     /unprotect     set current channel mode to -in
+     /unset <x>     unsets a SET Variable
+     /wjoin <x>     join channel in new window
+     /wquery <x>    same as /talkto
+
+See Also:
+   basical(8); bigcheese(8); ircprimer(8); lastlog(1); load(5); mode(1);
+   msg(1); notice(1); notify(1); query(1); quote(5); set(4) hold_mode,
+   logfile
+
+Other Notes:
+   Most of this script was written by Carl von Loesch (lynx).  The author
+   notes that portions were taken from various alt.irc postings.
+

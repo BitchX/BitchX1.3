@@ -1,0 +1,15 @@
+Synopsis:
+   load tabkey.wc
+
+Description:
+   This script is similar to the original tabkey, except it is somewhat
+   simplified.  The main difference is that nicknames are not automatically
+   added to the nickname list whenever a MSG is sent or received.  Nicks
+   must be manually added with /addmsg.
+
+See Also:
+   load(5); tabkey(8); tc(8)
+
+Other Notes:
+   This script was written by Brian Hauber (wc), bhauber@pobox.com..
+

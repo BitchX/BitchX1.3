@@ -1,0 +1,12 @@
+Synopsis:
+   window swap <hidden refnum>
+
+Description:
+   This swaps the current window with the specified hidden window.  The
+   proportions of the current window are maintained.  This command only
+   works with hidden windows.
+
+See Also:
+   bind(4) swap_last_window, swap_next_window, swap_previous_window;
+   window(4) back, goto, next, previous, refnum
+

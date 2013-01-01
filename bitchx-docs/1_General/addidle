@@ -1,0 +1,21 @@
+Synopsis:
+   addidle [#chan seconds]
+
+Description:
+   This command will add idle checking to a channel. It will kick
+   MAX_IDLEKICKS nicks at a time after the number of seconds specified 
+   for the idle time has elapsed. This can cause problems if mass kick
+   protection is active on the channel. Various things will make the client
+   think that another nick is not idle, publics, notices and ctcps for 
+   example will reset the timer for the nick doing them. You will not
+   kick yourself, another op or a voiced client as long as the channel set
+   for KICK_OPS is off. Also if the nick is on your userlist then you will
+   not kick them
+
+Examples:
+   To add idle checking to a channel:
+      /addidle #channel 600
+
+See Also:
+    set MAX_IDLEKICKS set KICK_OPS cset KICK_OPS unidle(1) 
+

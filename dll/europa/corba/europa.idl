@@ -1,0 +1,5 @@
+module EuropaAI {
+  interface Europa {
+    void inputChat(in string text);
+  };
+};

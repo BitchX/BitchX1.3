@@ -1,0 +1,15 @@
+Synopsis:
+   bind <key> toggle_insert_mode
+
+Description:
+   This toggles the client's default input mode between insert mode and
+   overwrite mode.  In insert mode, text typed in inserted into the input
+   buffer, shifting text following the input to the right, preserving it.
+   In overwrite mode, text typed will overwrite any following text.  The
+   mode is insignificant when there is no text following the cursor.
+
+   This function is equivalent to setting INSERT_MODE to "toggle".
+
+See Also:
+   set(4) insert_mode
+

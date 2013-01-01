@@ -1,0 +1,10 @@
+Synopsis:
+   load netsplit
+
+Description:
+   Use netsplit.env instead.  This version is old and uses outdated syntax
+   features.
+
+See Also:
+   load(5); netsplit.env(8)
+

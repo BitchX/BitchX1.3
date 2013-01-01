@@ -1,0 +1,20 @@
+Synopsis:
+   load starutils
+
+Description:
+   This script contains a trio of commands for irc operators.  They are
+   mainly aimed at helping operators curb clonebot abuse.
+
+     Command    Description                                               
+     /mkill     KILL multiple nicknames at once with the same reason
+     /tfilter   show all users matching pattern on your server
+     /tkill     KILL all users matching pattern on your server
+
+   Use the script's internal /starhelp for more information.
+
+See Also:
+   kill(3); load(5)
+
+Other Notes:
+   This script was written by archon, archon@tamu.edu.
+

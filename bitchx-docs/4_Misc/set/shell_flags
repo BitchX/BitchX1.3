@@ -1,0 +1,12 @@
+Synopsis:
+   set shell_flags [<flags>]
+
+Description:
+   This variable contains any flags that are to be passed to the command
+   shell used by the EXEC command.  The -c switch is generally required
+   by all shells, though others may be available as well; consult your
+   shell's documentation.
+
+See Also:
+   exec(5); set(4) shell
+

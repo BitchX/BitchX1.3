@@ -1,0 +1,25 @@
+Synopsis:
+   url save|list|http|ftp|clear
+   
+Description:
+   With this command you can display the urls and ftp's that have been
+   grabbed in the internal buffer. As well you can save, clear, and turn off
+   either of both of the ftp or http grabbing routines.
+
+Examples:
+   To list all the grabbed urls,
+	/url list
+	/url +
+   To save the grabbed urls to ~/.BitchX/BitchX.urls
+	/url save
+   To turn on http grabbing
+	/url http on
+   To turn http grabbing off 
+	/url http off
+   To turn ftp grabbing on
+	/url ftp on
+   To clear the url buffer
+	/url clear  (warning this buffer is not saved before clearing)
+	/url -
+   To delete url #69
+	/url -69

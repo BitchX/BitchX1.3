@@ -1,0 +1,15 @@
+Synopsis:
+   bind <key> stop_irc
+
+Description:
+   This command causes the client process to temporarily stop, returning
+   the user to the parent process that started the client (usually the
+   user's command shell).  This is useful for executing commands that
+   aren't well suited to EXEC.
+
+Other Notes:
+   Care should be taken with the length of time that the client is stopped
+   for.  Unless it was originally started with the -S command line option,
+   it will have no way of listening to the server.  This means that it
+   could be disconnected from the server if it misses a PING message.
+

@@ -1,0 +1,15 @@
+Synopsis:
+   ctcp [=]<nick>|<version> version
+
+Description:
+   This command asks another client what the name and version of the
+   client program being used is.
+
+See Also:
+   version(2)
+
+Other Notes:
+   Some older ircII clients will return "SL0" in their VERSION reply.
+   This stands for "Script Level 0".  It isn't seen very often anymore,
+   but if you do see it, that's what it means.
+

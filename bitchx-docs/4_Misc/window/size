@@ -1,0 +1,12 @@
+Synopsis:
+   window size [<lines>]
+
+Description:
+   This changes the current window's size to the specified number of lines.
+   All other visible windows are resized accordingly to accommodate the
+   current window's new size. Note that a size of 0 sets the window to
+   nothing but a status bar.
+
+See Also:
+   window(4) balance, grow, shrink
+

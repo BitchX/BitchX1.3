@@ -1,0 +1,22 @@
+Synopsis:
+   $serverport(<index>)
+
+Technical:
+   This function associates server ports with the given index number, as
+   shown in the client's internal server list.
+
+Practical:
+   This function is used to convert from a server's index number to its
+   ports.  This is useful for differentiation different daemons on the 
+   same server.
+
+Returns:
+   remote and local port of server, or 0
+
+Examples:
+   $serverport(0)               returns ports of default server
+   $serverport($winserv())      returns ports of current server
+
+See Also:
+   server(1) servnum(6) winserv(6) servername(6) servergroup(6)
+

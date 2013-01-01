@@ -1,0 +1,17 @@
+Synopsis:
+   sendline <text>
+
+Description:
+   SENDLINE sends a line of text to the client exactly as it is typed.  It
+   is similar to TYPE (and thus XTYPE), except that it does not actually
+   display the text on the input line as it is sent.
+
+   The primary use of SENDLINE is inside the INPUT hook, which grabs the
+   current input to the client before it is actually parsed or sent to a
+   server.  SENDLINE can be used as a preprocessor of sorts.  Extreme
+   caution is recommended with this practice, as an improper INPUT hook
+   can effectively render the client unusable.
+
+See Also:
+   on(5) input; set(4) input_protection; type(5); xtype(5)
+

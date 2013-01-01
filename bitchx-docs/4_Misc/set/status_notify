@@ -1,0 +1,18 @@
+Synopsis:
+   set status_notify [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when there is
+   activity in a hidden window.  If the hidden windows have been inactive
+   since the last time they were viewed, nothing is displayed.
+
+   This string is represented as %F in the STATUS_FORMAT string.  It will
+   expand to a list of active hidden windows when used in STATUS_NOTIFY.
+
+Examples:
+   Customizing the active window string in the status bar:
+      /set status_notify Active: %F
+
+See Also:
+   set(4) status_format; window(4) notify_level
+

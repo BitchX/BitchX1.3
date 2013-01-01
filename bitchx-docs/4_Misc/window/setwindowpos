@@ -1,0 +1,22 @@
+Synopsis:
+   window setwindowpos <options> <x pos> <y pos> <width> <height>
+
+Description:
+   Sets the position/size/state of the current window or the window
+   specified.  Possible options:
+        s = size
+        p = position
+        m = minimize
+        M = maximize
+        r = restore
+        a = activate
+        T = bring to top of Z order
+        B = bring to bottom of Z order
+   If you are not using the size option the width and height params
+   are ignored but must still be present. If you are not using the
+   postion option the x pos and y pos params are ignored but must
+   still be present.
+
+See Also:
+   window_menu(4) window_font(4)
+

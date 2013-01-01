@@ -1,0 +1,10 @@
+Synopsis:
+   dcc closeall
+
+Description:
+   This command closes every open DCC connection and clears your list of every
+   entry.
+
+See Also:
+   dcc(1) close, list, rename; on(5) dcc_lost
+

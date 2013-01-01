@@ -1,0 +1,21 @@
+Synopsis:
+   on [<modes>]dcc_lost [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a DCC CHAT or SEND connection is lost.
+   In the case of SEND, it is triggered only when a connection is lost
+   before the file transfer is complete.
+
+Parameters:
+   $0    nickname of the dcc connection
+   $1-   disconnection message (varies)
+
+Examples:
+   To indicate that dcc connection was terminated:
+      on ^dcc_lost "*" {
+         echo *** DCC connection with $0 lost${[$1] ? [: $1-] : []
+      }
+
+See Also:
+   dcc(1)
+

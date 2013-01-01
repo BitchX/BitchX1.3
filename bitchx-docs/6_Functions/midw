@@ -1,0 +1,24 @@
+Synopsis:
+   $midw(<offset> <count> <text>)
+
+Technical:
+   This function returns the input text, starting at the given word offset,
+   and not exceeding the total number of words specified.  The offset is
+   counted from 0 (zero).
+
+Practical:
+   This function operates on words in the same manner that $mid() operates
+   on characters, returning only a subset of the input word list.  This is
+   probably mostly useful in a script, perhaps to display the partial
+   contents of a variable.
+
+Returns:
+   word subset from input list, or nothing if error
+
+Examples:
+   $midw(2 2 hello there how are you?)     returns "how are"
+   $midw(2 4 hello there how are you?)     returns "how are you?"
+
+See Also:
+   leftw(6); restw(6); rightw(6)
+

@@ -1,0 +1,52 @@
+Synopsis:
+   encrypt [<nickname|channel> [<key>]]
+
+Description:
+   This allows you to maintain an encrypted conversation with a person
+   or channel.  Any messages you send to the specified target will
+   automatically be encrypted.  If the recipient has likewise specified
+   the proper encryption key for you, the incoming message will
+   automatically be decrypted.  Both parties must use the same key for
+   the messages to be decrypted.  Anyone receiving an encrypted message
+   without specifying the proper key will instead see "[ENCRYPTED
+   MESSAGE]" on their screen.
+
+   Unencrypted messages may still be sent to targets which you are
+   currently encrypting messages to.  This is done by inserting a ^E
+   (control-E) as the first character of the message.  This must be a
+   literal ^E, so it will either need to be quoted with whatever key is
+   bound to QUOTE_CHARACTER, or be bound to SELF_INSERT.  It will
+   appear in your input line as "E".
+
+   If no arguments are specified, a list of nicknames (or channels)
+   that encrypted messages are being sent to is shown, along with their
+   respective keys.  If only a nickname or channel is given, the
+   encrypted session with that target is ended.
+
+Examples:
+   To start an encrypted session with JoeBob using the key "foobar":
+      /encrypt joebob foobar
+
+   To start an encrypted session with channel #blah using key "booya":
+      /encrypt #blah booya
+
+   To list your current encrypted sessions:
+      /encrypt
+
+   To end your encrypted session with JoeBob:
+      /encrypt joebob
+
+See Also:
+   SET ENCRYPT_PROGRAM
+
+Other Notes:
+   IrcII's built-in encryption is fine for most purposes, but since the
+   raw algorithm is hardcoded into the client, it's not terribly secure.
+   It is generally suitable to deter prying eyes, but is certainly not
+   suitable for genuinely sensitive transactions.  If this bothers you,
+   an external encryption program may be used.  You will need to set
+   ENCRYPT_PROGRAM to this program's path.
+
+   Encrypted messages may be sent across DCC CHAT connections.  However,
+   non-EPIC3 clients will probably be confused by them.
+

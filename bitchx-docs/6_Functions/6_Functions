@@ -1,0 +1,45 @@
+Section 6: Built-In Functions                                               
+
+This section will be a treasure trove for many script writers.  Every single
+built-in function is described here; every helpfile shows exactly what each
+function takes in and what they spit out.
+
+Client State Information: cexist chanwin curpos currchans epic fnexist geom
+   getsets igmask igtype info irclib isconnected iscurchan lastserver
+   mychannels myservers pid ppid querywin rigmask rigtype servername
+   servernick servernum servports status userhost winbound winchan winlevel
+   winnam winnicklist winnum winrefs winserv winsize winvisible
+
+Server State Information: chanmode channel chanusers chops ischannel ischanop
+   ischanvoice key nochops notify numonchannel onchannel usermode version
+
+System Information: getenv getgid getlogin getpgrp getuid uname
+
+Time Functions: stime strftime tdiff tdiff2 time utime
+
+Pattern Matching: common copattern deuhc diff filter mask match pattern
+   regcomp regerror regex regexec regfree rfilter rmatch rpattern uhc
+
+Character Operations: ascii chr isalpha isdigit isnumber jot nohighlight
+   pass printlen split strip stripansi stripansicodes stripc tolower toupper
+
+String Operations: after before center chop count cparse decode encode
+   index left leftpc mid msar pad repeat rest reverse right rindex sar strlen
+   substr tr
+
+Word Operations: afterw beforew chngw findw fromw insertw leftw midw notw
+   numwords remw remws restw revw rightw tow uniq word
+
+Variable Operations: pop push shift splice unshift
+
+Array Operations: delarray delitem finditem getarrays getitem getmatches
+   getrmatches gettmatch ifindfirst ifinditem igetitem igetmatches igetrmatches
+   indextoitem itemtoindex matchitem numarrays numitems rmatchitem setitem
+
+File Operations: chmod close eof fexist fsize ftime glob mkdir open randread
+   read renme rmdir twiddle umask unlink which write writeb
+
+Network Operations: connect convert iptoname listen nametoip
+
+Miscellaneous: aliasctl crypt pipe rand srand trunc
+

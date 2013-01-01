@@ -1,0 +1,11 @@
+Synopsis:
+   set full_status_line [on|off|toggle]
+
+Description:
+   When turned on, the client's status bar will be drawn across the full
+   width of the screen.  If off, it is only as long as needed to hold
+   the information it contains.
+
+See Also:
+   set(4) status_format
+

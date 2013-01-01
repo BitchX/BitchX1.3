@@ -1,0 +1,13 @@
+Synopsis:
+   set do_notify_immediately [on|off|toggle]
+
+Description:
+   When this is set ON, the notify list is checked on every /notify command.
+   Else, it will wait until the top of the minute to update. This was added
+   primarily to speed up server connects, since so many people have huge
+   notify lists which slow down an initial connection.
+
+See Also:
+   notify(1); set(4) notify_handler, notify_level, notify_interval,
+   notify_on_termination
+

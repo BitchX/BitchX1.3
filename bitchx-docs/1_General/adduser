@@ -1,0 +1,53 @@
+Synopsis:
+   adduser [-ppp] <nick|nick!user@hostname> <channel|*> <levels> [password]
+
+Description:
+   Adds <nick|nick!user@hostname> on <channel|*> with [userlevels] and
+   optional [password]. If a password is specified, it is encrypted in the
+   saved userlist.
+   <channel> can have more than one via the use of of ","
+   Use -ppp to add *domain.com hosts
+   [userlevels]: (available to the registered user)
+     BAN -        Bans offender who bans a protected user
+     BOT -        Creates a bot entry in userlist(/addbot replacement)
+     DCC -        Allows a users dcc to auto-get regardless of whether
+                  /set dcc_autoget is Off or On
+     DEOP -       Deops offender who deops a protected user
+     FLOOD -      AllowS Flood checking to be turned off on a user
+     INVITE -     Allows a user to invite themself to a channel your in via
+                  CTCP
+     I_OPS -      Allows a user to be instantly opped/voiced upon joining a 
+                  channel they are protected in (NOT RECOMMENDED). 
+                  You still require OPS or VOICE with this modifier.
+     KICK -       Kicks offender who bans/kicks protected user
+     KILL -       <undefined as of yet>
+     OPS -        Allows a user to be opped via CTCP/deleyed ops
+     PBAN -       When a user is banned from a channel they are protected on,
+                  they are automatically un-banned
+     PINVITE -    When a user is kicked from a channel they are protected on,
+                  they are automatically re-invited back
+     REOP -       When a user is deopped from a channel they are protected on,
+                  they are automatically re-opped
+     UNBAN -      Allows a user to remotely unban his/herself via CTCP
+     VOICE -      Auto-voice on join
+
+     FRIEND -     Combination of: VOICE,OPS,UNBAN,INVITE
+     MASTER -     Combination of: VOICE,OPS,BAN,UNBAN,INVITE,DCC,FLOOD
+     OWNER -      Combination of: MASTER,KILL,DIE,BOT
+
+   More than one level is possible, you can combine them with a ",".
+   See UNUSER on how to remove <nick> from userlist
+   CTCP to understand valid CTCP commands which can be sent to gain
+   privileges
+
+Examples:
+
+   /adduser panasync #bitchx friend,i_ops 
+   would add panasync on the channel #bitchx only for instant ops on join
+   (if /cset aop on for that channel), and allow him too unban and invite 
+   himself. Commands are given using /ctcp.
+
+   /adduser panasync #bitchx,#mpeg3 friend,i_ops password
+   would add panasync on the channels #bitchx and #mpeg3. He would need to 
+   specify a password in order to become opped.
+

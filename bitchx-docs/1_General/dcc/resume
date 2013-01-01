@@ -1,0 +1,30 @@
+Synopsis:
+   dcc resume [=]<nick> <file>
+
+Description:
+   In the event that a DCC file transfer is interrupted, DCC RESUME can be
+   used to continue it where the original transfer stopped.  This is
+   generally most useful to users with very slow connections to the
+   Internet transferring large files.
+
+Examples:
+   To restart a transfer with joebob:
+      /dcc resume joebob somebigfile
+
+See Also:
+   dcc(1) close, get, send
+
+Restrictions:
+   This command is only available if the client was compiled with the
+   BROKEN_MIRC_DCC_RESUME #define enabled (in the config.h).  The client
+   compile options string (returned when $info(o) is evaluated) will have
+   an 'i' in it if this option is enabled.
+
+Other Notes:
+   It is very important that the user realize that use of this feature is
+   a blatant violation of the irc protocol (described in rfc 1459), in that
+   it makes the client respond to a remote PRIVMSG with another PRIVMSG.
+   While this may not mean much to the average user, it is nonetheless not
+   "the right way" to do things, and irc operators have been known to KILL
+   clients that violate the protocol in this manner.
+

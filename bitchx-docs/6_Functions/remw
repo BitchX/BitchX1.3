@@ -1,0 +1,23 @@
+Synopsis:
+   $remw(<word> <word list>)
+
+Technical:
+   This function returns the input list with the first occurrence of the
+   given word removed.
+
+Practical:
+   This function is probably most useful in text parsing within a script.
+   Because it only removes the first occurrence of the given word, and not
+   all of them, it should probably be used in conjunction with $uniq() to
+   be truly effective.
+
+Returns:
+   input list with first occurrence of given word removed
+
+Examples:
+   $remw(two one two three)            returns "one three"
+   $remw(two one two three two one)    returns "one three two one"
+
+See Also:
+   remws(6); uniq(6)
+

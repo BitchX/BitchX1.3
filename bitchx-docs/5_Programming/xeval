@@ -1,0 +1,20 @@
+Synopsis:
+   xeval [<switch>] <text>
+
+Description:
+   XEVAL works just like eval, but with switches. The -server forces it to
+   evaluate <text> with the context of another server as default. -window
+   forces the output to be in a specific window.
+
+Options:
+   -server <refnum>  send all server output to server <refnum>
+   -window <name>    send text to specified window (name or number)
+
+Examples:
+   To display colored text to window #2:
+      set display_ansi on
+      xeval -w 2 $chr(27)[34m This is Blue
+
+See Also:
+   eval(5)
+

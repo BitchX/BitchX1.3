@@ -1,0 +1,44 @@
+Synopsis:
+   $cparse(<text>)
+   $cparse(<text> <arguments>...)
+
+Technical:
+   This function parses <text> according to the following table:
+
+   Any instance of         will be replaced with ^C codes to change the
+                           text to         text to         background to
+   ---------------------------------------------------------------------
+   %k      %K      %0      black           bold black      black
+   %r      %R      %1      red             bold red        red
+   %g      %G      %2      green           bold green      green
+   %y      %Y      %3      yellow          bold yellow     yellow
+   %b      %B      %4      blue            bold blue       blue
+   %m      %M      %5      magenta         bold magenta    magenta
+   %p      %P              magenta (think: purple)
+   %c      %C      %6      cyan            bold cyan       cyan
+   %w      %W      %7      white           bold white      white
+   %F                      Flashing attribute turned on
+   %n                      All colors turned off
+   %N                      Don't put a clear-color tag at the of output
+   %%                      A single %
+   
+   If the first argument to $cparse() is an extended word (string with
+   quotes), it will be parsed similar to bitchx. (example below)
+
+Practical:
+   This is a convenient way add color to scripts without actually using
+   the control-c character.
+
+Returns:
+   <text> parsed according to the rules in the above table
+
+Examples:
+   $cparse(bl%Bah)
+     returns
+   bl^C4ah
+     where ^C4 is the control-c color code for blue.
+
+   $cparse("This is a $0 test" cparse)
+     returns
+   This is a cparse test
+

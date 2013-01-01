@@ -1,0 +1,115 @@
+
+			BitchX Plugins
+			Written by Colten Edwards (c) 1997
+
+
+Plugins can be created for BitchX quite easily. All plugins you create will
+have a startup function which is based on the filename of the plugin and 
+_Init appended to it. So for a module like cavlink.so we have a startup
+function called Cavlink_Init(). Cavlink_Init is defined as the following
+
+int Cavlink_Init(IrcCommandDll **interp)
+{
+}
+
+returning a 0 indicates successful installation, any other return is an
+error.
+
+You can add various commands, variables, functions, tcl functions, and ctcp
+to the main client itself. You have complete access to ALL variables defined
+within BitchX itself. 
+
+There is also a functions that may or may not be defined by you called the
+fini function. Once again it's based on the filename appended with _Cleanup
+to give us
+
+int Cavlink_Cleanup(IrcCommandDll **interp)
+{
+}
+
+If you make a cleanup function, you are responsible for removing all traces
+of your dll from the client.
+
+Adding a new command/function/var in a plugin is made easier with a function
+that I wrote to add them to BitchX while keeping track of what's loaded.
+
+add_module_proc(type, module name, command name, description, 
+		id, flag, function1, function2);
+
+type can be any of the following
+	COMMAND_PROC	(internal /command)
+	ALIAS_PROC	(internal function)
+	CTCP_PROC	(ctcp procedure)
+	VAR_PROC	(a /set variable)
+	HOOK_PROC	(like a /on hook)
+	RAW_PROC	(lowlevel access to server output)
+	DCC_PROC	(new /dcc commands)
+	WINDOW_PROC	(new /window commands)
+	OUTPUT_PROC	(replacement output procedure)
+
+module name is for internal bookkeeping practices. It's displayed when we
+list the loaded plugins, and is also used for finding what to remove in the
+event of a /unloaddll. 
+
+command name is the name of the procedure we are adding to the client. or
+How we will call the procedure.
+
+description is just a description for display in a usage() function. It can
+be NULL as well.
+
+id is used in a VAR_PROC HOOK_PROC and CTCP_PROC to identify some aspect of
+the procedure. each "type" uses id differantly. A VAR_PROC uses this to
+identify the type of variable being introduced ie. STR_TYPE_VAR,
+INT_TYPE_VAR, BOOL_TYPE_VAR. A CTCP_PROC can be set to -1. HOOK_PROC uses
+this to identify the hook to add this to. A negative number means this is a
+server numberic to add too. A non-negative value is used to indicate a
+particular hook. You can use the enumerated list of hooks in hook.h to make
+this easier ie. CHANNEL_SYNCH_LIST.
+
+flag is used in the same procedures as id. a VAR_PROC uses this as the
+default INT/BOOL value for the variable. CTCP_PROC uses this to tell the
+client what todo when we recieve one of these ctcp's. CTCP_SPECIAL,
+CTCP_TELLUSER, CTCP_REPLY, CTCP_INLINE, CTCP_NOLIMIT are possible values. 
+These can be or'd together as well. HOOK_PROC uses this as the "noise"
+of this event.
+
+function1 is the function to call for this particular command. This always
+needs to be supplied for all the various procedures.. Even a VAR_PROC can
+have a function associated with it.
+
+function2 is the reply function for CTCP_PROC. It can be NULL.
+
+Depending on the nature of the procedure your adding, determines what the
+return from that procedure should be. a $function should return a string for
+example. a command or a var procedure returns nothing. 
+
+void command_proc(IrcCommandDll *, char *, char *, char *, char *);
+
+void var_proc(Window *, char *, int);
+
+char *alias_proc(char *);
+
+char *ctcp_proc(CtcpEntryDll *, char *, char *, char *);
+
+void hook_proc(int hook, char *buffer, char *);
+void hook_proc(char *name, char *buffer, char *);
+
+int raw_proc(char *num, char *from, char *userhost, char **Args);
+
+void dcc_func(char *name, char *args);
+
+Window *window_proc(Window *, char **args, char *help);
+
+void output_proc(Window *, const unsigned char *str);
+
+
+Tcl commands can be added from a module quite easily. Just make sure that
+that you call Tcl_DeleteCommand() when unloading the module. This means you
+need to use a Cleanup function.
+
+A output procedure can be defined. It replaces ALL output procedures for ALL
+screens and windows. You will need to handle everything that the current
+add_to_window() function in screen.c does by yourself. You can however use
+any or all of the BitchX functions. When removing this procedure, ALL
+screens and windows are reset back to the default output procedure.
+

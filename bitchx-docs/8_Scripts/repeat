@@ -1,0 +1,25 @@
+Synopsis:
+   load repeat
+
+Description:
+   This script is mostly an intellectual exercise.  It shows several
+   different ways of writing a /repeat command, varying from FE, FOR, and
+   WHILE loops to alias recursion.  All function the same:
+
+     /repeat <count> <command>
+
+   This causes the given command to be executed the specified number of
+   times.  The current version even allows itself to be called recursively.
+   Refer to the source code for more information.
+
+Examples:
+   To remind yourself to get off irc:
+      /repeat 10 echo *** GET OFF IRC IT IS ROTTING YOUR BRAIN!!GGGG
+
+See Also:
+   load(5); recursion(8); repeat(5)
+
+Other Notes:
+   This script has been contributed to be many people.  The most recent
+   modifications come frm Jeremy Nelson (hop), jnelson@acronet.net.
+

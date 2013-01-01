@@ -1,0 +1,33 @@
+Synopsis:
+   wi [<nickname>[ <nickname>[ ...]]]
+
+Description:
+   The WI command is used to retrieve detailed information about the 
+   nickname(s) specified.  This will always include the user's
+   nickname, address (user@hostname), real name (IRCNAME), and the server
+   that user is on.  It may also show what channels the user is on (if
+   any, and if they aren't +p/+s) and whether the user is +o/+v in any of
+   those channels, whether the user is away, and if the user is an irc
+   operator. WI also displays the idle time of that nick.
+
+   If no arguments are given, the WI will be performed on the client 
+   itself.
+
+Examples:
+   To get information on users JoeBob, ToeJam, and JuneBug:
+      /wi joebob toejam junebug
+
+See Also:
+   who(2); whowas(2) whois(2)
+
+Restrictions:
+   In WI output, only channels that are not +p or +s are shown, unless
+   the client happens to be on one of those channels.
+
+Other Notes:
+   In addition to idle time, some servers also return the time the user
+   signed on to irc.
+
+   If you query a remote server for WHOIS information, there is no reliable
+   way to "wait" for the data to come back (i.e. WAIT will be useless).
+

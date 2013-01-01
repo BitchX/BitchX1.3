@@ -1,0 +1,14 @@
+Synopsis:
+   set eight_bit_characters [on|off|toggle]
+
+Description:
+   When turned on, this setting allows 8-bit characters to be entered on
+   the input line.  Character sets that are 8-bit include Swedish, Finnish,
+   Norwegian, and just about anything that isn't US-ASCII.  Note that an
+   appropriate translation table must be used for the characters to be
+   displayed properly.  Characters can be entered as digraphs, or with
+   various meta keys, depending on the environment the client runs in.
+
+See Also:
+   digraph(4); set(4) translation
+

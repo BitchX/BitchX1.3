@@ -1,0 +1,35 @@
+Synopsis:
+   describe <nickname|channel> <action description>
+
+Description:
+   DESCRIBE lets you perform an action.  It lets you describe what you're
+   doing as though someone is watching you, rather than you telling them.
+   You may send an action to either an individual or to an entire channel.
+
+Examples:
+   If your nickname is foobar, and you want to send an action to your
+   friend whose nickname is booya:
+      /describe booya is eating pizza
+
+   To send an action to channel #blah:
+      /describe #blah is eating pizza
+
+   Anyone receiving an action from you will see something like this:
+      * foobar is eating pizza
+
+Aliases:
+   DESCRIBE is identical to CTCP ACTION.  When sending an action to a
+   channel, it functions identically to the ME command.
+
+See Also:
+   ctcp(1) action; load(5) action, mudlike; me(1); on(5) action,
+   send_action
+
+Restrictions:
+   This command makes use of CTCP (client-to-client protocol), which is not
+   part of the IRC protocol.  Most modern IRC clients understand CTCP, but
+   not all do, while others might not support the same CTCP commands that
+   ircII-EPIC supports.  If you receive an error of some sort, then the
+   client on the receiving end is unable to properly handle your CTCP
+   message.
+

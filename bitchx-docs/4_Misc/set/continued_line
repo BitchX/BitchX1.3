@@ -1,0 +1,13 @@
+Synopsis:
+   set continued_line [<text>]
+
+Description:
+   The text in this variable, if any, will be prepended to any lines
+   printed that are wider than the display.  This is to provide a visual
+   indicator that the line is part of the previous line, and not a new
+   message.  This variable may be set in conjunction with the INDENT
+   variable.
+
+See Also:
+   set(4) indent
+

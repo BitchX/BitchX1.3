@@ -1,0 +1,61 @@
+Crash Course in irc with BitchX/EPIC                                       
+
+You are using the BitchX irc client.  Assuming you have the correct help
+files for your client.  BitchX is a variant of EPIC and ircII clients that 
+contains countless enhancements, while retaining near full backward 
+compatibility with ircII version 2.8.2.
+
+BitchX offers a staggering number of features, far too many to describe here.
+Instead, this document will show you the basics you'll need to get started
+with irc and with BitchX/EPIC.
+
+All commands in BitchX are prefixed with a '/'.  This is called the command
+character, and is used to distinguish typed commands from messages intended
+for a channel.  Here are some basic commands that you should become familiar
+with.  In these examples, do not actually include the <> characters when you
+enter the command.
+
+   /help <n> <topic>   This is the single most important command available
+                       in this client.  If you don't know what a command
+                       does, chances are it is documented in the online
+                       help.  When all else fails, look here.  The 'n' is
+                       a section number, and 'topic' is the command to
+                       get help on.  If you use /help by itself, a list
+                       of sections is given.
+
+   /join <channel>     This makes you join the specified channel.  For all
+                       intents and purposes, channels always start with a
+                       '#' character.
+
+   /part <channel>     This makes you leave the specified channel.
+
+   /nick <new nick>    This lets you choose a new nickname.  You may use
+                       any nickname you like, as long as someone else isn't
+                       currently using it.
+
+   /msg <someone>      This lets you send a private message to the specified
+                       nickname.
+
+   /server <server>    This lets you switch to a new irc server.
+
+   /whois <someone>    This will give you some information about the given
+                       nickname, such as the person's Internet address, the
+                       channels and server s/he is on, etc.
+
+   /names <channel>    This shows you a list of everyone on the specified
+                       channel.  You will automatically see a listing for
+                       any channel you join.
+
+   /list               This lets you list all the channels on your irc
+                       network.  This may not be a good idea, because some
+                       networks have several thousand channels.
+
+These commands should be sufficient to get you started.  If you want to learn
+more about BitchX, reading the online help is a good way to start.  If you 
+have questions about irc in general, join one of the irc help channels and 
+ask someone.  On EFnet, the channel is #irchelp, #epic and #bitchx.
+
+See Also:
+   help(1); join(1); list(2); msg(1); names(2); nick(1); part(1); server(1);
+   whois(2)
+

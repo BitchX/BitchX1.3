@@ -1,0 +1,15 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> finger
+
+Description:
+   This will return the idle time of the client it is sent to, as well
+   as the user's real name (from their system's /etc/passwd file).
+
+See Also:
+   load(5) finger
+
+Other Notes:
+   This is not the same as the Unix command of the same name.  Though it
+   returns similar information (idle time, real name), the two have no
+   relationship between one another.
+

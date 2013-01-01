@@ -1,0 +1,15 @@
+Synopsis:
+   set log [on|off|toggle]
+
+Description:
+   This variable globally sets whether the client saves its lastlog buffer
+   to an external file.  The actual buffer itself isn't saved, rather
+   anything that is saved to the buffer is also saved to the file.
+
+   If multiple windows are in use, this setting will affect all of them,
+   and will make no distinction in the log file as to which messages are
+   from which window.  In this case, WINDOW LOG should be used.
+
+See Also:
+   set(4) lastlog, logfile; window(4) log
+

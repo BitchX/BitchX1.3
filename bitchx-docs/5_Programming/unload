@@ -1,0 +1,13 @@
+Synopsis:
+   unload <name>
+
+Description:
+   This command allows on-the-fly unloading of a script packaged by the
+   package(5) command.
+
+Options:
+   <name>         name of the script package to unload
+
+See Also:
+   load(5); package(5); stub(5)
+

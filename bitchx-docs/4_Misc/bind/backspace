@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> backspace
+
+Description:
+   This function causes the cursor to be moved one space to the left, and
+   character previously in that position is deleted.  It has no effect if
+   the cursor is at the beginning of the input line.
+
+See Also:
+   bind(4) delete_character
+

@@ -1,0 +1,11 @@
+Synopsis:
+   load ping
+
+Description:
+   At one time, this script implemented a CTCP-based PING command.  As that
+   functionality has been present in the client for some time, the script
+   is obsolete.  This script loads the oldping script.
+
+See Also:
+   load(5); oldping(8)
+

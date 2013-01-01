@@ -1,0 +1,17 @@
+Synopsis:
+   mesg [yes|no]
+
+Description:
+   This command works exactly like the Unix command of the same name.  It
+   effectively removes the world-write permissions on the client's tty,
+   such that incoming talk requests and writes are blocked.  It is most
+   useful for dodging "flash" bombs; talk requests with special escape
+   sequences in the username that scramble vt100 terminals.
+
+   MESG used with no arguments displays the current setting.
+
+Other Notes:
+   This command has the undesired side effect of blocking legitimate talk
+   requests.  Talk and write are not blocked, however, when sent from the
+   host's superuser.
+

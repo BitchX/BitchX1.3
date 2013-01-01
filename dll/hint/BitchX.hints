@@ -1,0 +1,30 @@
+%Ghint%n: If you want to AutoOp users, don't forget to %W/cset %RAOP %WON
+%Ghint%n: Did you know that %WPageUp%n & %WPageDown%n will scroll screen up/dn?
+%Ghint%n: If you don't like your current auto response use %W/set %RRESPONSE%Y <new>%n
+%Ghint%n: Kick the guy who uses CTCP VERSION with %W/set %RAUTOKICK_ON_VERSION %WON
+%Ghint%n: Set %RAUTO_AWAY%n & %RAUTO_AWAY_TIME%n to set /away when idling...
+%Ghint%n: Set %RAUTO_NSLOOKUP%n to find the user's host on every join.
+%Ghint%n: Set number of beeps if someone /MSGs you by %RBEEP_WHEN_AWAY%n
+%Ghint%n: Set %RBOT_LOG%n to log your BOT commands. (like autoop)
+%Ghint%n: Set %RBITCH%n if you don't want un-authorized person to have ops.
+%Ghint%n: If you don't like that '/' is for your command, set %RCMDCHARS%n for new
+%Ghint%n: Set %RDCC_AUTOGET%n to specify wether you wan't to AUTOGET the packages.
+%Ghint%n: Set %RCTCP_FLOOD_PROTECTION%n to change CTCP protection ON/OFF
+%Ghint%n: Set %RDEFAULT_REASON%n to specify reason when you ban|kick someone.
+%Ghint%n: Set %RFLOOD_AFTER%n to specify the amount of messages sent before ignoring.
+%Ghint%n: All %RFLOOD_%n commands are useless if you don't set %RFLOOD_PROTECTION%n %WON%n
+%Ghint%n: Specify msg when returned from AWAY w/ %RFORMAT_BACK%n (time: %W$$1%n=m, %W$$2%n=h)
+%Ghint%n: If you want to see signon-ed nickname w/ host set %RHARD_UH_NOTIFY%n
+%Ghint%n: How long do you want to ignore the sucker? Set it with %RIGNORE_TIME%n
+%Ghint%n: If you don't want to harm OPS, set %RKICK_OPS%n to %WOFF%n
+%Ghint%n: Activate LinkLooker (net splits) with %RLOOK%n & %RLLOOK_DELAY%n
+%Ghint%n: When scrolling up/dn, specify %RSCROLL_LINES%n to specify the step.
+%Ghint%n: To send message when away set %RSEND_AWAY_MSG%n (not good idea)
+%Ghint%n: To send message when ignoring someone set %RSEND_IGNORE_MSG%n
+%Ghint%n: To use SHITLIST %RSHITLIST%n must be %WON%n
+%Ghint%n: Specify default SHITLIST reason with %RSHITLIST_REASON%n
+%Ghint%n: Set %RSUPPRESS_SERVER_MOTD%n to %WOFF%n if you want to read Server's MOTD.
+%Ghint%n: To use TAB key %RTAB%n must be %WON%n
+%Ghint%n: To use USERLIST (autoop, invite...) set %RUSERLIST%n to %WON%n
+%Ghint%n: Specify default user mode when connected to server with %RUSERMODE%n
+%Ghint%n: Remember: Special channel setup can be accessed via /CSET

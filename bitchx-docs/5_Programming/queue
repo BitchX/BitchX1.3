@@ -1,0 +1,40 @@
+Synopsis:
+   queue [<flag>] <name> [<number>] [<commands>]
+
+Description:
+   QUEUE allows for a sort of batch processing in ircII-EPIC.  It is a
+   convenient mechanism for preparing to execute a command at a later,
+   undetermined time.  It can also be used as a sort of dynamically
+   growing alias.
+
+   Sets of commands may be stored into named queues; there is no limit
+   to the number of queues that may exist, or the number of commands that
+   may be present in a queue.  For queues with multiple commands, the
+   commands must be surrounded by curly braces.
+
+Options:
+   -delete        delete the specified entry number in the named queue
+   -do            runs the commands in the named queue
+   -no_flush      does not flush commands (for use only with -do)
+   -flush         flush the named queue without running the commands
+   -list          show the contents of the named queue
+   -show          show the contents of all queues
+
+Examples:
+   To add an item to the queue "foo":
+      queue foo {
+         echo This is a queued command.
+         echo Isn't it cool?
+      }
+
+   To delete an item from a queue with multiple items:
+      queue -delete foo 2
+
+See Also:
+   alias(5)
+
+Bugs:
+   Error checking is not horribly tight with QUEUE.  Trying to confuse the
+   client with multiple arguments that don't belong together will probably
+   succeed.  Using multiple flags should be avoided whenever possible.
+

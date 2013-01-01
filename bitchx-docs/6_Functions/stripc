@@ -1,0 +1,12 @@
+Synopsis:
+   $stripc(<text>)
+
+Technical:
+   This function strips out any control-c (^C) color codes in the input text.
+
+Returns:
+   input text with control-c codes removed
+
+See Also:
+   set(4) display_ansi; strip(6); stripansi(6); stripansicodes(6)
+

@@ -1,0 +1,1576 @@
+INDEX
+   4OP        ABORT       ADDIDLE     ADDSHIT     ADDUSER    ADDLAME     ADDFORWARD
+   ADDWORD    ADMIN       AJOIN       AJOINLIST   AWAY       BACK        BAN
+   BANS       BANSTA      BANTYPE     BANWORD     BEEP       BHELP       BK
+   BOTLIST    BYE         C           CD          CDCC       CHANNEL     CHANST
+   CHAT       CHGAOP      CHGCHAN     CHGHOST     CHANNEL    CHANST      CHGAOP
+   CHGCHAN    CHGHOST     CHGLEVEL    CHGPROT     CHOPS      CLEARAUTO   CLEARLOCK
+   CLEARTAB   CLONES      CONNECT     CMSG        CREDIT     CSAY        CSET
+   CTCP       CWHO        CWHOM       CYCLE       DATE       DBAN        DC
+   DCA        DCC         DCG         DCS         DCX        DEOP        DEOPER
+   DESCRIBE   DETACH      DEVOICE     DF          DIE        DME         DISCONNECT
+   DUMP       ECHO        EVAL        EXEC        EXIT       FINGER      FK
+   FLUSH      FORWARD     FPORTS      FPROT       FSET       FTP         FUCK
+   FUCKEM     HELP        HISTORY     HOST        HOSTNAME   IG          IGH
+   IGNORE     IGT         INFO        INV         IRCHOST    IRCNAME     JNW
+   KB         KILL        LASTLOG     LEAVE       LINKS      LIST        LK
+   LKW        LLOOK       LOAD        LOADDLL     LOADTCL    LS          LUSERS
+   MAP        MSAY        MB          MDOP        ME         MESG        MK
+   MKB        MKNU        MODELOCK    MOP         MOTD       MSG         MUB
+   MULT       MVOICE      NAMES       NEWNICK     NEWUSER    NICK        NOCHAT
+   NOPS       NOTICE      NOTIFY      NSLOOKUP    NWHOIS     NWHOWAS     OFFERS
+   OOPS       OP          OPER        ORIGNICK    OSTAT      PARTALL     PASTE
+   PING       PS          PURGE       QME         QUERY      QUEUE       QUIT
+   QUOTE      READLOG     REDIRECT    REHASH      REL        RELC        RELCR
+   RELCRT     RELCT       RELD        RELDT       RELI       RELIT       RELM
+   RELMT      RELN        RELNT       RELOAD      RELS       RELSM       RELSMT
+   RELSN      RELSNT      RELST       RELSTT      RELSW      RELSWT      RELT
+   RELW       RELWT       REMLOG      REPEAT      REQUEST    RESET       RANDOMNICK
+   SAVE       SAVELIST    SHOWIDLE    SCAN        SCANF      SCANI       SCANN
+   SCANO      SCANS       SCANV       SERVER      SET        SHITLIST    SAY
+   SHOWLOCK   SLEEP       SPING       SQUIT       SV         STAT        TBAN
+   TIG        SHOWSPLIT   TIME        TIMER       TLOCK      TOPIC       TRACE
+   TOGG       TRACEKILL   TRACESERV   URL         USER       UB          UMODE
+   UNAJOIN    UNBAN       UNBOT       UNIDLE      UNIG       UNIGH       UNKEY
+   UNSCREW    UNSHIT      UNTOPIC     UNUSER      UNWORD     UPING       UNFORWARD
+   UNLOAD     UPTIME      USAGE       USER        USERIP     USERLIST    VER
+   VERSION    VOICE       WALL        WALLOP      WHICH      WHO         WHOIS
+   WW         WHOKILL     WHOWAS      WILM        WILN       WINDOW      WORDLIST
+   USERINFO   USERSHOW
+   *** Items in %Rred%n denote a newly added function.
+   *** Items in %Mmagenta%n denote a change/addition in the function.
+CREDIT
+   Help File for %WB%nitch%WX%n by %cpanasync%n
+   Original BitchX.help by %Wotiluke%n %Y(%nspaz%C@%nneta.com%Y)%n
+   Updated by %WPhucilage %K(%gd%GA%K' %GP%ghucilage %GP%ghactory%K)%Y (%nphucilag%c@%nasarian.org%Y)
+   Updated by %WBarK0de%n %Y(%nbark0de%C@%nw3n.net%Y)%n
+   Updated by %Wdrew%n %Y(%nlogic%C@%nconcept2000.net.au%Y)%n
+   Updated by %WPower%n %Y(%npower%C@%npower.zepa.net%Y)%n
+   Updated by %WPyroSmurf%n %Y(%nkerensky%C@%nhotmail.com%Y)%n
+HELP
+   %gUsage%n: %W/%nBHelp %Y<%nTopic%G|%nIndex%Y>%n
+     %YTopic%n - This gives help on %Y<%nTopic%Y>%n
+     %YIndex%n - This shows the list of commands supplied in BitchX
+4OP
+   %gUsage%n: %W/%n4op %Y<%Cnick%Y>%n
+   - Sets mode +oooo on %Y<%Cnick%Y>%n
+ABORT
+   %gUsage%n: %W/%nabort
+   - Saves IRCII settings then exits IRC
+ABOUT
+   %gUsage%n: %W/%nabout
+   - Shows yet another ansi screen with greets to people who have contributed
+     to the %PBitchX%n project
+WI
+   %gUsage%n: %W/%nwi %Y<%Cnick%Y>%n
+   - Display whois information on %Y<%Cnick%Y>%n
+ADDFORWARD
+   %gUsage%n: %W/%naddforward %Y<%Bchannel%G|%Cnick%Y>%n
+   - Forward all messages to %Y<%Bchannel%G|%Cnick%Y>%n
+    See %YUNFORWARD%n on how to remove %Y<%Bchannel%G|%Cnick%Y>%n from forward list
+ADDIDLE
+   %gUsage%n: %W/%naddidle %Y<%Bchannel%Y>%n %R[%nseconds%R]%n
+   - Adds %Y<%Bchannel%Y>%n as idle channel with %R[%nseconds%R]%n
+ADDSHIT
+   %gUsage%n: %W/%naddshit %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n %Y<%Bchannel%G|%Y*>%n %R[%nshitlevel%R]%n %R[%nreason%R]%n
+   %gHint%n: %Y<%Bchannel%Y>%n can have more than one via the use of%G ,%n
+   - Add %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n to your shitlist on %Y<%Bchannel%G|%Y*>%n with
+     %R[%nshitlevel%R]%n and for %R[%nreason%R]%n
+   See %YUNSHIT%n on how to remove %Y<%Cnick%Y>%n from shitlist%P;%n and
+       %YUSERLEVELS%n for shit levels
+ADDUSER
+   %gUsage%n: %W/%nadduser %Y[%C-ppp%Y] <%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n %Y<%Bchannel%G|%Y*>%n %Y<%nuserlevel1%W,%nuserlevel2%W,%netc%Y> [%npassword%Y]%n
+   %gHint%n: %Y<%Bchannel%Y>%n can have more than one via the use of %G,,%n
+   %gHint%n: Use %C-ppp%n to add %C*domain.com%n hosts
+   - Adds %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n on %Y<%Bchannel%G|%Y*>%n with %R[%nuserlevels%R]%n
+   See %YUNUSER%n on how to remove %Y<%Cnick%Y>%n from userlist%P;%n and
+       %YUSERLEVELS%n for user, auto-op and protection levels
+       %YCTCP%n to understand valid CTCP commands which can be sent to gain
+            privileges
+ADDLAME
+   %gUsage%n: %W/%naddlame %Y<%Cnick%G|%Cnick%C nick nick%Y>%n
+   - Adds %Y<%Cnick%Y>%n to your lame nicklist, bans nick!*@*
+ADDWORD
+   %gUsage%n: %W/%naddword %Y<%Bchannel%G|%Y*>%n %Y<%nword%y(%ns%y)%Y>%n
+   - Adds %Y<%nword%y(%ns%y)%Y>%n to wordlist, anyone saying it in %Y<%Bchannel%G|%Y*>%n will be kicked
+   See %YSHOWWORD%n to list banned words%P;%n and
+       %YUNWORD%n to remove banned words
+ADMIN
+   %gUsage%n: %W/%nadmin %R[%nserver%R]%n
+   - Shows the iRC Administration information on current server or %R[%nserver%R]%n
+AJOIN
+   %gUsage%n: %W/%najoin %Y<%Bchannel%y(%Bs%y)%Y>%n
+   - Add %Y<%Bchannel%y(%Bs%y)%Y>%n to AJoin list%P;%n it joins %Y<%Bchannel%y(%Bs%y)%Y>%n on startup or change of server
+     change
+AWAY
+   %gUsage%n: %W/%naway %R[%nreason%R]%n
+   - Sets you away for %R[%nreason%R]%n
+B
+   See %YBAN%n
+BAN
+   %gUsage%n: %W/%nban %Y<%Cnick%G|%Cnick%G!%nuser%y@%nhostname%Y>%n
+   - Ban %Y<%Cnick%G|%Cnick%G!%nuser%y@%nhostname%Y>%n from current channel
+   %GHint%n: Even works if %Y<%Cnick%Y>%n has left current channel
+BANSTAT
+   %gUsage%n: %W/%nbanstat %R[%Bchannel%R]%n
+   - Show bans on current channel or %R[%Bchannel%R]%n
+BANTYPE
+   %gUsage%n: %W/%nbantype %Y<%nNormal%G|%nBetter%G|%nHost%G|%nDomain%G|%nScrew%Y>%n
+   - When a ban is done on a nick, it uses %Y<%nbantype%Y>%n
+BEEP
+   %gUsage%n: %W/%nbeep
+   - Creates a beep noise
+   %GNote%n: This is not possible if beep_on_messages is set off, %Y*%ngrin%Y*%n
+BK
+   %gUsage%n: %W/%nbk %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   - Deops, bans and kicks %Y<%Cnick%Y>%n for %R[%nreason%R]%n
+BOTLIST
+   %gUsage%n: %W/%nbotlist
+   - Show internal botlist
+BYE
+   %gUsage%n: %W/%nbye
+   - Quits IRC
+CD
+   %gUsage%n: %W/%ncd %Y<%ndir%Y>%n
+   - Changes current directory to %Y<%ndir%Y>%n
+CDCC
+   %gUsage%n: %W/%nCDCC %Y<%ncommand%Y>%n
+   - CHANNEL, DESCRIBE, DOFFER, LIST, LOAD, MINSPEED, NOTICE
+     OFFER, PLIST, QUEUE, SAVE, SEND, RESEND, TSEND, TRESEND
+     RESUME, TIMER, NOTE, TYPE, ECHO, STATS, SECURE
+   %gUsage%n: %W/%nDCC %Y<%ncommand%Y>%n
+   - Bot, Chat, Close, Get, Raw, ReGet, Rename, Send
+   %gHint%n: %W/%nBHelp CDCC%G|%nDCC %Y<%ncommand%Y>%n for more information
+CDCC DESCRIBE
+   %gUsage%n: %W/%nCDCC describe %R[%Bdescription%R]%n
+   - Allows you to change the description of a pack
+CDCC CHANNEL
+   %gUsage%n: %W/%nCDCC channel %R[%Bchannel%R]%n
+   - Sets %R[%Bchannel%R]%n for public CDCC offers
+CDCC DOFFER
+   %gUsage%n: %W/%nCDCC doffer %R[%npack%r(%ns%r)%R]%n
+   - Removes %R[%npack%r(%ns%r)%R]%n from your offer list
+CDCC ECHO
+   %gUsage%n: %W/%nCDCC echo <on%G|%noff>
+   - Toggles the display output of cdcc offers to your screen
+CDCC LOAD
+   %gUsage%n: %W/%nCDCC load %R[%nfile%R]%n
+   - Loads cdcc.save or %R[%nfile%R]%n into the pack(s)
+CDCC LIST
+   %gUsage%n: %W/%nCDCC list
+   - Shows your current offer list
+CDCC MINSPEED
+   %gUsage%n: %W/%nCDCC minspeed %R[%nKB%Y/%npersec%R]%n
+   - Sets the minimum speed for DCC file transfer(s) at %R[%nKB%Y/%npersec%R]%n
+CDCC NOTE
+   %gUsage%n: %W/%nCDCC note %R[%Bnote%R]%n
+   - Allows you to change the notes of a pack
+CDCC NOTICE
+   %gUsage%n: %W/%nCDCC notice %R[%Bchannel%R]%n
+   - Shows a notice to your current channel or %R[%Bchannel%R]%n that you have an offer
+     list
+CDCC OFFER
+   %gUsage%n: %W/%nCDCC offer %R[%nfilename%r(%ns%r)%R]%n
+   - Prompts for %R[%nfilename%r(%ns%r)%R]%n if none specified and description, for a pack to
+     offer
+CDCC PLIST
+   %gUsage%n: %W/%nCDCC plist %R[%Bchannel%R]%n
+   - Shows your offer list to current channel or %R[%Bchannel%R]%n
+CDCC QUEUE
+   %gUsage%n: %W/%nCDCC queue
+   - Shows all nick(s) in the queue for a file to be sent
+CDCC RESEND
+   %gUsage%n: %W/%nCDCC resend %Y<%Cnick%C>%n %Y<%npack#%G|%nfilename%Y>%n
+   - Restores an archive which was disrupted to %Y<%Cnick%Y>%n
+CDCC SAVE
+   %gUsage%n: %W/%nCDCC save %R[%nfile%R]%n
+   - Saves all packs offered into cdcc.file or %R[%nfile%R]%n
+CDCC TYPE
+   %gUsage%n: %W/%nCDCC type
+   - Changes the display of offerings from public to notices
+CDCC SEND
+   %gUsage%n: %W/%nCDCC send %Y<%Cnick%Y> <%C#%W|%Cfile%Y>
+   - Send a pack to user
+CDCC TSEND
+   %gUsage%n: %W/%nCDCC tsend %Y<%Cnick%Y> <%C#%W|%Cfile%Y>
+   - TDCC Send a pack to user
+CDCC TRESEND
+   %gUsage%n: %W/%nCDCC tresend %Y<%Cnick%Y> <%C#%W|%Cfile%Y>
+   - TDCC Resend a pack to user
+CDCC RESUME
+   %gUsage%n: %W/%nCDCC resume %Y<%Cnick%Y> <%C#%W|%Cfile%Y>
+   - mIRC Resume
+CDCC TIMER
+   %gUsage%n: %W/%nCDCC timer
+   - Public list timer in minutes
+CDCC STATS
+   %gUsage%n: %W/%nCDCC stats
+   - Show CDCC Stats
+CDCC SECURE
+   %gUsage%n: %W/%nCDCC secure
+   - Adds a password to a pack
+CHANNEL
+   %gUsage%n: %W/%nchannel
+   - Shows information on the channels, modes and server you are on
+CHANST
+   %gUsage%n: %W/%nchanst %Y<%n-ALL%Y> %R[%Bchannel%R]%n
+   - Shows statistics on current channel or %R[%Bchannel%R]%n
+CHGAOP
+   %gUsage%n: %W/%nchgaop %Y<%Cnick%Y>%n <auto-oplevel>
+   - Changes %Y<%nauto-oplevel%Y>%n of %Y<%Cnick%Y>%n in userlist
+   See %YUSERLEVELS%n for auto-op levels
+CHGCHAN
+   %gUsage%n: %W/%nchgchan %Y<%Cnick%Y>%n %Y<%Bchannel%Y>%n
+   - Changes %Y<%Bchannel%Y>%n of %Y<%Cnick%Y>%n in userlist
+   %gHint%n: /ChgChan whoever #BitchX,#iRC can add multiple channels
+CHGHOST
+   %gUsage%n: %W/%nchghost %Y<%Cnick%Y>%n %Y<%Bhostname%Y>%n
+   - Changes %Y<%Bhostname%Y>%n of %Y<%Cnick%Y>%n in userlist
+CHGLEVEL
+   %gUsage%n: %W/%nchglevel %Y<%Cnick%Y>%n %Y<%nlevel%Y>%n
+   - Changes %Y<%nlevel%Y>%n of %Y<%Cnick%Y>%n in userlist
+   See %YUSERLEVELS%n for user levels
+CHGPROT
+   %gUsage%n: %W/%nchgprot %Y<%Cnick%Y>%n %Y<%nprotection-level%Y>%n
+   - Changes %Y<%nprotection-level> of %Y<%Cnick%Y>%n in userlist
+   See %YUSERLEVELS%n for protection levels
+CHOPS
+   %gUsage%n: %W/%nchops %Y[%ntypes%Y] [%n-sort type%Y] [%n#channel%Y]%n
+   - Shows, in a full format, all the nicks with op status
+   - %W/chops%n is the same as %W/user -ops%n
+   - For %Y[%ntypes%Y]%n and %Y[%n-sort types%Y]%n - see %YUSER%n
+CLEARAUTO
+   %gUsage%n: %W/%nclearauto
+   - Clears all the nicks in the auto-response list
+CLEARLOCK
+   %gUsage%n: %W/%nclearlock %Y<%Cchannel%G|%Y*>%n
+   - Unlocks the mode lock for %Y<%Cchannel%G|%Y*>%n
+CLEARTAB
+   %gUsage%n: %W/%ncleartab
+   - Clears the nicks in the tabkey list
+CMSG
+   %gUsage%n: %W/%ncmsg %Y<%Cnick%Y>%n %Y<%ntext%Y>%n
+   - While in the TwilightZone, a privat message will be sent to %Y<%Cnick%Y>%n with
+     %Y<%ntext%Y>%n
+CONNECT
+   %gUsage%n: %W/%nconnect %Y<%nserver1%Y>%n %Y<%nport%Y>%n %R[%nserver2%R]%n
+   %Y*%n Requires irc operator status
+   - Connect %Y<%nserver1%Y>%n to %Y<%nport%Y>%n from current server or %R[%nserver2%R]%n
+CSAY
+   %gUsage%n: %W/%ncsay %Y<%ntext%Y>%n
+   - While in the TwilightZone, and being the hub of the DCC Chats, %Y<%ntext%Y>%n
+     will be sent out to all users on the Chat network
+CSET
+   %gUsage%n: %W/%ncset %Y<%Pcommand%Y>%n %R[%narguments%R]%n
+   - Shows sets for current channel. These values are taken from the
+     corresponding /set of the same name to make a default channel. Changing
+     a set doesn't necessarily change the corresponding /cset
+   %gHint%n: %W/%nBHelp CSet %Y<%Pcommand%Y>%n for more information
+   %Y<%Pcommand%Y>%n:
+        AINV                ANNOY_KICK          AOP	
+        AUTO_REJOIN         BITCH               COMPRESS_MODES
+        DEOPFLOOD           DEOPFLOOD_TIME      DEOP_ON_DEOPFLOOD
+        DEOP_ON_KICKFLOOD   HACKING             JOINFLOOD
+        JOINFLOOD_TIME      KICKFLOOD           KICKFLOOD_TIME
+        KICK_IF_BANNED      KICK_OPS            KICK_ON_DEOPFLOOD
+        KICK_ON_JOINFLOOD   KICK_ON_KICKFLOOD   KICK_ON_NICKFLOOD
+        KICK_ON_PUBFLOOD    LAMELIST            NICKFLOOD
+        NICKFLOOD_TIME      PUBFLOOD            PUBFLOOD_IGNORE_TIME
+        PUBFLOOD_TIME       SHITLIST            USERLIST
+CSET AINV
+   %gUsage%n: %W/%ncset ainv %Y<%nuser level%Y>%n
+   - Invites %Y<%Cnick%Y>%n if message contains INV and is above %Y<%nuserlevel%Y>%n
+   See %YUSERLEVELS%n concerning userlevels
+CSET AUTO_REJOIN
+   %gUsage%n: %W/%ncset auto[rejoin %Y<%Ptype%Y>%n
+   - Use %Y<%Ptype%Y>%n to decide how to rejoin a channel when kicked from it
+   %Y<%Ptype%Y>%n:
+     %Y0%n %P-%n Rejoin is disabled
+     %Y1%n %P-%n Rejoin
+     %Y2%n %P-%n Rejoin with same username as the kicker
+     %Y3%n %P-%n Rejoin with random nick
+     %Y4%n %P-%n Rejoin with random nick and username
+     %Y5%n %P-%n Rejoin with random nick
+CSET DEOPFLOOD
+   %gUsage%n: %W/%ncset deopflood %Y<%non%G|%noff%Y>%n
+   - Set deop flood checking to %Y<%non%G|%noff%Y>%n
+CSET DEOPFLOOD_TIME
+   %gUsage%n: %W/%ncset deopflood_time %Y<%nseconds%Y>%n
+   - Set the number of %Y<%nseconds%Y>%n for deop flood checking is activated
+CSET DEOP_ON_DEOPFLOOD
+   %gUsage%n: %W/%ncset deop_on_deopflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of deops within DEOPFLOOD_TIME needed to deop the offender
+CSET DEOP_ON_KICKFLOOD
+   %gUsage%n: %W/%ncset deop_on_kickflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of kicks within DEOPFLOOD_TIME needed to kick the offender
+CSET HACKING
+   %gUsage%n: %W/%ncset hacking %Y<%Ptype%Y>%n
+   - Set %Y<%Ptype%Y>%n of nethack protection to be enforced on a channel
+   %Y<%Ptype%Y>%n:
+     0 - Off
+     1 - Silently deop the offender
+     2 - Announce only
+     3 - Announce and deop the offender
+CSET KICK_IF_BANNED
+   %gUsage%n: %W/%ncset kick_if_banned %Y<%non%G|%noff%Y>%n
+   - Set this to %Y<%non%G|%noff%Y>%n to kick the person who bans you
+   = Not implemented yet
+CSET KICK_ON_DEOPFLOOD
+   %gUsage%n: %W/%ncset kick_on_deopflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of deops needed before we kick the offender
+CSET KICK_ON_KICKFLOOD
+   %gUsage%n: %W/%ncset kick_on_kickflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of kicks needed before we kick the offender
+CSET KICK_ON_NICKFLOOD
+   %gUsage%n: %W/%ncset kick_on_nickflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of nick changes required before we kick the offender
+CSET KICK_ON_JOINFLOOD
+   %gUsage%n: %W/%ncset kick_on_joinflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of joins required before we kick the offender
+CSET KICK_ON_PUBFLOOD
+   %gUsage%n: %W/%ncset kick_on_pubflood %Y<%nnumber%Y>%n
+   - Set the %Y<%nnumber%Y>%n of public lines needed before we kick the offender
+CSET KICKFLOOD
+   %gUsage%n: %W/%ncset kickflood %Y<%non%G|%noff%Y>%n
+   - Set kickflood protection to %Y<%non%G|%noff%Y>%n
+CSET KICKFLOOD_TIME
+   %gUsage%n: %W/%ncset kickflood_time %Y<%nseconds%Y>%n
+   - set the number of %Y<%nseconds%Y>%n in which we measure the kicks allowed
+CSET LAMELIST
+   %gUsage%n: %W/%ncset lamelist %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n lame nicklist checking
+   = Not implemented yet
+CSET NICKFLOOD
+   %gUsage%n: %W/%ncset nickflood %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n nick flood checking
+CSET NICKFLOOD_TIME
+   %gUsage%n: %W/%ncset nickflood_time %Y<%nseconds%Y>%n
+   - Set the number of %Y<%nseconds%Y>%n in which we measure the number of nick changes
+     allowed
+CSET PUBFLOOD
+   %gUsage%n: %W/%ncset pubflood %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n public flood checking
+CSET PUBFLOOD_IGNORE_TIME
+   %gUsage%n: %W/%ncset pubflood_ignore_time %Y<%nminutes%Y>%n
+   - Set the number of %Y<%nminutes%Y>%n to ignore a nick on public floods
+CSET PUBFLOOD_TIME
+   %gUsage%n: %W/%ncset pubflood_time %Y<%nseconds%Y>%n
+   - Sets the amount of time in seconds that KICK_ON_PUBFLOOD counts lines
+CSET SHITLIST
+   %gUsage%n: %W/%ncset shitlist %Y<%non%G|%noff%Y>%n
+   - Turn the shitlist %Y<%non%G|%noff%Y>%n for a channel
+CSET USERLIST
+   %gUsage%n: %W/%ncset userlist %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n userlist for a channel
+CSET JOINFLOOD_TIME
+   %gUsage%n: %W/%ncset joinflood_time %Y<%nseconds%Y>%n
+   - set the number of %Y<%nseconds%Y>%n in which we measure the joins allowed
+CSET BITCH
+   %gUsage%n: %W/%ncset bitch %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n Bitch mode
+CSET KICK_OPS
+   %gUsage%n: %W/%ncset kick_ops %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n kicking of chanops
+CSET AOP
+   %gUsage%n: %W/%ncset aop %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n auto-op for people in your userlist
+   - %W/%nbhelp %YUSERLEVELS%n for user levels
+CSET COMPRESS_MODES
+   %gUsage%n: %W/%ncset compress_modes %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n mode compression
+CSET JOINFLOOD
+   %gUsage%n: %W/%ncset joinflood %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n join flood checking
+CSET ANNOY_KICK
+   %gUsage%n: %W/%ncset annoy_kick %Y<%non%G|%noff%Y>%n
+   - Turn %Y<%non%G|%noff%Y>%n annoy kicking
+   - If %Yon%n, kicks for caps, inverse, and bold
+CTCP
+   %gUsage%n: %W/%nctcp %Y<%Cnick%Y>%n %Y<%nrequest%Y>%n
+   - CTCP sends %Y<%Cnick%Y>%n with %Y<%nrequest%Y>%n
+   %Y<%nrequest%Y>%n: %G(%nexamples which can be sent to other %GBitchX%n users%G)%n
+     friends%G:%n
+       %Y*%n INVITE   %M-%n Ask for an invite to %Y<%Bchannel%Y>%n
+       %Y*%n OPS      %M-%n A legitimate way to gain ops
+       %Y*%n WHOAMI   %M-%n Request %Y<%Cnick%Y> to display current attributes of me
+       %Y*%n  %M-%n
+     other%G:%n
+       %Y*%n XLINK    %M-%n ?
+CWHO
+   %gUsage%n: %W/%ncwho
+   - Lists the clients and bots connected to the TwilightZone
+CWHOM
+   %gUsage%n: %W/%ncwhom
+   - Sorry, no help is available for this command yet
+CYCLE
+   %gUsage%n: %W/%ncycle %R[%Bchannel%R]%n
+   - Leaves current channel or %R[%Bchannel%R]%n and immediately rejoins
+D
+   See %YDESCRIBE%n
+DATE
+   %gUsage%n: %W/%ndate
+   - Shows current time and date from current server
+DBAN
+   %gUsage%n: %W/%ndban
+   - Clears all bans on current channel
+DC
+   %gUsage%n: %W/%ndc %Y<%Cnick%Y>%n
+   - Starts a DCC CHAT to %Y<%Cnick%Y>%n
+DCC
+   %gUsage%n: %W/%ndcc %Y<<%Pcommand%Y>%n %R[%narguments%R]%Y>%n
+   - Bot, Chat, Close, Get, Raw, ReGet, Rename, ReSend, Send
+   %Y<%Pcommand%Y>%n switches:
+     auto         %Y<%non%G|%noff%Y>%n     overwrite    %Y<%non%G|%noff%Y>%n
+     paths        %Y<%non%G|%noff%Y>%n     quiet        %Y<%non%G|%noff%Y>%n
+DCC BOT
+   %gUsage%n: %W/%ndcc bot %Y<%Cnick%Y>%n
+   - Starts a Direct-Client-to-Client bot chat to %Y<%Cnick%Y>%n
+   - This is a special mode for clients to act as hubs for other dcc chat
+     connections
+DCC CHAT
+   %gUsage%n: %W/%ndcc chat %Y<%Cnick%Y>%n
+   - Starts a Direct-Client-to-Client chat to %Y<%Cnick%Y>%n
+DCC CLOSE
+   %gUsage%n: %W/%ndcc close %Y<%ntype%Y>%n %Y<%Cnick%Y>%n %R[%narguments%R]%n
+   - Close %Y<%ntype%Y>%n connection from %Y<%Cnick%Y>%n with %R[%narguments%R]%n
+DCC EXEMPT
+   %gUsage%n: %W/%ndcc exempt %Y<%C+nick%Y>%n
+   - Adds a user to your dcc auto-get list regardless of whether
+     /set dcc_autoget is Off or On
+DCC GET
+   %gUsage%n: %W/%ndcc get %Y<%Cnick%Y>%n %R[%nfile%r(%ns%r)%R]%n
+   - Starts to receive %R[%nfile%r(%ns%r)%R]%n from %Y<%Cnick%Y>%n
+DCC HELP
+   - Gets DCC specific help
+DCC RAW
+   %gUsage%n: %W/%ndcc raw %Y<%Cnick%Y>%n %Y<%nhost%Y>%n
+   - This is used in conjunction with $connect() and $listen() for sending data
+     over a raw socket connection
+DCC REGET
+   %gUsage%n: %W/%ndcc reget %Y<%Cnick%Y>%n %R[%nfile%r(%ns%r)%R]%n
+   - Will reget %R[%nfile%r(%ns%r)%R]%n and restore a broken connection from %Y<%Cnick%Y>%n
+DCC RENAME
+   %gUsage%n: %W/%ndcc rename %Y<%Cnick%Y>%n %Y<%nnew filename%Y>%n
+   - Rename a filename being sent from %Y<%Cnick%Y>%n to %Y<%nnew filename%Y>%n
+DCC RESEND
+   %gUsage%n: %W/%ndcc resend %Y<%Cnick%Y>%n %Y<%nfile%Y>%n
+   - Starts a DCC send and restore a broken connection of %Y<%nfile%Y>%n to %Y<%Cnick%Y>%n
+DCC SEND
+   %gUsage%n: %W/%ndcc send %Y<%Cnick%Y>%n %Y<%nfile%Y>%n
+   - DCC Sends %Y<%nfile%Y>%n to %Y<%Cnick%Y>%n
+DCG
+   %gUsage%n: %W/%ndcg %Y<%Cnick%Y>%n
+   - Close a DCC GET from %Y<%Cnick%Y>%n
+DCX
+   %gUsage%n: %W/%ndcx %Y<%Cnick%Y>%n
+   - Close a DCC CHAT with %Y<%Cnick%Y>%n
+DEBUGMSG
+   - Displays server msg's via hashtable
+DEOP
+   %gUsage%n: %W/%ndeop %Y<%Cnick%y(%Cs%y)%Y>%n
+   - Deops %Y<%Cnick%y(%Cs%y)%Y>%n
+DEOPER
+   %gUsage%n: %W/%ndeoper
+   %Y*%n Requires IRC operator status
+   - Removes IRC operator status
+DESCRIBE
+   %gUsage%n: %W/%ndescribe %Y<%Cnick%G|%Bchannel%Y>%n %Y<%naction%Y>%n
+   - Describes to %Y<%Cnick%G|%Bchannel%Y>%n with %Y<%naction%Y>%n
+DF
+   %gUsage%n: %W/%ndf
+   - Show disk space usage
+DIE
+   %gUsage%n: %W/%ndie
+   %Y*%n Requires irc operator status
+   - Kills the IRC server you are on
+DIGRAPH
+   %gUsage%n: %W/%ndigraph
+   - Shows Digraph table
+DISCONNECT
+   %gUsage%n: %W/%ndisconnect
+   - Disconnects you from the current server
+DOP
+   See %YDEOP%n
+DUMP
+   %gUsage%n: %W/%ndump %Y<%ntype%Y>%n
+   - Dumps %Y<%ntype%Y>%n to screen
+   %Y<%ntype%Y>%n:
+     %YAlias%n          %YAll  %n          %YBind %n
+     %YFile %n          %YOn   %n          %YVar  %n
+EVALSERVER
+   %gUsage%n: %W/%nevalserver %Y<%nrefnum%Y> <%ncommand%Y>%n
+   - Sends command to reference numbered server
+EXEC
+   %gUsage%n: %W/%nexec %Y<%ncommand%Y>%n
+   - Executes %Y<%ncommand%Y>%n with the shell set from %PSHELL%n
+EXIT
+   %gUsage%n: %W/%nexit
+   - Quits IRC
+FINGER
+   %gUsage%n: %W/%nfinger %Y<%Cnick%Y>%n
+   - Fetches finger info on %Y<%Cnick%Y>%n
+FK
+   %gUsage%n: %W/%nfk %Y<%Cnick%G!%nuser%Y@%nhostname%Y>%n%R[%nreason%R]%n
+   - Finds clients matching %Y<%Cnick%G!%nuser%Y@%nhostname%Y>%n and immediately kicks
+     them from current channel for %R[%nreason%R]%n
+FKLINE
+   %gUsage%n: %W/%nfkline %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n%R[%nserver%R]%n
+   - Finds K-line(s) matching %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n on current server
+     or %R[%nserver%R]%n
+FLOOD
+   %gUsage%n: %W/%nflood %Y<%Cnick%Y>%n
+   - Floods %Y<%Cnick%Y>%n with beeps
+FLUSH
+   %gUsage%n: %W/%nflush
+   - Flushes all iRC server output
+FORWARD
+   %gUsage%n: %W/%nforward %Y<%Cnick%Y>%n
+   - Forwards all messages to %Y<%Cnick%Y>%n
+FPORTS
+   %gUsage%n: %W/%nfports %Y<%nhostname%Y>%n %R[%Y<%nlowport%Y>%n %Y<%nhighport%Y>%R]%n
+   - Attempts to find ports on %Y<%nhostname%Y>%n on %R[%Y<%nlowport%Y>%n %Y<%nhighport%Y>%R]%n
+FPROT
+   %gUsage%n: %W/%nfprot
+   - Toggles flood protection to be either on or off
+FTP
+   %gUsage%n: %W/%nftp
+   - Opens a FTP client in a virtual screen
+     Use %B^[%Gnumber%n to switch through virtual screens
+FUCK
+   %gUsage%n: %W/%nfuck %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   - Deops, bans and kicks %Y<%Cnick%Y>%n for %R[%nreason%R]%n
+     Also adds %Y<%Cnick%Y>%n to shitlist at level 3 for current channel
+HISTORY
+   %gUsage%n: %W/%nhistory
+   - Shows recently typed commands
+HOST
+   %gUsage%n: %W/%nhost %R<%Cnick%R>%n
+   - Shows host of yourself or %R<%Cnick%R>%n
+I
+   See %YINVITE%n
+IG
+   %gUsage%n: %W/%nig +%G|%n-%Y<%Cnick%Y>%n
+   - Ignores ALL except crap and public of nick!host matching %Y<%Cnick%Y>%n
+IGH
+   %gUsage%n: %W/%nigh +%G|%n-%Y<%Cnick%Y>%n
+   - Ignores ALL except crap and public of hostname matching %Y<%Cnick%Y>%n
+IGNORE
+   %gUsage%n: %W/%nignore +%G|%n-%G|%n^%Y<%Cnick%Y>%n
+   - Ignores ALL except crap and public from %Y<%Cnick%Y>%n
+IGT
+   %gUsage%n: %W/%nigt +%G|%n-%Y<%Cnick%Y>%n
+   - Ignores ALL except crap and public of nick!host matching %Y<%Cnick%Y>%n
+   - Nickname is ignored for /set IGNORE_TIME minutes
+IGHT
+   %gUsage%n: %W/%night +%G|%n-%Y<%Cnick%Y>%n
+   - Ignores ALL except crap and public of host matching %Y<%Cnick%Y>%n
+   - Nickname is ignored for /set IGNORE_TIME minutes
+INFO
+   %gUsage%n: %W/%ninfo
+   - Shows current client info
+INV
+   See %YINVITE%n
+INVITE
+   %gUsage%n: %W/%ninvite %Y<%Cnick%Y>%n %R[%Bchannel%R]%n
+   - Invites %Y<%Cnick%Y>%n to current channel or %R[%Bchannel%R]%n
+JNW
+   %gUsage%n: %W/%njnw %Y<%Bchannel%Y>%n
+   - Simultaneously joins %Y<%Bchannel%Y>%n and creates a new window
+     (split screen)
+K
+   %gUsage%n: %W/%nk %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   - Kicks %Y<%Cnick%Y>%n for %R[%nreason%R]%n on current channel
+KB
+   %gUsage%n: %W/%nkb %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   - Deops, kicks and bans %Y<%Cnick%Y>%n for %R[%nreason%R]%n
+KICK
+   %gUsage%n: %W/%nkick %Y<%Bchannel%G|%Y*>%n %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   - This behaves just like /k
+   See %YK%n for further information
+KICKIDLE
+   %gUsage%n: %W/%nkickidle %Y<%Bchannel%Y>%n
+   - Kicks all idle people on %Y<%Bchannel%Y>%n
+KILL
+   %gUsage%n: %W/%nkill %Y<%Cnick%Y>%n %R[%nreason%R]%n
+   %Y*%n Requires irc operator status
+   - Kills %Y<%Cnick%Y>%n for %R[%nreason%R]%n
+     If no reason is given, a quote from the random kick file is used
+     *hopefully in a latter version of BitchX*
+L
+   See %YLEAVE%n
+LASTLOG
+   %gUsage%n: %W/%nlastlog -file filename%G|%n-clear%G|%n-max #%G|%n
+                           -liternal pat%G|%n-beep%G|%nlevel
+   - Shows more than a few pages back
+LEAVE
+   %gUsage%n: %W/%nleave %Y<%Bchannel%Y>%n
+   - Leaves current channel or %Y<%Bchannel%Y>%n
+LINKS
+   %gUsage%n: %W/%nlinks
+   - Shows servers and links to other servers
+LIST
+   %gUsage%n: %W/%nlist
+   - Lists all channels
+LK
+   %gUsage%n: %W/%nlk %R[%nreason%R]%n
+   - Kicks all non +o people on current channel with %R[%nreason%R]%n
+LKW
+   %gUsage%n: %W/%nlkw %R[%Bchannel%R]%n
+   - Leave the current channel, killing the window in current channel or
+     %R[%Bchannel%R]%n aswell
+LLOOK
+   %gUsage%n: %W/%nllook
+   %Y*%n Requires set %YLLOOK%n %RON%n
+   - Lists all the servers which are current split from the IRC network
+LOAD
+   %gUsage%n: %W/%nload <script>
+   - Loads <script> into memory
+LS
+   %gUsage%n: %W/%nls %R[%narguments%R]%n <file(s)|dir(s)>
+   - Lists current <file(s)|dir(s)> with %R[%narguments%R]%n
+LUSERS
+   %gUsage%n: %W/%nlusers
+   - Shows stats on current server
+M
+   See %YMSG%n
+MB
+   %gUsage%n: %W/%nmb
+   - Mass bans everybody on current channel
+MDOP
+   %gUsage%n: %W/%nmdop
+   - Mass deops everybody on current channel
+MDVOICE
+   %gUsage%n: %W/%nmdvoice
+   - Removes voice status from everyone in current channel
+ME
+   %gUsage%n: %W/%nme <action>
+   - Sends an action to current channel
+MESG
+   %gUsage%n: %W/%nmesg %Y<%nYes%g|%nNo%g||%nOn%g|%nOff%Y>%n
+   - Turns mesg %Y<%nYes%g|%nNo%g||%nOn%g|%nOff%Y>%n
+MKB
+   %gUsage%n: %W/%nmkb
+   - Sorry, no help is available for this command yet
+MKNU
+   %gUsage%n: %W/%nmknu
+   - Mass kick non-users
+MODELOCK
+   %gUsage%n: %W/%nmodelock %Y<%Bchannel%Y>%n +%G|%n-%Y<%ninstampkl #%Y>%n
+   - Locks %Y<%Bchannel%Y>%n with +%G|%n-%Y<%nmodes%Y>%n
+MOP
+   %gUsage%n: %W/%nmop
+   - Mass ops everybody on current channel
+MOTD
+   %gUsage%n: %W/%nmotd %R[%nserver%R]%n
+   - Shows MOTD on current server %R[%nserver%R]%n
+MSG
+   %gUsage%n: %W/%nmsg %Y<%Cnick%Y>%n %Y<%ntext%Y>%n
+   - Send %Y<%Cnick%Y>%n a message with %Y<%ntext%Y>%n
+MUB
+   %gUsage%n: %W/%nmub
+   - Mass unbans current channel
+MULT
+   %gUsage%n: %W/%nmult %Y<%Cnick%y(%Cs%y)%Y>%n
+   - Multikicks %Y<%Cnick%y(%Cs%y)%Y>%n
+MVOICE
+   %gUsage%n: %W/%nmvoice %R[%Cnick%G|%Bchannel%G|%Cnick%Y!%Cuser%Y@%nhostname%Y]%n
+   - Mass voice nicks matching %R[%Cnick%G|%Bchannel%G|%Cnick%Y!%Cuser%Y@%nhostname%Y]%n
+NAMES
+   %gUsage%n: %W/%nnames %R[%Bchannel%R]%n
+   - Shows names on current channel or %R[%Bchannel%R]%n
+NEWNICK
+   %gUsage%n: %W/%nnewnick %Y<%Cnick%Y>%n <username>
+   - Changes your %Y<%Cnick%Y>%n and <username>
+NEWUSER
+   %gUsage%n: %W/%nnewuser <username>
+   - Changes your <username>
+NICK
+   %gUsage%n: %W/%nnick %Y<%Cnick%Y>%n
+   - Changes your %Y<%Cnick%Y>%n
+NOPS
+   %gUsage%n: %W/%nnops %Y[%ntypes%Y] [%n-sort type%Y] [%n#channel%Y]%n
+   - Shows, in a full format, all the nicks without op status
+   - %W/nops%n is the same as %W/user -nonops%n
+   - For %Y[%ntypes%Y]%n and %Y[%n-sort types%Y]%n - see %YUSER%n
+NOTICE
+   %gUsage%n: %W/%nnotice %Y<%Cnick%G|%Bchannel%Y> %Y<%ntext%Y>%n
+   - Sends a notice to %Y<%Cnick%G|%Bchannel%Y> with %Y<%ntext%Y>%n
+NOTIFY
+   %gUsage%n: %W/%nnotify %Y<%Cnick%Y>%n
+   - Adds %Y<%Cnick%Y>%n to notify list
+   %gUsage%n: %W/%nnotify -%Y<%Cnick%Y>%n
+   - Removes %Y<%Cnick%Y>%n from notify list
+NSLOOKUP
+   %gUsage%n: %W/%nnslookup %Y<%nhostname%Y>%n
+   - Returns the IP adress and IP number for %Y<%nhostname%Y>%n
+NWHOIS
+   %gUsage%n: %W/%nnwhois %Y<%Cnick%Y>%n
+   - Shows internal statistics for %Y<%Cnick%Y>%n
+NWHOWAS
+   %gUsage%n: %W/%nnwhowas
+   - Displays internal whowas info for all channels. This information expires
+     after 20 minutes for users on internal list, 10 minutes for others
+OOPS
+   %gUsage%n: %W/%noops %Y<%Cnick%Y>%n
+   - Sends a oops message to last recipient of a message and sends the
+     correct message to %Y<%Cnick%Y>%n
+OP
+   %gUsage%n: %W/%nop %Y<%Cnick%Y>%n
+   - Gives %Y<%Cnick%Y>%n +o
+OPER
+   %gUsage%n: %W/%noper %Y<%Cnick%Y>%n %R[%npassword%R]%n
+   - To receive irc operator status with %Y<%Cnick%Y>%n and %R[%npassword%R]%n
+ORIGNICK
+   %gUsage%n: %W/%norignick %Y<%Cnick%Y>%n
+   - Attempts to regain a nick that someone else has taken from you.
+OSTAT
+   %gUsage%n: %W/%nostat
+   - A list of server statistics shown. They include:
+       Bot Alarms        Client Exits      Client Floods     Fake Modes
+       High Traffic      Invalid User      New K: Lines      Nick Collisions
+       Normal Traffic    Oper Kills        Oper Requests     Possible Bots
+       Server Rehash     Stats Requests    Total Clients     UnAuth
+PING
+   %gUsage%n: %W/%nping %Y<%Cnick%Y>%n
+   - Send a CTCP PING to %Y<%Cnick%Y>%n to check lag
+PS
+   %gUsage%n: %W/%nps %R[%narguments%R]%n
+   - Shows active processes on local machine
+PURGE
+   - Complete removes all traces of a variable or variable structure
+Q
+   See %YQUERY%n
+QK
+   %gUsage%n: %W/%nqk %Y<%Cnick%Y>%n
+   - Kick %Y<%Cnick%Y>%n with a %Yreason%n randomly selected from %GBitchX%n.reasons
+QUERY
+   %gUsage%n: %W/%nquery %Y<%n-cmd cmdname%Y> <%Cnick%Y>%n
+   - Starts a query to %Y<%Cnick%Y>%n
+   %GUsage%n: %W/%nquery
+   - Whilst in a query, conclude the query if no arguments are present
+   - Use -cmd to specify what type of output you want. default is a msg.
+   - cmsg wall csay are all possible to use here.
+QUEUE
+   %gUsage%n: %W/%nqueue
+   - Shows current queue
+QUIT
+   %gUsage%n: %W/%nquit
+   - Leaves IRC
+RANDOMNICK
+    %gUsage%n: %W/%nrandomnick %Y<%Cnick%Y>%n
+    - Changes your nick to a random nick. If nick is specified, then it is
+      used as a prefix to the randomness.
+READLOG
+   %gUsage%n: %W/%nreadlog
+   - Displays current away log
+RECONNECT
+   %gUsage%n: %W/%nreconnect
+   - Reconnects you to current server
+REDIRECT
+   %gUsage%n: %W/%nredirect %Y<%Cnick%G|%Bchannel%Y> <command>
+   - Redirects <command> to %Y<%Cnick%G|%Bchannel%Y>
+REHASH
+   %gUsage%n: %W/%nrehash
+   %Y*%n Requires IRC operator status
+   - Rehashs ircd.conf for new configuration
+REL
+   %gUsage%n: %W/%nrel? -command # nick
+   - command is one of the following:   -kick, -wall, -notice, -msg,
+                                        -wallop, -topic, -kill, -kboot,
+                                        -ansi and -list
+   - If the list supports more than one saved message then # can be from 0-9
+   - nick can be a nick or a channel. If left off, then current channel is
+     assumed
+RELC
+   %gUsage%n: %W/%nrelc
+   - Displays the last CTCP command issued
+RELCR
+   %gUsage%n: %W/%nrelcr
+   - Displays the last CTCP reply message received
+RELCRT
+   %gUsage%n: %W/%nrelcrt
+   - Changes the topic to the last CTCP reply message
+RELCT
+   %gUsage%n: %W/%nrelct
+   - Changes the topic to the last CTCP command issued
+RELD
+   %gUsage%n: %W/%nreld
+   - Displays the last DCC msg recieved.
+RELDT
+   %gUsage%n: %W/%nreldt
+   - Sets the topic to the last DCC message recieved.
+RELI
+   %gUsage%n: %W/%nreli
+   - Shows the last invite message received
+RELIT
+   %gUsage%n: %W/%nrelit
+   - Changes the topic to the last invite message received
+RELM
+   %gUsage%n: %W/%nrelm %Y<%Cnick%G|%Bchannel%Y>%n
+   - Redirects last received message to %Y<%Cnick%G|%Bchannel%Y>%n
+     If invoked with -l, the last 10 messages received are listed
+     -l # will display message number #
+RELMT
+   %gUsage%n: %W/%nrelmt %Y<%Cnick%G|%Bchannel%Y>%n
+   - Changes the topic to the last received message
+RELN
+   %gUsage%n: %W/%nreln %Y<%Cnick%G|%Bchannel%Y>%n
+   - Redirects last received notice to %Y<%Cnick%G|%Bchannel%Y>%n
+     If invoked with -l, the last 10 messages received are listed
+     -l # will display message number #
+RELNT
+   %gUsage%n: %W/%nrelnt
+   - Changes the topic to the last notice received
+RELOAD
+   %gUsage%n: %W/%nreload
+   - Reloads BitchX.sav file
+RELS
+   %gUsage%n: %W/%nrels %Y<%Cnick%G|%Bchannel%Y>%n
+   - Redirects last received server notice to %Y<%Cnick%G|%Bchannel%Y>%n
+     If invoked with -l, the last 10 messages received are listed
+     -l # will display message number #
+RELSMT
+   %gUsage%n: %W/%nrelsmt
+   - Changes the topic to the last message issued by you
+RELSNT
+   %gUsage%n: %W/%nrelsnt
+   - Changes the topic to the last notice issued by you
+RELST
+   %gUsage%n: %W/%nrelst
+   - Displays the last topic issued by you
+RELSTT
+   %gUsage%n: %W/%nrelstt
+   - Changes the topic to the last topic issued by you
+RELSW
+   %gUsage%n: %W/%nrelsw
+   - Sorry, no help is available for this command yet
+RELSWT
+   %gUsage%n: %W/%nrelswt
+   - Sorry, no help is available for this command yet
+RELT
+   %gUsage%n: %W/%nrelt
+   - Displays the current topic in the current channel
+RELW
+   %gUsage%n: %W/%nrelw
+   - Displays the last wallop message received
+RELWT
+   %gUsage%n: %W/%nrelwt
+   - Changes the topic to the last wallop message received
+RELSM
+   %gUsage%n: %W/%nrelsm %Y<%Cnick%G|%Bchannel%Y>%n
+   - Redirects last sent message to %Y<%Cnick%G|%Bchannel%Y>%n
+RELSN
+   %gUsage%n: %W/%nrelsn %Y<%Cnick%G|%Bchannel%Y>%n
+   - Redirects last sent notice to %Y<%Cnick%G|%Bchannel%Y>%n
+REMLOG
+   %gUsage%n: %W/%nremlog
+   - Removes logfile
+REPEAT
+   %gUsage%n: %W/%nrepeat %Y<%ntimes%Y>%n %Y<%ncommand%Y>%n
+   - Repeats %Y<%ntimes%Y>%n %Y<%ncommand%Y>%n
+REQUEST
+   %gUsage%n: %W/%nrequest %Y<%Cnick%G|%Bchannel%Y>%n %Y<%nrequest%Y>%n
+   - Sends CTCP %Y<%nrequest%Y>%n to %Y<%Cnick%G|%Bchannel%Y>%n
+RESET
+   %gUsage%n: %W/%nreset
+   - Fixes flashed terminals
+SAVE
+   %gUsage%n: %W/%nsave
+   - Save all settings and lists to ~/.BitchX/BitchX.sav
+   - See Also %YSAVELIST%n, %YSAVEIRC%n
+SAVELIST
+   See %YSAVE%n
+SAVEIRC
+   %gUsage%n: %W/%nsaveirc
+   - Save settings to ~/.bitchxrc
+SAVEALL
+   - See %YSAVE%n
+SCAN
+   %gUsage%n: %W/%nscan %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for all nicks
+SCANN
+   %gUsage%n: %W/%nscann %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for nicks with no ops
+SCANO
+   %gUsage%n: %W/%nscano %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for nicks with ops
+SCANV
+   %gUsage%n: %W/%nscanv %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for nicks with voice
+SERVER
+   %gUsage%n: %W/%nserver %Y<%nserver%Y>%n
+   - Changes to %Y<%nserver%Y>%n
+SET
+   %gUsage%n: %W/%nset %Y<%Pcommand%Y>%n %R[%nvalue%R]%n
+   - Set %Y<%Pcommand%Y>%p with the value of %R[%nvalue%R]%n
+   %Y<%Pcommands%Y>%n:
+     ANNOY_KICK		AOP		AUTO_CK		AUTOKICK_ON_VERSION
+     AUTO_NSLOOKUP	AUTO_UMARK_AWAY AUTO_WHO_ON_JOIN
+     AUTO_WHOWAS	BEEP_WHEN_AWAY	BITCHX_HELP	CDCC_FLOOD_AFTER
+     CDCC_FLOOD_RATE	CDCC_SECURITY	CLOAK		CTCP_DELAY
+     CTCP_FLOOD_PROTECTION		CTOOLZ_DIR	DCC_AUTOGET
+     DCC_DLDIR		DCC_GET_LIMIT	DCC_SEND_LIMIT	DCC_QUEUE_LIMIT
+     FLOOD_AFTER	FLOOD_KICK	FLOOD_PROTECTION
+     FLOOD_RATE		FLOOD_USERS	FLOOD_WARNING	HACKPASS
+     HARD_UH_NOTIFY	IDENT_HACK	IDLE_CHECK	KICK_OPS
+     KILL_LOGFILE	LLOOK		LLOOK_DELAY	LONG_MSG
+     MAX_AUTOGET_SIZE	MAX_DEOPS	MAX_IDLEKICKS	MIRCS
+     MODE_STRIPPER	MSGCOUNT	MSGLOG		MSGLOGFILE
+     NAMES_ON_JOIN	NEXT_SERVER_ON_LOCAL_KILL	NO_CTCP_FLOOD
+     NUM_BANMODES	NUM_OPMODES	PING_TYPE	PROTECT_CHANNELS
+     PUBLOGSTR		REASONFILE	REASON_TYPE	SAVEFILE
+     SCRIPT_HELP	SEND_AWAY_MSG	SEND_IGNORE_MSG	SHITLIST_REASON
+     SHOW_FAKES		SHOW_SERVER_CRAP		SHOW_SERVER_KILLS
+     SHOW_TOOMANY	SHOW_UNAUTHS	SHOW_WHO_HOPCOUNT
+     USE_FAKE_HOST	VERBOSE_CTCP	WARN_OF_IGNORES
+     _CDCC_CLOSE_IDLE_SEND_TIME		_CDCC_MINSPEED_TIME
+     %RIGNORE_TIME        CPU_SAVER_AFTER CPU_SAVER_EVERY AUTO_COMP_CHAR
+     AUTO_UNBAN         APPEND_LOG      DCC_FAST
+   See %YCSET%n for commands which can be set through %YSET%n and have a
+   global channel effect instead of one channel effect via %YCSET%n
+SET ANNOY_KICK
+   %gUsage%n: %W/%nset annoy_kick
+   - Sorry, no help is available for this command yet
+SET APPEND_LOG
+   %gUsage%n: %W/%nset append_log
+   - Should we append to the away log or overwrite when we open it.
+SET AOP
+   %gUsage%n: %W/%nset aop
+   - Sorry, no help is available for this command yet
+SET AUTO_CK
+   %gUsage%n: %W/%nset auto_ck
+   - Sorry, no help is available for this command yet
+SET AUTOKICK_ON_VERSION
+   %gUsage%n: %W/%nset autokick_on_version %Y<%non%G|%noff%Y>%n
+   - Set this to %Y<%non%G|%noff%Y>%n whether to kick the nick who CTCP VERSION you
+SET AUTO_NSLOOKUP
+   %gUsage%n: %W/%nset auto_nslookup
+   - Sorry, no help is available for this command yet
+SET AUTO_UMARK_AWAY
+   %gUsage%n: %W/%nset auto_umark_away
+   - Sorry, no help is available for this command yet
+SET AUTO_WHO_ON_JOIN
+   %gUsage%n: %W/%nset auto_who_on_join
+   - Sorry, no help is available for this command yet
+SET AUTO_WHOWAS
+   %gUsage%n: %W/%nset auto_whowas
+   - Sorry, no help is available for this command yet
+SET BEEP_WHEN_AWAY
+   %gUsage%n: %W/%nset beep_when_away
+   - Sorry, no help is available for this command yet
+SET BITCHX_HELP
+   %gUsage%n: %W/%nset bitchx_help %Y<%nlocation%Y>%n
+   - Sets the %Y<%nlocation%Y>%n of BitchX.help file
+SET CDCC_FLOOD_AFTER
+   %gUsage%n: %W/%nset cdcc_flood_after
+   - Sorry, no help is available for this command yet
+SET CDCC_FLOOD_RATE
+   %gUsage%n: %W/%nset cdcc_flood_rate
+   - Sorry, no help is available for this command yet
+SET CDCC_SECURITY
+   %gUsage%n: %W/%nset cdcc_security
+   - Sorry, no help is available for this command yet
+SET CLOAK
+   %gUsage%n: %W/%nset cloak
+   - Sorry, no help is available for this command yet
+SET CTCP_DELAY
+   %gUsage%n: %W/%nset ctcp_delay
+   - Sorry, no help is available for this command yet
+SET CTCP_FLOOD_PROTECTION
+   %gUsage%n: %W/%nset ctcp_flood_protection
+   - Sorry, no help is available for this command yet
+SET CTOOLZ_DIR
+   %gUsage%n: %W/%nset ctoolz_dir
+   - Sorry, no help is available for this command yet
+SET DCC_AUTOGET
+   %gUsage%n: %W/%nset dcc_autoget
+   - Sorry, no help is available for this command yet
+SET DCC_DLDIR
+   %gUsage%n: %W/%nset dcc_dldir
+   - Sorry, no help is available for this command yet
+SET DCC_GET_LIMIT
+   %gUsage%n: %W/%nset dcc_get_limit
+   - Sorry, no help is available for this command yet
+SET DCC_SEND_LIMIT
+   %gUsage%n: %W/%nset dcc_send_limit
+   - Sorry, no help is available for this command yet
+SET DCC_QUEUE_LIMIT
+   %gUsage%n: %W/%nset dcc_queue_limit
+   - Sorry, no help is available for this command yet
+SET FLOOD_AFTER
+   %gUsage%n: %W/%nset flood_after
+   - Sorry, no help is available for this command yet
+SET FLOOD_KICK
+   %gUsage%n: %W/%nset flood_kick
+   - Sorry, no help is available for this command yet
+SET FLOOD_PROTECTION
+   %gUsage%n: %W/%nset flood_protection
+   - Sorry, no help is available for this command yet
+SET FLOOD_RATE
+   %gUsage%n: %W/%nset flood_rate
+   - Sorry, no help is available for this command yet
+SET FLOOD_USERS
+   %gUsage%n: %W/%nset flood_users
+   - Sorry, no help is available for this command yet
+SET FLOOD_WARNING
+   %gUsage%n: %W/%nset flood_warning
+   - Sorry, no help is available for this command yet
+SET HACKPASS
+   %gUsage%n: %W/%nset hackpass
+   - Sorry, no help is available for this command yet
+SET HARD_UH_NOTIFY
+   %gUsage%n: %W/%nset hard_uh_notify %Y<%non%G|%noff%Y>%n
+   - Sorry, no help is available for this command yet
+SET IDENT_HACK
+   %gUsage%n: %W/%nset ident_hack
+   - Sorry, no help is available for this command yet
+SET IDLE_CHECK
+   %gUsage%n: %W/%nset idle_check
+   - Sorry, no help is available for this command yet
+SET KICK_OPS
+   %gUsage%n: %W/%nset kick_ops
+   - Sorry, no help is available for this command yet
+SET KILL_LOGFILE
+   %gUsage%n: %W/%nset kill_logfile
+   - Sorry, no help is available for this command yet
+SET LLOOK
+   %gUsage%n: %W/%nset llook
+   - Sorry, no help is available for this command yet
+SET LLOOK_DELAY
+   %gUsage%n: %W/%nset llook_delay
+   - Sorry, no help is available for this command yet
+SET LONG_MSG
+   %gUsage%n: %W/%nset long_msg
+   - Sorry, no help is available for this command yet
+SET MAX_AUTOGET_SIZE
+   %gUsage%n: %W/%nset max_autoget_size
+   - Sorry, no help is available for this command yet
+SET MAX_DEOPS
+   %gUsage%n: %W/%nset max_deops
+   - Sorry, no help is available for this command yet
+SET MAX_IDLEKICKS
+   %gUsage%n: %W/%nset max_idlekicks
+   - Sorry, no help is available for this command yet
+SET MIRCS
+   %gUsage%n: %W/%nset mircs
+   - Sorry, no help is available for this command yet
+SET MODE_STRIPPER
+   %gUsage%n: %W/%nset mode_stripper
+   - Sorry, no help is available for this command yet
+SET MSGCOUNT
+   %gUsage%n: %W/%nset msgcount
+   - Sorry, no help is available for this command yet
+SET MSGLOG
+   %gUsage%n: %W/%nset msglog
+   - Sorry, no help is available for this command yet
+SET MSGLOGFILE
+   %gUsage%n: %W/%nset msglogfile
+   - Sorry, no help is available for this command yet
+SET NAMES_ON_JOIN
+   %gUsage%n: %W/%nset names_on_join
+   - Sorry, no help is available for this command yet
+SET NEXT_SERVER_ON_LOCAL_KILL
+   %gUsage%n: %W/%nset next_server_on_local_kill
+   - Sorry, no help is available for this command yet
+SET NO_CTCP_FLOOD
+   %gUsage%n: %W/%nset no_ctcp_flood
+   - Sorry, no help is available for this command yet
+SET NUM_BANMODES
+   %gUsage%n: %W/%nset num_banmodes
+   - Sorry, no help is available for this command yet
+SET NUM_OPMODES
+   %gUsage%n: %W/%nset num_opmodes
+   - Sorry, no help is available for this command yet
+SET PING_TYPE
+   %gUsage%n: %W/%nset ping_type
+   - Sorry, no help is available for this command yet
+SET PROTECT_CHANNELS
+   %gUsage%n: %W/%nset protect_channels
+   - Sorry, no help is available for this command yet
+SET PUBLOGSTR
+   %gUsage%n: %W/%nset publogstr
+   - Sorry, no help is available for this command yet
+SET REASONFILE
+   %gUsage%n: %W/%nset reason_File
+   - Sorry, no help is available for this command yet
+SET REASON_TYPE
+   %gUsage%n: %W/%nset reason_type
+   - Sorry, no help is available for this command yet
+SET SAVEFILE
+   %gUsage%n: %W/%nset savefile
+   - Sorry, no help is available for this command yet
+SET SCRIPT_HELP
+   %gUsage%n: %W/%nset script_help
+   - Sorry, no help is available for this command yet
+SET SEND_AWAY_MSG
+   %gUsage%n: %W/%nset send_away_msg
+   - Sorry, no help is available for this command yet
+SET SEND_IGNORE_MSG
+   %gUsage%n: %W/%nset send_ignore_msg
+   - Sorry, no help is available for this command yet
+SET SHITLIST_REASON
+   %gUsage%n: %W/%nset shitlist_reason
+   - Sorry, no help is available for this command yet
+SET SHOW_FAKES
+   %gUsage%n: %W/%nset show_Fakes
+   - Sorry, no help is available for this command yet
+SET SHOW_SERVER_CRAP
+   %gUsage%n: %W/%nset show_server_crap
+   - Sorry, no help is available for this command yet
+SET SHOW_SERVER_KILLS
+   %gUsage%n: %W/%nset show_server_kills
+   - Sorry, no help is available for this command yet
+SET SHOW_TOOMANY
+   %gUsage%n: %W/%nset show_toomany
+   - Sorry, no help is available for this command yet
+SET SHOW_UNAUTHS
+   %gUsage%n: %W/%nset show_unauths
+   - Sorry, no help is available for this command yet
+SET SHOW_WHO_HOPCOUNT
+   %gUsage%n: %W/%nset show_who_hopcount
+   - Sorry, no help is available for this command yet
+SET USE_FAKE_HOST
+   %gUsage%n: %W/%nset use_fake_host
+   - Sorry, no help is available for this command yet
+SET VERBOSE_CTCP
+   %gUsage%n: %W/%nset verbose_ctcp
+   - Sorry, no help is available for this command yet
+SET WARN_OF_IGNORES
+   %gUsage%n: %W/%nset warn_of_ignores
+   - Sorry, no help is available for this command yet
+SET _CDCC_CLOSE_IDLE_SEND_TIME
+   %gUsage%n: %W/%nset _cdcc_close_idle_send_time
+   - Sorry, no help is available for this command yet
+SET _CDCC_MINSPEED_TIME
+   %gUsage%n: %W/%nset _cdcc_minspeed_time
+   - Sorry, no help is available for this command yet
+SHELL
+   %gUsage%n: %W/%nshell
+   - Opens shell in a virtual screen
+     Use %B^[%Gnumber%n to switch through virtual screens
+SHITLIST
+   %gUsage%n: %W/%nshitlist
+   - Shows the users in your shitlist
+SHOWIDLE
+   %gUsage%n: %W/%nshowidle %Y[%n-sort type%Y] [%n#channel%Y]%n
+   - Shows idle people on current channel or %Y[%n#channel%Y]%n
+   - Valid %Y-sort%n types: %Wtime host ip nick none%n
+   - Default %Y-sort%n is %Wnick%n
+   %gExample%n: /showidle -sort time #BitchX
+STAT
+   %gUsage%n: %W/%nstat [c|h|k|i|l|m|u|y] [<server>]
+   - See %W/%nhelp stat for further details
+SHOWSPLIT
+   %gUsage%n: %W/%nshowsplit
+   - See current splits
+SHOWWORDKICK
+   %gUsage%n: %W/%nshowwordkick
+   - Shows list of banned words
+SAY
+   %gUsage%n: %W/%nsay -%Y<%ntype%Y>%n [-c for cool -a for annoy -e for elite]
+   - Says whatever you write in either cool, annoy or elite format
+SK
+   %gUsage%n: %W/%nsk %Y<%nserver%Y>%n
+   - Deops and kick nicks matching %Y<%nserver%Y>%n on current channel
+SPING
+   %gUsage%n: %W/%nsping %Y<%nserver%Y>%n
+   - Checks how lagged it is to %Y<%nserver%Y>%n
+SQUIT
+   %gUsage%n: %W/%nsquit %Y<%nserver1%Y>%n %R[%nserver2%R]%n
+   %Y*%n Requires irc operator status
+   - Disconnects %Y<%nserver1%Y>%n from current server or %R[%nserver2%R]%n
+T
+   %gUsage%n: %W/%nt %Y<%ntext%Y>%n
+   - Sets %Y<%ntext%Y>%n as topic on current channel
+TBAN
+   %gUsage%n: %W/%ntban
+   - Interactive channel ban delete
+TIME
+   %gUsage%n: %W/%ntime
+   - Shows time and date of current server
+TLOCK
+   %gUsage%n: %W/%ntlock %Y<%Bchannel%Y>%n %R[%non%G|%noff%R]%n
+   - [Un]Locks %Y<%Bchannel%Y>%n with the current topic
+TOPIC
+   %gUsage%n: %W/%ntopic %Y<%Btext%Y>%n
+   - Changes topic to %Y<%Btext%Y>%n in the current channel
+TOGG
+   %gUsage%n: %W/%ntogg
+   - Allow's toggling of userlist, autorejoin, cloak, etc. self explanitory.
+TRACE
+   %gUsage%n: %W/%ntrace <argument> <server>
+   - Without a specified server it shows the current connections on
+   - local server
+   - Arguments: -s -u -o   trace for servers, users, ircops
+   See %W/%nhelp trace for furthur details
+U
+   %gUsage%n: %W/%nu
+   - Shows users on current channel
+UB
+   %gUsage%n: %W/%nub %R[%Cnick%R]%n
+   - Removes ban on %R[%Cnick%R]%n
+   Hint: %W/%nub with no arguments removes all bans placed on current channel
+UMODE
+   %gUsage%n: %W/%numode %Y<%nmode%Y>%n
+   - Sets %Y<%nmode%Y>%n on yourself
+UNAJOIN
+   %gUsage%n: %W/%nunajoin %Y<%Bchannel%Y>%n
+   - Removes autojoin %Y<%Bchannel%Y>%n from list
+UNBOT
+   %gUsage%n: %W/%nunbot %Y<%nbot%Y>%n %Y<%Bchannel%Y>%n
+   - Removes %Y<%nbot%Y>%n from your botlist
+UNFORWARD
+   %gUsage%n: %W/%nnoforward %Y<%Cnick%G|%Bchannel%Y>
+   - Remove %Y<%Cnick%G|%Bchannel%Y> from forward list
+UNIDLE
+   %gUsage%n: %W/%nunidle %Y<%Bchannel%Y>%n
+   - Removes %Y<%Bchannel%Y>%n from idle list
+UNIG
+   %gUsage%n: %W/%nunig %Y<%Cnick%Y>%n
+   - UnIgnores %Y<%Cnick%Y>%n
+UNIGH
+   %gUsage%n: %W/%nunigh %Y<%Cnick%Y>%n
+   - Removes %Y<%Cnick%Y>%n's host from the ignore list
+UNKEY
+   %gUsage%n: %W/%nunkey
+   - Removes channel key from current channel
+UNSCREW
+   %gUsage%n: %W/%nunscrew %Y<%Cnick%Y>%n
+   - Unscrew %Y<%Cnick%Y>%n
+UNSHIT
+   %gUsage%n: %W/%nunshit %Y<%Cnick%Y>%n %Y<%Bchannel%Y>%n
+   - Removes %Y<%Cnick%Y>%n in %Y<%Bchannel%Y>%n from your shitlist
+UNTOPIC
+   %gUsage%n: %W/%nuntopic %R[%Bchannel%R]%n
+   - Removes the topic from %R[%Bchannel%R]%n or current channel
+UNUSER
+   %gUsage%n: %W/%nunuser %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n %Y<%Bchannel%G|%Y*>%n
+   - Removes %Y<%Cnick%G|%Cnick%G!%nuser%Y@%nhostname%Y>%n in %Y<%Bchannel%G|%Y*>%n from your userlist
+UNVOICE
+   %gUsage%n: %W/%nunvoice %R[%Bchannel%R]%n %Y<%Cnick%Y>%n
+   - Removes voice status from %Y<%Cnick%Y>%n on %R[%Bchannel%R]%n or current channel
+UNWORD
+   %gUsage%n: %W/%nunword %Y<%Bchannel%Y>%n %Y<%nword%y(%ns%y)%Y>%n
+   - Removes banned %Y<%nword%y(%ns%y)%Y>%n from wordlist on %Y<%Bchannel%Y>%n
+UPING
+   %gUsage%n: %W/%nuping %Y<%Cnick%Y>%n
+   - Sends an improved ping to %Y<%Cnick%Y>%n
+UPTIME
+   %gUsage%n: %W/%nuptime
+   - Shows uptime of client and other information
+USAGE
+   %gUsage%n: %W/%nusage
+   - Shows memory usage of local machine
+USER
+   %gUsage%n: %W/%nuser %Y[%ntype%Y] [%n-sort type%Y] [%n#channel%W|%nnick!user@host%Y]%n
+   - Displays information about a user
+   - Performs action on a user, or class of users
+   - Valid %Y[%ntypes%Y]%n:%W -ops -nonops -msg -notice -nkill -kill -kick -stats -ips%n
+   - Valid %Y[%n-sort types%Y]%n:%W time host ip nick none%n
+   - %Y[%nnick!user@host%Y]%n can be a wildcarded nick!user@host. %W*!*@*%n is the default.
+   - %Y[%ntypes%Y]%n descriptions:
+        %W-ops%n performs the operations on the ops
+        %W-nonops%n performs the operations on the nonops
+        %W-msg%n sends a msg
+        %W-notice%n sends a notice
+        %W-nkill%n kills everyone but these matching hosts
+        %W-kill%n kills matching
+        %W-kick%n kicks matching
+        %W-stats%n shows the stats on the matching
+        %W-ips%n displays list of ips
+        %W-sort [type]%n default if not specified is host sorting.
+   %gExample%n: /user -kick -nonops *!*@* mass kick of nonops!
+   %gExample%n: /user -msg -ops *!*@*.net Hi all you .net ops
+USERINFO
+   %gUsage%n: %W/%nuserinfo %Y<%nnick%Y>%n comment
+   - Sets the userinfo for a given nick. If comment is not on command line
+     then comment for that nick is deleted.
+USERSHOW
+   %gUsage%n: %W/%nusershow
+   - Shows the userinfo for your userlist.
+USERLEVELS
+   %R[%nuserlevels%R]%n: (available to the registered user)
+     %YBAN%n %P-%n        Bans offender who bans a protected user
+     %YBOT%n %P-%n        Creates a bot entry in userlist(/addbot replacement)
+     %YDCC%n %P-%n        Allows a users dcc to auto-get regardless of whether                 /set dcc_autoget is Off or On
+     %YDEOP%n %P-%n       Deops offender who deops a protected user
+     %YFLOOD%n %P-%n      AllowS Flood checking to be turned off on a user
+     %YINVITE%n %P-%n     Allows a user to invite themself to a channel your in via            CTCP
+     %YI_OPS%n %P-%n      Allows a user to be instantly opped upon joining a channel           they are protected in (NOT RECOMMENDED)
+     %YKICK%n %P-%n       Kicks offender who bans/kicks protected user
+     %YKILL%n %P-%n       <undefined as of yet>
+     %YOPS%n %P-%n        Allows a user to be opped via CTCP/deleyed ops
+     %YPBAN%n %P-%n       When a user is banned from a channel they are protected on,          they are automatically un-banned
+     %YPINVITE%n %P-%n    When a user is kicked from a channel they are protected on,          they are automatically re-invited back
+     %YREOP%n %P-%n       When a user is deopped from a channel they are protected on,         they are automatically re-opped
+     %YUNBAN%n %P-%n      Allows a user to remotely unban his/herself via CTCP
+     %YVOICE%n %P-%n      Auto-voice on join
+     %YFRIEND%n %P-%n     Combination of: VOICE,OPS,UNBAN,INVITE
+     %YMASTER%n %P-%n     Combination of: VOICE,OPS,BAN,UNBAN,INVITE,DCC,FLOOD
+     %YOWNER%n %P-%n      Combination of: MASTER,KILL,DIE,BOT
+     %RShitlist levels%n:
+     %Y1%n %P-%n          Deop user at all times
+     %Y2%n %P-%n          Kick user when they join the channel
+     %Y3%n %P-%n          Ban/Kick user when they join the channel
+     %Y4%n %P-%n          Ban user at all times
+     %Y5%n %P-%n          Perm ignore ALL from user
+USERLIST
+   %gUsage%n: %W/%nuserlist
+   - Shows your current userlist
+USERS
+   %gUsage%n: %W/%nuser %R[%nfilter%R]%n %R[%n(command) %R[%nadditional arguments%R]]%n
+   - If no arguments are given, a list of users are displayed
+   %R[%bfilter%R]%n:
+     -ops
+     -nonops
+   %R[%ncommand%R]%n:
+     -kick     Kick people who match %R[%nfilter%R]%n
+     -kill     Kill people who match %R[%nfilter%R]%n
+                  %G(%nRequires irc operator status%G)%n
+     -msg      Send a message to people who match %R[%nfilter%R]%n
+     -nkill    Sorry, no help is available yet
+                  %G(%nRequires irc operator status%G)%n
+     -notice   Send a notice to people who match %R[%nfilter%R]%n
+     -stats    Display channel statistics for nick(s)
+VERSION
+   %gUsage%n: %W/%nversion
+   - Shows client, script and server versions
+VOICE
+   %gUsage%n: %W/%nvoice %R[%Bchannel%R]%n %Y<%Cnick%Y>%n
+   - Gives voice status to %Y<%Cnick%Y>%n on %R[%Bchannel%R]%n or current channel
+W
+   See %YWHO%n
+WALL
+   %gUsage%n: %W/%nwall %Y<%nmessage%Y>%n
+   - Sends %Y<%nmessage%Y>%n to ops on current channel
+WALLMSG
+   See %YWALL%n
+WALLOP
+   %gUsage%n: %W/%nwallop %Y<%nmessage%Y>%n
+   - Sends %Y<%nmessage%Y>%n to everyone on iRC
+WHICH
+   %gUsage%n: %W/%nwhich %Y<%nfile%Y>%n
+   - Determines which %Y<%nfile%Y>%n was loaded with the /load command
+WHO
+   %gUsage%n: %W/%nwho %Y<%Cnick%G|%Bchannel%Y>
+   - Shows who listing on %Y<%Cnick%G|%Bchannel%Y>
+WHOIS
+   %gUsage%n: %W/%nwhois %Y<%Cnick%Y>%n
+   - Display whois information on %Y<%Cnick%Y>%n
+WHOKILL
+   %gUsage%n: %W/%nwhokill %Y<%Cnick%G!%nuser%Y@%nhostname%Y>%n %R[%nreason%R]%n
+   %Y*%n Requires irc operator status
+   - Kills multiple clients matching the filter %Y<%Cnick%G!%nuser%Y@%nhostname%Y>%n
+     with %R[%nreason%R]%n
+WHOLEFT
+   %gUsage%n: %W/%nwholeft
+   - Display who split away after a netsplit
+WHOWAS
+   %gUsage%n: %W/%nwhowas %Y<%Cnick%Y>%n
+   - Display whowas information on %Y<%Cnick%Y>%n
+WINDOW
+   %R[%nwindow shortcuts%R]%n:
+     %Y^W-%n %P-%n Shrinks current window 1 line
+     %Y^W+%n %P-%n Grows current window 1 line
+     %Y^Wm%n %P-%n Moves current window down 1 line
+     %Y^Wl%n %P-%n Lists current windows
+     %Y^Wk%n %P-%n Kills current window
+     %Y^Wh%n %P-%n Hides current window
+     %Y^Wb%n %P-%n Balances window sizes
+     %Y^Wn%n %P-%n Swaps to next window
+     %Y^Wp%n %P-%n Swaps to previous window
+     %Y /#%n %P-%n Shows window number (1-4)
+WINDOW HELP
+    - Gets WINDOW specific help
+TIMER
+    %gUsage%n: %W/%ntimer %Y[%C-del #%Y] %Y[%C-ref #%Y] [%C-rep #%Y] <%Cdelay%Y> <%Ccommand%Y>%n
+    - To delete an active timer, type /timer -del <refnum>
+    - To make a timer loop indefinately, type /timer -rep -1 <delay> <command>
+TIG
+    %gUsage%n: %W/%ntig
+    - Interactive Ignore list delete
+BANS
+    %gUsage%n: %W/%nbans %Y[%C#channel%Y]
+    - List active bans on a channel
+    - If no channel is given, lists bans on current channel
+BANSTA
+    %gUsage%n: %W/%nbansta %Y[%C#channel%Y]
+    - List active bans on a channel
+    - If no channel is given, lists bans on current channel
+FUCKEM
+    %gUsage%n: %W/%nfuckem
+    - Bans *!*a*@* thru *!*z*@* on current channel
+LOADDLL
+    %gUsage%n: %W/%nloaddll %Y<%Cfilename.so%Y>
+    - Loads DLL module
+LOADTCL
+    %gUsage%n: %W/%nloadtcl %Y<%Cfilename.tcl%Y>
+    - Loads TCL Script
+    %RNote%n: You must be running a TCL version of BitchX
+UNLOAD
+    %gUsage%n: %W/%nunload
+    - Unloads all scripts and returns BitchX to `stock`
+VER
+    %gUsage%n: %W/%nver %Y[%Cnick%Y] %Y[%C#channel%Y]
+    - Sends CTCP VERSION request to <nick> or <channel>
+    - If no nick or channel is given, versions the current channel
+
+# After this line, addidition by PyroSmurf
+
+IRCNAME
+    %gUsage%n: %W/%nircname %Y<%Ctext%Y>
+    - Changes your IRCNAME upon next connect
+HOSTNAME
+    %gUsage%n: %W/%nhostname %Y<%Chost%Y>
+    - Use a virtual hostname on IRC
+    - If no host is given, will list available hostnames.
+P
+   See %YPING%n
+URL
+   %gUsage%n: %W/%nurl %Y[%Chttp on%W|%Coff%Y] [%Cftp on%W|%Coff%Y] [%Clist%Y] [%Csave <#>%Y]
+   - URL Catcher
+   - If no arg is given, shows current status
+OFFERS
+   %gUsage%n: %W/%noffers %Y[%C#channel%Y]%n
+   - XDCC LISTS the current channel, or #channel
+FPORT
+   - See %YFPORTS%n QUOTE
+QUOTE
+   %gUsage%n: %W/%nquote %Y<%Ccommand%Y>%n
+   - Sends raw commands to the server
+EVAL
+   %gUsage%n: %W/%neval %Y<%Ccommand%Y>%n
+   - Forces BitchX to expand functions
+   - Examples: /eval echo Server: $S
+   -           /eval say I'm using $J
+   -           /eval msg Power I've been online for $uptime()
+BANWORD
+   %gUsage%n: %W/%nbanword %Y<%C#channel%W|%C*%Y> <%Cword%Y>%n
+   - Adds %Y<%nword%Y>%n to the banned word list for %Y<%nchannel%Y>%n
+BANWORDS
+   %gUsage%n: %W/%nbanwords %Y<%C#channel%W|%C*%Y> <%Cword%Y>%n
+   - Adds %Y<%nword%Y>%n to the banned word list for %Y<%nchannel%Y>%n
+WORDLIST
+   %gUsage%n: %W/%nwordlist
+   - Shows banned wordlist
+   - See also %YBANWORD%n
+C
+   %gUsage%n: %W/%nc %Y<%nmode%Y>%n
+   - Set modes for current channel
+FSET
+   %gUsage%n: %W/%nfset %Y<%nformat%Y>%n %Y<%nstring%Y>%n
+   - Set a %Y<%nformat%Y>%n to %Y<%nstring%Y>%n
+AJOINLIST
+   - Shows channels in your auto-join list
+   - See also %YAJOIN%n, %YUNAJOIN%n
+QME
+   - %gUsage%n: %W/%nqme %Y<%ntext%Y>%n
+   - Sends an action to a query
+CLONES
+   - %gUsage%n: %W/%nclones %Y[%n#channel%Y]%n
+   - Shows clones in current channel or %Y[%n#channel%Y]%n
+CLONE
+   - %gUsage%n: %W/%nclones %Y[%n#channel%Y]%n
+   - Shows clones in current channel or %Y[%n#channel%Y]%n
+DME
+   - %gUsage%n: %W/%ndme %Y<%ntext%Y>%n
+   - Sends an action to a dcc
+PASTE
+   - %gUsage%n: %W/%npaste %Y<%nnum%W|%nrange%Y> [%n-win #%Y] [%nnick%W|%n#chan%Y]%n
+   - Pastes %Y<%nnum%W|%nrange%Y>%n of scrollback buffer
+     from %Y[%n-win #%Y]%n to %Y[%nnick%W|%n#chan%Y]%n in ansi
+   - /paste 5 will paste line 5 of your scrollback
+   - /paste 1-8 will paste lines 1 through 8 of your scrollback
+   - %gRelated Format:%Y FORMAT_PASTE%n
+   - %gRelated Hook:%Y paste%n
+WW
+   %gUsage%n: %W/%nww %Y<%Cnick%Y>%n
+   - Display whowas information on %Y<%Cnick%Y>%n
+SCANF
+   %gUsage%n: %W/%nscanf %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for friends on your userlist
+SCANI
+   %gUsage%n: %W/%nscani %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for IrcOps
+SCANS
+   %gUsage%n: %W/%nscani %R[%Bchannel%R]%n
+   - Scans %R[%Bchannel%R]%n or current channel for shitlisted users
+SHOWLOCK
+   %gUsage%n: %W/%nshowlock %R[%Bchannel%R]%n
+   - Displays current +k key for %R[%Bchannel%R]%n
+SLEEP
+   %gUsage%n: %W/%nsleep %Y<%Csecs%Y>%n
+   - Halts BitchX for %Y<%Csecs%Y>%n
+UNBAN
+   - See %YUB%n
+USERIP
+   %gUsage%n: %W/%nuserip %Y<%Cnick%Y>%n
+   - Displays hostname for %Y<%Cnick%Y>%n
+WILN
+    %gUsage%n: %W/%nwiln
+    - Whois's last person who sent you a notice
+WILM
+    %gUsage%n: %W/%nwilm
+    - Whois's last person who sent you a privmsg
+ALIAS
+    %gUsage%n: %W/%nalias %Y<%Ccommand%y(%Cs%y)%Y>%n
+    - Adds new alias with %Y<%Ccommand%y(%Cs%y)%Y>%n
+    - Hint: If no argument is given, all aliases will be displayed
+BHELP
+    %gUsage%n: %W/%nbhelp %Y<%Ccommand%Y>%n
+    - Displays help for %Y<%Ccommand%Y>%n %W(%nhopefully %W;)%n
+BACK
+    %gUsage%n: %W/%nback
+    - Sets you back from being away
+CHAT
+    %gUsage%n: %W/%nchat %Y<%Cnick%Y>%n
+    - Attempts to dcc chat %Y<%Cnick%Y>%n
+DCA
+    %gUsage%n: %W/%ndca
+    - Closes all DCC connections
+DCS
+    %gUsage%n: %W/%ndca %Y<%Cnick%Y>%n
+    - Closes all DCC SEND connections to %Y<%Cnick%Y>%n
+DETACH
+    %gUsage%n: %W/%ndetach
+    - Detaches BitchX (use scr-bx to reattach)
+DEVOICE
+    %gUsage%n: %W/%ndevoice %Y<%Cnick%Y>%n
+    - De-voices %Y<%Cnick%Y>%n in current channel
+DV
+    - See %YDEVOICE%n
+ECHO
+    %gUsage%n: %W/%necho %Y<%Ctext%Y>%n
+    - Echos %Y<%Ctext%Y>%n to the screen
+IRCHOST
+    - See %YHOSTNAME%n
+MAP
+    %gUsage%n: %W/%nmap
+    - Generates an irc server map
+MSAY
+    %gUsage%n: %W/%nmsay %Y<%Ctext%Y>%n
+    - Sends %Y<%Ctext%Y>%n to all channels
+NOCHAT
+    %gUsage%n: %W/%nnochat %Y<%Cnick%Y>%n
+    - Closes DCC CHAT request from %Y<%Cnick%Y>%
+PARTALL
+    %gUsage%n: %W/%npartall
+    - Leaves all channels
+CDPLAY
+    %gUsage%n: %W/%ncdplay
+    - Plays an audio CD
+CDSTOP
+    %gUsage%n: %W/%ncdstop
+    - Stops a currently playing audio CD
+CDEJECT
+    %gUsage%n: %W/%ncdpeject
+    - Eject the CD from the cdrom drive
+CDPAUSE
+    %gUsage%n: %W/%ncdpause
+    - Pauses a currently playing CD
+CDLIST
+    %gUsage%n: %W/%ncdlist
+    - List track info on CD
+CDVOL
+    %gUsage%n: %W/%ncdvol
+    - Sets CD playback volume

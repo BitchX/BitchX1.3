@@ -1,0 +1,7 @@
+Under UNIX SV we need to change include/irc.h and remove 
+ #include <arpa/inet.h> from the file. This causes a couple of new 
+warnings in dcc.c to appear, but everything works as advertised.
+
+HPUX seems to have some header files problems.
+in particular. #include <sys/types.h> can't be included before #include
+<time.h> or #include <sys/time.h>

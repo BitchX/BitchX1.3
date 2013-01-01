@@ -1,0 +1,22 @@
+Synopsis:
+   on [<modes>]exec [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever an EXECed process generates output to
+   standard output.
+
+Parameters:
+   $0    the pid of the EXECed process that triggered the hook (an internal
+         | number, not the system pid); if the process was started with the
+         | -name switch, the name specified is returned instead
+   $1-   a line of the process's output stderr
+
+Examples:
+   To distinguish process output from other window output:
+      on ^exec "*" {
+         echo [$0] $1-
+      }
+
+See Also:
+   exec(5); on(5) exec_errors, exec_exit, exec_prompt
+

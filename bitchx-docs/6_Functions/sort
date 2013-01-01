@@ -1,0 +1,25 @@
+Synopsis:
+   $sort(<list>)
+   $numsort(<list>)
+
+Technical:
+   These functions sort the given list in ascending order.  The $sort()
+   function sorts the list based on character value, while $numsort()
+   sorts by numeric value.
+
+Practical:
+   The $sort() function is used primarily for alphabetizing the list.  It
+   isn't true alphabetical order, since uppercase letters come before
+   lowercase, but it works for most cases.  The $numsort() function is
+   used for sorting a list of numbers.  It understands negative numbers,
+   and any non-number is treated as 0 (zero).
+
+Returns:
+   the given list, sorted
+
+Examples:
+   $sort(foo bar blah erf booya)       returns "bar blah booya erf foo"
+   $sort(foo Bar blah Erf booya)       returns "Bar Erf blah booya foo"
+   $numsort(4 -6 34 -96 0)             returns "-96 -6 0 4 34"
+   $numsort(4 -6 34 -96 0Erf blah)     returns "-96 -6 0 Erf blah 4 34"
+

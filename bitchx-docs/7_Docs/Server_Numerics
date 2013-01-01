@@ -1,0 +1,26 @@
+Hooking Server Numerics                                                     
+
+In addition to the numerous named hooks provided by the client (refer to the
+ON command in Section 5), BitchX and EPIC can hook any numeric reply sent 
+by a server. They are treated no differently from named hooks.  Space 
+constraints prevent a full discussion of all server numerics, not to mention 
+that they tend to differ from network to network.
+
+A small subset of commonly used numerics are provided for convenience.  A
+mostly full listing can be found in the irc protocol specification, RFC 1459
+(though you should look in the ircd source code for an exact list; they are
+in the file s_err.c in standard ircd distributions).
+
+   Replies to /whois:   311-313, 317-319
+   Replies to /mode +b: 367, 368
+   Replies to /trace:   200-206, 208, 209, 261, 262
+   Replies to /stats:   211-219, 241-244
+
+   Common error numerics: 401 (nickname doesn't exist)
+                        : 404 (can't send message to channel)
+                        : 421 (unknown command)
+                        : 436 (nickname collision server kill)
+                        : 465 (you're banned from server)
+                        : 473 (can't going channel, invite-only)
+                        : 482 (you're not a channel operator)
+

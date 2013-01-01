@@ -1,0 +1,11 @@
+Synopsis:
+   set show_channel_names [on|off|toggle]
+
+Description:
+   When turned on, when the client joins a channel, a list of its users
+   will be displayed.  Turning this setting off suppresses this behavior.
+   The list can be explicitly shown with the NAMES command.
+
+See Also:
+   names(2)
+

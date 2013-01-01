@@ -1,0 +1,37 @@
+Synopsis:
+   while (<condition>) <action>
+   while (<condition>) [{ <action> }]
+
+Description:
+   The WHILE loop is a sort of hybrid between the FOR loop and the IF
+   control statement.  It allows for repetitive action, as with FOR,
+   but the loop iterates (performs the action) only if a specific
+   condition is met, as with IF.
+
+   The "condition" portion may contain any comparison or assignment
+   allowed in an IF statement.
+
+Examples:
+   To display a warning message 3 times:
+      @ xx = 3
+      while ( xx > 0 ) {
+         echo WARNING!  This ship will self destruct in $xx seconds!
+         @ xx--
+      }
+
+   A infinite loop that behaves like the Unix 'yes' command:
+      while ( 1 ) echo yes
+
+Aliases:
+   UNTIL is the exact opposite of WHILE.  It is essentially the same
+   applying the negation operator (!) to the entire WHILE condition.
+
+See Also:
+   fe(5); fec(5); for(5); foreach(5)
+
+Other Notes:
+   WHILE has all of the capabilities of FOR, only in a different syntax.
+   The distinction between the two is not great enough to warrant a
+   recommendation of one over the other.  If anything, FOR tends to be
+   more concise than WHILE; however, this is not always the case.
+

@@ -1,0 +1,13 @@
+Synopsis:
+   bind <key> quit_irc
+
+Description:
+   This function causes the client to sign off from the irc network.
+
+Aliases:
+   Thus function has the same effect as the QUIT command, except that a
+   specific QUIT reason cannot be specified.
+
+See Also:
+   quit(1)
+

@@ -1,0 +1,21 @@
+Synopsis:
+   echo [<anything>]
+
+Description:
+   This command prints its arguments back to the screen.  That's it.  It
+   is useful for printing status messages from inside scripts, or inside
+   hooks for redefining server messages.
+
+   The ECHO command is also the only command (one of two, actually; see
+   XECHO) that can write to the screen when DISPLAY is off. ECHO now
+   has no length limitation, it can display any string within the confines
+   of memory.
+
+See Also:
+   eval(5); set(4) display, input_aliases; xecho(5)
+
+Other Notes:
+   ECHO will not normally expand variables unless it is used inside an
+   alias.  To force expansion, use EVAL or set INPUT_ALIASES on. This is
+   not a bug, it is an intentional feature common to all commands.
+

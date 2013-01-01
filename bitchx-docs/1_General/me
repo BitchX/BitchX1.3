@@ -1,0 +1,32 @@
+Synopsis:
+   me <action description>
+
+Description:
+   ME lets you perform an action on your current channel.  It lets you
+   describe what you're doing as though someone is watching you, rather
+   than you telling them.
+ 
+Examples:
+   To perform an action:
+      /me doesn't want to go to work today
+
+   Anyone on the channel you sent the action to will see something like
+   this:
+      * foobar doesn't want to go to work today
+
+Aliases:
+   ME functions identically to using DESCRIBE to send an action to your
+   current channel, as well as to CTCP ACTION.
+
+See Also:
+   ctcp(1) action; load(5) action, mudlike; describe(1); on(5) action,
+   send_action
+
+Restrictions:
+   This command makes use of CTCP (client-to-client protocol), which is not
+   part of the IRC protocol.  Most modern IRC clients understand CTCP, but
+   not all do, while others might not support the same CTCP commands that
+   ircII-EPIC supports.  If you receive an error of some sort, then the
+   client on the receiving end is unable to properly handle your CTCP
+   message.
+

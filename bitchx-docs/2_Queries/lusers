@@ -1,0 +1,24 @@
+Synopsis:
+   lusers [<server mask> [<remote server>]]
+
+Description:
+   LUSERS (shorthand for list users) returns some summary information
+   about who is currently using the network.  It shows how many users
+   are currently online (broken up between visible and invisible users),
+   the number of channels formed, and the number of servers currently
+   connected to the network.  Some servers may return other information
+   as well, such as the maximum number of clients that have connected
+   to it at one time, or the maximum number of users on the network at
+   once (from its perspective).
+
+   If a server mask is specified, the data returned will only apply to
+   servers matching that mask.  If a remote server is specified as well,
+   that server is queried for the LUSERS information instead of the
+   client's current server.
+
+Other Notes:
+   Servers using "dog3/super" patched code may disallow use of the LUSERS
+   command from time to time.  Such servers have a "high traffic mode",
+   in which certain commands are disabled to conserve server resources.
+   A 263 numeric will be returned if LUSERS is unavailable.
+

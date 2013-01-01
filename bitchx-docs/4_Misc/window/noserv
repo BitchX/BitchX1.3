@@ -1,0 +1,11 @@
+Synopsis:
+   window noserv [on|off]
+
+Description:
+   When this is ON, the current window is flagged as not being bound to any
+   server, and therefore will not get any output from server events unless
+   specified with an /xecho -window or the such.
+
+See Also:
+   window(4) echo; xecho(5)
+

@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> command_completion
+
+Description:
+   This function attempts to complete a command name used on the input
+   line, much like modern Unix shells do.  It can expand both builtin
+   commands and aliases.  It only attempts to expand the first word on
+   the input line, and only if it is prefixed by the command character,
+   and thus unlike Unix shells, the cursor does not need to be near the
+   command name to expand it.
+
+See Also:
+   alias(5); set(4) cmdchars
+

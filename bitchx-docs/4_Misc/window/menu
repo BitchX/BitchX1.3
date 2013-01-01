@@ -1,0 +1,10 @@
+Synopsis:
+   window menu <menu name>
+
+Description:
+   Attaches the menu specified to the top of the current window
+   or the window specified.
+
+See Also:
+   window_font(4) window_setwindowpos(4)
+

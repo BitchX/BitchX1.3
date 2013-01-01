@@ -1,0 +1,267 @@
+The OS/2 portion of the BitchX client is no longer supported and will not
+be maintained in BitchX2.  If you have troubles with this software you can
+attempt to contact the former maintainer but be aware that he may no longer
+have any interest in updating or fixing problems with the OS/2 portion of
+the client.
+
+sin@bitchx.org/EFnet@#BitchX
+
+------
+
+
+This is a port of the latest BitchX to OS/2 Presentation Manager. (3-25-02)
+
+Several environment variables should be set before running PMBitchX.
+
+As of this version you can let the installation program set these, 
+or you can do it yourself.
+
+HOME = your home directory, where you will place scripts and other things.
+
+USER = your username
+
+IRCNAME = PMBX User's name
+
+IRCNICK = PMBXUser
+
+HOSTNAME = mycomputer
+
+Scripts are located at scripts.bitchx.com. To install untar them into the
+HOME directory and /load them.  Also try /load menu.bx for pull down 
+menus. If it is a clean installation and you don't have the HOME environment
+variable set... it should load automatically.
+
+What's new in 1.0c19:
+
+Fixed multiserver issues resulting from script calls from the
+GUI thread with from_server set incorrectly.
+
+Updated to the latest version of Dynamic Windows.
+
+Memory leaks and buffer under/overrun fixes, should be very
+stable now.
+
+Probably alot more but I've been distracted with other projects
+and this code has been developing for over a year.
+
+What's new in 1.0c17:
+
+Lots of bug fixes to the main BitchX source.
+
+Fixed another multiserver bug.  from_server was pointing
+to the wrong server when the EVKEY message made it back to
+the main thread.  This affected any GUI BitchX's.
+
+What's new in 1.0c16 release 4:
+
+Fixed saving of the MDI variable. (as well as a few others)
+
+Fixed a bug in /window delete.
+
+Added double click keybindings.
+
+Updated script to use these keybindings to open query windows.
+
+Added Saving of the nick@network time date in the "Comments"
+Extended Attribute.  So you can tell when and where a file
+came from.
+
+Fixed some major multiserver issues.  Some issues still exist.
+
+Updated to the latest version of dynamic windows.
+
+Fixed a bug where the window size was set to 0 when a window was minimized.
+
+Fixed size bug of the minimized icons in MDI mode.
+
+Added virtual host support.
+
+Fixed a couple timer bugs.
+
+Fixed a crash when trying to detach shared menus from a menu that
+didn't exist.
+
+PM About box.
+
+What's new in 1.0c16 release 3:
+
+MDI fixes, resizing flips the y component.
+
+Enhanced codepage support with tips from mikh.
+
+Fixed a bug where BitchX was attempting to operate on dead screens.
+
+What's new in 1.0c16 release 2:
+
+Once again updated the installer.  Fixed a bug in release 1 installer
+which caused crashes when updating CONFIG.SYS.
+
+Fixed a bug which *VERY* intermittently caused crashes when updating
+the cursor (blink).
+
+Fixed crashing when loading the script (when comparing against a 
+string with "infinity" in it... i.e. in the server list).
+
+Removed MMPM dependency.  Now when starting up it tries to load
+MCIAPI.DLL and if it fails it disables sound support.
+
+Fixed a crash bug when SERVER_GROUPS is enabled, and it cycles 
+through all the server entries.  
+
+What's new in 1.0c16:
+
+Updated script to allow CTRL-X to switch windows as well as channels.
+If you turn off JOIN_NEW_WINDOW please also disable the rebinding of CTRL-X.
+
+Added some keybindings to bx-rc to make things easier.
+If you are an OpenChat user you may want to edit the bx-rc
+and uncomment a couple lines.
+
+Fixed crash bug when reloading menu.bx.
+
+PMPaste now pastes to your query.
+
+Fixed window close crash bug.
+
+Fixed Switch List to show only one window in MDI mode.
+
+Fixed background not redrawing in the MDI window in certain conditions.
+
+Added attached nicklist.
+
+Script enhancements to take advantage of the nicklist.
+
+Preliminary MDI code ... it's buggy in spots.
+
+New JOIN_NEW_WINDOW_TYPE, QUERY_NEW_WINDOW and QUERY_NEW_WINDOW_TYPE.
+Allows the JOIN_NEW_WINDOW variable to be used in console clients.
+
+Since DavidW2 and pana reautoconfed BitchX PMBitchX can now be configured
+via the configure script with the following options:
+./configure --with-pm --enable-sound
+
+Rewrote the copy code.  It now allows you to select the entire window.
+Fixed a bug where it was using the wrong character size during the 
+selection when more than one font is in use. It now strips trailing 
+white space from the end of the line.
+
+Added tab stops to the properties notebook so it can be manuvered with
+the keyboard.
+
+New shared menu code in line with OpenChat.
+
+New function $menucontrol().
+
+Rewrote the font dialog, dialog is bigger, has the option to 
+change the font for all windows. No longer blocks the UI while
+the dialog is open.
+
+Fixed a key binding problem with the delete key.
+
+Script updated to demonstrate the new functionality. (settings menu)
+
+New command /dialog in the source tree althought disabled for release
+because it is to incomplete/buggy at the moment.
+
+Debating best fix for keybinding differneces on OS/2 and Unix.
+
+What's new in 75p3 (rel 3):
+
+Fixed a bug in /window setwindowpos which core if the improper
+number of arguments was used.
+
+Fixed the scrollerbars in the pm and gtk, so they no longer use
+the bug work around in clients prior to 75p3.
+
+Fixed a bug which made /window menu -delete not function.
+
+What's new in 75p3 (rel 2):
+
+Bug fix for window #10 cores.
+
+ajoin, invite etc now obey the JOIN_NEW_WINDOW parameter.
+
+The Join menu now works properly.
+
+/window setwindowpos implemented.
+
+Bug fix in $winitem() so it properly returns the current position
+in pmbx and gtkbx.
+
+$screensize() implemented.
+
+Various updates to menu.bx.
+
+What's new 75p3:
+
+Renamed bxmenu.bx to menu.bx (which is what is used in gtkbx).
+
+Several menu.bx fixes, including adding the "quiet" alias.
+
+Merged with the latest source, fixed a bug with event sending when more
+than 10 windows were open.
+
+Fixed a bug in the nicklist when the window in focus was not on a channel.
+
+What's new 75p2 (rel3):
+
+Fixed a bug where the maximum file descriptor limit was incorrectly set to
+16, it is now set to FD_SETSIZE (which in emx 0.9d is 256).  Solves a 
+core problem with a large number of DCCs.  
+
+Fixed a plugin bug where it would loop infinitely when there were less than
+20 nicks on a channel.
+
+Fixed /window show to properly change the current focus.
+
+What's new 75p2 (rel2):
+
+Readded /exec code fixes, and file dialog code that didn't get merged. 
+
+What's new 75p2 (rel1):
+
+Fixed a bug in the input line.
+
+Subsequent calls to /nl (nicklist plugin) now correctly turn the
+nicklist on and off.
+
+Updated the nicklist plugin so you can /set nl_always_on_top on.
+
+Using new keybinding code.
+
+Fix for Aurora/Trident/GRADD/Cirrus Logic drivers. (IBM misdocumentation)
+
+Based on BitchX 75p2 (public) code, merged with main distribution.
+
+I have created an XP-like interface in the source code to ease
+porting to other OSes.  A preliminary gtk port is available.
+
+Some performance changes in the caching code.
+
+File dialog no longer blocks the window which it was called from.  
+It now runs in a separate thread. 
+
+Added a clist window scripting function.
+
+Fixed a bug in $servergroup() which caused the script to screw up
+in the server menu server list.
+
+Fixed a bug in /window show which caused a crash when used with 
+hidden windows.
+
+Added SIGINT on CTRL-C to allow you to break out of a server connect.
+(In both pmbx and gtkbx)
+
+Changed the installer to not add IRCSERVER to the CONFIG.SYS.
+
+Readded a couple patches that got missed in the last code merge.
+
+Fixed the corruption bug in gui_clreol().
+
+Known bugs:
+
+No PM specific ones known at the moment.
+
+Please don't report the above as bugs, I already know about them. :>
+
+Please send any comments to dbsoft@technologist.com

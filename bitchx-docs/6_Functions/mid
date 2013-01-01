@@ -1,0 +1,24 @@
+Synopsis:
+   $mid(<offset> <length> <text>)
+
+Technical:
+   This function returns the input text, starting at the specified offset,
+   and not exceeding the specified length.  If the length specified would
+   extend beyond the end of the text, it is adjusted accordingly.  The
+   offset is counted from 0 (zero).
+
+Practical:
+   This function takes an arbitrary input string, and returns a slice of
+   it.  This might be used to strip the first few characters off of a
+   string, regardless of what they might be.
+
+Returns:
+   slice of input text, or nothing if error
+
+Examples:
+   $mid(4 3 hello there)                returns "o t"
+   $mid(7 100 this is a long string)    returns " a long string"
+
+See Also:
+   left(6); right(6)
+

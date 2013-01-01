@@ -1,0 +1,38 @@
+Synopsis:
+   $chops([<channel>|*])
+   $nochops([<channel>|*])
+
+Technical:
+   These functions are used to show the channel operators (and non-ops) on
+   the given channel.  If a "*" is given as the channel name, or no name is
+   given at all, the current is assumed.  These functions require that you
+   be on the specified channel to function.
+
+Practical:
+   This is a convenient way to see who is and isn't a channel operator on
+   the channel you specify.  One use for $chops() might be to send a
+   message to all channel operators on your channel.
+
+Returns:
+   chops:   channel operators on given channel
+   nochops: non-operators on given channel
+
+Examples:
+   $chops(#foo)             shows operators on channel #foo
+   $chops(*)                shows channel operators on current channel
+   $chops()                 also shows operators on current channel
+   $nochops()               shows non-operators on current channel
+
+Bugs:
+   There is a long-standing bug in many servers that can lead to erroneous
+   output from this function.  These servers limit the length of numeric
+   353 (RPL_NAMEREPLY) to 510 characters.  When the nickname list exceeds
+   this, the server uses multiple 353s.  Unfortunately, they will truncate
+   any nickname that would end up exceeding the 510th character.  This
+   function uses 353 to generate it's initial nickname list, so it is
+   likely that it will return chopped nicknames on large channels.  This is
+   an unavoidable server bug.
+
+See Also:
+   names(2); onchannel(6)
+

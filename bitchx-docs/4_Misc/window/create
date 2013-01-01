@@ -1,0 +1,34 @@
+Synopsis:
+   window create
+
+Description:
+   Depending on the environment the client is running in, this creates a
+   new physical window.  The client must be running under the 'screen'
+   program, or in the X Window System environment.
+
+   'screen' is a popular Unix program used from the command line that
+   allows for multiple virtual screens in a text-based environment.  With
+   WINDOW CREATE, the client will create a new screen with ircII-EPIC
+   running in it.
+
+   X is the dominant graphical user interface used on Unix systems.  It
+   is generally available only on Unix workstations with high-resolution
+   monitors.  With WINDOW CREATE, a new xterm is started with ircII-EPIC
+   running in it.
+
+See Also:
+   window(4) delete, new
+
+Restrictions:
+   Currently, when using this command in X, all xterms must be the same
+   size.  The behavior of the client is undefined if an xterm is resized.
+
+   This command is only available if the WINDOW_CREATE #define (found in
+   window.c) was enabled at compile time.  It is not enabled by default.
+
+Bugs:
+   Use of this command is not recommended.  It has never truly worked as
+   intended, and is rather unstable.  For this reason, it is disabled by
+   default, and the method for enabling it at compile time has intentionally
+   been kept vague.  Use WINDOW NEW instead.
+

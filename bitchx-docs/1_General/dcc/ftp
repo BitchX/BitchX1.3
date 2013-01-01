@@ -1,0 +1,15 @@
+Synopsis:
+   dcc ftp hostname user password [-p port] [-b blocksize]
+
+Description:
+   DCC FTP initiates a ftp connection to a host. 
+
+   To send a message across the DCC FTP connection, use MSG as you
+   normally would, but prefix the hostname with a "-". If you have a ncftp
+   bookmarks file in 2.x format, you can use shortcuts from that file for
+   the hostname. If no user and password is specifed defaults are supplied
+   for a anonymous connection.
+
+See Also:
+   ctcp(1); ftp(1); msg(1); on(5) dcc_chat, send_dcc_chat
+

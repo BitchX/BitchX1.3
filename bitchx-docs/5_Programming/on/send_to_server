@@ -1,0 +1,30 @@
+Synopsis:
+   on [<modes>]send_to_server [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook, when set, is triggered whenever the client sends data to the
+   server that matches the hook.  It is useful for catching raw messages
+   destined for the server and redefining them.  One such use is with DCC,
+   as it offers no convenient way to send a raw request.  By using the
+   silent mode, the default action (sending data to the server) is
+   suppressed, allowing any arbitrary command to be replaced.
+
+   When this hook is defined, it causes the client to monitor all traffic
+   to the server, making it somewhat resource intensive.  It is recommended
+   that it be used sparingly.  Caution should be used, as it is easy to
+   put the client into an infinite loop with this hook.
+
+Parameters:
+   $0    reference number of the target server
+   $1    Unix file descriptor of the server connection
+   $2-   text to be sent to the server
+
+Examples:
+   To change how a DCC handshake is made (on the sending side):
+      on ^send_to_server "% % % PRIVMSG % :$chr(1)DCC*" {
+         quote PRIVMSG $4 :$chr(1)SECRET_DCC $6-
+      }
+
+See Also:
+   fake-dcc(8); on(5) raw_irc; quote(5)
+

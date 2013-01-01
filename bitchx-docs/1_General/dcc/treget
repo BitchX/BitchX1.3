@@ -1,0 +1,29 @@
+Synopsis:
+   dcc treget [=]<nick> [<file>]
+
+Description:
+   DCC TREGET initiates a file transfer with a remote client that has 
+   offered the client a DCC TRESEND.  Naturally, a remote client must have 
+   already send the client a DCC TRESEND request in order for the client to 
+   start a DCC TREGET with it.  If the DCC request comes over an existing 
+   DCC CHAT connection, a '=' must be prepended to the nickname.
+
+   This command resumes the file if it exists. It is not compatible with
+   mIRC.
+
+   This method is slightly faster than a normal dcc get.
+
+   The client need not specify the name of the file to get.  If multiple
+   files are offered by the same remote client, the oldest TRESEND request
+   is processed first.
+
+Examples:
+   To accept a TRESEND from joebob:
+      /dcc treget joebob
+
+   To accept all files offered to you by DCCbot:
+      /dcc treget DCCbot *
+
+See Also:
+   dcc(1) rename, resume, send; set(4) dcc_dldir
+

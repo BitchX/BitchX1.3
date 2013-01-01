@@ -1,0 +1,26 @@
+Synopsis:
+   on [<modes>]mode [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes a mode change on a
+   channel, or whenever the client changes its modes.
+
+Parameters:
+   $0    nickname of person issuing mode change
+   $1    channel or nickname affected by mode change
+   $2    modes changed
+   $3-   arguments to modes (if any)
+
+Examples:
+   To distinguish between user modes and channel modes:
+      on ^mode "*" {
+         if ( [$1] == N ) {
+            echo *** User mode change for $1: $2-
+         } {
+            echo *** Mode change for $1 by $0: $2-
+         }
+      }
+
+See Also:
+   mode(1); on(5) mode_stripped
+

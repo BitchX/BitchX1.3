@@ -1,0 +1,11 @@
+Synopsis:
+   addlamenick <nick>
+
+Description:
+   ADDLAMENICK adds a nickname to your lamenick list. It will be matched
+   against the nick joining your channel and if you opped, they will be
+   banned by nick.
+
+See Also:
+   unlamenick(1) lamenicklist(1)
+

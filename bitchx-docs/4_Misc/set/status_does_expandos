@@ -1,0 +1,13 @@
+Synopsis:
+   set status_does_expandos <on|off>
+
+Description:
+   This variable determines wether expandos (variables, functions) in the
+   status bar are to be evaluated.
+
+See Also:
+   away(1); set(4) status_format
+
+Other Notes
+   Expandos are very costly, don't use them unless you need to :)
+

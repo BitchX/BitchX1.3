@@ -1,0 +1,33 @@
+Synopsis:
+   $copattern(<pattern> <var1> <var2>)
+
+Technical:
+   Given a pattern and two variable names that represent lists of words of
+   the same length, for every word in $var1 that is matched by the
+   specified pattern, the corresponding word in $var2 will be returned.
+   If the corresponding word in $var2 is absent (because $var2 is too
+   short), then the empty string is substituted (i.e., nothing is returned
+   for that word.)
+
+Practical:
+   When you have two variables, one that contains a list of control data,
+   and another that contains a list of secondary data, and you wish to
+   retrieve the secondary data, but you need to do it based on a query of
+   the control data, you might use this function.  One possible use might
+   be if one variable held your friends list, and another held their access
+   levels.
+
+Returns:
+   word in var2 corresponding to indexed word in var1
+
+Examples:
+   @ friends = [bob@foo.com tom@bar.com]
+   @ levels  = [20 10]
+   $copattern(*@foo.com friends levels)       returns "20"
+   $copattern(*@bar.com friends levels)       returns "10"
+   $copattern(*@*.com friends levels)         returns "20 10"
+   $copattern(*@*.net friends levels)         returns ""  (empty string)
+
+See also:
+   match(6); word(6)
+

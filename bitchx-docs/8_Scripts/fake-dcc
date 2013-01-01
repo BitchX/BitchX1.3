@@ -1,0 +1,16 @@
+Synopsis:
+   load fake-dcc
+
+Description:
+   This script is mostly meant as example usage of the PRETEND command and
+   the SEND_TO_SERVER hook.  This particular example shows how a DCC
+   handshake can be modified to use a CTCP command word other than "DCC".
+   It includes the function $getrandword(), which randomly returns a
+   single word from a list of words.
+
+See Also:
+   load(5); on(5) send_to_server; pretend(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

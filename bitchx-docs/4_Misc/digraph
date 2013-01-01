@@ -1,0 +1,50 @@
+Synopsis:
+   digraph [-<flag> [<arg0> <arg1> [<arg2>]]]
+
+Description:
+   DIGRAPH allows you to maintain your client's internal digraph table.
+   A digraph is a series of keystrokes that are used to represent other
+   characters that may not physically be available on your keyboard
+   (such as the British pound sign on U.S. keyboards).  To actually
+   enter a digraph, a key must be bound to ENTER_DIGRAPH, which then
+   makes the client interpret the next two characters as the desired
+   special character.
+
+   If no arguments are given to DIGRAPH, the current digraph table is
+   shown.  Depending on the flag given, digraphs may be added, deleted,
+   or the entire digraph table may be cleared.  If the SAVE command is
+   used, any changes made to the client's default internal digraph
+   table are saved in your .ircrc file.
+
+Options:
+   -add     This takes 3 arguments, the two characters to type to get
+              the digraph, and the digraph itself.  Any of the 3
+              characters may be represented as literal characters or
+              their decimal equivalent, in any combination.
+   -remove  This takes 2 arguments, the two characters used to obtain a
+              specific digraph.  Either the literal characters or
+              decimal values may be used, as with -add.
+   -clear   This takes no arguments, it just clears the internal
+              digraph table.
+
+Examples:
+   To add a digraph for the character "c" by composing "a" and "b":
+      /digraph -add a b c
+
+   Another way of adding the same digraph:
+      /digraph -add 61 62 63
+
+   To remove the digraph set above:
+      /digraph -remove a b
+
+   To clear the internal digraph table:
+      /digraph -clear
+
+See Also:
+   bind(4) enter_digraph; set(4) translation
+
+Other Notes:
+   If your translation table is set to anything other than Latin-1,
+   some (or all) characters may be converted to something your terminal
+   is incapable of displaying.  Your mileage will vary.
+

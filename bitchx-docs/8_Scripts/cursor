@@ -1,0 +1,16 @@
+Synopsis:
+   load cursor
+
+Description:
+   This script sets key bindings that allow the keyboard arrow keys to be
+   used to navigate backward and forward through the command history, and
+   to move it left and right on the command line.  It should work on just
+   about any terminal type.
+
+See Also:
+   bind(4) backward_character, backward_history, forward_character,
+   forward_history; load(5)
+
+Other Notes:
+   The name of the author of this script is not known.
+

@@ -1,0 +1,27 @@
+@ECHO OFF
+
+REM @configure_input@
+
+REM This is your realname.
+SET IRCNAME=BitchX for Windows User
+
+REM This is a list of servers to connect to, separated by a ":". If the first
+REM one can't be connected to, then the next one is used, and so on.
+SET IRCSERVER=irc.primenet.com:irc.cs.cmu.edu:irc.mindspring.com
+
+REM This is your username or ident.
+SET IRCUSER=WinBitchX
+
+REM This is your nickname.
+SET IRCNICK=WinBitchX
+
+REM This is your usermode.
+SET IRCUMODE="+iw"
+
+REM REM This is the vhost you want to use, if applicable.
+REM SET IRCHOST="WinBitchX.com"
+
+REM This is the name/path of the BitchX executable to run.
+REM -c #BitchX (joins #BitchX on startup)
+REM -l bx-rc (load bx-rc on startup)
+@_VERSION_@@EXEEXT@ -c #BitchX -l bx-rc

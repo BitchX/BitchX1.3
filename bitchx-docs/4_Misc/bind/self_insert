@@ -1,0 +1,15 @@
+Synopsis:
+   bind <key> self_insert
+
+Description:
+   This function overrides the key's default value, causing it to insert
+   itself into the input buffer, instead of doing what it would normally
+   do.  This can be used to intentionally prevent certain control keys
+   from being misused.
+
+   This function has a similar effect on the specified key as the
+   QUOTE_CHARACTER function does on the key it precedes.
+
+See Also:
+   bind(4) quote_character
+

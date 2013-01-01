@@ -1,0 +1,12 @@
+Synopsis:
+   window prompt <text>
+
+Description:
+   This sets the current input prompt to the given text.  It will replace
+   the $T expando as the window target when it is used in INPUT_PROMPT
+   variable.  The window prompt is set automatically anytime the client
+   detects an EXECed process waiting for input.
+
+See Also:
+   Special_Vars(7); set(4) input_prompt
+

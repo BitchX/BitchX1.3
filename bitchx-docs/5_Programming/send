@@ -1,0 +1,12 @@
+Synopsis:
+   send <text>
+
+Description:
+   This command provides a convenient mechanism for scripts, aliases, key
+   bindings, etc. to send a line of text to the current channel or query.
+   It is also useful for chatting while COMMAND_MODE is off.  Other than
+   the ability to send a message to a query, SEND is identical to SAY.
+
+See Also:
+   msg(1); say(1); set(5) command_mode
+

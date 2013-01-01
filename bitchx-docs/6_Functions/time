@@ -1,0 +1,27 @@
+Synopsis:
+   $time()
+   $utime()
+
+Technical:
+   These functions return the current time in utc format.  The only
+   difference between the two is that $time() is accurate to the second,
+   while $utime() is accurate to the microsecond.  Neither function takes
+   any arguments.
+
+Practical:
+   Both functions return a long unsigned integer representing the number
+   of seconds since 18:00, 31 December 1969, which can be parsed into a
+   human-readable format by $stime().  In addition, $utime() returns an
+   additional integer, representing the number of microseconds past the
+   first number that the current time is.
+
+Returns:
+   utc time, plus number of microseconds past utc time for $utime()
+
+Examples:
+   $time()      might return "850381369"
+   $utime()     might return "850381369 56367", which is "850381369.056367"
+
+See Also:
+   stime(6)
+

@@ -1,0 +1,20 @@
+Synopsis:
+   $absstrlen(<string>)
+
+Technical:
+   This function is used to determine the length, in characters, of a given
+   string, while stripping ansi codes from it. 
+
+Practical:
+   This function is the same as $strlen() except that it will strip
+   ansicodes from the string so it will count everything but the 
+   ansicodes. 
+
+Returns:
+   >0   number of characters in string
+    0   no string given
+
+Examples:
+
+   $abbstrlen($cparse("%ghello"))    	   returns "5"   
+   

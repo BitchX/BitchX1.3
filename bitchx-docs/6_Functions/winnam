@@ -1,0 +1,24 @@
+Synopsis:
+   $winnam(<refnum>)
+
+Technical:
+   This returns the window name of the window specified by <refnum>, if it
+   has one. If no arguments are passed, the function defaults to the current
+   window.
+
+Practical:
+   This function is useful to scripts that need to know the name of the
+   current window.
+
+Returns:
+   Name of the window specified by <refnum>, or name of the current window if
+   no arguments are passed.
+   
+   Nothing is returned if the window has no name.
+
+Examples:
+   $winnum()            returns name of current window, if any
+
+See Also:
+   set(4) status_window; winnum(6)
+

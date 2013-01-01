@@ -1,0 +1,16 @@
+Synopsis:
+   window add <name>
+
+Description:
+   This makes all messages from the specified name go to the current ircII
+   window.  The name can be a nickname or a channel, and does not have to
+   exist prior to being added to the window list.  A comma-delimited list
+   of names may be specified as well.
+
+Examples:
+   To add channel #blah for joebob to the current window list:
+      /window add #blah,joebob
+
+See Also:
+   window(4) remove
+

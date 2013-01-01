@@ -1,0 +1,53 @@
+Synopsis:
+   $mask(<type> <address>)
+
+Technical:
+   This function returns <address> in a wildcard mask according to the type
+   specified by <type>. The mask types are defined in the following table:
+   
+    <type>     <address> has a hostname       <address> has an ip
+  -------------------------------------------------------------------
+      0            *!u@h.d                        *!u@d.h
+      1            *!*u@h.d                       *!*u@d.h
+      2            *!*@h.d                        *!*@d.h
+      3            *!*u@*.d                       *!*u@d.*
+      4            *!*@*.d                        *!*@d.*
+      5            n!u@h.d                        n!u@d.h
+      6            n!*u@h.d                       n!*u@d.h
+      7            n!*@h.d                        n!*@d.h
+      8            n!*u@*.d                       n!*u@d.*
+      9            n!*@*.d                        n!*@d.*
+      10           *!*@h.d                        *!*@d.*
+      11           *!*u@h.d                       *!*u@d.*
+      12           n!*@h.d                        n!*@d.*
+      13           n!*u@h.d                       n!*u@d.*
+
+   where n=nick, u=user, h=host, and d=domain
+
+   With the following modifications:  In the ``local'' portion of
+   the hostname, all sequence of numbers are substituted with a
+   single '*'.  In the username, leading ~'s are also substituted
+   with a single '*'.
+
+Returns:
+   <address> in a wildcard mask according to <type>
+
+Examples:
+   $mask(3 foo!bar@long.host.blah.com)
+      returns:
+   *!*bar@*.blah.com
+
+   $mask(10 nick!user@ppp-147-0-52-129.frobitz.com)
+      returns:
+   *!*@ppp-*-*-*-*.frobitz.com
+
+See also:
+  uhc(6); deuhc(6)
+
+Other Notes:
+   This function strips all tildes ('~') from the left of the username. For
+   script writers, this means that in mask types 0 and 5, the function is
+   *NOT* guaranteed to produce a mask matching the given address. If a script
+   is to use these types, they should expect tildes to be stripped and be able
+   to act accordingly.
+

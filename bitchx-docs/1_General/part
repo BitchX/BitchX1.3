@@ -1,0 +1,31 @@
+Synopsis:
+   part <channel>|* [:<part message>]
+
+Description:
+   PART makes you leave a channel.  That's it.  If you happen to be on
+   multiple channels, you may leave more than one at the same time. 
+   You may also specify a "*", which is interpreted as your current
+   channel.  As with QUIT, you may specify a "leaving message."
+   
+Examples:
+   To leave channel #foobar:
+      /part #foobar :I'm going to #fubar, it's cooler!
+
+   To leave your current channel:
+      /part *
+
+   To leave channels #foo and #bar at the same time:
+      /part #foo,#bar
+
+Aliases:
+   LEAVE is technically identical in operation to PART.  However, it is
+   redefined (and enhanced) by an alias of the same name in 2.8script,
+   which is automatically loaded when the client is started.
+   
+See Also:
+   2.8script(8); join(1); on(5) leave; set(4) novice
+
+Restrictions:
+   If you specify "*" as the channel to leave, you may not specify any
+   other channels to leave at the same time.
+

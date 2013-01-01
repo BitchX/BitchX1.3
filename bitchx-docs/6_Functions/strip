@@ -1,0 +1,26 @@
+Synopsis:
+   $strip(<chars> <text>)
+   $pass(<chars> <text>)
+
+Technical:
+   Both functions are used to single out a set of characters within a given
+   string.  The $strip() function removes all occurrences of the characters,
+   while $pass() returns them.
+
+Practical:
+   The functions have varying uses.  The $strip() function is often used to
+   remove any possibly "dangerous" characters from untrusted input; $pass()
+   is convenient for counting the number of times certain characters appear
+   in the text.
+
+Returns:
+   strip: input text with characters removed
+   pass:  input characters found in input text
+
+Examples:
+   $strip(aeoiu hello there)            returns "hll thr"
+   $pass(aeiou hello there)             returns "eoee"
+
+See Also:
+   stripansi(6); tr(6)
+

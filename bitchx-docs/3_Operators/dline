@@ -1,0 +1,12 @@
+Synopsis:
+   dline <user@host>,<user@host> :<comment>
+
+Description:
+   DLINE is used to block a client from the irc server.  It works
+   similarly to a KLINE, except that a reason must be given (even if it
+   is meaningless or flat-out wrong). Multiple user@host may be specified
+   using comma's. The ":" specify's the comment. 
+
+Restrictions:
+   This command is limited to irc operators.  
+

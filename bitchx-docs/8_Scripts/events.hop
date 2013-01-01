@@ -1,0 +1,17 @@
+Synopsis:
+   load events.hop
+
+Description:
+   This scripts consists of a set of hooks designed to mimic the look of
+   the MODERN_ART setting found in ancient ircII clients.  It primarily
+   computes the total number of items returned from WHO, LIST, and NAMES
+   once they are finished.  It also places the nickname of the last
+   person to MSG you in STATUS_USER in the status bar.
+
+See Also:
+   environment(8); events(8); load(5); on(5); set(4) status_user
+
+Other Notes:
+   This script was originally written by Carl von Loesch (lynx).  It was
+   mildly updated by Jeremy Nelson (hop), jnelson@acronet.net.
+

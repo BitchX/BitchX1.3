@@ -1,0 +1,16 @@
+Synopsis:
+   ajoin <channel> [key]
+
+Description:
+
+   AJOIN will join the channel every time you connect to a server. These are
+   saved using SAVE command. 
+
+Examples:
+   /ajoin #bitchx
+   /ajoin #bitchx bitches
+
+See Also:
+   unajoin(1); ajoinlist(1);  JOIN_NEW_WINDOW(5);
+
+

@@ -1,0 +1,39 @@
+Synopsis:
+   switch (<control text>) { (<switch>) { <body> } }
+
+Description:
+   SWITCH is similar to C's switch statement.  It allows for multiple
+   alternatives to a given "control" statement where more than two
+   possible values exist.  It is functionally similar to IF except it
+   doesn't require excessive nesting for multiple alternatives.
+
+   Whitespace is not significant any any part of SWITCH.  Braces may
+   appear anywhere, and multiple switches may appear on the same line
+   or on individual lines.  No logic takes place inside the switch, only
+   string comparisons.  For this reason, the expression parser is not
+   needed (nor allowed), as everything is assumed to be a string, and
+   variables are expanded.
+
+Examples:
+   A simple switch that checks the value of an arbitrary input:
+      switch ( $0 ) {
+         ( foo ) {
+            <do action for "foo">
+         }
+         ( bar ) ( blah ) {
+            <do action for "bar" or "blah">
+         }
+         ( * ) {
+            <do action for everything else>
+         }
+      }
+
+See Also:
+   if(5); fe(5); fec(5)
+
+Restrictions:
+   EPIC does not support a break-like mechanism, as one would find in C.
+   This makes it impossible to implicitly simulate C's "fall-through"
+   capability.  FE is better suited to the task of matching multiple
+   independent strings.
+

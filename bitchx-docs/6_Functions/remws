@@ -1,0 +1,18 @@
+Synopsis:
+   $remws(<lwords> / <rwords>)
+
+Technical:
+   This function simply returns <rwords> with all of the words to the left
+   of the / removed.
+
+Returns:
+   <rwords> with <lwords> removed
+
+Examples:
+   $remws(foo bar / test blah foo fnord bar nyah)
+      returns
+   "test blah fnord nyah"
+
+See Also:
+   remw(6); uniq(6);
+

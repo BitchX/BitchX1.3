@@ -1,0 +1,23 @@
+Synopsis:
+   on [<modes>]exit [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered when the client is about to exit normally (from
+   the QUIT command, etc.).  It is mostly useful for doing cleanup before
+   exiting, such as saving any current settings.  It cannot be used to
+   trap the QUIT command; the client will exit immediately after this
+   hook is triggered..
+
+Parameters:
+   $0    always the string "Exiting"
+
+Examples:
+   Save current settings before exiting:
+      on ^exit "*" {
+         save all
+         echo Now exiting ircII-${J}...
+      }
+
+See Also:
+   exec(5); quit(1)
+

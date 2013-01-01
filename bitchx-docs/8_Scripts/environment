@@ -1,0 +1,20 @@
+Synopsis:
+   load environment
+
+Description:
+   This script mainly serves as an example of the flexibility of EPIC's
+   hooks.  It redefines most of them, named hooks and server numerics alike,
+   to return a customized response.
+
+   One neat thing it does is to automatically add any nickname detected by
+   NOTIFY as a signon to an internal nickname list.  It uses the same
+   method as the TABKEY and TC scripts (and in fact relies on them).  The
+   nickname list is shared between the scripts.
+
+See Also:
+   events(8); events.hop(8); load(5); notify(1); on(5); tabkey(8);
+   tabkey.wc(8); tc(8)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

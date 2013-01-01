@@ -1,0 +1,22 @@
+Synopsis:
+   set realname [<text>]
+
+Description:
+   If set, the client will use the value of this variable as its IRCNAME
+   when connecting to new servers.  The variable may be set to anything
+   desired, including nothing.  If unset, the client will use the value
+   in the environment variable IRCNAME, or failing that, the value in
+   the user's GCOS field in the system password file.
+
+Aliases:
+   Setting this variable is essentially equivalent to using the REALNAME
+   command.
+
+See Also:
+   Environment(7); realname(4); reconnect(1); server(1)
+
+Other Notes:
+   The nature of irc servers is such that this information cannot be
+   changed on the fly.  The client must establish a connection with a new
+   server (or reconnect to the current one) for the setting to take
+   effect.

@@ -1,0 +1,22 @@
+Synopsis:
+   motd [<server|nickname>]
+
+Description:
+   This is used to display a server's Message of the Day.  All servers by
+   default will send this message to the client when it first connects to
+   the server (though it is often not displayed by the client).  These
+   messages typically tell a little about the server connected to, its
+   various policies, who to contact with questions or problems, etc.
+
+   If a server is specified, that server's motd is retrieved.  If a user's
+   nickname is given, that user's server is queried.  Otherwise the
+   default is the client's current server.
+
+Other Notes:
+   Users are encouraged to read the Message of the Day of any server they
+   use.  In some cases, the server administrator may need to inform all
+   users of something, and the MOTD is the most convenient way.  In any
+   event, users should be aware of a server's policies if they use that
+   server, as they will be held accountable for their actions whether
+   they are aware of such policies or not.
+

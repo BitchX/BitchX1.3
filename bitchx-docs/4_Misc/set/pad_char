@@ -1,0 +1,15 @@
+Synopsis:
+   set pad_char [<character>]
+
+Description:
+   If this variable is set, the character it is set to will be used to pad
+   right-aligned text, instead of using spaces.  It can be set to a space,
+   or unset, to return to the default behavior.
+
+See Also:
+   Expressions(7)
+
+Other Notes:
+   This variable can actually be set to a string of any length.  However,
+   only the first character is actually significant in this context.
+

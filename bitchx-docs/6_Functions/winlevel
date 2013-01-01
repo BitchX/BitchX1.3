@@ -1,0 +1,13 @@
+Synopsis:
+   $winlevel(<window name/refnum>)
+
+Technical:
+   This function takes a window description as an argument and returns that
+   window's lastlog levels.
+
+Returns:
+   specified window's lastlog levels
+
+See Also:
+   window(4) lastlog, level; set(4) lastlog, lastlog_level
+

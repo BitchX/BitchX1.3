@@ -1,0 +1,16 @@
+Synopsis:
+   load shell
+
+Description:
+   This script allows the user to start an interactive command shell from
+   within the client.  It supplies a simple /shell command that starts the
+   shell in a new window.  This script requires that the external ircflush
+   program be available (it should be if the client's installation
+   defaults were used).
+
+See Also:
+   exec(5); load(5)
+
+Other Notes:
+   This script was written by a person or persons unknown.
+

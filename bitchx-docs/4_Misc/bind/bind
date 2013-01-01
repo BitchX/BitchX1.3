@@ -1,0 +1,38 @@
+Synopsis:
+   bind [<key/series> [<function> [<args>]]]
+
+Description:
+   BIND is used to bind a keystroke (or series of keystrokes) to a given
+   function or command.  Traditionally, such key bindings have been used
+   for cursor control and input line editing.  However, there really is
+   no limit to what can be bound to a key.
+
+   Most often, functions are bound to a control key (typing a key while
+   depressing the control key on the keyboard).  EPIC provides a mechanism
+   for overriding existing bindings to insert literal characters, by binding
+   a key to QUOTE_CHARACTER.
+
+   Using BIND with no specified function will display the function bound
+   to the given key.  If no key is given, all bindings are displayed.
+
+Examples:
+   To bind the QUOTE_CHARACTER function to ^Q (control-Q):
+      /bind ^Q quote_character
+
+   To bind the right arrow (ESC-[-C) to FORWARD_CHARACTER:
+      /bind ^[ meta1_character
+      /bind meta1-[ meta2_character
+      /bind meta2-C forward_character
+
+See Also:
+   Key_Bindings(7); parsekey(5); rbind(4)
+
+Other Notes:
+   Case is important with literal characters with BIND.  However, it is
+   not important in control characters.  Thus, 'C' and 'c' are treated
+   independently, but '^C' and '^c' are the same.
+
+   Be careful when binding literal keys (such as 'c' alone) to functions.
+   If the wrong keys get bound, it may be impossible to unbind them
+   without restarting the client.
+

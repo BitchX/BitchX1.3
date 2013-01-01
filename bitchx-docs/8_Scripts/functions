@@ -1,0 +1,26 @@
+Synopsis:
+   load functions
+
+Description:
+   This script contains several functions useful in scripting for text
+   display.  Of primary interest are $format() and $lformat().  They
+   behave similarly to using the $[]var notation, except they will not
+   truncate text that is wider than the specified width.
+
+   Also included are $pluck(), $notword(), and $remove(), which are really
+   just aliases to EPIC's builtin functions $remw(), $notw(), and $remw()
+   (again).
+
+   Refer to Section 6 of the help files for more information on the
+   myriad functions built into the client.
+
+See Also:
+   Expressions(7); load(5); notw(6); remw(6)
+
+Other Notes:
+   Originally, this script contained many more functions, and a number of
+   aliases.  Though still present in the script source code, they are
+   commented out, as they have been obsoleted by builtin capabilities of
+   the client.  The original functions were authored by Ian Frechette
+   (Daemon), frechett@spot.colorado.edu.
+

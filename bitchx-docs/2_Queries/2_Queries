@@ -1,0 +1,11 @@
+Section 2: Server Queries                                                   
+
+This section addresses the other half of EPIC's must-know commands, server
+queries.  These are commands that, in one way or another, ask an irc server
+for some information.  This might entail a listing of current channels, a
+list of people on your current channel, or some detailed information about
+a particular user.
+
+These commands aren't quite as important as those in Section 1, but you
+should make yourself familiar with them.
+

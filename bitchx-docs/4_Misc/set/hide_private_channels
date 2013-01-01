@@ -1,0 +1,11 @@
+Synopsis:
+   set hide_private_channels [on|off|toggle]
+
+Description:
+   When turned on, the client will not display the name of any current
+   channel in the status bar if that channel is +p or +s.  Instead, it
+   will display "*private*".
+
+See Also:
+   mode(1)
+

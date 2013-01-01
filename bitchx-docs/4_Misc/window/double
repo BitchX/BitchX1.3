@@ -1,0 +1,12 @@
+Synopsis:
+   window double [on|off|toggle]
+
+Description:
+   When turned on, this causes the current window to use a "doubled" status
+   bar.  In other words, the status bar is two lines high instead of one,
+   allowing more information to be visible at once.  Each window may have a
+   double status bar independently of the rest.
+
+See Also:
+   set(4) status_format
+

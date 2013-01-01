@@ -1,0 +1,13 @@
+Synopsis:
+   ctcp <nick>|<channel> cdcc <command>
+    commands are as follows.
+    <help|resend|resume|send|tresend|tsend|list|info|queue>
+
+Description:
+   This is a part of the CDCC system builtin to BitchX. These are  the
+   for transfering files using the dcc protocol. 
+
+Aliases:
+
+See Also:
+

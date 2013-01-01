@@ -1,0 +1,97 @@
+Synopsis:
+   if (<condition>) <then>
+   if (<condition>) { <then> } [{ <else> }]
+   if (<condition>) { <then> } elsif (<condition>) { <then> } else { <then> }
+
+Description:
+   IF is the general purpose control statement for testing the truth/false
+   value of a given condition.  If the condition is true, it performs
+   some action; if false, some alternate action.  The condition does not
+   necessarily need to be a numeric comparison.  It may be a function whose
+   return value is evaluated for truth or falsity, or compared against some
+   other value (which might also be a function return value).  Expressions
+   are generally of the following forms:
+
+      (  exp )           tests for existence of exp (usually a variable)
+      ( !exp )           tests for non-existence of exp
+      (  exp1 == exp2 )  tests whether exp1 equals exp2
+      (  exp1 != exp2 )  tests whether exp1 does not equal exp2
+      (  exp1 && exp2 )  tests for existence of exp1 and exp2
+      (  exp1 || exp2 )  tests for existence of exp1 or exp2 or both
+      (  exp1 ^^ exp2 )  tests for existence of exp1 or exp2, not both
+      (  exp1 <  exp2 )  tests whether exp1 is less than exp2
+      (  exp1 >  exp2 )  tests whether exp1 is more than exp2
+      (  exp1 <= exp2 )  tests whether exp1 is less than or equal to exp2
+      (  exp1 >= exp2 )  tests whether exp1 is more than or equal to exp2
+
+   The "else" portion of an IF statement is not required.  Additionally,
+   if the "then" portion is only a single statement, the curly braces are
+   not required either.  The expression (exp) is evaluated as though it
+   were within a ${} construct, such that
+
+      if ( blah ) ...
+
+   would expand "blah" to $blah, then test the value of $blah.  Variables
+   can also be placed inside the expression parser, such that
+
+      if ( [$blah] ) ...
+
+   is equivalent to the previous statement (though it isn't as efficient).
+   Both forms may be combined in the same expression.  Numbers are treated
+   as constants, so in order to expand numeric expandos, such as $0, you
+   must use the expression parser, as above.  Strings must also be passed
+   through the expression parser (otherwise they are interpreted as
+   variables), and are compared case-insensitively.
+
+   As in C, assignment operators may be used inside IF statements.  This is
+   generally not recommended, if only because it can make the code rather
+   confusing, but there are times when it can prove to be useful.  The
+   following:
+
+      if ( foo = 3 > bar ) ...
+
+   would first set the value of $foo to 3, and then compare it with $bar.
+   Note that the @ operator is not needed (and in fact is not even allowed).
+   Gratuitous use of parenthesis is recommended with this notation.
+
+   Finally, as with other ircII-EPIC control statements, the curly braces
+   may be placed anywhere.
+
+Examples:
+   The following two statements are functionally equivalent:
+      if ( foo == bar ) echo foo and bar are the same
+      if ( foo == bar ) {
+         echo foo and bar are the same
+      }
+
+   These are also equivalent:
+      if ( !foo ) ...
+      unless ( foo ) ...
+
+   Braces are required for a multi-line then portion:
+      if ( foo == bar ) {
+         echo foo and bar are the same
+         echo that's so cool!
+      }
+
+   Like other control statements, IFs may be embedded:
+      if ( foo ) {
+         if ( bar ) {
+            echo foo and bar are the same
+            echo that's so cool!
+         }
+      }
+
+   Function return values can be evaluated too:
+      if ( rmatch(foobar *blah* *bar) ) {
+         echo it matched
+      }
+
+Aliases:
+   UNLESS is the exact opposite of IF.  It is essentially the same applying
+   the negation operator (!) to the entire IF condition.
+
+Other Notes:
+   The "then" and "else" portions aren't required to contain anything.  Use
+   of the negation operator and UNLESS obsolete this practice, however.
+

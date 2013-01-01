@@ -1,0 +1,40 @@
+Synopsis:
+   load basical
+
+Description:
+   This script is a collection of simple, though oft-used, aliases.  It is
+   usually loaded automatically when the client starts.
+
+     Alias        Description                                             
+     /a           same as AWAY
+     /c           same as CHANNEL
+     /ch          same as CHANNEL
+     /chop <x>    give user channel mode +o in current channel
+     /dmsg <x>    send a MSG acroiss an existing DCC chat connection
+     /dquery <x>  start a query with an existing DCC chat connection
+     /e           same as EXIT
+     /h           same as HELP
+     /i           same as INVITE
+     /j           same as JOIN
+     /k           same as KICK, for current channel
+     /l           same as LIST
+     /log         same as SET LOG
+     /m           same as MSG
+     /mo          same as MODE
+     /n           same as NAMES
+     /s           same as SIGNOFF
+     /show        sends output of an EXEC command to the current target
+     /t           same as TOPIC
+     /umode       sets user modes
+     /unchop      opposite of /chop
+     /w           same as WHOIS
+     /wdetected   do WHOIS for the last nickname detected by NOTIFY
+
+See Also:
+   alias(8); away(1); bigcheese(8); dcc(1); exec(5); help(1); invite(1);
+   ircprimer(8); join(1); kick(1); list(2); load(5); msg(1); mode(1);
+   names(2); notify(1); set(4) log; signoff(1); topic(1); whois(2)
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx) and Troy Rollo (troy).
+

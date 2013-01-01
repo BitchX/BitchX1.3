@@ -1,0 +1,21 @@
+Synopsis:
+   $rigtype(<levels>)
+
+Technical:
+   Takes an space-separated list of ignore levels and returns all entries in
+   the ignore(1) list matching *only* those levels. No more, and no less.
+
+Returns:
+   space-separated list of ignore(1) list entries matching the levels
+   specified in <levels>
+
+Examples:
+   /ignore foo!bar@blah.com ALL
+   /ignore a!b@c.d MSGS NOTICES
+   
+   $rigtype(MSGS)                /* returns "FOO!BAR@BLAH.COM A!B@C.D" */
+   $rigtype(ALL)                 /* returns "FOO!BAR@BLAH.COM" */
+
+See Also:
+   ignore(1); rigmask(6); igmask(6); igtype(6)
+

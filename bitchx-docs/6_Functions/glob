@@ -1,0 +1,33 @@
+Synopsis:
+   $glob(<file glob pattern>)
+
+Technical:
+   This function is used to find filenames that are matched by specified
+   patterns.  This function is controlled by a compile time option, so it
+   may not be available on every installation.  Multiple patterns may be
+   specified.  Hidden files (dot-files) are not displayed unless a glob
+    pattern beginning with a dot is given.
+
+Practical:
+   This function gives the client the file globbing abilities of modern
+   Unix command shells.  It will attempt to find any file or directory
+   names matching the given glob pattern.  This is highly useful for
+   listing files, or finding files with similar names.
+
+Returns:
+   list of files matching input glob pattern, nothing if none match
+
+Examples:
+   $glob(~/*)    returns all non-hidden files in your home directory
+   $glob(*)      returns all non-hidden files in your current directory
+   $glob(.*)     returns all hidden files in your current directory
+   $glob(f*)     returns all non-hidden files that start with "f" in cwd
+
+See Also:
+   fexist(6); fsize(6)
+
+Restrictions:
+   This function may not be present in all clients.  A compile-time option
+   is available to disable it.  The function is present if the string
+   returned by $info(o) has a "g" in it.
+

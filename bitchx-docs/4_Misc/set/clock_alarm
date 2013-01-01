@@ -1,0 +1,14 @@
+Synopsis:
+   set clock_alarm [<time>|off]
+
+Description:
+   This variable sets an alarm that will go off that the specified time.
+   The time format may be in either 12-hour (AM or PM) or 24-hour format;
+   if no "AM" or "PM" is given, 24-hour format is assumed.  The alarm
+   itself consists of a one-line message and a beep, repeated every 10
+   seconds until the next minute has elapsed.  The setting of CLOCK has
+   no effect on the alarm.
+
+See Also:
+   set(4) clock
+

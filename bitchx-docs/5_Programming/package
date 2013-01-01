@@ -1,0 +1,21 @@
+Synopsis:
+   package <name>
+
+Description:
+   The PACKAGE command allows a script to "group" all of the assigns, aliases,
+   binds, ON hooks (and stubs) under a common package name. When the PACKAGE
+   command is used, any alias/assigns/on that are registered until the end of
+   the file are given the current package name. The package name can be changed
+   anywhere in a script, even if PACKAGE had been previously used. However,
+   packages only last until the end of the file, they never propagate
+   upwards. Scripts that are loaded by other scripts may put themselves
+   under a different package name than the one being used by the loading
+   script. By default, a script is put into the package that is currently
+   active in the script that loaded it (or * if no package is active)
+
+Options:
+   <name>         name of the package to group the current script under
+
+See Also:
+   load(5); stub(5); unload(5); on(5) unload
+

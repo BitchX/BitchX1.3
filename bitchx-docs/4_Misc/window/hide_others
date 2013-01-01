@@ -1,0 +1,11 @@
+Synopsis:
+   window hide_others
+
+Description:
+   This is similar to WINDOW HIDE, but it hides all windows except the
+   current one.  Naturally, the current window is resized to completely
+   fill the screen
+
+See Also:
+   window(4) hide, show
+

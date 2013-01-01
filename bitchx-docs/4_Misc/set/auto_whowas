@@ -1,0 +1,16 @@
+Synopsis:
+   set auto_whowas [on|off|toggle]
+
+Description:
+   When turned on, this setting will cause the client to automatically
+   issue a WHOWAS for any WHOIS query that returns an error (generally
+   meaning the queried nickname is not on irc).  The client will limit
+   the number of WHOWAS replies displayed to the number specified by
+   the NUM_OF_WHOWAS variable.
+
+   If this variable is turned off, the client will not automatically
+   send a WHOWAS after any failed WHOIS query.
+
+See Also:
+   on(5) 401; set(4) num_of_whowas; whois(2); whowas(2)
+

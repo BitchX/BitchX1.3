@@ -1,0 +1,18 @@
+Synopsis:
+   set status_chanop [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the user
+   is a channel operator in the current channel.  If the user is not a
+   channel operator, nothing is displayed.
+
+   This string is represented as %@ in the STATUS_FORMAT string.  It is
+   taken literally in STATUS_CHANOP, and has no special meaning.
+
+Examples:
+   Customizing the channel operator status indicator:
+      /set status_chanop @
+
+See Also:
+   mode(1); set(4) status_format, status_voice
+

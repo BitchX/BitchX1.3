@@ -1,0 +1,15 @@
+Synopsis:
+   $irclib()
+
+Technical:
+   This function returns the irc library directory, specified at compile time.
+
+Practical:
+   It can be used to locate scripts or whatnot.
+
+Examples:
+   load $irclib()/script/motd                  /* loads the "motd" script */
+
+See Also:
+   load(5);
+

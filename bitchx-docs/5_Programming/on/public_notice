@@ -1,0 +1,25 @@
+Synopsis:
+   on [<modes>]public_notice [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a NOTICE is sent to any channel the
+   client is on from someone not actually on that channel.
+
+Parameters:
+   $0    nickname sending message
+   $1    channel sent to
+   $2-   text of message
+
+Examples:
+   To distinguish NOTICEs sent to the current channel vs. other channels:
+      on ^public_notice "*" {
+         if ( [$1] == C ) {
+            echo +$0+ $2-
+         } {
+            echo +$0:$1+ $2-
+         }
+      }
+
+See Also:
+   notice(1); on(5) notice
+

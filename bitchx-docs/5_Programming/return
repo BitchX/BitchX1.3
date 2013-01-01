@@ -1,0 +1,15 @@
+Synopsis:
+   return [<arguments>]
+
+Description:
+   Return ends processing of a block such as an alias, scripted function,
+   or an on hook, optionally giving it a return value.
+
+Examples:
+   alias square return ${[$0]*[$0]}
+   
+   eval echo $square(5)                      /* returns 25 */
+
+See Also:
+   alias(5); break(5); continue(5); for(5); while(4) until
+

@@ -1,0 +1,50 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> <command> [<arguments>]
+
+Description:
+   The CTCP command is a user-level interface to CTCP, the client-to-
+   client protocol.  CTCP is used for interaction with other clients on
+   the network, instead of the server.  It works by sending a specially
+   coded message to another client, which will respond to it if it
+   knows how.
+
+   The actual command sent depends on the particular client you are
+   dealing with, though most that support CTCP at all will support the
+   basic ones used by ircII.  Used in conjunction with ON, just about
+   any CTCP command can be created and used.  To find out what CTCP
+   commands a client understands, issue it a CTCP CLIENTINFO.
+
+   The normal behavior is to send the CTCP command across the network,
+   though ircII-EPIC also allows them to be sent across DCC CHAT
+   connections.  To do this, prefix the nickname with a "=".  If a "*"
+   is specified instead of a nick or channel, the command is sent to
+   the current channel.  All CTCP commands may be sent to individual
+   clients or channels, with the same destination limitations as MSG.
+
+Examples:
+   To request the version of another client:
+      /ctcp version nickname
+
+   To ping a client that you have a DCC CHAT connection to:
+      /ctcp =nickname ping
+
+   To make a client echo back the the arguments you send it:
+      /ctcp nickname echo send this back
+
+See Also:
+   ctcp(1) clientinfo; on(5) ctcp, ctcp_reply; load(5) sound; set(4)
+   no_ctcp_flood, verbose_ctcp
+
+Other Notes:
+   Aside from the CTCP commands documented here, ircII also supports a
+   command called SED.  SED stands for simple encrypted data, and is used
+   internally by the client for its built-in encryption.  It is not
+   intended for use by the user, as the results can be unpredictable.
+   See the ENCRYPT command for more information.
+
+   If you happen to be holding an encrypted conversation with another
+   person, and you send that person a CTCP, it will be encrypted as well.
+   This is useful primarily because it will encrypt DCC handshakes.  This
+   does pose an incompatibility with older ircII clients, however, as
+   they won't know how to respond properly.
+

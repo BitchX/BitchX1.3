@@ -1,0 +1,31 @@
+Synopsis:
+   stub alias|assign <alias/var>[,<alias/var>] <filename> [<filename> ...]
+
+Description:
+   The STUB command allows for a sort of dynamic script loading.  Any
+   alias or variable name may be associated with a file; that alias or
+   variable effectively becomes a stub for that file, a placeholder.
+   When that alias/variable is accessed, the file is loaded.
+
+   Stubs are always cleared when the alias or variable associated with
+   them is accessed.  That is, calling the variable again will not
+   reload the same file.  Stubs are also cleared any time a stubbed
+   file is loaded.  The file that is loaded does not necessarily need
+   to contain to redefine the alias or variable associated with it.
+   Finally, Stubs may load more than one file at a time.
+
+Examples:
+   To load the file foobar.irc when the /foo command is issued:
+      stub alias foo foobar.irc
+      
+   To load footoo.irc when $foo and $bar are accessed:
+      stub assign foo,bar footoo.irc
+
+See Also:
+   alias(5); assign(5); load(5)
+
+Other Notes:
+   STUB is not a memory management tool.  Its purpose is to minimize the
+   client's overhead at it initially starts up.  Files that are loaded
+   with STUB are not automatically unloaded later.
+

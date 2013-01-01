@@ -1,0 +1,18 @@
+Synopsis:
+   unshit <nick|nick!user@hostname> <channel|*> 
+
+Description:
+   Removes <nick|nick!user@hostname> on <channel|*> 
+   <channel> can have more than one via the use of of "," or * for all.
+
+Examples:
+
+   /unshit panasync #bitchx
+   would remove panasync from your shitlist.
+
+   /unshit panasync *
+   would add panasync on all channels
+
+See Also:
+   shitlist(1); addshit(1);
+

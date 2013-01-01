@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> yank_from_cutbuffer
+
+Description:
+   This function restores the last text string deleted from the input
+   buffer with DELETE_NEXT_WORD, DELETE_PREVIOUS_WORD, ERASE_LINE,
+   ERASE_TO_END_OF_LINE, or DELETE_TO_PREVIOUS_SPACE.
+
+See Also:
+   bind(4) delete_next_word, delete_previous_word, delete_to_previous_space,
+   erase_line, erase_to_end_of_line
+

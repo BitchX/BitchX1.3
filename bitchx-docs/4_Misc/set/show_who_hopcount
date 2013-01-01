@@ -1,0 +1,15 @@
+Synopsis:
+   set show_who_hopcount [on|off|toggle]
+
+Description:
+   When turned on, the number of server hops from the client to each user
+   in WHO output is shown.  When turned off, it is suppressed.  The only
+   reason one might turn it off for is that it can be confusing to new
+   users.
+
+See Also:
+   on(5) who; who(2)
+
+Other Notes:
+   This setting does not affect the WHO hook in any way.
+

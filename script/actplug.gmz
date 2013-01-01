@@ -1,0 +1,121 @@
+##action plugin module support for GemZ 2.5
+##Format for the plugin file must be one line per menuitem using
+## the following keyword format
+##"TITLE" TYPE TEXT GOES HERE
+##   Type Keywords are: %ACT, %PUB, %KICK or %CMD
+##   Other Keywords are %nk (nick) %pnk (possesive nick)
+##     and %ch (current channel)
+##   Comment lines must begin with a pound (#)
+##To create a new column in the submenu, put %new as the second word
+##followed by a Command keyword
+##%kick must have %nk following it immediately.
+##%cmd must be followed by a valid command... like /gimpkick
+
+
+#Greets 
+
+"A-Hi" %pub 0,12ฎ15,111,12>>15,14,7>>15,114,6>>15,112,3>>15,18,4>>15,19,2>>15,113,10>>15,17,1>>15,11,13>>15,18,7 %nk 15,11,13<<15,17,1<<15,113,10<<15,19,2<<15,18,4<<15,112,3<<15,114,6<<15,14,7<<15,111,12<<15,10,12ฎ
+"Big_Hi" %act 11,1jumps up and down, throws ฉ๐๑f๊tt๏ in the air,and hollers Yippeee! Hi It's so good to see you8,1 %nk 2,1 ~`;.~`;.*3,1`*`;.`~;`~`8,1*;.`~;`~`12,1* `;.8,1 %nk 5,1 ~`;.~`;.9,1*`;.`~;`~`* `;.8,1 %nk 13,1 ~`;.~`;6,1*`;.`~;`~`*14,1.*`;.`~;`~`* `;.8,1 %nk 10,1 ~`;.~`;.*4,1` ~`;.~`;.*11,1`;.`~;`~`7,1* `;.8,1 %nk 9,1 ~`;.~`;.*12,1`;.`~;`~`* `;.8,1 %nk 2,1~`;.~`;.*13,1`;.`~;`~`*8,1*`;.`~;
+"Smile_Hi" %pub 1,8:)1,12:)1,7:)1,13:)1,11:)1,9:)1,0 %nk 1,9(:1,11(:1,13(:1,7(:1,12(:1,8(:
+"Face_Hi" %pub 7,1{12,1=9,1^13,1*9,1^12,1=7,1}{12,1=9,1^13,1:9,1^12,1=7,1}9,1 %nk 7,1{12,1=9,1^13,1:9,1^12,1=7,1}{12,1=9,1^13,1*9,1^12,1=7,1}
+"Ice" %pub 11,0%0,11% 12,11%11,12% 2,12%12,2% 1,2%2,1%11,1 %nk 2,1%1,2% 12,2%2,12% 11,12%12,11% 0,11%11,0%
+"Fire" %pub 8,0`%0,8%,7,8`%8,7%,4,7`%7,4%,1,4`%4,1%,8,1 %nk 4,1`%1,4%,7,4`%4,7%,8,7`%7,8%,0,8`%8,0%,
+"Pine_lime" %pub 8,0`%8,8%,9,8`%8,9%,11,9`%9,11%,12,11`%11,12%,1,12 2,12`%12,2%,1,2`%2,1%,0,1 %nk 2,1,%1,2%ด12,2,%2,12%ด11,12,%12,11%ด9,11,%11,9%ด8,9,%9,8%ด9,88,8,%8,0%ด
+"C-Bar" %pub 1,2 1,3 1,7 1,4 1,6 1,5 1,8 1,9 1,10 1,11 1,12 1,13 1,14 1,15 1,1 1,2 8,1 %nk 1,1 1,2 1,3 1,7 1,4 1,6 1,5 1,8 1,9 1,10 1,11 1,12 1,13 1,14 1,15 1,1 1,2 1,3
+"Talkin" %act 8,12Welcome %nk 6,11 just like the yellow pages, let ya fingers do the talkin'
+"Hello" %pub 12,1:::7,1H12,1:::7,1E12,1:::7,1L12,1:::7,1L12,1:::7,1O12,1::11,12 %nk !
+"Hello_All" %pub 6,6-0,6H6,6-7,7-0,7E7,7-8,8-1,8L8,8-9,9-1,9L9,9-3,3-0,3O3,3-12,12---6,6-0,6A6,6-7,7-0,7L7,7-8,8-1,8L8,8-9,9-1,9!9,9-3,3-0,3!3,3-12,12-0,12!12,12-6,6-0,6!6,6-
+"Hello_Every1" %pub 7,10*0,10H8,10*0,10e9,10*0,10l11,10*0,10l13,10*0,10o7,10*0,108,10*0,10e9,10*0,10v11,10*0,10e13,10*0,10r7,10*0,10y8,10*0,10b9,10*0,10o11,10*0,10d13,10*0,10y7,10*0,10!8,10*0,10!9,10*0,1011,10*0,1013,10*
+"Welcome_Back" %pub 13,13-14,14-0,14W14,14-6,6-0,6E6,6-7,7-0,7L7,7-13,13-6,13C13,13-14,14-0,14O14,14-6,6-0,6M6,6-7,7-0,7E7,7-13,13-14,14-0,14B14,14-6,6-0,6A6,6-7,7-0,7C7,7-13,13-6,13K13,13-14,14-6,6-0,6 %nk 6,6-7,7-0,7!7,7-13,13-6,13!13,13-
+
+#Nice Stuff
+
+"Walk_Room" %new %act 11,1 walks around the channel 12,1{{trip}}11,1 sorry 12,1{{squelch}} 11,1who's that on the floor? 12,1{{crunch}} 11,1oops, nice shoes tho..12,1{{Bump}} 11,1excuse me.. 12,1{{shove}} 11,1sorry, my fault.. 12,1{{fondle}} 13,1 WOW nice ass %nk ...8,1 ahem, hi everyone.....:)
+"FireWorks" %act 8,1shoots fireworks for11,1 %nk 7,1*8,1~~~~~12,1|#####> 9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*... 11,1 %nk 7,1*8,1~~~~~12,1|#####> 9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*... 11,1 %nk 7,1*8,1~~~~~12,1|#####> 9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*... 11,1 %nk 7,1*8,1~~~~~12,1|#####> 9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*... 11,1 %nk 7,1*8,1~~~~~12,1|#####>
+"Fire_Fly" %act runs around the channel like a mad cat......Stops In front of %nk ..... Holds out his hand and Shows %nk the Colorful 11,1 >*< 12,1>*< 9,1>*< 7,1>*< 1,8FireFlys he Caught for %nk 11,1 >*< 12,1>*< 9,1>*< 7,1>*<
+"Rainbow" %act 6,6 12,12 9,9 8,8 7,7 2,2 3,3 0,7stole 6,6 12,12 9,9 8,8 7,7 2,2 3,3 0,12a little6,6 12,12 9,9 8,8 7,7 2,2 3,3 0,13bit of a6,6 12,12 9,9 8,8 7,7 2,2 3,3 0,7rainbow6,6  12,12 9,9 8,8 7,7 2,2 3,3 0,12just for6,6 12,12 9,9 8,8 7,7 2,2 3,3 0,2you8,1 %nk
+"Angel_Dust" %act 13,1Sprinkles Angel Dust All Over11,1 %nk 9,1**11,1.:15,17,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล8,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1~8,1ล7,1~11,1.:8,1 %nk 9,1**11,1.:`7,1~8,1ล7,1~11,1.:9,1`**11,1.:`7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1`~8,1ล7,1~11,1.:`9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1`**11,1.:,17,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1 %nk 7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล~11,1.:9,1`**11,1.:7,1~8,1ล
+"confetti" %act Celebrates by Tossing Confetti all over11,1 %nk 7,1" '~`*+,.7,1 3,1`*`'" ~ :, 9,1 ~ ' " -;. 11,1 : ' ` ` * 12,1- _ + ^ : 13,1, .+ * ^ * - ,14,1.:" '~`*+,. 15,1`*`'" ~ :, 6,16,1 ~ ' " -;. 5,1 : ' ` ` * 8,1- _ + ^ : 9,1, . + * ^ * - , 10,1.:" '~`*+,. 11,1`*`'" ~ :,12,1_ + ^ : 13,1, .+13,1 * ^ * - , 14,1.:" '~`*+,. 15,1`*`'" ~ :, 7,1 ~ ' " -;. 3,1 : '" '~`*+,. 2,1`*`'" ~ :, 9,1 ~ ' " -;. 6,16,1 : ' ` ` * 4,1- _ + ^ : 7,1 ,, .+ * ^ * - , 10,1.:" '~`*+,. " '~`*+,. 13,1
+"Petals" %act 8,1gently tosses rose petals all over12,1 %nk 7,1`;-`;,*-`;",`*-,'``;-;`;*;,"-`*,`-;`,`;`-;`,`-`;,*``;-,``-";*,;```-;`,`-`;,''`-``,-`*`;``,'-*.-`;.`;*;-'.'-`*.`.-`*.`*-`.-,*-`,*-`-,`-,`-,
+"Roses" %act 15,1gives %nk a dozen 8,1Yellow15,1 roses. 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1 8,1@3,1-}-,-'--15,1
+"Hot_Choc" %act passes %nk a cup of hot chocolate. 8,4__4,1P 15,1~~~~
+"Wriggle_bum" %act watches 13,1 %nk 12,1wiggle her cute little butt12,1  13,1"(_/_)"(_!_)"(_\_)"(_!_)"(_/_)" 12,1and 7,1WOW! What a butt12,1!!!7,1 Ya gotta love those7,1 cheeks12,1!!!
+"Rain" %act does a 11,1rain 15,1dance then watches as it 11,1rain 15,1all over8,1 %nk 11,1ญญญญญญญญญญญญญญญญญญญญญ8,1 %nk 11,1ญญญญญญญญญญญญญญญญญญญญญ8,1 %nk 11,1ญญญญญญญญญญญญญญญญญญญญญ8,1 %nk 11,1ญญญญญญญญญญญญญญญญญญญญญ8,1 %nk 11,1ญญญญญญญญญญญญญญญญญญญญญ
+"Pat" %act gives %nk a pat on da wittle head and says, 10,1"Awww, poor wittle %nk ."
+
+#Not so Nice Stuff
+
+"Postal" %new %act goes postal, whips out an AK-47, and Unloads on %ch
+"Ugly-stick" %act beats %nk with a custom built Ugly stick
+"Wit" %pub %nk I would really love to engauge you in a Battle of Wits but I can see your Unarmed !!!!
+"OutSider" %pub %nk As an outsider what is your opinion of the Human Race ???
+"Clue" %pub %nk If you can scrounge up another brain cell, you might captivate us further... but I doubt it. You couldn't get a clue during clue-mating season in a field full of horny clues if you smeared your body with clue musk and did the clue mating dance.
+"NewsPaper" %act smacks %nk on the head with a rolled up newspaper...now 7,1BEHAVE!!!
+"Blowup_Doll" %act gives %nk a blow up doll to make their life dream come true....to find someone as smart as them !
+"kitty" %act 13,1Sprinkles Kitty Litter All Over 9,1**11,1.:15,17,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1`~8,1ล8,1~11,1.:9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1**11,1.:7,1~8,1ล7,1~11,1.:8,1 %nk 9,1**11,1.:`7,1~8,1ล7,1~11,1.:9,1`**11,1.:`7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1`~8,1ล7,1~11,1.:`9,1**11,1.:7,1`~8,1ล7,1~11,1.:9,1`**11,1.:,17,1~8,1ล7,1~11,1.:9,1`**11,1.:~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล7,1~11,1.:9,1`**11,1.:7,1~8,1ล~11,1.:9,1`**11,1.:7,1~8,1ล
+"Caution" %pub 1,88,1C1,8a8,1U1,8t8,1I1,8o8,1N1,80,7 %nk 3,1is 7,1HERE 1,88,1C1,8a8,1U1,8t8,1I1,8o8,1N1,8
+"Scream" %pub AIEEEEEEEEEEEEEEEE!!!!!!!
+"Dynamite" %act throws a stick of 1,7 D Y N A M I T E 4,0]4,1-------7,1.`,'.12,1 Here 7,1 %nk 12,1!!! 12,1CATCH !!!
+"BandAid" %pub 8,1Does poor widdle %nk need a bandaid ? 5,5.15,10,13(:::::[]::::::)15,15,5.8,1 Awwwwww poor baby!!
+
+#Misc
+
+"Spank_Me" %new %act runs thru the Channel Naked yelling Spank Me SPANK ME !!!!!
+"Chip`n_Dip" %act passes around the CornChips `n 7,1EXTRA HOT15,1 Chilli Dip ....
+"Weeeee" %act Says Weeeeeeeeeeeeeeeeeeeeeee !!!!!!!
+"Skittles" %act gives %nk a pack of 1,9S0,3K0,7I1,8T0,10T0,7L0,3E1,9S15,1
+"Gnite" %pub 7,1*14,1*8,1*9,1*12,1*13,1*12,1*9,1*8,1*14,1*7,1*7,1 Goodnight %nk 7,1*14,1*8,1*8,1*9,1*12,1*13,1*12,1*9,1*8,1*14,1*7,1*
+"Gnite2" %pub 11,2G10,1*11,1O10,1*11,1O10,1*11,1D10,1*11,1N10,1*11,1I10,1*11,1G10,1*11,1H10,1*11,1T10,1*11,1 -(7,1 %nk 11,1)-
+"Kiss_G`Nite" %act says after kissing %nk ..2,1.I climbed up the door, and shut 2,1the stairs.....3,1I said my clothes, and pulled on my prayers.....14,1I shut off my 14,1bed, and climbed in to the light....12,1.All because %nk kissed me 12,1!!!4,1**Smoooooches** 7,1 WOW 15,1 7,1 What a kiss!!
+"Sleepy_Dust" %act 11,1opens a magic book to the sandman page and showers7,1 %nk 11,1with magic sleepy dust13,1...13,1Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*10,1...13,1 Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*...13,1Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*...13,1 13,1  Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*...13,1Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1*...13,1Z9,1z12,1z13,1z...9,1*7,1.9,1*10,1ฐ9,1*7,1.11,1* 8,1... Sweet dreams7,1 %nk
+"Sparkle" %act 0,1* ท.*11,1Says0,1* . + . * : 11,1 %nk 0,1+ * . : . : +. * .*11,1your 0,1ท * . + .0,1* : . * .+ *.ท..11,1eyes0,1 * . +. * .: +. .* +. ท. + * . * . ท. . ท 11,1twinkle0,1*. +ท . ท *0,1. * +. : . ท * . * ท. * .* +. * ท . 11,1like0,1+.**. . * ท.ท*.+ * .* ท ท*.* : ท *.11,1stars0,1* * . + ท. ท*. .*ท.ท *+. *ท.ท*.11,1in the 0,1*.: *. .ท**. *+. ท *.* + * ท. * . *0,1+.*ท.11,1nightsky0,1* * + ท . ท* : +*.* . * +:. . *.ท*. .*. ..
+"Prayer" %act Prays 7,8 LORD, GRANT ME; SERENITY TO ACCEPT THE THINGS I CANNOT 7,8  CHANGE; COURAGE TO CHANGE THE THINGS I CAN; 15,12 AND THE WISDOM TO HIDE THE BODIES 15,12  OF THOSE PEOPLE I HAD TO KICK 15,17,1 BECAUSE THEY PISSED ME OFF!
+
+
+#Kicks
+
+"WinKick" %kick %nk Hiroshima '45 - Chernobyl '86 - Windows '95 - %nk '98
+"EjecuKick" %kick %nk EjecuKick Dont CUM back !!!
+"Ponder" %kick %nk Take a little time to ponder the error of your ways !!!!
+"Wombat-Kick" %kick %nk LOOK OUT !!!!! There was a Wombat Behind you !!!
+"RunKick" %kick %nk If you run you will just die tired !!!!
+"HideKick" %kick %nk You can run but you CANT Hide !!!
+"stepline" %kick %nk Did you see the line you just steped over ya Momo ???
+"CosinKick" %kick %nk If your parents got divorced, would they still be Brothers ?
+"superkali.." %kick %nk SuperKaliFragilisticKick
+
+#Handy.irc Stuff
+
+"500mile" %cmd /500mile %ch %nk
+"Bunny" %cmd /bunny %ch %nk
+"Teddy" %cmd /teddy %ch %nk
+"Teddy_Heart" %cmd /teddyheart %ch %nk
+"Teddy_Rose" %cmd /bearrose %ch %nk
+"Tweetie" %cmd /tweetie %ch %nk
+"Sexy_Meter" %cmd /hunk %ch %nk
+"sail" %cmd /sail %ch %nk
+"Island" %cmd /island %ch %nk
+"Peek" %cmd /peek %ch %nk
+"Rotate" %cmd /asshole %ch
+"Hello" %new %cmd /hello %ch %nk
+"3D Hello" %cmd /hello3d %ch
+"This_Much" %cmd /much %ch %nk
+"Deep" %cmd /deep %ch %nk
+"Flower" %cmd /flower %ch %nk
+"Sweetie_Pie" %cmd /sweetie_pie %ch %nk
+"Hug You" %cmd /hugyou %ch %nk
+"Hi_All" %cmd /hi_all %ch
+"Big_Rose" %cmd /big_rose %ch %nk
+"Special_Angel" %cmd /angel %ch %nk
+"Dozen_Roses" %cmd /doz_roses %ch %nk
+"Mega Hug" %cmd /megahug %ch %nk
+"Pig" %new %cmd /pig %ch %nk
+"Dragon" %cmd /dragon %ch %nk
+"Snake" %cmd /snake %ch %nk
+"Toys" %cmd /toys %ch %nk
+"Octopus" %cmd /octopus %ch %nk
+"Elephant" %cmd /elephant %ch
+"Bull Shiter" %cmd /bulls %ch
+"Nyah Nyah" %cmd /nyah %ch %nk
+"Nyah Nyah 2" %cmd /nyah2 %ch %nk
+

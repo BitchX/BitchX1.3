@@ -1,0 +1,17 @@
+Synopsis:
+   on [<modes>]window_create [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a new window is created. This enables
+   defaults to be given to each window.
+
+Parameters:
+   $0    reference number or name of created window
+
+Examples
+  on -window_create "*" window double on
+                         /* doubles the status bar for each new window */
+
+See Also:
+   window(4) new
+

@@ -1,0 +1,41 @@
+Synopsis:
+   assign [[-]<variable name> [<value>]]
+
+Description:
+   ASSIGN is the general-purpose interface for creating and manipulating
+   variables.  Just about any value can be assigned, whether it be a
+   string or a number.  Internally, ircII-EPIC treats the contents of all
+   variables as strings, though it is smart enough to distinguish between
+   strings and numerical values for mathematical purposes.
+
+   The rules for variable names are similar to those of the C language;
+   they may consist of any letter, digit, or the underscore (_) character,
+   and they must begin with a letter.  Unlike C, variable names are not
+   case-sensitive (nor are their contents, though they are case-preserving).
+
+   ASSIGN is primarily used for string assignments.  It can be used for
+   mathematical purposes as well, using the ${} construct, but it can very
+   quickly become awkward and cumbersome.  Mathematical operations are
+   better suited to the @ modifier (see Expressions).
+
+Examples:
+   To assign a text string to the variable $foo:
+      assign foo this is some text string
+
+   To compute the sum of two integers:
+      assign foo ${4 + 5}
+
+   To delete a variable:
+      assign -foo
+
+See Also:
+   Expressions(7); Special_Vars(7); alias(5); eval(5); set(4) input_aliases
+
+Other Notes:
+   The default behavior of the client is to not treat variables specially
+   on the command line; they are passed as literal text.  Variables normally
+   are only expanded when used inside an alias.  This naturally poses a
+   problem for using ASSIGN with the ${} construct from the input line.  To
+   force $ expansion on the input line, set INPUT_ALIASES to on, or use EVAL.
+   This is not a bug, it is a general feature of all commands.
+

@@ -1,0 +1,12 @@
+Synopsis:
+   set insert_mode [on|off|toggle]
+
+Description:
+   When this setting is on, text typed on the input line in the middle of
+   a text string will shift the text to the right, making room for the
+   text being typed.  If it is off, the typed text overwrites anything
+   ahead of it.
+
+See Also:
+   bind(4) toggle_insert_mode
+

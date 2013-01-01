@@ -1,0 +1,26 @@
+Synopsis:
+   load nicks
+
+Description:
+   This script allows the user to assign aliases to other users' nicknames,
+   such that one only needs to type a short name when sending a MSG or
+   initiating a QUERY.  All one needs to do is ASSIGN the person's real
+   nickname to a variable with a shorter name, than messages may be sent
+   to the variable name.
+
+Examples:
+   To alias SomeBigNicknameOnDALnet's nick to something easier to handle:
+      /assign sbn SomeBigNicknameOnDALnet
+      /msg sbn hi there!
+
+See Also:
+   assign(5); load(5); msg(1); query(1)
+
+Bugs:
+   The nature of this script is such that it will expand any variable name,
+   not just those that were intended to be nickname aliases.  Care should
+   be taken to avoid misdirecting messages.
+
+Other Notes:
+   This script was written by Mike Sandrof (BigCheese).
+

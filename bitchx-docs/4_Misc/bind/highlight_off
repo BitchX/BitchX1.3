@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> highlight_off
+
+Description:
+   This function turns off any special highlighting in use prior to this
+   character, including ANSI color escape sequences.
+
+See Also:
+   bind(4) blink, bold, reverse, underline
+

@@ -1,0 +1,13 @@
+Synopsis:
+   load lynx_ircrc
+
+Description:
+   This is another sample .ircrc file.  All it does is load the BASICAL,
+   EVENTS, and MSG scripts.
+
+See Also:
+   basical(8); events(8); ircrc(8); load(5); msg(8)
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

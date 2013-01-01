@@ -1,0 +1,21 @@
+Synopsis:
+   set status_user [<text>]
+
+Description:
+   This variable is user-definable.  The text that is assigned to it is
+   displayed in the status bar as %U (or %0, see below).  The expando is
+   treated literally inside STATUS_USER, and has no special meaning.
+   This variable is provided so the user can make arbitrary information
+   available in the status bar.
+
+Examples:
+   Setting some custom string for the status bar:
+      /set status_user Client configured by IRC Systems, Inc.
+
+Aliases:
+   There are actually 9 additional user-definable variables, STATUS_USER1
+   through STATUS_USER9.  Each has a unique expando, %1 to %9.
+
+See Also:
+   set(4) status_format
+

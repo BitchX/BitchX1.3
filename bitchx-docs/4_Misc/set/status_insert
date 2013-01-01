@@ -1,0 +1,18 @@
+Synopsis:
+   set status_insert [<text>]
+
+Description:
+   This variable sets the string displayed when the client is in insert
+   mode on the input line.  When the client is not in insert mode (i.e.
+   is in overwrite mode), nothing is displayed.
+
+   This string is represented as %I in the STATUS_FORMAT string.  The %I
+   is treated literally in STATUS_INSERT.
+
+Examples:
+   Customizing the text displayed when in insert mode:
+      /set status_insert (Inserting)
+
+See Also:
+   bind(4) toggle_insert_mode; set(4) status_format, status_overwrite
+

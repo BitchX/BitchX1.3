@@ -1,0 +1,25 @@
+Synopsis:
+   on [<modes>]action [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes a CTCP ACTION.  It
+   will hook when the recipient is either the user or a channel.
+
+Parameters:
+   $0    nickname of the ACTION sender
+   $1    target of the ACTION (user's nickname or a channel)
+   $2-   message body of the ACTION
+
+Examples:
+   To distinguish personal actions from those sent to a channel:
+      on ^action "*" {
+         switch ( $1 ) {
+            ( $N ) { echo *> $0 $2- }
+            ( $C ) { echo * $0 $2- }
+            ( * )  { echo * $0/$1 $2- }
+         }
+      }
+
+See Also:
+   ctcp(1) action; describe(1); me(1); on(5) send_action
+

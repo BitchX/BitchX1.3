@@ -1,0 +1,16 @@
+alias query
+{
+	if (!$0)
+		return;
+
+	if (!querywin($0))
+	{
+		^window new name $0 hide_others query $0
+		^window logfile $CTOOLZ_DIR/$0.log
+		^window log on
+	}
+	else
+	{
+		^window show querywin($0)
+	}
+}

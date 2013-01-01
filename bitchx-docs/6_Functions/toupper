@@ -1,0 +1,28 @@
+Synopsis:
+   $tolower(text)
+   $toupper(text)
+
+Technical:
+   This $toupper() function converts all occurrences of characters in the
+   range a..z to their uppercase counterparts, A..Z.  Its counterpart,
+   $tolower(), does just the opposite, converting from A..Z to a..z.
+
+Practical:
+   This basically converts the entire input string to all capital or all
+   lowercase letters, depending on the function used.
+
+Returns:
+   input string with case converted
+
+Examples:
+   $toupper(Hello there.)          returns "HELLO THERE."
+   $tolower(Hi Bob!)               returns "hi bob!"
+
+See Also:
+   tr(6)
+
+Restrictions:
+   These functions only work on 7-bit ascii letters.  They will not convert
+   8-bit letters with the high bit set (i.e. European characters that have
+   accents, graves, etc.).  Use $tr() instead.
+

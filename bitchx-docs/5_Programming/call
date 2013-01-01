@@ -1,0 +1,35 @@
+Synopsis:
+   call
+
+Description:
+   CALL produces a gdb/dbx-like stack trace of the alias currently being
+   executed.  It returns a list of the commands currently being executed,
+   tracing back from the current command, to the command that called it,
+   and so forth until the CALL command itself it listed.  A deeply nested
+   alias might have the following alias stack:
+
+      [ 0] call
+      [ 1] go
+      [ 2] get_set
+      [ 3] get_ready
+      [ 4] on_your_marks
+      [ 5] /superalias
+
+   In this example, CALL was run from the "go" alias, which in turn was
+   called from "get_set", which was called from "get_ready", and so on, all
+   the way down to the original command executed.
+
+   Command names appear precisely as they are typed in (which means, if
+   an alias is called with a / in front of it, the slash will appear in
+   the stack listing).  Additionally, in the (unlikely) event that EPIC
+   were to crash, CALL is executed before the client terminates, to aid
+   in debugging.
+
+See Also:
+   set(4) debug
+
+Restrictions:
+   This command requires that the client be compiled with the WIND_STACK
+   #define enabled; it is enabled by default.  If the client was compiled
+   with it, the $info(o) string will have an 'a' in it.
+

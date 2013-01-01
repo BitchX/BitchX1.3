@@ -1,0 +1,11 @@
+Synopsis:
+   window grow <lines>
+
+Description:
+   This makes the current window increase in size by the specified number
+   of lines.  Any other visible windows are decreased in size accordingly
+   to accommodate the current window.
+
+See Also:
+   window(4) balance, shrink, size
+

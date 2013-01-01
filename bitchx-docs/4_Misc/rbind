@@ -1,0 +1,10 @@
+Synopsis:
+   rbind <bind function>
+
+Description:
+   This command is used to display the keys (or multi-key sequences) bound
+   to the specified function.
+
+See Also:
+   Key_Bindings(7); bind(4)
+

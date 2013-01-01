@@ -1,0 +1,19 @@
+Synopsis:
+   invite <nickname> <channel>
+
+Description:
+   This command lets you invite people to a one of your current channels.
+   This is generally used on channels that are +i (meaning people can only
+   join if someone INVITEs them; see MODE for more information on channel
+   modes), but this is not a restriction.
+
+Examples:
+   To invite foobar to channel #blah:
+      /invite foobar #blah
+
+   To join the last channel you were INVITEd to:
+      /join -invite
+
+See Also:
+   join(1); mode(1); on(5) invite
+

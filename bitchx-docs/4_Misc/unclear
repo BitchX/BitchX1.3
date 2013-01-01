@@ -1,0 +1,16 @@
+Synopsis:
+   unclear [-all|-hidden|-visible]
+
+Description:
+   This command repositions the bottom of the scrollback buffer, effectively
+   undoing the clear(4) command.
+
+Options:
+   -all      clears all windows, not just the current one
+   -hidden   clears all hidden windows
+   -visible  clears all visible windows
+
+See Also:
+   clear(4); bind(4) clear_screen; set(4) hold_mode;
+   window(4) hold_mode
+

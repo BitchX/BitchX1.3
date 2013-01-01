@@ -1,0 +1,24 @@
+Synopsis:
+   load follow
+
+Description:
+   This script was originally written as an exercise in creativity.  It
+   provides two functions intended to aid users in following other users,
+   even after their nicknames change, by using output from WHOWAS as input
+   to WHO.
+
+   The first function is $follow(), which takes a single nickname argument.
+   It attempts to find any users currently on irc with the same address as
+   that belonging to the given nickname.
+
+   The second is $ffollow(), which takes a nickname, and an optional
+   channel name, as arguments.  It is similar to $follow(), but only works
+   for users that are on the same channels as the client.  This function
+   requires that the GUH script also be loaded.
+
+See Also:
+   guh(8); load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

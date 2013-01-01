@@ -1,0 +1,14 @@
+Synopsis:
+   load disc
+
+Description:
+   This script is a simple example of BINDing more than one command to the
+   same key at once.  In this case, ^Z will set the client away, and then
+   suspend the client.
+
+See Also:
+   away(1); bind(4) parse_command, stop_irc; load(5)
+
+Other Notes:
+   This script was written by The_Edge.
+

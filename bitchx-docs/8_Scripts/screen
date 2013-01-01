@@ -1,0 +1,25 @@
+Synopsis:
+   load screen
+
+Description:
+   This script allows ircII windows to be manipulated muck like with the
+   iScreen program.  It creates a number of key bindings:
+
+     Key          Function                                                
+     ^X1 ... ^X0  swap windows 1 to 10.
+     ^Xa          goes to the last window..
+     ^Xc , ^X^C   creates a new window
+     ^Xk          kills the current window, swaps it with a hidden window.
+     ^Xl          lists the windows.
+     ^Xn          swaps the next window (in refnumbers)
+     ^Xp          swap the previous window (in refnumbers)
+     ^X           (space) swap the next window.
+     ^XC          clears all windows visible
+
+See Also:
+   load(5); window(4)
+
+Other Notes:
+   This script was written by Matthew Green (phone), mrg@mame.mu.oz.au, with
+   inspiration from Darren Reed (avalon), avalon@coombs.anu.edu.au.
+

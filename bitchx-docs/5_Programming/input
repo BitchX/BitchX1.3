@@ -1,0 +1,38 @@
+Synopsis:
+   input      "<prompt>" <command> [<arguments>]
+   input_char "<prompt>" <command> [<arguments>]
+
+Description:
+   This command is primarily for use inside scripts.  It allows the client
+   to present the user with a visible prompt for specific commands.  This
+   can be used for interactive commands, for command confirmation, etc.
+   Multiple commands may be specified if surrounded with curly braces.
+
+   The variant INPUT_CHAR words the same as INPUT, except it only takes a
+   single character.  The primary difference is that it does not require
+   that a carriage return be entered before executing the command; the first
+   keystroke will trigger it.
+
+Options:
+   -noecho    stops the echoing of characters as they are typed
+
+Examples:
+   To let a command ask for confirmation:
+      input "Are you REALLY sure you want to do this? (y/n) " {
+         if ( [$0] == [y] ) exec rm -rf *
+      }
+
+   The basis for a simple paging mechanism:
+      input_char "Press 'q' to quit, any other key to continue: " {
+         unless ( [$0] == [q] ) {
+            /* do whatever */
+         }
+      }
+
+Aliases:
+   These commands are functionally equivalent to the $"..." expando.  In
+   truth, they supersedes $"...".
+
+See Also:
+   Special_Vars(7)
+

@@ -1,0 +1,28 @@
+Synopsis:
+   dcc [<command> [<arguments>]]
+
+Description:
+   DCC stands for direct client-to-client.  The DCC command handles all
+   such connections.  There are two primary uses for DCC; bypassing the
+   irc network for chatting, and file transfers.  However, this is not
+   the limit of DCC's capabilities.
+
+   DCC connections are established with CTCP handshakes.  All this really
+   means is that connection request, connection, and rejection messages
+   are sent in CTCP format.  This is noteworthy, as other commands that
+   operate based on message type will lump DCC messages in with CTCPs
+   (including IGNORE and the client's internal logging mechanisms).
+
+Aliases:
+   Using DCC with no arguments is the same as DCC LIST.
+
+See Also:
+   ctcp(1); on(5) dcc_connect, dcc_lost, dcc_request
+
+Restrictions:
+   It is worth noting that users behind firewalls may have some problems
+   using DCC.  Depending on the nature of the firewall, such users will
+   probably be unable to initiate a DCC SEND.  Others may find that they
+   cannot use DCC at all.  This is not a bug in ircII-EPIC, it is due
+   simply to matters beyond the control of the client program.
+

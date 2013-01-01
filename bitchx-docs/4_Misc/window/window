@@ -1,0 +1,33 @@
+Synopsis:
+   window [<refnum>] [<command> [<arguments> ...]]
+
+Description:
+   The WINDOW command allows the client to display multiple "windows" of
+   irc activity at once.  Some common uses for this include using
+   separate windows for different channels, or for connecting to several
+   servers at the same time.
+
+   There are two different types of windows.  The first, and the more
+   widely used of the two, are ircII windows.  These work by splitting
+   the screen vertically, such that there are multiple panes stacked on
+   top of one another.  Each window has its own status bar, which is
+   what separates them.
+
+   The second variety is less common, and depends largely on the
+   environment in which the client is launched.  The client is able to
+   interface with the X Window System, and with the terminal SCREEN
+   program.  Under X, the client can spawn a new xterm with a client
+   running in it.  Under SCREEN, a new screen is created with similar
+   properties.
+
+   In practice, the first type are the only windows used.  Most of the
+   various WINDOW commands deal with them.  They are also considerably
+   more stable than the second type.
+
+Other Notes:
+   On some systems, support for the second type of window (X/SCREEN) is
+   not even compiled into the client.  It's use is discouraged except
+   for debugging purposes, as it may well crash the client, or worse.
+   It is not expected to be supported in future versions. If <refnum>
+   is given, all <commands> will be executed on that window.
+

@@ -1,0 +1,33 @@
+Synopsis:
+   kbi [<channel>] <nickname> [<reason for kick>]
+
+Description:
+   This command "kicks/bans/ignores" the specified user off of the specified 
+   channel. It is typically used to remove troublemakers, flooders, or people
+   otherwise making a nuisance of themselves on the channel.  The reason
+   for the kick is recommended, but not required by the IRC servers.
+
+Examples:
+   To kick foobar out of channel #blah:
+      /kbi #blah foobar Go away!
+
+   To kick foobar out of your current channel:
+      /kbi foobar I said go away!!
+
+See Also:
+    ignore(1); load(5) autokick; mode(1); on(5) kick
+
+Restrictions:
+   KICK is limited to channel operators (users with channel mode +o; see
+   MODE for more information) on the specified channel.
+
+Other Notes:
+   It is important to note that channel operators are the single absolute
+   authority on their channels, and as such they may kick out anyone they
+   choose for any reason (or no reason at all).  Keep in mind, however,
+   that doing so for such petty reasons won't make you very popular with
+   other users, and it isn't unheard of for users to abusively avenge the
+   kick.  If someone is annoying you, using IGNORE (or SILENCE, if
+   available) is a better solution.  KICK should be reserved for users who
+   are harassing your channel or its members in general.
+

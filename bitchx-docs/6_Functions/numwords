@@ -1,0 +1,22 @@
+Synopsis:
+   $numwords(<word list>)
+
+Technical:
+   This function serves as a replacement for the $#var notation when you
+   want to count the words in a string not held in a variable.
+
+Practical:
+   This function is used to count the number of words in an arbitrary
+   string.  Normally, you could get this value with the $#var form, but
+   that doesn't work for parameter expandos or function return values.
+
+Returns:
+   number of words in given string
+
+Examples:
+   $numwords(hello there bob)                returns 3
+   $numwords()                               returns 0
+
+See Also:
+   Special_Vars(7); strlen(6)
+

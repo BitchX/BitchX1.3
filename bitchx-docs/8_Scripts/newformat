@@ -1,0 +1,23 @@
+Synopsis:
+   load newformat
+
+Description:
+   This script is primarily meant as an extension to 2.8script, though it
+   can be used alone without problems.  It mostly adds commands useful to
+   irc operators, as well as cleaning up STATS and TRACE output.
+
+     Command
+     /cleantr   purge the list of servers from the last TRACE
+     /conall    connect to all servers from last TRACE (usually after
+                | restarting one's server)
+     /invite    same as INVITE, but current channel is used if none given
+     /topic     same as TOPIC, but current channel is used if none given
+     /tt        toggles display of normal users in STATS and TRACE output
+                | (also bound to ESC-t)
+
+See Also:
+   2.8script(8); invite(1); load(5); stats(2); tls(8); topic(1); trace(2)
+
+Other Notes:
+   This script is assumed to have been written by Matthew Green (phone).
+

@@ -1,0 +1,27 @@
+Synopsis:
+   $listen([<port>])
+
+Technical:
+   This function causes the client to bind to the given TCP port and listen
+   for incoming connections.  The client is not permitted to listen to any
+   port below 1025; they are reserved for privileged system use.  If no
+   port is given, the system allocates an arbitrary port above 1024.
+
+Practical:
+   This function makes the client listen to the given port.  This allows,
+   theoretically, someone to connect to that port to use whatever services
+   you have scripted for it.  This could be used for something simple,
+   such as a daytime or motd generator, or something more complex like a
+   file server.
+
+Returns:
+   port number bound to, or nothing if error
+
+Examples:
+   $listen(1025)             returns 1025
+   $listen(1024)             error, returns nothing
+   $listen()                 returns a system-allocated port number
+
+See Also:
+   connect(6); dcc(1) close, raw; on(5) dcc_raw
+

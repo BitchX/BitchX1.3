@@ -1,0 +1,27 @@
+Synopsis:
+   $usermode([<server>])
+
+Technical:
+   This function returns the client's current user mode for the specified
+   server.  It will accept either a server name or list number.  If no
+   server is given, the one for the current window is assumed.
+
+Practical:
+   The information returned with this function is identical to the
+   contents of STATUS_UMODE in the status bar for the current server.  It's
+   useful for getting the current usermodes for hidden windows without
+   switching to them.  It is useful when used in conjunction with
+   $winserv().
+
+Returns:
+   user mode string for current server (nothing if bad server or no modes)
+
+Examples:
+   $usermode()                      shows user mode for current server
+   $usermode(2)                     shows user mode for server #2
+   $usermode(irc.blah.com)          shows user mode on irc.blah.com
+   $usermode(irc.fakeserver.com)    no such server, returns nothing
+
+See Also:
+   mode(1); set(4) status_umode; winserv(6)
+

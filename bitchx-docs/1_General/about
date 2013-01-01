@@ -1,0 +1,14 @@
+Synopsis:
+   about 
+
+Description:
+   This command displays the about message that is built-in too the client.
+
+Options:
+   none
+
+Examples:
+   To display the about msg on your screen:
+      /about
+
+

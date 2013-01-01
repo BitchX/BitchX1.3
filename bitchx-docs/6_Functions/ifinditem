@@ -1,0 +1,46 @@
+Synopsis:
+   $finditem(<array> <string>)
+   $ifinditem(<array> <string>)
+   $ifindfirst(<array> <string>)
+
+Technical:
+   These functions do a binary search on the items stored in the given
+   array, looking for an exact match of the input string.  It will only
+   return the results of an exact match.  Unlike other string handlers in
+   the client, these are case-sensitive.  They only operate on arrays
+   created with the $setitem() function.
+
+   These functions differ only in which exact match they will return.  The
+   $finditem() function returns the item number of the first match found;
+   it does not check the array sequentially, so other exact matches with
+   lower item numbers may not be returned.  The $ifinditem() function is
+   same, except it returns the index number of the first match found (also
+   regardless of the actual indexing order).  The $ifindfirst function is
+   similar to $ifinditem(), except it returns the first exact match after
+   the array has been sorted.
+
+Practical:
+   These functions are useful when you want to see if a particular string is
+   present in an array.  Being sensitive to case, they are more precise than
+   the general pattern-matching functions.
+
+Returns:
+     -2   item not found in array
+     -1   array does not exist
+   > -1   item/index number that matches input
+
+Examples:
+   /* contrived sample array */
+   $setitem(booya 0 blah)
+   $setitem(booya 1 foobar)
+   $setitem(booya 2 blah)
+
+   $finditem(booya blah)                   returns 0
+   $ifinditem(booya blah)                  returns 1
+   $ifindfirst(booya blah)                 returns 0
+   $finditem(booya Blah)                   returns -1
+   $finditem(foobar blah)                  returns -2
+
+See Also:
+   Arrays(7); getitem(6); setitem(6)
+

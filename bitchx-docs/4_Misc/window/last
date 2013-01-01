@@ -1,0 +1,11 @@
+Synopsis:
+   window last
+
+Description:
+   This switches from the current window to the last current window, if
+   one exists.
+
+See Also:
+   bind(4) swap_last_window; window(4) back, goto, next, previous, refnum,
+   swap
+

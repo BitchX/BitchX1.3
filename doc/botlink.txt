@@ -1,0 +1,251 @@
+BitchX bots mini-howto.. by Rwf, date: 08/17/97
+
+Table of contents:
+	(1) Overview of BitchX's bot mode
+	(2) Basic steps to link two (or more) clients
+	(3) Using the partyline
+	(4) Frequently asked questions
+	(5) Contacts / miscellaneous information
+
+Note: this document targets BitchX 72p2 and higher.. if you don't have
+	at least 72p2, check out the contacts section info on how to get
+	a newer copy of BitchX.
+
+
+(1) Overview of BitchX's bot mode
+
+BitchX includes an eggdrop-like bot mode.. it allows you to create a DCC
+'partyline' between several BitchX clients. This document explains how
+to create a network like this, and answers some of the questions surrounding
+the linking in general.
+
+(1a) Single-bot partylines
+
+Yes, it is possible to create a partyline on just one client. It looks a
+little like this:
+			Bot A
+	   Client A  /    |    \ Client C
+		          |
+		       Client B  
+
+In this situation, Clients A, B, and C can be any kind of IRC client who
+is active in a chat with Bot A. Bot A relays all the text between the three
+clients, allowing them to talk to each other through the bot. 
+
+(1b) Dual-bot partylines
+
+Dual-bot partylines are structured like this:
+
+		Bot A  -------------------------------	Bot B
+     Client A /	  |			     Client C /  |    \ Client E
+		Client B			       Client D
+
+Here, Bots A and B are linked together. Clients A and B hold DCC chat 
+connections to Bot A, while clients C, D, and E have DCC chat connections
+to Bot B. On each of the bots, the chat works the same way as it does in
+the single-bot situation. However, the two bots also relay the information
+between themselves, and pass that information on to their clients. For
+example, if Client A typed a line of text, that same line would show up
+on Client C's screen as Client A's nickname followed by Bot A's nickname,
+to let Client C know where the message was coming from.
+
+(1c) Three (and more) bot partylines
+
+		     Client A \       / Client B
+				Bot A
+			Bot B /	      \ Bot C -- Client F
+	     Client C /   |		  |
+			Client D	Client E
+
+In this diagram, Bot A serves as the hub bot. Bots B and C are linked to
+Bot A, and all the bots have clients attached to them. Here, if Client A
+sends a message, it is relayed to Bots B and C by Bot A, as well as being 
+relayed to Client B. Bots B and C take the message and further relay it to
+their clients. Now, if Client F were to send a message, the message would
+be relayed by Bot C to Bot A and Client E. Bot A would pass the message to
+its clients, and to Bot B, which would further pass the message along to
+the clients attached to Bot B.
+
+More complicated uplinks are possible, but i'm getting a little sick of
+drawing nice pictures. :)  Section 2 explains how the linking takes place.
+
+
+(2) Basic steps to link two (or more) clients
+
+This can be done in just a few steps, but you have to pay attention..
+Notice: This is not for the idle-minded, stop by #teenchat sometime. :)
+
+a) Make sure you actually have two (or more) clients to do the linking
+    with. How you choose to run the clients is up to you, although a lot
+    of people (including myself) prefer running them under screen. again,
+    check the contacts section to find out how to get screen.
+
+b) Decide which bot you want to be the hub bot.. it doesn't make too much
+    difference in a two-bot network, but its always nice to have a 
+    designated driver, you know? :)
+
+c) Pick a bot to start with.. (preferably the hub, unless you enjoy doing
+    things the hard way like a complete fool)  Use the /addbot  command to
+    add each of the other bots to the internal bot list. The syntax of the 
+    /addbot command is this:
+
+	/addbot BotB #MyChannel 2 2 i_am_lame
+	   |      |       |     | |    |
+   the command    |       |     | |   password 
+		bot nick  |     |  \
+                         /      |    protection level
+		channel for bot  \
+				   auto-op level
+   notes:
+    BotB - the nickname can also be a hostmask.. however, you MUST specify
+	    a nickname somewhere. for example, BotB!*mybot@*.lame.net
+    #MyChannel - channel the bot will sit in
+    auto-op - desired auto-op level for the other bot, just like in a
+		normal userlist. see /bhelp userlevels
+    protection - always a good idea to wear it.
+		   oh come on, that should be self-explanatory.. :)
+    password - this is a *MUST-HAVE* !!!! its a good idea to make sure
+		its the same thing across all the bots... either that
+		or i hope you own stock in Tylenol.
+
+   For each of the non-hub bots, use the same procedure to add the hub
+    bot to the botlist. Its pretty simplistic.
+
+d) Now that all the bots know who each other are, its time for a formal
+    introduction. (if you have more than two bots, start with the hub and
+    one of the other bots, add the rest later.)  From the hub bot, issue
+    this command:
+
+	/dcc bot BotB
+
+    where BotB is the nickname of the second bot. This will send the second
+    bot a DCC BOT request, which will be checked against its bot list.
+
+   Next, flip over to BotB, and enter the command:
+
+	/dcc bot BotA
+
+   You should already have seen some CTCP & DCC messages from BotA, and
+    issuing that command causes BotB to finish off the link.
+
+   To test the link, type this:
+
+	/csay hi there
+
+   This will send a message as if the bot itself was speaking. Try looking
+    at BotA to make sure the message showed up.. it should look like this:
+
+	(BotB(xlink)) hi there
+
+   If you see a message like that, you're in business. Read on.
+
+e) Finishing touches.. 
+
+	1. make sure every bot has its settings correct..
+	    type /set bot  , and check these settings:
+
+.......................BOT_LOG ON
+...................BOT_LOGFILE tcl.log
+......................BOT_MODE ON
+....................BOT_PASSWD has no value
+....................BOT_RETURN has no value
+.......................BOT_TCL OFF
+
+	The most important setting being BOT_MODE .. make sure its 
+	 turned on, otherwise the bot will refuse DCC chats.
+	
+	2. In BitchX 72p2 and up, the bots will only accept chats from
+	    persons in their userlist (see /bhelp adduser  for details),
+	    *OR* persons who have been .invite 'd into the chat session.
+	    See the command list in the next section for details.
+
+	3. Make sure to do a /saveall to save all important settings.
+
+
+(3) Using the partyline
+
+To join the partyline, start a dcc chat with one of the bots. After the
+DCC is connected, type .chat   into the DCC to join the partyline. You
+can then talk to any other people already there, and use the available
+commands in the DCC:
+
+	.act <action>           - sends <action> to chat line
+	.boot <nick> <msg>      - boot <nick> from network
+	.chat                   - once a dcc is started send .chat to enter
+	                          the party line
+	.cmsg <nick> <msg>      - sends <msg> to <nick> in chat
+	.echo                   - toggle echo back to you on/off
+	.help <topic>           - help for commands or <topic>
+	.invite <nick>          - invites <nick> to join the partyline
+	.msg <nick> <msg>       - send <msg> to <nick>
+	.say <msg>              - say <msg> to the channel
+	.quit                   - quit partyline, but not the chat.
+	.tcl <tcl_command>      - tcl command
+	.who <botnick>          - who is on bot or <botnick>
+	.whom                   - shows all users on network
+
+Just typing text in the DCC causes the bot to relay it to the partyline.
+
+(4) Frequently Asked Questions
+
+Its time for the big FAQ list.. a lot of these I asked myself at one time,
+but its good info so be sure to read it ALL.
+
+q) What's BitchX?
+a) Uhm... this isn't the file you were looking for.
+
+q) The bots didn't link but I have botlist entries for them each!
+a) Check the passwords. They *MUST* be identical. Also check the usermasks
+	for the bots for typos, etc.
+
+q) The bots linked, but I can't chat to them.
+a1) Make sure you've added yourself to the bot's userlists. 
+a2) Make sure BOT_MODE is turned ON.
+
+q) Some of the commands in the chat don't work.
+a) Many of the commands require the specified userlevel in .help  to use
+	them. Make sure to add yourself to the bot's userlist.
+
+q) Can the bots share userfiles like in eggdrop?
+a) No. The bots do not share userfiles..
+
+q) Can the bots link to eggdrops?
+a) No. Eggdrops link via telnet, not DCC.
+
+q) Where can i get BitchX?
+a) See the contacts section.
+
+q) Where can i get screen?
+a) See the contacts section.
+
+q) Where can i get Windows?
+a) Press the power button.
+
+q) Can the bots share userfiles like in eggdrop?
+a) Dumbass.
+
+q) Who the hell is Rwf?
+a) God.
+
+q) Who the hell is panasync?
+a) The big god.
+
+q) Can the bots share userfiles like in eggdrop?
+a) You can go away now.
+
+q) Does chicken come in a can?
+
+....
+
+(5) Contacts & information
+
+Where to get bX:
+
+As always, there's the #BitchX channel on EFNet.
+Get BitchX via FTP: ftp://aurora.bridges.edu
+Get screen from the same places.
+
+Contacts:
+
+Rwf - find me on EFNet.. #Lb, or #BitchX. rwf@loonybin.dyn.ml.org
+panasync - find him on EFNet too, in #BitchX.

@@ -1,0 +1,10 @@
+Copyright (c) 1999, Ed Schlunder <zilym@asu.edu>
+This is free software distributable under the terms of the GNU GPL.
+See COPYING for details.
+
+This is some old natural language processing code I wrote for a class I
+took at ASU (CSE476 appearantly). Its not great (read: buggy and poorly
+documented) but I'm keeping it around for reference when I get around to
+writing a new NLP engine for Europa in Java.
+
+

@@ -1,0 +1,22 @@
+Synopsis:
+   load smileys
+
+Description:
+   This is a simple set of key bindings that print out smileys.  Nothing
+   earth-shattering.  The author says he couldn't chat without them ;)
+
+     Key      Face | Key      Face | Key      Face | Key      Face
+     meta2-:   :)  | meta2-*   :*  | meta2-#   :#  | meta2-)   :)
+     meta2-(   :(  | meta2-I   :I  | meta2-;   ;)  |
+
+See Also:
+   load(5)
+
+Bugs:
+   Way back when this script was written, ^B meant inverse video, and ^_
+   meant boldface.  Thus, the smileys won't be displayed as they were
+   originally intended
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

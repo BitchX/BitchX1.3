@@ -1,0 +1,19 @@
+Synopsis:
+   type <keystrokes>
+
+Description:
+   TYPE is used to simulate user keystrokes.  The arguments given to it
+   are literally "typed" out in the input line, as though the user had
+   typed them in.  Variables and bound keys are usually expanded, so
+   XTYPE must be used to force literal display of the keys.
+
+Examples:
+   This will type out a "template" for the KICK command that allows a
+   user to be kicked with a normal reason, plus a generic message appended
+   to the kick reason (where ^[ is the ESC key; ^[b moves the cursor
+   back by one word):
+      type /kick FooScript C1996^[b^[b
+
+See Also:
+   xtype(5)
+

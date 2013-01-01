@@ -1,0 +1,33 @@
+Security Issues                                                             
+
+BitchX is an extremely flexible client.  To borrow a phrase from many a C
+programmer, it gives you enough rope to hang yourself.  With caution and
+some common sense, this isn't a problem.
+
+By far, the most potentially dangerous facility is ON.  Because hooks can
+be set to activate on any arbitrary input, and because they can perform
+most any action when activated, they are often used for malicious purposes.
+Consider the following:
+
+   on ^msg "% obey *" {
+      $2-
+   }
+
+This allows anyone to make your client perform any command, simply by
+sending you a message beginning with "obey", followed by any command.  On
+top of that, you won't even see the message, and if the perpetrator is
+careful, you won't see its output either.
+
+Social engineering is also a problem on irc.  BitchX and EPIC attempt to 
+combat this with special configuration settings that disable certain 
+"dangerous" commands.  Of course, experienced users can disable these 
+settings, but novices should think twice before doing so.
+
+Above all, lack of education is probably the biggest problem associated
+with the client.  Think twice before typing a command you aren't familiar
+with.  Think twice before loading a script someone has given you, if you
+don't understand how it works.
+
+See Also:
+   New_User(7); set(4) exec_protection, novice, security
+

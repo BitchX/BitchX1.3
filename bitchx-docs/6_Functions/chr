@@ -1,0 +1,34 @@
+Synopsis:
+   $ascii(<integer list>)
+   $chr(<character list>)
+
+Technical:
+   This pair of function is used to convert between 8-bit characters and
+   their numeric equivalent (dependent on your locale).  The $ascii()
+   function converts from numeric to character, and $chr() converts from
+   characters to their numeric values.
+
+   For $ascii(), integers in the range 0..255 are accepted for input.  For
+   $chr() any arbitrary list of characters is accepted.
+
+Practical:
+   These functions are used to convert from character values to their
+   numeric values, and back.  One common use for these is to insert control
+   character into text without having to actually type them in; or to
+   check the case of a character.
+
+Returns:
+   ascii: space-delimited list of integer values
+   chr:   concatenated list of characters
+
+Examples:
+   /* assume iso8859-1 character set */
+   $ascii(abcABC)                     returns "97 98 99 65 66 67"
+   $chr(1 2 3)                        returns "ABC" (ctrl-A, -B, -C)
+   $chr($ascii(abcABC))               returns "abcABC"
+
+Other Notes:
+   Some characters with the high bit set will return negative numeric
+   values from $ascii().  Add 256 to this negative value to get its
+   positive equivalent.  The $chr() function will accept either.
+

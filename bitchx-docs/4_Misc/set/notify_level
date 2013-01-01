@@ -1,0 +1,11 @@
+Synopsis:
+   set notify_level [<levels>]
+
+Description:
+   This variable sets the client's default NOTIFY_LEVEL used when a new
+   window is created.  Refer to SET LASTLOG_LEVEL for a full explanation
+   of the available levels.
+
+See Also:
+   set(4) lastlog_level; window(4) notify_level, new
+

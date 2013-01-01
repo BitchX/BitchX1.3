@@ -1,0 +1,20 @@
+Synopsis:
+   window notify_level [<levels>]
+
+Description:
+   This works similarly to WINDOW LEVEL, except the levels specified
+   determine what types of messages the client will report activity in
+   that window for if WINDOW NOTIFY is on.  If no level is specified,
+   the current level is displayed.
+
+   The list of levels to use may be any of those allowed for WINDOW
+   LEVEL.  A comma-delimited list may be used to specify more than one
+   level at once.
+
+Examples:
+   To only show activity for private messages and notices:
+      /window lastlog_level msg,notice
+
+See Also:
+   set(4) lastlog_level; window(4) level, notify
+

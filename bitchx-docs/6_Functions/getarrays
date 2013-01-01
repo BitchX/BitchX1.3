@@ -1,0 +1,19 @@
+Synopsis:
+   $getarrays(<pattern>)
+
+Technical:
+   This function returns a space-seperated list of the names of the existing
+   arrays created by $setitem() that match the given pattern.
+   If the <pattern> argument is omitted all current arrays are returned.
+
+Practical:
+   This function is used to find all current arrays. This might be useful
+   for modifying data in multiple arrays, when it is not known precisely
+   which ones exist at the moment in question.
+
+Returns:
+   list of array names, or nothing if none are set
+
+See Also:
+   Arrays(7); setitem(6)
+

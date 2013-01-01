@@ -1,0 +1,14 @@
+Synopsis:
+   load channel
+
+Description:
+   This script redefines the CHANNEL command to make it behave as though
+   the NOVICE setting was turned on.  It will leave the current channel
+   before joining a new one.  It does not affect the JOIN command.
+
+See Also:
+   join(1); load(5); set(4) novice
+
+Other Notes:
+   The name of the author of this script is not known.
+

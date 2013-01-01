@@ -1,0 +1,12 @@
+Synopsis:
+   load uping
+
+Description:
+   This script was originally designed to handle pings with microsecond
+   accuracy.  However, the client now supports this natively, so the script
+   is no longer needed.  It supplies a /uping command which is aliased to
+   PING.
+
+See Also:
+   load(5); ping(1)
+

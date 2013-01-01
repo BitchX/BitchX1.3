@@ -1,0 +1,15 @@
+Synopsis:
+   load old-dcc
+
+Description:
+   This script is of little use to users of release versions of ircII-EPIC
+   3.0 and above.  It is provided for older or non-EPIC clients that are
+   not aware of EPIC's DCC REJECT message, sent whenever a DCC connection
+   is closed prematurely.
+
+See Also:
+   dcc(1) close; load(5)
+
+Other Notes:
+   This script was written by persons unknown.
+

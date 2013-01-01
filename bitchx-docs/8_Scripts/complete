@@ -1,0 +1,44 @@
+Synopsis:
+   load complete
+
+Description:
+   This script was largely inspired by the T-shell (tcsh) and its flexible
+   command-line tab completion.  The tab key (^I) can be used to expand
+   partial nicknames, server names, or script files.  The expansion can be
+   customized, permitting the user to expand just about anything to
+   anything else.
+
+   Adding New Expansions
+     The interface allowing new expansions to be added is the /compl.add
+     alias.  It takes a minimum of 2 (two) arguments; the commands to match
+     for, and the matching method.  Basically, the syntax is:
+
+       /compl.add -null|-nomatch|<command> <method>
+
+     Any number of commands or switches may be specified.  The command must
+     appear exactly as it would on the command line (including any command
+     characters).  The "method" must be one of "messparse" (nickname
+     expansion for MSG), "connparse" (server name expansion), or
+     "loadparse" (script files).
+
+   Showing Current Expansions
+     A listing of all current tab expansion rules can be listed with the
+     /compl.list alias.  Each expansion is assigned a unique index number,
+     mainly for use in the /compl.del alias described below.
+
+   Removing Expansions
+     Tab expansion definitions can also be removed as desired.  This is
+     done with the /compl.del alias. It takes a single argument, the index
+     of the rule to delete (as shown with /compl.list).
+
+   The script provides one additional alias, /makelist, which is used to
+   gather the current list of servers on the network, for use in server
+   name expansion.
+
+See Also:
+   compl.mods(8); load(5)
+
+Other Notes:
+   This script relies on the COMPL.MODS script, and will not function
+   without it.  It was written by Ian Frechette (Daemon).
+

@@ -1,0 +1,9 @@
+Synopsis:
+   dcc activecount
+
+Description:
+   DCC ACTIVECOUNT displays the number of active dcc's and the number of
+   possible dcc sends allowed. The number allowed can be changed using /set
+   DCC_SEND_LIMIT
+
+

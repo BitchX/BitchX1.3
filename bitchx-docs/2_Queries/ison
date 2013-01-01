@@ -1,0 +1,19 @@
+Synopsis:
+   ison [<nick> [<nick> ...]]
+
+Description:
+   This takes a list of nicknames, then returns the subset of that list
+   that are currently in use on the network.  If none are online, an
+   empty list is returned.  This is the mechanism used by NOTIFY.  If
+   no nickname is specified, the user's nickname is used (and is thus
+   returned).
+
+See Also:
+   notify
+
+Other Notes:
+   The 303 numeric is used to return ISON queries.  This numeric is used
+   by NOTIFY to determine who has signed on or off.  Caution should be
+   exercised when hooking this numeric, as it could very well hamper or
+   disable the client's internal NOTIFY system.
+

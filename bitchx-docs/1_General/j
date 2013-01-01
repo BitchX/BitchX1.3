@@ -1,0 +1,67 @@
+Synopsis:
+   j [-invite|<channel list> [<key>]]
+
+Description:
+   J lets you join a new channel.  If you are on multiple channels,
+   the specified channel will become the current one.  If you do not
+   specify a channel (or channels) to join, your client will display
+   your current channels, along with their respective modes and users,
+   and which server you are on the channel from.
+
+   You may join more than channel at a time with a single J command
+   by separating the channels with commas.  If a key (channel mode +k)
+   is set on a channel you wish to join, you must specify that key in
+   the JOIN command to be able to join the channel.
+
+   You can create a new channel simply by joining a channel that does
+   not exist.  Channel names begin with a '#', a '&' (&channels are local
+   to your server), or a '+' (modeless channels, not available everywhere)
+   and following that may consist of any character except SPACE, BELL, NUL,
+   CR, LF, or comma (',').  Channel names may be up to 200 characters in
+   length.  Additionally, a channel may be restricted to only users from
+   certain hosts, by adding a hostmask to the end of the channel name,
+   separated with a ':' (this is not supported everywhere).
+
+Options:
+   -invite   makes you join the last channel to which you were INVITEd
+
+Examples:
+   To join channel #blah (or create it if it does not exist):
+      /j #blah
+
+   To join channel #blah that has the key "foobar":
+      /j #blah foobar
+
+   To join more than one channel at once:
+      /j #foo,#bar,&blah
+
+   To join a channel that only German users may join:
+      /j #blah:*.de
+
+   To join channel #blah if you have been invited to it (either will
+   work, although the first is better, since channel names may contain
+   characters that your terminal can't display):
+      /j -invite
+      /j #blah
+
+Aliases:
+   J is identical in operation to JOIN.
+
+See Also:
+   bind(4) switch_channels; invite(1); mode(1); on(5) join; set(4) novice;
+   window(4) channel
+
+Restrictions:
+   The ability to join a channel can be restricted by the channel's modes.
+   If mode +k is set, you must specify the channel's key to join.  If mode
+   +i is set, you must first be INVITEd.  If mode +l is set, and the limit
+   has been reached, you cannot join.  If a ban (mode +b) has been set
+   that matches your nick!user@host pattern, you cannot join.  See MODE
+   for more information.
+
+Other Notes:
+   The ircII client provides a NOVICE mode mechanism.  When turned on, the
+   client will not allow you to join more than one channel at once.  If
+   you are on a channel and try to join another, it will first make you
+   leave the first channel.
+

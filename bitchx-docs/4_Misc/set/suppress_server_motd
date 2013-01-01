@@ -1,0 +1,19 @@
+Synopsis:
+   set suppress_server_motd [on|off|toggle]
+
+Description:
+   When turned on, the client will attempt to hide the server's MOTD when
+   connecting to the server.  When turned off, the MOTD will be displayed
+   as normal upon connection to the server.  This setting only affects
+   the initial connection.  It will always display the MOTD when it is
+   requested with the MOTD command.
+
+See Also:
+   motd(2); on(5) 372, 374, 375
+
+Other Notes:
+   This setting works by filtering the 372, 374, and 375 server numerics.
+   It is foiled by some servers, though, as recent versions (most notably,
+   +CS variants) can be configured to send the MOTD with a different
+   numeric, 377.
+

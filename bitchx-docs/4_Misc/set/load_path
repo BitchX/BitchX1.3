@@ -1,0 +1,25 @@
+Synopsis:
+   set load_path [<directory>[:<directory> ...]]
+
+Description:
+   This setting is used primarily by LOAD and WHICH (and thus the $which()
+   function).  If the client tries to access a file and cannot find it, it
+   searches through each directory listed in the LOAD_PATH.  It operates
+   much like the PATH statement in Unix shells.  The directories are
+   searched sequentially.
+
+Examples:
+   To set the path to your home directory, and the client's script library:
+      /set load_path ~:/usr/local/irc/script
+
+   To add ~/my_irc to the path:
+      /eval set load_path ${load_path}:~/my_irc
+
+See Also:
+   Environment_Vars(7); File_Ops(6); load(4); which(5)
+
+Other Notes:
+   The client will also obey the IRCPATH environment variable when first
+   starting the client.  It will override LOAD_PATH until the client is
+   started completely (i.e. everything in the .ircrc has loaded).
+

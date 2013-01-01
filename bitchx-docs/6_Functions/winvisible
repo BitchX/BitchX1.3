@@ -1,0 +1,23 @@
+Synopsis:
+   $winvisible(<name|number>)
+
+Technical:
+   This function is used to determine whether a window is currently hidden
+   or not.  It may take a window name or window number as its argument.
+
+Practical:
+   This function is useful when you want to make sure that a particular
+   message is displayed in a visible window.
+
+Returns:
+    1   window exists and is visible  
+    0   window exists and is hidden
+   -1   window does not exist
+
+Examples:
+   $winvisible(1)                  checks if window #1 is hidden
+   $winvisible(misc)               checks with window "misc" is hidden
+
+See Also:
+   window(4) hide
+

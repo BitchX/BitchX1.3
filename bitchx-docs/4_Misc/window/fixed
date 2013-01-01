@@ -1,0 +1,15 @@
+Synopsis:
+   window fixed [on|off]
+
+Description:
+   This toggles the current window's fixed status on/off. When a window is
+   fixed, it can't be moved or resized by an operation on a separate window.
+   All movements and resizes must explicitly be done on this window.
+   
+Practical:
+   This is ideal for an Oper View type window, where it only sits and has
+   data outputted to it (and therefore shouldn't be moved/resized)
+
+See Also:
+   window(4)
+

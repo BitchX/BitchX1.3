@@ -1,0 +1,12 @@
+Synopsis:
+   spam #channel
+
+Description:
+   This command will compare 2 or more channels and display the
+   nicks/userhosts that are common between the two channels. This is 
+   useful for finding possible spam relays.
+
+Examples:
+   To check #mpeg3 and #warez-elite. Client needs to be in both channels
+      /spam #non-active-channel
+

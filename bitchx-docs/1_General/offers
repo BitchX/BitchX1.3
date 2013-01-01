@@ -1,0 +1,30 @@
+Synopsis:
+   offers <nickname|channel>
+
+Description:
+   OFFERS is a XDCC command used to list what people are file offering.
+   The default is to check offers your current channel if nothing is 
+   specified.
+
+Examples:
+   To see what your friend booya is offering:
+      /offers booya
+
+   To see what a channel full of people are offering:
+      /offers #blah
+
+Aliases:
+   This command is identical to CTCP XDCC LIST.
+
+See Also:
+   ctcp(1)
+
+Restrictions:
+   This command makes use of CTCP (client-to-client protocol), which is not
+   part of the IRC protocol.  Most modern IRC clients understand CTCP, but
+   not all do, while others might not support the same CTCP commands that
+   ircII-EPIC supports.  If you receive an error of some sort, then the
+   client on the receiving end is unable to properly handle your CTCP
+   message. This command will depend on the other clients running a xdcc
+   offer script.
+

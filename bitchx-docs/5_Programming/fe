@@ -1,0 +1,61 @@
+Synopsis:
+   fe (<list>) <variable> [<variable> ...] { <actions> }
+
+Description:
+   FE is one of several loop types available in ircII-EPIC.  This loop
+   takes a list of items, and for each one, it performs the specified
+   action.
+
+   It may act on more than one item at a time.  The list may be a plain
+   text list, a variable, a function, or any combination.  As with aliases
+   and other control structures, the braces surrounding the action may
+   appear anywhere.  List items are whitespace-delimited.  Extended words
+   (those with spaces in them) are honored when they are surrounded in
+   double quotes (").
+
+   For instance, FE might be used to loop through a list of nicknames
+   that the user wishes to invite to a channel (or kick from it!).
+
+   Any looping mechanism can run through a list one by one.  The real
+   power of FE is its ability to act on multiple list items at once.
+   One could perform an action on 3 at a time, for instance, such as
+   setting a +o channel mode on other users.  Other loops, such as FOR,
+   can do this as well, but FE offers a more elegant solution.
+
+Examples:
+   A simple mode +o script to cluster mode changes 3 at a time:
+      fe ( $friends ) xx yy zz {
+         if ( zz ) {
+            mode #blah +ooo $xx $yy $zz
+         } {
+            if ( yy ) {
+               mode #blah +oo $xx $yy
+            } {
+               mode +o $xx
+            }
+         }
+      }
+
+   A script to check for upper-case letters in a line of input:
+      @ caps = 0
+      fec ( $* ) xx {
+         if ( ascii($xx) >= 65 || ascii($xx) <= 90 ) {
+            @ caps++
+         }
+      }
+      echo *** Found $caps upper-case letters
+
+Aliases:
+   FEC works the same as FE, except it loops through each character in the
+   list, not each word.  Whitespace is only valid if it is between two
+   other non-whitespace characters.  Whitespace that follows the opening
+   parenthesis, and that leads up to the closing one, is ignored.
+
+See Also:
+   for(5); foreach(5); until(5); while(5)
+
+Other Notes:
+   The loop doesn't necessarily have to have an action inside the curly
+   braces.  It doesn't make much sense to omit it, though. Since 01/22/97,
+   FE and FEC use local(6) variables instead of global.
+

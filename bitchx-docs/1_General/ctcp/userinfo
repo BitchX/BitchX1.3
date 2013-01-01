@@ -1,0 +1,10 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> userinfo
+
+Description:
+   This asks another client to return whatever text it has stored in its
+   USER_INFORMATION variable, which can be just about anything.
+
+See Also:
+   set(4) user_information
+

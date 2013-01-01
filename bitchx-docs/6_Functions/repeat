@@ -1,0 +1,21 @@
+Synopsis:
+   $repeat(<count> <text>)
+
+Technical:
+   This function returns a string composed of the input text concatenated
+   to itself the specified number of times.
+
+Practical:
+   This function has many potential uses.  For example, it would be used to
+   format output from a script such that it is always the width of the
+   current window.  This has the side bonus of removing the need to hard-
+   code formatting devices (table headers and such), which tend to look
+   rather messy in source code.
+
+Returns:
+   input string repeated count times
+
+Examples:
+   $repeat(5 hello)                   returns "hellohellohellohellohello"
+   $repeat(5  )                       returns "     "  (spaces)
+

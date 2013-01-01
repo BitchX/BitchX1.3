@@ -1,0 +1,19 @@
+# ~/.bitchxrc file
+#
+# This file is automatically loaded by BitchX before you connect
+# to a server.  You can use any commands you want.  Most often,
+# this file is used to automatically load scripts. -power
+##############################################################################
+
+# loads the script 'venoma.irc' located in your ~/.BitchX/ directory.
+^load venoma.irc
+
+# loads cypress script located in /your_home_dir/cyp/
+^load ~/cyp/cyp.bx
+
+# sets up an alias for an easy way to change channel modes
+^alias cm {mode $C $*}
+
+# load the blowfish module
+^loaddll blowfish.so
+

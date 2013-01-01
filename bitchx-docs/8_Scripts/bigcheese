@@ -1,0 +1,38 @@
+Synopsis:
+   load bigcheese
+
+Description:
+   This script is one of several good sample .ircrc files included with the
+   client.  This one creates a number of commonly-used aliases, sets various
+   key bindings and hooks, and customizes many of the client's internal SET
+   variables.
+
+     Alias          Description                                           
+     /cl            same as CLEAR
+     /clock         enable or disable the status bar clock
+     /finger        EXEC a finger process
+     /list          same as LIST, for all public channels
+     /m             same as MSG
+     /mode          same as MODE, for current channel
+     /names         same as NAMES, for all public channels
+     /oops <x>      resend a misdirected MSG
+     /re            send a MSG to the last sender of a MSG
+     /reply         start a query in a new window with last MSG sender
+     /swap          same as WINDOW SWAP LAST
+     /talkto <x>    start a query in a new window
+     /this <x>      set window level to crap while running a command
+     /unalias <x>   remove an alias
+     /unset         undefine a SET variable
+     /wchannel <x>  join a new channel in the current window
+     /wjoin <x>     join a new channel in a new window
+
+   This script also loads the SHELL, NICKS, and TABKEY scripts.
+
+See Also:
+   alias(8); basical(8); clear(4); exec(5); ircprimer(8); list(2); load(5);
+   msg(1); mode(1); names(2); nicks(8); query(1); set(4) clock;
+   shell(8); tabkey(8); window(4) last, level, new, swap
+
+Other Notes:
+   This script was written by Mike Sandrof (BigCheese).
+

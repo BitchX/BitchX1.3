@@ -1,0 +1,18 @@
+Synopsis:
+   set display [on|off|toggle]
+
+Description:
+   When turned off, this setting will cause the client to suppress all
+   messages from being displayed (though it can still act on them
+   internally.  However, ECHO can still be used to explicitly print
+   messages to the display.
+
+See Also:
+   echo(5); xecho(5)
+
+Other Notes:
+   This setting is automatically turned off while a script file is being
+   loaded, including the .ircrc file.  It is turned on again when the
+   file finishes loading.  This can be overridden by explicitly setting
+   DISPLAY on inside the loaded scripts.
+

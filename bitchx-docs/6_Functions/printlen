@@ -1,0 +1,23 @@
+Synopsis:
+   $printlen(<string>)
+
+Technical:
+   This function is used to determine the number of printable characters in
+   <string>, as it would appear on the screen. Note that ANSI escape sequences
+   are counted as printable characters, and should first be removed using the
+   stripansicodes(6) function.
+
+Practical:
+   This function could be used when displaying an arbitrary string from IRC
+   which could contain control-characters, such as channel names, topics,
+   modes, and /whois info.
+
+Returns:
+   number of *printable* characters in <string>
+
+Examples:
+   $strlen(blahC4,2fooBbar)                  returns 10
+
+See Also:
+   strlen(6); strip(6); stripansicodes(6)
+

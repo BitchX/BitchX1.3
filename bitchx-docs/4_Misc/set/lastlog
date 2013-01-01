@@ -1,0 +1,10 @@
+Synopsis:
+   set lastlog [<number>]
+
+Description:
+   This option sets the size of the client's lastlog buffer.  It can be
+   disabled if set to 0 (zero).
+
+See Also:
+   lastlog(1); set(4) lastlog_level, log, logfile
+

@@ -1,0 +1,19 @@
+Synopsis:
+   on [<modes>]msg_group [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is similar to the MSG hook, except it applies to messages sent
+   to an undetermined group of people.  Typically, this is a server mask or
+   hostmask, and is sent by an irc operator.
+
+Parameters:
+   $0    nickname of message sender
+   $1    group message was sent to
+   $2-   text of message
+
+See Also:
+   msg(1)
+
+Restrictions:
+   This hook has the same limitations on automated replies as the MSG hook.
+

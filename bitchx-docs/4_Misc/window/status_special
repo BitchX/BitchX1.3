@@ -1,0 +1,10 @@
+Synopsis:
+   window status_special <text>
+
+Description:
+   This changes the status bar %. expando. It could be used to set some
+   window-specific information.
+
+See Also:
+   set(4) status_format
+

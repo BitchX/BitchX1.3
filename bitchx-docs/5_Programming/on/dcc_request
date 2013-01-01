@@ -1,0 +1,26 @@
+Synopsis:
+   on [<modes>]dcc_request [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a DCC request of some
+   sort (currently CHAT or SEND).
+
+Parameters:
+   $0    nickname of remote client
+   $1    type of DCC connection
+   $2    description of dcc connection (currently same as $1)
+   $3    ip address of remote client
+   $4    port on the ip address the client is connected to
+   $5    file name (SEND only)
+   $6    file size (SEND only)
+
+Examples:
+   To customize the dcc request message:
+      on ^dcc_request "*" {
+         echo *** DCC $1 requested by $0!$userhost() [$3:$4]
+         if ( [$1] == [send] ) echo *** File offered: $4 \($5 bytes\)
+      }
+
+See Also:
+   dcc(1) chat, send; on(5) dcc_connect, dcc_lost
+

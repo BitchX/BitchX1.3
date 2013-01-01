@@ -1,0 +1,40 @@
+Synopsis:
+   for ([<pre>],[<condition>],[<post>]) { <action> }
+
+Description:
+   FOR is a general purpose loop.  It is modeled on the C for statement,
+   and works in a very similar manner.  Aside from the action, there are
+   three parts to a FOR loop:
+
+   * The "pre" part is executed before the loop begins iterating.  This is
+     often used for initializing counters and other variables that will be
+     used in the loop.
+
+   * Before each loop iteration, the "condition" is checked.  Most often,
+     this is used to see if the counter has exceeded a certain limit.  The
+     condition may contain any expression legal in the IF command.
+     Because of this, the loop does not necessarily have to iterate at all.
+
+   * The "post" part is executed after the condition, if the condition
+     returns true.  This is generally used to increment a counter that
+     gets checked by the condition statement.
+
+   Multiple commands may be used in each part; they must be separated by
+   semicolons (giving it something of a reverse-C syntax).  Note that
+   there does not necessarily need to be any commands in any part.  The
+   action is optional as well.
+
+Examples:
+   To display a warning message 3 times:
+      for ( @ xx = 3, xx > 0, @ xx-- ) {
+         echo WARNING!  This ship will self destruct in $xx seconds!
+      }
+
+   A infinite loop that behaves like the Unix 'yes' command:
+      for ( ,, ) {
+         echo yes
+      }
+
+See Also:
+   fe(5); fec(5); foreach(5); until(5); while(5)
+

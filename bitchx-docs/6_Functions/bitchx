@@ -1,0 +1,20 @@
+Synopsis:
+   $bitchx()
+
+Technical:
+   Returns true if the client is an BitchX client.
+
+Practical:
+   If this function returns true, the client is an BitchX client, or some
+   variant of it.  The $V and $J expandos will tell you the exact version
+   of the client.  This function is necessary because the stock ircII
+   client's value for $V and EPIC's overlap.  This is mostly a useful way
+   for scripts to see if they can load or not.
+
+Returns:
+   > 0   client is an BitchX client
+     0   client is not an BitchX client (should never happen)
+
+See Also:
+   Special_Vars(7)
+

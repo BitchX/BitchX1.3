@@ -1,0 +1,11 @@
+Synopsis:
+   menu (-)<menu name> 
+
+Description:
+   MENU Creates a new menu with the given menu name.  Or if "-" is 
+   specified immediately before the menu name, any menu with that name
+   is removed.
+
+See Also:
+   menuitem(5) submenu(5); popupmenu(5)
+

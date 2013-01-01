@@ -1,0 +1,13 @@
+Synopsis:
+   bind <key> toggle_stop_screen
+
+Description:
+   This function is used to pause or unpause the screen.  It is effectively
+   the same as setting HOLD_MODE to "toggle", except the client doesn't
+   wait for a screenful of data before pausing the screen.  The screen is
+   automatically unpaused if the SEND_LINE function is used.
+
+See Also:
+   bind(4) send_line, unstop_all_windows; set(4) hold_mode; window(4)
+   hold_mode
+

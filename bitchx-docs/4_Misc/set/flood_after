@@ -1,0 +1,11 @@
+Synopsis:
+   set flood_after [<number>]
+
+Description:
+   This setting specifies how many messages must be received before
+   triggering the FLOOD hook.  Naturally, the hook is only triggered if
+   the message rate meets or exceeds the FLOOD_RATE setting.
+
+See Also:
+   on(5) flood; set(4) flood_rate, flood_users, flood_warning
+

@@ -1,0 +1,16 @@
+Synopsis:
+   on [<modes>]server_notice [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a server sends the client a NOTICE. This
+   is generally any message that does not have its own unique name or
+   numeric code, and usually begins with "***"..
+
+Parameters:
+   $0    server sending the message
+   $1    first word of the actual message (usually "***")
+   $2-   remainder of message
+
+See Also:
+   notice(1)
+

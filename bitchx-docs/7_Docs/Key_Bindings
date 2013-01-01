@@ -1,0 +1,53 @@
+How to Use Key Bindings in BitchX                                          
+
+One of the strengths of this client is its /bind command.  It permits any
+key or sequences to keys to be bound to any arbitrary action.  You are most
+likely already familiar with using keyboard shortcuts with other programs.
+
+The general allowable key sequences that may be bound are as follows:
+
+   Sequence   Description                                                   
+   c          any single character may be bound (case sensitive)
+   ^c         any letter (case insensitive) may be bound as a control key,
+              as well as any of:  ? [ ] \ ^ @
+   METAn-c    any meta key (1..9) may be used in conjunction with a single
+              key (as in the first form, above)
+   METAn-^c   meta keys (1..9) may also be used in conjunction with control
+              keys (as in the second form, above)
+   mc         this is another form of using meta keys, except in this case
+              the key bound to a META function is specified
+   m^c        same as above, except used in conjunction with control keys
+
+Meta keys may also be bound to other meta keys, such that a sequences may
+be several characters in length.  Some examples:
+
+   Whenever the '|' key is typed, the client will try to use that nick:
+      bind | parse_command nick |
+
+   This lets ^X (control-x) be used as a meta key in other bindings
+      bind ^X meta2_character
+
+   Either of these can be used to switch to a new window:
+      bind meta2-w next_window
+      bind ^Xw next_window
+
+   Either of these can be used to switch back to the previous window
+      bind meta2-^W previous_window
+      bind ^X^W previous window
+
+   A binding can also use a block of commands:
+      bind ^^ {
+         echo 1
+         echo 2
+      }
+
+   The client uses these bindings automatically for the arrow keys
+      bind ^[ meta1_character
+      bind meta1-[ meta2_character
+      bind meta2-A backward_history        /*    up arrow */
+      bind meta2-B forward_history         /*  down arrow */
+      bind meta2-C backward_character      /*  left arrow */
+      bind meta2-D forward_character       /* right arrow */
+
+Refer to the BIND command in section 4 for more information.
+

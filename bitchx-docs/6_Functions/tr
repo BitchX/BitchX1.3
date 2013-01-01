@@ -1,0 +1,32 @@
+Synopsis:
+   $tr(/<input>/<output>/<string>)
+
+Technical:
+   This function "translates" the input characters to the output characters
+   in the given string.  Input and output characters are paired up in the
+   order they are specified in (first-first, second-second, etc.).  If
+   there are more input than output, the last output character will replace
+   any input characters that do not have a corresponding output character.
+   Any of the arguments may be variables or literal strings.  The delimiter
+   does not need to be a '/'; it may be any character not found in the
+   input or output characters.
+
+Practical:
+   This function is useful for doing very simple text encoding, such as
+   ROT13.  It is also useful for stripping out unwanted characters from
+   untrusted sources (such as shell meta characters).
+
+Returns:
+   "translated" string
+
+Examples:
+   /* assume $oldc is "aeiouy" and $newc is "yuoiea" */
+   $tr(/s/z/efnet has bots)             returns "efnet haz botz"
+   $tr(/$oldc/$newc/efnet has bots)     returns "ufnut hys bits"
+   $tr(/$oldc/_/efnet has bots)         returns "_fn_t h_s b_ts"
+   $tr(/abc//blah blah)                 effectively the same as $strip()
+   $tr(#a#e#blah)                       returns "bleh"
+
+See Also:
+   sar(6); msar(6); split(6); strip(6)
+

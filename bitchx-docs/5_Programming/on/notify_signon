@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]notify_signon [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client detects that a nickname on its
+   internal NOTIFY list has signed on to irc.
+
+Parameters:
+   $0    nickname that signon was detected for
+   $1    user@host of person signing on (if set(4) notify_userhost_automatic
+         is ON)
+
+See Also:
+   notify(1); set(4) notify_userhost_automatic; on(5) notify_signoff
+

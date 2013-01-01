@@ -1,0 +1,39 @@
+Synopsis:
+   set lastlog_level [[-]<level> [[-]<level> ...]]
+
+Description:
+   This setting controls the type(s) of information that EPIC will store
+   in its lastlog buffer.  Any single message type, or any combination,
+   may be used.  If a type is prepended with a '-', messages of that type
+   are explicitly not saved (useful with the ALL type).  Message types
+   may be abbreviated unambiguously.
+
+Options:
+   actions        public and private CTCP ACTION messages
+   ctcp           CTCP messages (except ACTION and DCC)
+   dcc            DCC messages
+   msgs           MSG messages
+   notes          NOTE messages (not supported on all servers)
+   notices        NOTICE messages
+   opnotes        operator broadcast messages
+   public         public channel messages
+   snotes         anything hooked by the SERVER_NOTICE hook
+   userlog1 - 4   reserved for the user (available with XECHO)
+   walls          WALL messages (deprecated, no servers support it)
+   wallops        WALLOP messages
+   crap           everything else (channel joins/parts, mode changes...)
+   all            all of the above
+   none           none of the above
+
+Examples:
+   To log everything except server and operator notices:
+      /set lastlog_level all -opnotes -snotes
+
+See Also:
+   ctcp(1); dcc(1); msg(1); note(4); notice(1); on(5) server_notice; set(4)
+   lastlog; wallop(3); window(4) lastlog_level; xecho(5)
+
+Bugs:
+   Message type names may only be abbreviated when including the type.  The
+   full name must be given when excluding the type with a '-'.
+

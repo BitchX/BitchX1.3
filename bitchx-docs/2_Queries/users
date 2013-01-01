@@ -1,0 +1,14 @@
+Synopsis:
+   users [<server>]
+
+Description:
+   This gives a listing of the users logged into the machine that the
+   specified irc server is running on.  The output is similar to the
+   Unix finger or w commands.  The users shown are not necessarily on
+   irc.  If a server is not specified, the current is used.
+
+Other Notes:
+   Use of this command is deprecated.  It is almost universally disabled,
+   as is serves no useful purpose related to irc, and is considered by
+   some to be an invasion of privacy.
+

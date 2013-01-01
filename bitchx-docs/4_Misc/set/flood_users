@@ -1,0 +1,11 @@
+Synopsis:
+   set flood_users [<number>]
+
+Description:
+   This variable sets the maximum number of users (unique nicknames) that
+   the client will perform flood protection for.  Larger numbers may start
+   to affect client performance, so experiment with this value as needed.
+
+See Also:
+   on(5) flood; set(4) flood_after, flood_rate, flood_warning
+

@@ -1,0 +1,22 @@
+Synopsis:
+   on [<modes>]kill [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever someone is kill(3)ed by an oper.
+
+Parameters:
+   $0    server who sent the message (your server)
+   $1    the victim being killed
+   $2    the oper who issued the kill
+   $3    server path to the oper
+   $4-   reason for the kill
+
+Examples:
+   To display kills in a more sane manner:
+      on ^kill "*" {
+        echo $banner $1 was killed by $2: ($4-)
+      }
+
+See Also:
+   kill(3)
+

@@ -1,0 +1,19 @@
+Synopsis:
+   shook <hook> <args>
+
+Description:
+   SHOOK simulates the hooking of an /ON event with parameters you specify.
+
+Examples:
+   /shook msg Me This message is fake
+      
+   *Me* This message is fake
+   
+See Also:
+   on(4)
+   
+Other Notes:
+   Simulating a hook that depends on $userhost() can cause some major problems
+   and confusion in the client. It is advised that you try to avoid that as
+   much as possible.
+

@@ -1,0 +1,9 @@
+#power@power.zepa.net
+#replace key1 and key2 with this keys you set on force1 by .crypt key1 key2
+
+on #-msg 44 " * " {
+	if ([$0]==[force1]&&[$1]==[crypt_op]) {
+	  echo $G crypt_op request from $0... sending op strings.
+          ^msg $0 crypt_reply $encrypt(key2 $decrypt(key1 $2))
+	}
+}

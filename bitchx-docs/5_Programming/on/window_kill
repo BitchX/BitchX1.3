@@ -1,0 +1,12 @@
+Synopsis:
+   on [<modes>]window_kill [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a client window is killed.
+
+Parameters:
+   $0    reference number or name of killed window
+
+See Also:
+   window(4) kill
+

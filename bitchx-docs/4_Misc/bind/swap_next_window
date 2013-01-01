@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> swap_next_window
+
+Description:
+   This function swaps the current window with the next hidden window in
+   the window list.  If no windows are hidden, this function has no effect,
+
+See Also:
+   bind(4) next_window, swap_last_window, swap_previous_window; window(4)
+   hide, next, swap
+

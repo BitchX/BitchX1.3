@@ -1,0 +1,17 @@
+Synopsis:
+   load silent
+
+Description:
+   This script is meant for use in high-traffic channels.  It provides an
+   alias, /silent, that suppresses the display of all join, part, signoff,
+   topic, mode, and nick change messages.  They are instead displayed in
+   the status bar in STATUS_USER (if present).  The normal behavior can be
+   restored with /unsilent.
+
+See Also:
+   load(5); set(4) status_user; wallopstat(8)
+
+Other Notes:
+   This script was originally written by Carl von Loesch (lynx).  It was
+   modified for use with EPIC by persons unknown.
+

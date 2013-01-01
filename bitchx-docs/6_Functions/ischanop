@@ -1,0 +1,19 @@
+Synopsis:
+   $ischanop(<nick> <channel>)
+
+Technical:
+   This function tests whether the given user is a channel operator on the
+   given channel.  It only functions for channels that you are currently
+   on.
+
+Practical:
+   This function is used for seeing if someone is a channel operator on one
+   of the channels you're on.  This might be useful for an script that
+   gives out chanops to people, to avoid any redundant mode changes.
+
+Returns:
+   "true" value if user is a channel op, "false" if not or if error
+
+See Also:
+   chops(6); nochops(6)
+

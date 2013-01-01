@@ -1,0 +1,338 @@
+This is some information provided for script writers about the extra hooks
+that BitchX provides for you. You can either use these or not depending on
+what you like to see. This list is being added to and I will try and keep
+this file updated for them. Thanks to "suicide" for pushing me into this :)
+suicide writes the Whirred script for BitchX
+
+MSGLOG  returns  
+	timestr 
+	type 
+	from 
+	what they sent.
+	-or-
+	timestr
+	"On"
+	fully expanded filename
+	-or-
+	timestr
+	"Off"
+
+BANS returns 
+	the number we consider this to be
+	channel
+	the ban itself
+	who set it.
+BANS_HEADER
+
+CDCC_PREPACK
+CDCC_POSTPACK
+	type   NOTICE or PRIVMSG
+	from
+	nickname
+	active dcc's
+	send limit
+	number in the queue
+	queue limit
+	max dcc rate out
+	number of bytes sent in this session.
+	max dcc rate in
+	number of bytes received in this session.
+	total size of the packs we're offering
+	minimum dcc speed we require.
+
+CDCC_PACK
+	type    NOTICE or PRIVMSG
+	channel
+	num of this pack
+	number of files in this pack
+	size of this pack
+	number of gets for this pack
+	the description.
+
+CDCC_NOTE
+	type   NOTICE or PRIVMSG
+	channel
+	note for this package
+
+CDCC_QUEUE
+	nick
+	time
+	pack num
+	number of files
+	description
+
+BOT_LIST
+	Auto op
+	protected
+	nick
+	channels comma separated.
+	host
+BOTLIST_HEADER
+
+CHANNEL_SYNCH
+	channel
+	time to join
+
+KICK_LIST
+	who
+	from
+	channel
+	comment
+DCC_HEADER      /* display before DCC_STAT* */
+	"Dccnum"
+	"type"
+	"num"
+	"status"
+	"K/s"
+	"File"
+	"Encrypt"
+DCC_POST        /* display after DCC_STAT*  */
+	"Dccnum"
+	"type"
+	"num"
+	"status"
+	"K/s"
+	"File"
+	"Encrypt"
+
+DCC_STAT
+	/* this hook displays only dcc like chat's raw etc */
+	number
+	type
+	user
+	status
+	"N/A"
+	Description
+	"E" for encrypted or nothing.
+
+DCC_STATF
+	/* this hook should only display files being transfered */
+	Same as above.
+	except kilobytes instead of "N/A"
+
+DCC_STATF1
+	percentage of file transfer'd
+	bytes transferred.
+	filesize
+	minutes
+	seconds
+
+DCC_TRANSFER_STAT
+	/* for /dcc stats command */
+	bytes in
+	max rate in
+	min rate in
+	bytes out
+	max rate out
+	min rate out
+	number of dcc's
+	active dcc's
+	send limit
+	Dcc Auto get "On" or "Off"
+	show dcc paths "On" or "Off"
+	Dcc quiet mode "On" or "Off"
+	Dcc overwrite mode "On" or "Off"
+
+JOIN_ME
+	channel we just joined.
+	/* useful for setting individual channel cset's */
+LLOOK_JOIN
+	name of server
+	name of server link
+	hopcount
+
+LLOOK_ADDED
+	name of server
+	name of server link
+	hopcount
+
+LLOOK_SPLIT
+	name of server
+	name of server link
+	hopcount
+
+STAT_HEADER
+	Nick
+	Dop
+	kicks
+	nicks
+	publics
+
+STAT
+	nick
+	dop count
+	kick count
+	nick change count
+	public count
+
+USERS_HEADER
+	Level
+	Auto op
+	protection
+	Channel
+	Nick
+	+o
+	UserHost
+
+USERS
+	Users level in our userlist
+	Auto op ?
+	Protect ?
+	Channel/Channels comma separated.
+	nickname
+	Hostname
+	chanop ? '@' :''
+
+USERLIST
+	Level
+	Aop
+	Prot
+	nick
+	host
+	channel(s) comma separated.
+	Password
+USERLIST_HEADER
+
+NOTIFY_SIGNOFF_UH
+	Nick
+	username
+	hostname
+
+NOTIFY_SIGNON_UH
+	Nick
+	Username
+	Hostname
+
+SAVEFILE
+	Userlist and count
+	-or-
+	ShitList and count
+	-or-
+	AutoJoin and count
+	-or-
+	BotList and count
+	-or-
+	Notify and count
+	-or-
+	Idle and count
+	-or-
+	BanWord and count
+		
+SAVEFILEPOST
+SAVEFILEPRE
+	name of file we are saving to
+	expanded name of file.
+
+SERVER_NOTICE_FAKES
+SERVER_NOTICE_FAKES_MYCHANNEL
+SERVER_NOTICE_FOREIGN_KILL
+SERVER_NOTICE_KILL
+SERVER_NOTICE_LOCAL_KILL
+SERVER_NOTICE_SERVER_KILL
+	for nickname
+	from who
+	reason
+	server
+	other
+	/* note some of these depend on /set's being on in order to provide
+	   the information. SHOW_UNAUTH's SHOW_FAKES, SHOW_SERVER_KILLS,
+	   SHOW_SERVER_CRAP in particular.
+	 */
+
+SERVER_NOTICE
+	depends on /set SHOW_SERVER_CRAP on/off
+	from nick
+	line to display
+
+SHITLIST
+	level of shit to apply
+	uh filter 
+	channel(s) comma separated
+	reason for shitlist
+SHITLIST_HEADER
+
+SHOWIDLE_HEADER
+	channel
+	idle time allowed
+
+SHOWIDLE
+	nick
+	host
+	userlevel in the userlist
+	idle time
+
+CHANNEL_STATS (32 parameters)
+	channel
+	complete date time in Mon Jun 10 01:20:03 1996 format. channelcreation
+	time on channel in 0d  0h  0m 20s format
+	mem usage total size
+	mem used by nicklist
+	mem used by channellist itself
+	mem used by banlist
+	stats_ops
+	stats_dops
+	stats_bans
+	stats_unbans
+	stats_ops
+	stats_dops
+	stats_bans
+	stats_unbans
+	stats_signoffs
+	stats_joins
+	totalbans
+	maxbans
+	stats_sops
+	stats_sdops
+	stats_sbans
+	stats_sunbans
+	usershere
+	usersaway
+	chanops
+	chanunop
+	totalnicks
+	maxnicks
+	numircops
+	ircops 		list of nicks that varies.
+
+USAGE   /* note still experimenting with this particular hook which may 
+	   change at any time */
+	command
+	usage of command
+
+DESYNC_MESSAGE
+	channel
+	server
+
+HELPSUBJECT /* output from /chelp */
+	name
+	output
+
+HELPTOPIC /* output from /chelp */
+	name
+
+WHOLEFT /* this list is expired after 20 minutes for those on the userlist
+		and 10 minutes on the regular list. */
+	nick
+	userhost
+	channel
+	seconds since split
+	their server
+	my server
+WHOLEFT_HEADER
+
+USERS_SERVER
+	nick
+	server
+USERS_SERVER_HEADER
+
+AR_REPLY /* when the user presses ^] this hook is called with auto_reply
+            nick to use passed to it. */
+	nick 
+
+CLONE_READ
+	/* When information is ready on a socket this hook is called once
+	   until $readsocket() is used.
+        */
+        socket number
+        server name
+        port

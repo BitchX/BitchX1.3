@@ -1,0 +1,10 @@
+Synopsis:
+   window list
+
+Description:
+   This displays a table of all windows.  For each window, it shows the
+   reference number, nickname used in that window, name of the window (if
+   any), channels being directed to that window (if any), the nickname of
+   the user being queried in that window (if any), what server it is on,
+   and the LEVEL.
+

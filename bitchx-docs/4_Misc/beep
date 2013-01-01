@@ -1,0 +1,11 @@
+Synopsis:
+   beep
+
+Description:
+   This command makes the terminal beep.  It's a simple alternative to
+   embedded Gs for client notices.  It cannot be used to send a beep to
+   another client.
+
+See Also:
+   bind(4) beep; set(4) beep
+

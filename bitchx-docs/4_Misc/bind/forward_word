@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> forward_word
+
+Description:
+   This function moves the cursor forward to the beginning of the next
+   word in the input line.
+
+See Also:
+   bind(4) backward_word
+

@@ -1,0 +1,15 @@
+Synopsis:
+   load meta1
+
+Description:
+   This simple script binds the backtick character (`) to META1_CHARACTER.
+   This is mostly useful for people whose keyboard do not have an ESC key
+   on them (believe it or not...).  The ` character can be produced by
+   typing that key twice in a row.
+
+See Also:
+   bind(4) meta1_character; load(5)
+
+Other Notes:
+   The name of this scripts author is not known.
+

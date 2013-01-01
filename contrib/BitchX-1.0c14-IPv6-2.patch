@@ -1,0 +1,1065 @@
+diff -uNr BitchX.orig/source/banlist.c BitchX/source/banlist.c
+--- BitchX.orig/source/banlist.c	Wed Nov 17 09:03:44 1999
++++ BitchX/source/banlist.c	Mon Dec 27 18:28:50 1999
+@@ -237,6 +237,7 @@
+ 		switch(*p)
+ 		{
+ 			case '.':
++			case ':':
+ 			case '*':
+ 			case '@':
+ 			case '!':
+diff -uNr BitchX.orig/source/commands.c BitchX/source/commands.c
+--- BitchX.orig/source/commands.c	Fri Dec 17 11:30:38 1999
++++ BitchX/source/commands.c	Mon Dec 27 18:28:50 1999
+@@ -2529,16 +2529,25 @@
+ BUILT_IN_COMMAND(e_hostname)
+ {
+ 	struct hostent *hp;
++	int norev = 0;
++	
++	if (args && !strcasecmp(args, "-norev"))
++	{
++		norev = 1;
++		next_arg(args, &args);
++	}
+ 	
+ 	if (args && *args && *args != '#')
+ 	{
+ 		int reconn = 0;
++
+ 		if (LocalHostName && strcmp(LocalHostName, args))
+ 			reconn = 1;
+ 		malloc_strcpy(&LocalHostName, args);
++#ifndef IPV6
+ 		if ((hp = gethostbyname(LocalHostName)))
+-			memcpy((void *)&LocalHostAddr, hp->h_addr, sizeof(LocalHostAddr));
+-
++			memcpy((void *)&LocalHostAddr.sf_addr, hp->h_addr, sizeof(struct in_addr));
++#endif
+ 		bitchsay("Local host name is now %s", LocalHostName);
+ 		if (reconn)
+ 			reconnect_cmd(NULL, NULL, NULL, NULL);
+@@ -2597,12 +2606,35 @@
+ 		while((fgets(comm, 200, fptr)))
+ 		{
+ #if defined(__linux__)
++
++#ifdef IPV6
++			if (strstr(comm, "inet6 addr") || strstr(comm, "inet addr"))
++			{
++				/* inet addr:127.0.0.1  Mask:... */
++				/* inet6 addr: ::1/128 Scope:... */
++			
++				if ((p = strstr(comm, "inet6 addr")))
++				{
++					p += 12;
++					q = strchr(p, '/');
++				}
++				else
++				{	
++					p = strstr(comm, "inet addr") + 10;
++					q = strchr(p, ' ');
++				}
++				*q = 0;
++
++				if (p && (!*p || !strcmp(p, "127.0.0.1") || !strcmp(p, "::1") || !strncmp(p, "fe80:", 5) || !strncmp(p, "ff80:", 5))) continue;
++#else
+ 			if ((p = strstr(comm, "inet addr")))
+ 			{
+ 				p += 10;
+ 				q = strchr(p, ' ');
+ 				*q = 0;
+ 				if ((p && !*p) || (p && !strcmp(p, "127.0.0.1"))) continue;
++#endif
++
+ #elif _BSDI_VERSION < 199701
+ 			if (!strncmp(comm, device, strlen(device)))
+ 			{
+@@ -2620,13 +2652,37 @@
+ 				*q = 0;
+ 				if ((p && !*p) || (p && !strcmp(p, "127.0.0.1"))) continue;
+ #endif
+-				ip = inet_addr(p);
+-				if ((host = gethostbyaddr((char *)&ip, sizeof(ip), AF_INET)))
++
++#ifdef IPV6
+ 				{
++					char vhost[128], vip[128];
++					struct sockaddr_foobar sf;
++				
++					if (inet_pton(AF_INET6, p, &sf.sf_addr6))
++						sf.sf_family = AF_INET6;
++					else
++					{
++						inet_pton(AF_INET, p, &sf.sf_addr);
++						sf.sf_family = AF_INET;
++					}
++
+ 					new = (Virtuals *) new_malloc(sizeof(Virtuals));
+-					new->hostname = m_strdup(host->h_name);
++					if (!norev && !getnameinfo((struct sockaddr*) &sf, sizeof(sf), vhost, 128, NULL, 0, 0))
++						new->hostname = m_strdup(vhost);
++					else
++						new->hostname = m_strdup(inet_ntop(sf.sf_family, (sf.sf_family == AF_INET) ? (void*)&sf.sf_addr : (void*)&sf.sf_addr6, vhost, 128));
+ 					add_to_list((List **)&virtuals, (List *)new);
++					
+ 				}
++#else
++				new = (Virtuals *) new_malloc(sizeof(Virtuals));
++				ip = inet_addr(p);
++				if (!norev && (host = gethostbyaddr((char *)&ip, sizeof(ip), AF_INET)))
++					new->hostname = m_strdup(host->h_name);
++				else
++					new->hostname = m_strdup(p);
++				add_to_list((List **)&virtuals, (List *)new);
++#endif
+ 
+ 			}
+ 		}
+@@ -2652,9 +2708,10 @@
+ 		if (newhost)
+ 		{
+ 			malloc_strcpy(&LocalHostName, newhost);
++#ifndef IPV6
+ 			if ((hp = gethostbyname(LocalHostName)))
+-				memcpy((void *)&LocalHostAddr, hp->h_addr, sizeof(LocalHostAddr));
+-
++				memcpy((void *)&LocalHostAddr.sf_addr, hp->h_addr, sizeof(struct in_addr));
++#endif
+ 			bitchsay("Local host name is now [%s]", LocalHostName);
+ 			new_free(&newhost);
+ 			reconnect_cmd(NULL, NULL, NULL, NULL);
+@@ -2671,8 +2728,7 @@
+ 				selectflag = -1;
+ 		int		oldbufsize,
+ 				bufsize = sizeof(struct ifreq);
+-                  
+-		
++
+ 		if ((s = socket(AF_INET, SOCK_DGRAM, 0)) < 0)
+ 		{
+ 			error("ifconfig: socket %s", strerror(errno));
+diff -uNr BitchX.orig/source/dcc.c BitchX/source/dcc.c
+--- BitchX.orig/source/dcc.c	Wed Dec  8 06:55:53 1999
++++ BitchX/source/dcc.c	Mon Dec 27 18:28:50 1999
+@@ -160,13 +160,13 @@
+ 
+ #if 0
+ 			/* sock num, type, address, port */
+-int (*dcc_open_func) (int, int, unsigned long, int) = NULL;
++int (*dcc_open_func) (int, int, struct sockaddr_foobar, int) = NULL;
+ 			/* type, sock num, buffer, buff_len */
+ int (*dcc_output_func) (int, int, char *, int) = NULL;
+ 			/* sock num, type, buffer, new line, len buffer */
+ int (*dcc_input_func)  (int, int, char *, int, int) = NULL;
+ 			/* socket num, address, port */
+-int (*dcc_close_func) (int, unsigned long, int) = NULL;
++int (*dcc_close_func) (int, sockaddr_foobar, int) = NULL;
+ #endif
+ 
+ 
+@@ -485,7 +485,7 @@
+ DCC_int *dcc_create(char *nick, char *filename, char *passwd, unsigned long filesize, int port, int type, unsigned long flags, void (*func)(int))
+ {
+ 
+-struct  in_addr myip;
++struct  sockaddr_foobar myip, blah;
+ int	ofs	= from_server;
+ int	s;
+ DCC_int *new 	= NULL;
+@@ -497,11 +497,16 @@
+ 	if (from_server == -1)
+ 		return NULL;
+ 	if (get_int_var(DCC_USE_GATEWAY_ADDR_VAR))
+-		myip.s_addr = get_server_uh_addr(from_server).s_addr;
++		blah = get_server_uh_addr(from_server);
+ 	else
+-		myip.s_addr = get_server_local_addr(from_server).s_addr;
++		blah = get_server_local_addr(from_server);
++	memcpy(&myip, &blah, sizeof(struct sockaddr_foobar));
++
+ 	if (use_nat_address)
+-		myip.s_addr = nat_address.s_addr;
++	{
++		myip.sf_family = AF_INET;
++		myip.sf_addr.s_addr = nat_address.s_addr;
++	}
+ 
+ 	set_display_target(NULL, LOG_DCC);
+ 	if ( ((new_i = find_dcc_pending(nick, filename, NULL, type, 1, -1)) && new_i->sock.flags & DCC_OFFER) || (flags & DCC_OFFER))
+@@ -654,7 +659,7 @@
+ 		}
+ 		else
+ #endif
+-			send_ctcp_booster(nick, Type, file, ntohl(myip.s_addr), portnum, filesize);
++			send_ctcp_booster(nick, Type, file, ntohl(myip.sf_addr.s_addr), portnum, filesize);
+ 		if (!doing_multi && !dcc_quiet)
+ 		{
+ 			if (filesize)
+@@ -1458,7 +1463,7 @@
+ 			{
+ 				send_ctcp_booster(nick, 
+ 					dcc_types[DCC_CHAT]->name, "chat", 
+-					htonl(get_int_var(DCC_USE_GATEWAY_ADDR_VAR) ? get_server_uh_addr(from_server).s_addr : get_server_local_addr(from_server).s_addr), 
++					htonl(get_int_var(DCC_USE_GATEWAY_ADDR_VAR) ? get_server_uh_addr(from_server).sf_addr.s_addr : get_server_local_addr(from_server).sf_addr.s_addr), 
+ 					htons(s->port), new->filesize);
+ 				add_sockettimeout(s->is_read, 120, NULL);
+ 			}
+@@ -1836,7 +1841,7 @@
+ 				new = (DCC_int *)s->info;
+ 				if (s->flags & DCC_WAIT)
+ 				{
+-					send_ctcp_booster(nick, dcc_types[type]->name, filebuf, htonl(get_server_local_addr(from_server).s_addr), htons(s->port), new->filesize);
++					send_ctcp_booster(nick, dcc_types[type]->name, filebuf, htonl(get_server_local_addr(from_server).sf_addr.s_addr), htons(s->port), new->filesize);
+ 					add_sockettimeout(s->is_read, 120, NULL);
+ 				}
+ 				continue;
+@@ -1879,7 +1884,7 @@
+ 		new = (DCC_int *)s->info;
+ 		if (s->flags & DCC_WAIT)
+ 		{
+-			send_ctcp_booster(nick, dcc_types[type]->name, FileBuf, htonl(get_server_local_addr(from_server).s_addr), htons(s->port), new->filesize);
++			send_ctcp_booster(nick, dcc_types[type]->name, FileBuf, htonl(get_server_local_addr(from_server).sf_addr.s_addr), htons(s->port), new->filesize);
+ 			add_sockettimeout(s->is_read, 120, NULL);
+ 		}
+ 		return;
+diff -uNr BitchX.orig/source/functions.c BitchX/source/functions.c
+--- BitchX.orig/source/functions.c	Sun Dec 19 12:36:49 1999
++++ BitchX/source/functions.c	Mon Dec 27 18:44:52 1999
+@@ -428,6 +428,10 @@
+ static		char *  function_menucontrol    (char *, char *);
+ #endif
+ 
++#ifdef IPV6
++static		char *	function_ipv6		(char *, char *);
++#endif
++
+ #undef BUILT_IN_FUNCTION
+ #define BUILT_IN_FUNCTION(x, y) static char * x (char *fn, char * y)
+ 
+@@ -549,6 +553,9 @@
+ 	{ "INSERTW",            function_insertw 	},
+ 	{ "IPLONG",		function_iplong		},
+ 	{ "IPTONAME",		function_iptoname 	},
++#ifdef IPV6
++	{ "IPV6",		function_ipv6		},
++#endif
+ 	{ "IRCLIB",		function_irclib		},
+ 	{ "ISALNUM",		function_isalnum	},
+ 	{ "ISALPHA",		function_isalpha 	},
+@@ -7326,3 +7333,9 @@
+ 	RETURN_EMPTY;
+ }
+ 
++#ifdef IPV6
++BUILT_IN_FUNCTION(function_ipv6, input)
++{
++	RETURN_INT(1);
++}
++#endif
+\ No newline at end of file
+diff -uNr BitchX.orig/source/irc.c BitchX/source/irc.c
+--- BitchX.orig/source/irc.c	Thu Dec 16 12:05:39 1999
++++ BitchX/source/irc.c	Mon Dec 27 18:28:50 1999
+@@ -127,8 +127,8 @@
+ 				 * between an incorrect password generated by
+ 				 * an oper() command and one generated when
+ 				 * connecting to a new server */
+-	struct	in_addr	MyHostAddr;		/* The local machine address */
+-	struct	in_addr LocalHostAddr;
++	struct	sockaddr_foobar	MyHostAddr;		/* The local machine address */
++	struct	sockaddr_foobar LocalHostAddr;
+ char	*LocalHostName = NULL;
+ 
+ 
+@@ -939,7 +939,7 @@
+ 		}
+ 		else
+ 		{
+-			if (!strchr(argv[ac], '.'))
++			if (!strchr(argv[ac], '.') && !strchr(argv[ac], ','))
+ 				strmcpy(nickname, argv[ac], NICKNAME_LEN);
+ 			else
+ 				build_server_list(argv[ac]);
+@@ -1081,14 +1081,16 @@
+ 	if (LocalHostName)
+ 	{
+ 		printf("Your hostname appears to be [%s]\n", LocalHostName);
++#ifndef IPV6
+ 		memset((void *)&LocalHostAddr, 0, sizeof(LocalHostAddr));
+ 		if ((hp = gethostbyname(LocalHostName)))
+-			memcpy((void *)&LocalHostAddr, hp->h_addr, sizeof(LocalHostAddr));
++			memcpy((void *)&LocalHostAddr.sf_addr, hp->h_addr, sizeof(struct in_addr));
+ 	} 
+ 	else
+ 	{
+ 		if ((hp = gethostbyname(hostname)))
+-			memcpy((char *) &MyHostAddr, hp->h_addr, sizeof(MyHostAddr));
++			memcpy((char *) &MyHostAddr.sf_addr, hp->h_addr, sizeof(struct in_addr));
++#endif
+ 	}
+ 
+ 	if (!nickname || !*nickname)
+diff -uNr BitchX.orig/source/ircaux.c BitchX/source/ircaux.c
+--- BitchX.orig/source/ircaux.c	Sat Dec  4 01:52:17 1999
++++ BitchX/source/ircaux.c	Mon Dec 27 18:28:50 1999
+@@ -2400,7 +2400,7 @@
+ 
+ 	if (!bang && !at)
+ 	{
+-		if (strchr(mystuff, '.'))
++		if (strchr(mystuff, '.') || strchr(mystuff, ':'))
+ 			myhost = mystuff;
+ 		else
+ 		{
+diff -uNr BitchX.orig/source/misc.c BitchX/source/misc.c
+--- BitchX.orig/source/misc.c	Mon Dec 13 00:43:27 1999
++++ BitchX/source/misc.c	Mon Dec 27 18:28:50 1999
+@@ -3566,22 +3566,37 @@
+ static void handle_socket_connect(int rc)
+ {
+ struct servent *serv;
+-struct sockaddr_in      addr;
++struct sockaddr_foobar	addr;
+ struct hostent *host;
++char buf[128], *hostname = buf;
+         int             address_len;
+ 
+-	address_len = sizeof(struct sockaddr_in);
++	address_len = sizeof(struct sockaddr_foobar);
+         if ((getpeername(rc, (struct sockaddr *) &addr, &address_len)) != -1)
+ 	{
+-		serv = getservbyport(addr.sin_port,"tcp");
+-		address_len = sizeof(addr.sin_addr);
+-		host = gethostbyaddr((char *)&addr.sin_addr, address_len, AF_INET);
+-		put_it("Hostname %s:%s  port %d is running (%s)", host->h_name, inet_ntoa(addr.sin_addr), htons(addr.sin_port), serv == NULL? "UNKNOWN":serv->s_name);
++		serv = getservbyport(addr.sf_port,"tcp");
++		strcpy(hostname, "unknown");
++		if (addr.sf_family == AF_INET)
++		{
++			address_len = sizeof(struct in_addr);
++			if ((host = gethostbyaddr((char *)&addr.sf_addr, address_len, AF_INET)))
++				hostname = host->h_name;
++			else
++				hostname = inet_ntoa(addr.sf_addr);
++		}
++#ifdef IPV6
++		else
++		{
++			if (getnameinfo((struct sockaddr*) &addr, sizeof(struct sockaddr_foobar), hostname, 128, NULL, 0, 0))
++				hostname = inet_ntop(AF_INET6, (void*) &(addr.sf_addr6), buf, 128);
++		}
++#endif
++		put_it("Hostname %s port %d is running (%s)", hostname, htons(addr.sf_port), serv == NULL? "UNKNOWN":serv->s_name);
+ 	}
+ 	close_socketread(rc);
+ }
+ 
+-static int scan(char *remote_host, int low_port, int high_port, struct hostent *host)
++static int scan(char *remote_host, int low_port, int high_port, struct sockaddr_foobar *host)
+ {
+ 	unsigned short int port;
+ 	int rc;
+@@ -3604,7 +3619,7 @@
+ char	*t;
+ int	low_port = 0,
+ 	high_port = 0;
+-struct	hostent *host;
++struct	sockaddr_foobar *host; /* gee, and what's this one for? */
+ 
+         if (!stuff || !stuff->nick || !nick || !strcmp(stuff->user, "<UNKNOWN>") || my_stricmp(stuff->nick, nick))
+         {
+@@ -3630,7 +3645,7 @@
+ char *remote_host;
+ int low_port = 6660;
+ int high_port = 7000;
+-struct hostent *host;
++struct sockaddr_foobar *host;
+ 
+ 	
+ 	if (args && *args)
+@@ -3649,7 +3664,7 @@
+ 			else
+ 				high_port = low_port;
+ 		}
+-		if (strchr(remote_host, '.'))
++		if (strchr(remote_host, '.') || strchr(remote_host, ':'))
+ 		{
+ 			if ((host = resolv(remote_host)))
+ 			{
+diff -uNr BitchX.orig/source/network.c BitchX/source/network.c
+--- BitchX.orig/source/network.c	Wed Dec  8 19:56:03 1999
++++ BitchX/source/network.c	Mon Dec 27 18:28:50 1999
+@@ -14,6 +14,8 @@
+ #include "output.h"
+ #include "vars.h"
+ 
++#include "struct.h"
++
+ #ifdef HAVE_SYS_UN_H
+ #include <sys/un.h>
+ #endif
+@@ -391,6 +393,7 @@
+ #else
+ 	sock_type = AF_INET;
+ #endif
++
+ 	proto_type = (protocol == PROTOCOL_TCP) ? SOCK_STREAM : SOCK_DGRAM;
+ 
+ 	if ((fd = socket(sock_type, proto_type, 0)) < 0)
+@@ -446,14 +449,22 @@
+ #ifdef IP_PORTRANGE
+ 		int ports;
+ #endif
+-		struct sockaddr_in name;
++		struct sockaddr_foobar name;
++#ifdef IPV6
++		struct in6_addr any = { IN6ADDR_ANY_INIT };
++
++		memset(&name, 0, sizeof(struct sockaddr_foobar));
++		name.sf_family = AF_INET6;
++		memcpy(&name.sf_addr6, &any, sizeof(struct in6_addr));
++#else
++		memset(&name, 0, sizeof(struct sockaddr_foobar));
++		name.sf_family = AF_INET;
++		name.sf_addr.s_addr = htonl(INADDR_ANY);
++#endif
+ 
+-		memset(&name, 0, sizeof(struct sockaddr_in));
+-		name.sin_family = AF_INET;
+-		name.sin_addr.s_addr = htonl(INADDR_ANY);
+-		name.sin_port = htons(*portnum);
++		name.sf_port = htons(*portnum);
+ #ifdef PARANOID
+-		name.sin_port += (unsigned short)(rand() & 255);
++		name.sf_port += (unsigned short)(rand() & 255);
+ #endif
+ 		
+ #ifdef IP_PORTRANGE
+@@ -472,7 +483,7 @@
+ 		if (getsockname(fd, (struct sockaddr *)&name, &length))
+ 			return close(fd), -5;
+ 
+-		*portnum = ntohs(name.sin_port);
++		*portnum = ntohs(name.sf_port);
+ 
+ 		if (protocol == PROTOCOL_TCP)
+ 			if (listen(fd, 4) < 0)
+@@ -486,39 +497,74 @@
+ 	/* Inet domain client */
+ 	else if (!is_unix && (service == SERVICE_CLIENT))
+ 	{
+-		struct sockaddr_in server;
++		struct sockaddr_foobar server;
+ 		struct hostent *hp;
+-		struct sockaddr_in localaddr;
++		struct sockaddr_foobar localaddr;
+ #ifdef WINNT
+ 		char buf[BIG_BUFFER_SIZE+1];
+ #endif		
+-		/*
+-		 * Doing this bind is bad news unless you are sure that
+-		 * the hostname is valid.  This is not true for me at home,
+-		 * since i dynamic-ip it.
+-		 */
++#ifdef IPV6
++		struct addrinfo hints, *res;
++		struct sockaddr_foobar *sf = NULL;
++#endif
++
++#ifndef IPV6
+ 		if (LocalHostName)
+ 		{
+-			memset(&localaddr, 0, sizeof(struct sockaddr_in));
+-			localaddr.sin_family = AF_INET;
+-			localaddr.sin_addr = LocalHostAddr;
+-			localaddr.sin_port = 0;
+-			if (bind(fd, (struct sockaddr *)&localaddr, sizeof(localaddr)))
++			if (bind(fd, (struct sockaddr *)&LocalHostAddr, sizeof(LocalHostAddr)))
+ 				return close(fd), -2;
+ 		}
++#endif
+ 
+ 		memset(&server, 0, sizeof(struct sockaddr_in));
+ #ifndef WINNT
++
++#ifdef IPV6
++                memset(&hints, 0, sizeof(hints));
++                if (!getaddrinfo(hostn, NULL, &hints, &res) && res)
++                {
++                        sf = (struct sockaddr_foobar*) res->ai_addr;
++
++                        close(fd);
++
++                        proto_type = (protocol == PROTOCOL_TCP) ? SOCK_STREAM : SOCK_DGRAM;
++                        if ((fd = socket(sf->sf_family, proto_type, 0)) < 0)
++                                return -1;
++                        set_socket_options (fd);
++
++                        if ((server.sf_family = sf->sf_family) == AF_INET)
++                                memcpy(&server.sf_addr, &sf->sf_addr, sizeof(struct in_addr));
++                        else
++                                memcpy(&server.sf_addr6, &sf->sf_addr6, sizeof(struct in6_addr));
++                        server.sf_port = htons(*portnum);
++
++                        memset(&hints, 0, sizeof(struct addrinfo));
++                        hints.ai_family = res->ai_family;
++                        freeaddrinfo(res);
++ 
++                        if (LocalHostName && !getaddrinfo(LocalHostName, NULL, &hints, &res) && res)
++                        {
++                                if (bind(fd, (struct sockaddr *) res->ai_addr, sizeof(struct sockaddr_foobar)))
++                                        return close(fd), -2;
++                                freeaddrinfo(res);
++                        }
++                }
++                else
++                        return close(fd), -6;
++
++#else
+ 		if (isdigit(hostn[strlen(hostn)-1]))
+-			inet_aton(hostn, (struct in_addr *)&server.sin_addr);
++			inet_aton(hostn, (struct in_addr *)&server.sf_addr);
+ 		else
+ 		{
+-			if (!(hp = resolv(hostn)))
++			if (!(hp = gethostbyname(hostn)))
+ 	  			return close(fd), -6;
+-			memcpy(&server.sin_addr, hp->h_addr, hp->h_length);
++			memcpy(&server.sf_addr, hp->h_addr, hp->h_length);
+ 		}
+-		server.sin_family = AF_INET;
+-		server.sin_port = htons(*portnum);
++		server.sf_family = AF_INET;
++		server.sf_port = htons(*portnum);
++#endif /* IPV6 */
++		
+ #else
+ 		/* for some odd reason resolv() fails on NT... */
+ 		server = (*(struct sockaddr_in *) hostn);
+@@ -527,21 +573,21 @@
+ 			gethostname(buf, sizeof(buf));
+ 			hostn = buf;
+ 		}
+-		if ((server.sin_addr.s_addr = inet_addr(hostn)) == -1)
++		if ((server.sf_addr.s_addr = inet_addr(hostn)) == -1)
+ 		{
+ 			if ((hp = gethostbyname(hostn)) != NULL)
+ 			{
+ 				memset(&server, 0, sizeof(server));
+-				bcopy(hp->h_addr, (char *) &server.sin_addr,
++				bcopy(hp->h_addr, (char *) &server.sf_addr,
+ 					hp->h_length);
+-				server.sin_family = hp->h_addrtype;
++				server.sf_family = hp->h_addrtype;
+ 			}
+ 			else
+ 				return (-2);
+ 		}
+ 		else
+-			server.sin_family = AF_INET;
+-		server.sin_port = (unsigned short) htons(*portnum);
++			server.sf_family = AF_INET;
++		server.sf_port = (unsigned short) htons(*portnum);
+ #endif
+ 
+ #ifdef NON_BLOCKING_CONNECTS
+@@ -549,11 +595,12 @@
+ 			return close(fd), -4;
+ #endif
+ 
+-#if !defined(WTERM_C) && !defined(STERM_C)
++#if !defined(WTERM_C) && !defined(STERM_C) && !IPV6
+ 
+ 		if (use_socks && get_string_var(SOCKS_HOST_VAR))
+ 		{
+-			fd = handle_socks(fd, server, get_string_var(SOCKS_HOST_VAR), get_int_var(SOCKS_PORT_VAR));
++
++			fd = handle_socks(fd, *((struct sockaddr_in*) &server), get_string_var(SOCKS_HOST_VAR), get_int_var(SOCKS_PORT_VAR));
+ 			if (fd == -1)
+ 				return -4;
+ 			else
+@@ -579,41 +626,114 @@
+ 	return fd;
+ }
+ 
+-int	lame_resolv (const char *hostname, struct in_addr *buffer)
++int	lame_resolv (const char *hostname, struct sockaddr_foobar *buffer)
+ {
++#ifdef IPV6
++	struct addrinfo *res;
++	if (getaddrinfo(hostname, NULL, NULL, &res) && res)
++		return -1;
++
++	memmove(buffer, res->ai_addr, res->ai_addrlen);
++	return 0;
++#else
+ 	struct hostent 	*hp;
+ 
+-	if (!(hp = resolv(hostname)))
++	if (!(hp = gethostbyname(hostname)))
+ 		return -1;
+ 
+-	memmove(buffer, hp->h_addr, hp->h_length);
++	buffer->sf_family = AF_INET;
++	memmove(&buffer->sf_addr, hp->h_addr, hp->h_length);
+ 	return 0;
++#endif	
+ }
+ 
++#ifdef IPV6
+ 
+-extern struct hostent *resolv (const char *stuff)
++extern struct sockaddr_foobar *lookup_host (const char *host)
+ {
+-	struct hostent *hep;
++	static struct sockaddr_foobar sf;
++	struct addrinfo *res;
++	
++	if (!getaddrinfo(host, NULL, NULL, &res) && res)
++	{
++		memcpy(&sf, res->ai_addr, sizeof(struct sockaddr_foobar));
++		freeaddrinfo(res);
+ 
+-	if ((hep = lookup_host(stuff)) == NULL)
+-		hep = lookup_ip(stuff);
++		return &sf;
++	}
+ 
+-	return hep;
++	return NULL;
+ }
+ 
+-extern struct hostent *lookup_host (const char *host)
++extern char *host_to_ip (const char *host)
+ {
+-	struct hostent *hep;
++	struct addrinfo *res;
++	struct sockaddr_foobar *sf;
++	static char ip[128];
++	
++	if (!getaddrinfo(host, NULL, NULL, &res) && res)
++	{
++		sf = (struct sockaddr_foobar*) res->ai_addr;
++		inet_ntop(sf->sf_family, (sf->sf_family == AF_INET) ?
++		  (void*) &sf->sf_addr : (void*) &sf->sf_addr6, ip, 128);
++		freeaddrinfo(res);
++
++		return ip;
++	}
++	else
++		return empty_string;
++}
++
++extern char *ip_to_host (const char *ip)
++{
++	static char host[128];
++	struct sockaddr_foobar sf;
++	
++	if (inet_pton(AF_INET6, ip, &sf.sf_addr6))
++		sf.sf_family = AF_INET6;
++	else
++	{
++		inet_pton(AF_INET, ip, &sf.sf_addr);
++		sf.sf_family = AF_INET;
++	}
++	
++	if (getnameinfo((struct sockaddr*)&sf, sizeof(struct sockaddr_foobar), host, 128, NULL, 0, 0))
++		strncpy(host, ip, 128);
++
++	return host;
++}
++
++extern char *one_to_another (const char *what)
++{
++	if (isdigit(what[strlen(what)-1]) || strchr(what, ':'))
++		return ip_to_host (what);
++	else
++		return host_to_ip (what);
++}
++
++#else
++
++extern struct sockaddr_foobar *lookup_host (const char *host)
++{
++	struct hostent *he;
++	static struct sockaddr_foobar sf;
+ 
+ 	alarm(1);
+-	hep = gethostbyname(host);
++	he = gethostbyname(host);
+ 	alarm(0);
+-	return hep;
++	if (he)
++	{
++		sf.sf_family = AF_INET;
++		memcpy(&sf.sf_addr, he->h_addr, sizeof(struct in_addr));
++		return &sf;
++	}
++	else
++		return NULL;
+ }
+ 
+ extern char *host_to_ip (const char *host)
+ {
+-	struct hostent *hep = lookup_host(host);
++	struct hostent *hep = gethostbyname(host);
+ 	static char ip[30];
+ 
+ 	return (hep ? sprintf(ip,"%u.%u.%u.%u",	hep->h_addr[0] & 0xff,
+@@ -623,31 +743,16 @@
+ 						ip : empty_string);
+ }
+ 
+-extern struct hostent *lookup_ip (const char *ip)
+-{
+-	int b1 = 0, b2 = 0, b3 = 0, b4 = 0;
+-	char foo[4];
+-	struct hostent *hep;
+-
+-	sscanf(ip,"%d.%d.%d.%d", &b1, &b2, &b3, &b4);
+-	foo[0] = b1;
+-	foo[1] = b2;
+-	foo[2] = b3;
+-	foo[3] = b4;
+-
+-	alarm(1);
+-	hep = gethostbyaddr(foo, 4, AF_INET);
+-	alarm(0);
+-
+-	return hep;
+-}
+-
+ extern char *ip_to_host (const char *ip)
+ {
+-	struct hostent *hep = lookup_ip(ip);
++	struct in_addr ia;
++	struct hostent *he;
+ 	static char host[101];
++	
++	ia.s_addr = inet_addr(ip);
++	he = gethostbyaddr((char*) &ia, sizeof(struct in_addr), AF_INET);
+ 
+-	return (hep ? strncpy(host, hep->h_name, 100): empty_string);
++	return (he ? strncpy(host, he->h_name, 100): empty_string);
+ }
+ 
+ extern char *one_to_another (const char *what)
+@@ -659,7 +764,7 @@
+ 		return ip_to_host (what);
+ }
+ 
+-
++#endif
+ 
+ /*
+  * It is possible for a race condition to exist; such that select()
+diff -uNr BitchX.orig/source/server.c BitchX/source/server.c
+--- BitchX.orig/source/server.c	Fri Dec 17 11:36:21 1999
++++ BitchX/source/server.c	Mon Dec 27 18:28:50 1999
+@@ -81,10 +81,10 @@
+ irc_server *map = NULL;
+ static int first_time = 0;
+ 
+-int (*serv_open_func) (int, unsigned long, int) = NULL;
++int (*serv_open_func) (int, struct sockaddr_foobar, int) = NULL;
+ int (*serv_output_func) (int, int, char *, int) = NULL;
+ int (*serv_input_func)  (int, char *, int, int, int) = NULL;
+-int (*serv_close_func) (int, long, int) = NULL;
++int (*serv_close_func) (int, struct sockaddr_foobar, int) = NULL;
+ 
+ static QueueSend *serverqueue = NULL;
+ 
+@@ -104,7 +104,7 @@
+ 		return;
+ 		
+ 	if (serv_close_func)
+-		(*serv_close_func)(cs_index, server_list[cs_index].local_addr.s_addr, server_list[cs_index].port);
++		(*serv_close_func)(cs_index, server_list[cs_index].local_addr, server_list[cs_index].port);
+ 	clean_server_queues(from_server);
+ 
+ 	if (waiting_out > waiting_in)
+@@ -388,7 +388,7 @@
+ 	/*
+ 	 * Next check to see if its a "server:port:password:nick:network"
+ 	 */
+-	else if (index(server, ':'))
++	else if (index(server, ':') || index(server, ','))
+ 		parse_server_info(server, &cport, &password, &nick, &snetwork);
+ 
+ 	else if (index(server, '['))
+@@ -548,13 +548,17 @@
+  * string, so * upon return, name will only point the the name.  If portnum
+  * or password are missing or empty,  their respective returned value will
+  * point to null. 
++ *
++ * With IPv6 patch it also supports comma as a delimiter.
+  */
+ void	parse_server_info (char *name, char **port, char **password, char **nick, char **snetwork)
+ {
+-	char *ptr;
++	char *ptr, delim;
++
++	delim = (index(name, ',')) ? ',' : ':';
+ 
+ 	*port = *password = *nick = NULL;
+-	if ((ptr = (char *) strchr(name, ':')) != NULL)
++	if ((ptr = (char *) strchr(name, delim)) != NULL)
+ 	{
+ 		*(ptr++) = (char) 0;
+ 		if (strlen(ptr) == 0)
+@@ -562,7 +566,7 @@
+ 		else
+ 		{
+ 			*port = ptr;
+-			if ((ptr = (char *) strchr(ptr, ':')) != NULL)
++			if ((ptr = (char *) strchr(ptr, delim)) != NULL)
+ 			{
+ 				*(ptr++) = (char) 0;
+ 				if (strlen(ptr) == 0)
+@@ -570,7 +574,7 @@
+ 				else
+ 				{
+ 					*password = ptr;
+-					if ((ptr = (char *) strchr(ptr, ':'))
++					if ((ptr = (char *) strchr(ptr, delim))
+ 							!= NULL)
+ 					{
+ 						*(ptr++) = 0;
+@@ -579,7 +583,7 @@
+ 						else
+ 						{
+ 							*nick = ptr;
+-							if ((ptr = strchr(ptr, ':')) !=NULL)
++							if ((ptr = strchr(ptr, delim)) !=NULL)
+ 							{
+ 								*(ptr++) = 0;
+ 								if  (!strlen(ptr))
+@@ -746,7 +750,7 @@
+ static	int	connect_to_server_direct (char *server_name, int port)
+ {
+ 	int		new_des;
+-struct sockaddr_in 	*localaddr;
++	struct sockaddr_foobar	*localaddr;
+ 	int		address_len;
+ 	unsigned short	this_sucks;
+ 
+@@ -821,9 +825,14 @@
+ 
+ 	if (*server_name != '/')
+ 	{
+-		address_len = sizeof(struct sockaddr_in);
+-		getsockname(new_des, (struct sockaddr *) localaddr, &address_len);		
+-		server_list[from_server].local_addr.s_addr = localaddr->sin_addr.s_addr;
++		address_len = sizeof(struct sockaddr_foobar);
++		getsockname(new_des, (struct sockaddr *) localaddr, &address_len);
++		if ((server_list[from_server].local_addr.sf_family = localaddr->sf_family) == AF_INET)
++			memcpy(&server_list[from_server].local_addr.sf_addr, &localaddr->sf_addr, sizeof(struct in_addr));
++#ifdef IPV6
++		else
++			memcpy(&server_list[from_server].local_addr.sf_addr6, &localaddr->sf_addr6, sizeof(struct in6_addr));
++#endif
+        	}
+ #ifdef WDIDENT
+ 	if(candofilestuff && (fp = fopen(lockfile, "w")) )
+@@ -881,7 +890,7 @@
+ 			return -1;
+ 
+ 		if (serv_open_func)
+-			(*serv_open_func)(from_server, server_list[from_server].local_addr.s_addr, server_list[from_server].port);
++			(*serv_open_func)(from_server, server_list[from_server].local_addr, server_list[from_server].port);
+ 		if ((c_server != -1) && (c_server != from_server))
+ 		{
+ 			server_list[c_server].reconnecting =1;
+@@ -2892,15 +2901,15 @@
+ 	else if (gsp_index >= number_of_servers)
+ 		return 0;
+ 
+-	return ntohs(server_list[gsp_index].local_sockname.sin_port);
++	return ntohs(server_list[gsp_index].local_sockname.sf_port);
+ }
+ 
+-struct in_addr	get_server_local_addr (int servnum)
++struct	sockaddr_foobar	get_server_local_addr (int servnum)
+ {
+ 	return server_list[servnum].local_addr;
+ }
+ 
+-struct	in_addr	get_server_uh_addr (int servnum)
++struct	sockaddr_foobar	get_server_uh_addr (int servnum)
+ {
+ 	return server_list[servnum].uh_addr;
+ }
+Binary files BitchX.orig/source/tcl.o and BitchX/source/tcl.o differ
+diff -uNr BitchX.orig/source/wserv.c BitchX/source/wserv.c
+--- BitchX.orig/source/wserv.c	Wed Nov  3 15:36:57 1999
++++ BitchX/source/wserv.c	Mon Dec 27 18:28:50 1999
+@@ -124,7 +124,7 @@
+ 
+ /* These are here so we can link with network.o */
+ char *LocalHostName = NULL;
+-struct in_addr LocalHostAddr;
++struct sockaddr_foobar LocalHostAddr;
+ char empty_string[] = "";
+ enum VAR_TYPES { unused };
+ int get_int_var (enum VAR_TYPES unused) { return 5; }
+diff -uNr BitchX.orig/include/config.h BitchX/include/config.h
+--- BitchX.orig/include/config.h	Mon Dec 20 20:43:25 1999
++++ BitchX/include/config.h	Mon Dec 27 19:16:27 1999
+@@ -349,6 +349,13 @@
+  */
+ #define TRANSLATE
+ 
++/*
++ * IPv6 support by wojtekka@irc.pl (thanks to Cron and thorgi)
++ * If you have a Linux box with glibc-2.x change the following line to
++ * `#define IPV6 1'. For older libc and libinet6 run configure script
++ * with `--enable-ipv6' parameter.
++ */
++#undef IPV6
+ 
+ #define DEFAULT_PING_TYPE 1
+ 
+diff -uNr BitchX.orig/include/defs.h.in BitchX/include/defs.h.in
+--- BitchX.orig/include/defs.h.in	Fri Dec 17 00:26:59 1999
++++ BitchX/include/defs.h.in	Mon Dec 27 19:05:30 1999
+@@ -328,6 +328,9 @@
+ /* Define this is you want sound support */
+ #undef SOUND
+ 
++/* Define this if you want IPv6 support */
++#undef IPV6
++
+ /* Define this if you have dlfcn.h */
+ #undef HAVE_DLFCN_H
+ 
+diff -uNr BitchX.orig/include/irc.h BitchX/include/irc.h
+--- BitchX.orig/include/irc.h	Sun Nov 21 22:41:14 1999
++++ BitchX/include/irc.h	Mon Dec 27 18:28:50 1999
+@@ -228,10 +228,10 @@
+ extern	int	inhibit_logging;
+ 
+ extern	char	MyHostName[];
+-extern	struct	in_addr MyHostAddr;
+-extern	struct	in_addr LocalHostAddr;
++extern	struct	sockaddr_foobar MyHostAddr;
++extern	struct	sockaddr_foobar LocalHostAddr;
+ extern	int	cpu_saver;
+-extern	struct	in_addr	local_ip_address;
++extern	struct	sockaddr_foobar	local_ip_address;
+ 
+ 
+ int	is_channel (char *);
+diff -uNr BitchX.orig/include/ircaux.h BitchX/include/ircaux.h
+--- BitchX.orig/include/ircaux.h	Mon Nov 15 17:39:32 1999
++++ BitchX/include/ircaux.h	Mon Dec 27 18:28:50 1999
+@@ -151,16 +151,16 @@
+ 
+ /* Used from network.c */
+ int			connect_by_number (char *, unsigned short *, int, int, int);
+-struct hostent *	resolv (const char *);
+-struct hostent *	lookup_host (const char *);
+-struct hostent *	lookup_ip (const char *);
++#define resolv		lookup_host
++struct sockaddr_foobar *	lookup_host(const char *);
++#define lookup_ip	host_to_ip
+ char *			host_to_ip (const char *);
+ char *			ip_to_host (const char *);
+ char *			one_to_another (const char *);
+ int			set_blocking (int);
+ int			set_non_blocking (int);
+ int			my_accept (int, struct sockaddr *, int *);
+-int			lame_resolv (const char *, struct in_addr *);
++int			lame_resolv (const char *, struct sockaddr_foobar *);
+ 
+ #define my_isspace(x) \
+ 	((x) == 9 || (x) == 10 || (x) == 11 || (x) == 12 || (x) == 13 || (x) == 32)
+diff -uNr BitchX.orig/include/server.h BitchX/include/server.h
+--- BitchX.orig/include/server.h	Sun Nov 21 22:09:37 1999
++++ BitchX/include/server.h	Mon Dec 27 18:28:50 1999
+@@ -117,9 +117,9 @@
+ 	int	ctcp_not_warned;	/* */
+ 	time_t	ctcp_last_reply_time;	/* used to limit flooding */
+ 
+-	struct in_addr local_addr;      /* ip address of this connection */
+-	struct in_addr uh_addr;		/* ip address of this connection */
+-	struct sockaddr_in local_sockname; /* sockname of this connection */
++	struct sockaddr_foobar local_addr;      /* ip address of this connection */
++	struct sockaddr_foobar uh_addr;		/* ip address of this connection */
++	struct sockaddr_foobar local_sockname; /* sockname of this connection */
+ 
+ 	ChannelList	*chan_list;	/* list of channels for this server */
+ 	int	in_delay_notify;
+@@ -324,8 +324,8 @@
+ 	Server	*get_server_list		(void);
+ 
+ 	int	get_server_local_port		(int);
+-struct in_addr	get_server_local_addr		(int);
+-struct in_addr	get_server_uh_addr		(int);
++struct sockaddr_foobar	get_server_local_addr		(int);
++struct sockaddr_foobar	get_server_uh_addr		(int);
+ NotifyItem	*get_server_notify_list		(int);
+ 	void	send_msg_to_nicks		(ChannelList *, int, char *);        
+ 	void	send_msg_to_channels		(ChannelList *, int, char *);        
+diff -uNr BitchX.orig/include/struct.h BitchX/include/struct.h
+--- BitchX.orig/include/struct.h	Wed Dec  8 23:03:12 1999
++++ BitchX/include/struct.h	Mon Dec 27 18:28:50 1999
+@@ -17,6 +17,30 @@
+ 
+ #include "alist.h"
+ #include "hash.h"
++#include "config.h"
++#include <netinet/in.h>
++
++/*
++ * struct sockaddr_storage isn't avaiable on all ipv6-ready-systems, bleh ;(
++ * and i'm too lazy to #ifdef every sockaddr declaration. --wojtekka
++ */
++
++struct sockaddr_foobar
++{
++       union {
++               struct sockaddr_in sin;
++#ifdef IPV6
++           struct sockaddr_in6 sin6;
++#endif
++       } sins;
++};
++
++#define sf_family sins.sin.sin_family
++#define sf_port sins.sin.sin_port
++#define sf_addr sins.sin.sin_addr
++#ifdef IPV6
++#      define sf_addr6 sins.sin6.sin6_addr
++#endif
+ 
+ 
+ #ifdef GUI
+--- BitchX.orig/configure.in	Fri Dec 17 00:23:23 1999
++++ BitchX/configure.in	Mon Dec 27 19:02:33 1999
+@@ -1452,6 +1452,24 @@
+ AC_MSG_RESULT(none)
+ )
+ 
++AC_MSG_CHECKING(whether to enable IPv6 support)
++AC_ARG_ENABLE(ipv6,
++[  --enable-ipv6           Enable IPv6 support (Linux only).],
++[ if test x"$enableval" = x"yes"; then
++    if test -d /usr/inet6/include; then
++      CFLAGS="$CFLAGS -I/usr/inet6/include"
++      LIBS="$LIBS -L/usr/inet6/lib -linet6"
++      AC_MSG_RESULT(yes (libinet6))
++    else
++      AC_MSG_RESULT(yes (libc))
++    fi
++    AC_DEFINE(IPV6)
++  else
++    AC_MSG_RESULT(no)
++  fi ],
++AC_MSG_RESULT(no)
++)
++
+ dnl ----------------------------------------------------------
+ dnl
+ dnl Socks4 or Socks5 or neither?

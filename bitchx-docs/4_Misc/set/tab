@@ -1,0 +1,11 @@
+Synopsis:
+   set tab [on|off|toggle]
+
+Description:
+   When turned off, the client will strip out all tabs from any message
+   received before displaying it, replacing them with Is.  If turned on,
+   it will display the tabs, within the TAB_MAX limit.
+
+See Also:
+   set(4) tab_max
+

@@ -1,0 +1,8 @@
+Synopsis:
+   bind <key> transpose_characters
+
+Description:
+   This function swaps the character under the cursor with the character
+   immediately before it.  It has no effect if the cursor is at the end
+   of the input line, or if no characters precede the current one.
+

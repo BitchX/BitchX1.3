@@ -1,0 +1,16 @@
+Synopsis:
+   set current_window_level [<lastlog levels>]
+
+Description:
+   This variable takes a lastlog level description (eg. "MSGS,PUBLIC,CRAP")
+   which defines which levels are redirected to the current window. This
+   means all output with the levels in this variable are *NOT* sent to
+   their regular window, but the current window instead.
+   
+Example:
+   To send all output with the level "CRAP" to the current window:
+      /set current_window_level CRAP
+
+See Also:
+   window(4) level
+

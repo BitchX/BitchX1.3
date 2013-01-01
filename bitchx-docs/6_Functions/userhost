@@ -1,0 +1,40 @@
+Synopsis:
+   $userhost([<nickname>])
+
+Technical:
+   Without arguments, this function returns the address of the sending client
+   of any message received by the client. It only works in hooks, and only when
+   the event hooked originated from another client on the irc network.
+   
+   When <nickname> is specified, $userhost() will return the user@host of
+   the nickname *IF IT IS KNOWN*, else it will give you "<UNKNOWN>@<UNKNOWN>".
+   A user@host will only be known to the client if you are on the same channel
+   as <nickname>.
+
+Practical:
+   This function is useful for named hooks that do not dump the sender's
+   address into its standard argument list. It also can return the user@host of
+   a different person (who didn't trigger the hook), as long as they're in a
+   common channel with the client. This saves valuable time, since $userhost()
+   does not query the server.
+
+Returns:
+   address of message sender when used with no arguments, or user@host of
+   <nickname> if they are in a common channel with the client.
+
+Examples:
+   To show someone's address when they leave a channel:
+      on ^leave "*" {
+         echo *** $0 \($userhost()\) left channel $1
+      }
+      
+   To show another person's address on demand (must be in same channel):
+      eval echo Nuke!$userhost(Nuke) writes terrible help files.
+
+See Also:
+   lastserver(6); who(2); userhost(2).
+
+Other Notes:
+   When returning a user@host, this function does not query the server.
+   Instead, it checks an internal list of users.
+

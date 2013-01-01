@@ -1,0 +1,10 @@
+Synopsis:
+   window name <name>
+
+Description:
+   This assigns the current window the specified name.  The name may now be
+   used in place of the window's reference number in most cases.
+
+See Also:
+   window(4) number
+

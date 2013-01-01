@@ -1,0 +1,20 @@
+Synopsis:
+   $deuhc(<user@host>)
+
+Technical:
+   This function removes a *! or *!*@ from the <user@host>, if it is present.
+
+Practical:
+   It can be used as a quick way to get only the hostname from a full address
+   argument.
+
+Returns:
+   arguments without *! or *!*@ in front
+
+Examples:
+   $deuhc(*!user@host)                       returns "user@host"
+   $deuhc(*!*@host)                          returns "host"
+
+See Also:
+   uhc(6); match(6); userhost(6)
+

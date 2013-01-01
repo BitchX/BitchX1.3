@@ -1,0 +1,20 @@
+Process Signals Relevant to the Operation of BitchX                       
+
+BitchX's behavior can be controlled (to an extent) from the Unix command line
+via signals.  The following signals have notable affects on the client:
+
+   SIGSEGV   cause the client to dump core, if compiled with BITCHX_DEBUG
+   SIGTERM   cause the client to immediately, but gracefully, exit
+   SIGKILL   cause the client to die immediately, no cleanup
+   SIGUSR1   cause the client to close all DCC connections and any EXEC'd
+             processes that are still active
+
+Typically, these signals are delivered with kill(1).  The client's process
+id (PID) must be known to send it a signal.  The PID may be obtained with the
+ps(1) command, or other utilities that display running processes.  The basic
+form would be:
+
+   % kill -USR1 <PID>
+
+Refer to your system's manual pages for more information.
+

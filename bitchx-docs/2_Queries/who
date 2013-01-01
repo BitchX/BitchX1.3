@@ -1,0 +1,82 @@
+Synopsis:
+   who [<switch> [<arg>] [<switch> [<arg>] ...]] [<glob pattern>]
+
+Description:
+   The WHO command is used to retrieve detailed information about every
+   user on irc.  For each user, it returns a single line containing
+   their nickname, address (user@hostname), realname (IRCNAME), what
+   their current channel is (and whether they have +o or +v there),
+   whether they are marked away, and whether they are an irc operator.
+
+   The data returned can be filtered by the client in a number of ways.
+   It can be set to return only users who are marked away, people with a
+   certain username, or users on a specific server.  For large queries,
+   the data can also be conveniently dumped to a file for later viewing.
+   
+   The parameters to -end are as follows:
+      $0   name of server queried
+      $1   body of the query
+
+Options:
+   -operators            returns irc operators
+   -lusers               returns non-irc operators
+   -chops                returns channel operators
+   -nick <nickname>      returns info for the given nickname only
+   -name <username>      returns info for the given username only
+   -host <hostname>      returns info for the given hostname only
+   -server <servername>  returns info for the given servername only
+   -diagnose             shows contents of the who queue for the server
+                         of the current window
+   -flush                removes all entries of the who queue for the server
+                         of the current window
+   -here                 returns users who are not away
+   -away                 returns users who are away
+   -line {...}           executes {...} for each line of output
+   -end {...}            executes {...} at the end of the query
+   -file <filename>      compare file contents to each line of output
+   -u-i                  show invisible users (opers only, required
+                         on the undernet)
+
+Examples:
+   To list all irc operators on servers from foo.com:
+      /who -o -s *.foo.com
+
+   To list the channel operators on channel #blah, which you are on:
+      /who -c #blah
+
+   To list all users from Russia, saving it to a file:
+      /who -h *.ru -f ru.users
+
+   To list all non-opers and say something at the end:
+      /who -lusers -end { echo sheesh. that's alot of lusers! }
+
+See Also:
+   on(5) who; whois(2)
+
+Restrictions:
+   There are some limitations to the data returned by WHO.  For instance,
+   it will not show users who have user mode +i set, unless that user's
+   nickname is explicitly and unambiguously specified.  Similarly, it
+   will mask channels with mode +p set, and will not show +s channels at
+   all.  These limits do now apply, however, if the user in question is
+   on a like channel with the querying client, or if the client is on a
+   channel for which data is queried.
+
+Other Notes:
+   The various command line switches detailed above may be abbreviated,
+   as shown in the examples, so line as the abbreviations are unambiguous.
+   For instance, -n may not be used, since it matches -nick and -name.
+
+   Use of the -file switch is not recommended, unless you know that the WHO
+   output will be minimal.  This is because the client reads the entire file
+   specified for each line of output, which is obviously quite inefficient,
+   to say nothing of being rather abusing to your filesystem.
+
+   The arguments from -line are identical to the arguments to on(5) who.
+   In fact, -line works exactly like on(5) who. except it ALWAYS overrides
+   on(5) who and disappears when the query is done. The -end is similar in
+   that it overrides hooks to the 315 numeric.
+
+   The -flush switch should *never* be used while a WHO request is still
+   pending. The results are unpredictable. This is not a bug.
+

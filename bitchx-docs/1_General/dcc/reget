@@ -1,0 +1,27 @@
+Synopsis:
+   dcc reget [=]<nick> [<file>]
+
+Description:
+   DCC REGET initiates a file transfer with a remote client that has 
+   offered the client a DCC RESEND.  Naturally, a remote client must have 
+   already send the client a DCC RESEND request in order for the client to 
+   start a DCC REGET with it.  If the DCC request comes over an existing 
+   DCC CHAT connection, a '=' must be prepended to the nickname.
+
+   This command resumes the file if it exists. It is not compatible with
+   mIRC.
+
+   The client need not specify the name of the file to get.  If multiple
+   files are offered by the same remote client, the oldest RESEND request
+   is processed first.
+
+Examples:
+   To accept a RESEND from joebob:
+      /dcc reget joebob
+
+   To accept all files offered to you by DCCbot:
+      /dcc reget DCCbot *
+
+See Also:
+   dcc(1) rename, resume, send; set(4) dcc_dldir
+

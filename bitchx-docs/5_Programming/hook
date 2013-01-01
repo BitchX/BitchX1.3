@@ -1,0 +1,28 @@
+Synopsis:
+   hook <anything>
+
+Description:
+   HOOK is used for one thing only; to activate a HOOK hook.  Don't worry
+   if that didn't make much sense.  The client has a mechanism by which
+   an arbitrary hook may be defined that can be hooked at any time by
+   the HOOK command.  The hook is created just like any other named
+   hook, except only the HOOK command may trigger it.
+
+Examples:
+   This script will echo a line every 10 seconds:
+      on ^hook "foo" {
+         timer 10 {
+            echo This line is repeated every 10 seconds
+            hook foo
+         }
+      }
+      hook foo
+
+See Also:
+   on(5) hook
+
+Other Notes:
+   The same functionality of HOOK can be obtained with normal aliases.
+   However, use of HOOK is preferred as it avoids the need for recursive
+   aliases (which have been known to cause trouble).
+

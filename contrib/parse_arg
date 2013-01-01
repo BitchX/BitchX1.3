@@ -1,0 +1,266 @@
+#if 0
+	int ch;
+	int add_servers = 0;
+	strqct passwd *entry;
+	struct hostent *hp;
+	char *ptr = NULL;
+	char *tmp_hostname = NULL;
+	char *channel = NULL;
+	
+	extern char *optarg;
+	extern int optind;
+
+	*nickname = 0;
+	*realname = 0;
+	*username = 0;
+
+	/* 
+	 * Its probably better to parse the environment variables
+	 * first -- that way they can be used as defaults, but can 
+	 * still be overriden on the command line.
+	 */
+#ifndef WINNT
+	if ((entry = getpwuid(getuid())))
+	{
+		if (entry->pw_gecos && *(entry->pw_gecos))
+		{
+			if ((ptr = strchr(entry->pw_gecos, GECOS_DELIMITER)))
+				*ptr = 0;
+			strmcpy(realname, entry->pw_gecos, REALNAME_LEN);
+		}
+
+		if (entry->pw_name && *(entry->pw_name))
+			strmcpy(username, entry->pw_name, NAME_LEN);
+
+		if (entry->pw_dir && *(entry->pw_dir))
+			malloc_strcpy(&my_path, entry->pw_dir);
+	}
+#else
+	{
+		u_long size=NAME_LEN+1;
+		if (!(ptr = getenv("IRCUSER")))
+			strcpy(username, "unknown");
+		else
+			strcpy(username,ptr);
+	}
+#endif
+	if ((ptr = getenv("IRCNICK")))
+		strmcpy(nickname, ptr, NICKNAME_LEN);
+
+	/*
+	 * We now allow users to use IRCUSER or USER if we couldnt get the
+	 * username from the password entries.  For those systems that use
+	 * NIS and getpwuid() fails (boo, hiss), we make a last ditch effort
+	 * to see what LOGNAME is (defined by POSIX.2 to be the canonical 
+	 * username under which the person logged in as), and if that fails,
+	 * we're really tanked, so we just let the user specify their own
+	 * username.  I think everyone would have to agree this is the most
+	 * reasonable way to handle this.
+	 */
+	if (!*username)
+		if ((ptr = getenv("LOGNAME")) && *ptr)
+			strmcpy(username, ptr, NAME_LEN);
+
+	if (!*username)
+		if ((ptr = getenv("IRCUSER")) && *ptr) 
+			strmcpy(username, ptr, NAME_LEN);
+		else if (*username)
+			;
+		else if ((ptr = getenv("USER")) && *ptr) 
+			strmcpy(username, ptr, NAME_LEN);
+		else if ((ptr = getenv("HOME")) && *ptr)
+		{
+			char *ptr2 = strrchr(ptr, '/');
+			if (ptr2)
+				strmcpy(username, ptr2, NAME_LEN);
+			else
+				strmcpy(username, ptr, NAME_LEN);
+		}
+		else
+			strmcpy(username, "Unknown", NAME_LEN); 
+
+
+#ifdef IDENT_FAKE
+		{
+			char *p = NULL, *q = NULL;
+			FILE *f;
+			malloc_sprintf(&p, "~/%s", get_string_var(IDENT_HACK_VAR));
+			q = expand_twiddle(p);
+			if ((f = fopen(q, "r")))
+			{
+				fgets(username, NAME_LEN, f);
+				if (*username && strchr(username, '\n'))
+					username[strlen(username)-1] = 0;
+			}
+			fclose(f);
+			new_free(&p); new_free(&q);
+			if (!*username)
+				strmcpy(username, "Unknown", NAME_LEN);
+		}
+#endif
+
+
+
+	if ((ptr = getenv("IRCNAME")))
+		strmcpy(realname, ptr, REALNAME_LEN);
+	else if ((ptr = getenv("NAME")))
+		strmcpy(realname, ptr, REALNAME_LEN);
+	else if (!*realname)
+		strmcpy(realname, "* New BX user who didn't read BitchX.doc *", REALNAME_LEN);
+
+	if ((ptr = getenv("HOME")))
+		malloc_strcpy(&my_path, ptr);
+	else if (!my_path)
+#ifndef WINNT
+		malloc_strcpy(&my_path, "/");
+#else
+		malloc_strcpy(&my_path, empty_string);
+#endif
+#if defined(WINNT) || defined(__EMX__)
+	convert_unix(my_path);
+#endif
+
+
+	if ((ptr = getenv("IRCPORT")))
+		irc_port = my_atol(ptr);
+
+
+	if ((ptr = getenv("IRCRC")))
+		ircrc_file = m_strdup(ptr);
+	else
+		ircrc_file = m_2dup(my_path, IRCRC_NAME);
+
+
+
+	if ((ptr = getenv("IRCLIB")))
+		irc_lib = m_2dup(ptr, "/");
+	else
+		irc_lib = m_strdup(IRCLIB);
+
+#if defined(WINNT) || defined(__EMX__)
+	convert_unix(irc_lib);
+#endif
+
+
+	if ((ptr = getenv("IRCUMODE")))
+		send_umode = m_strdup(ptr);
+
+	if ((ptr = getenv("IRCPATH")))
+		irc_path = m_strdup(ptr);
+	else
+		irc_path = m_strdup(IRCPATH);
+
+#if defined(WINNT) || defined(__EMX__)
+	convert_unix(irc_path);
+#endif
+
+
+	set_string_var(LOAD_PATH_VAR, irc_path);
+	new_free(&irc_path);
+
+	if ((ptr = getenv("IRCHOST")) && *ptr)
+		tmp_hostname = ptr;
+
+	if (!ircservers_file)
+#if defined(WINNT) || defined(__EMX__)
+		malloc_strcpy(&ircservers_file, "irc-serv");
+#else
+		malloc_strcpy(&ircservers_file, ".ircservers");
+#endif
+
+	if (!bircrc_file)
+#if defined(WINNT) || defined(__EMX__)
+		malloc_sprintf(&bircrc_file, "%s/bx-rc", my_path);
+#else
+		malloc_sprintf(&bircrc_file, "%s/.bitchxrc", my_path);
+#endif
+
+	while ((ch = getopt(argc, argv, "aBbc:dfFhH:l:L:Nn:p:r:qsvxz:")) != EOF)
+	{
+		switch (ch)
+		{
+			case 'v':	/* Outpqt ircII version */
+				show_version();
+				/* NOTREACHED */
+			case 'p': /* Default port to use */
+				irc_port = my_atol(optarg);
+				break;
+
+			case 'f': /* Use flow control */
+				use_flow_control = 1;
+				break;
+
+			case 'F': /* dont use flow control */
+				use_flow_control = 0;
+				break;
+
+			case 'd': /* use dumb mode */
+				dumb_mode = 1;
+				break;
+
+			case 'l': /* Load some file instead of ~/.ircrc */
+			case 'L': /* Same as above. Doesnt work like before */
+				malloc_strcpy(&ircrc_file, optarg);
+				break;
+
+			case 'a': /* add server, not replace */
+				add_servers = 1;
+				break;
+			case 'r':
+				add_servers = 1;
+				malloc_strcpy(&ircservers_file, optarg);
+				break;
+
+			case 'q': /* quick startup -- no .ircrc */
+				quick_startup = 1;
+				break;
+
+			case 's': /* dont connect - let user choose server */
+				dont_connect = 1;
+				break;
+
+			case 'b':
+				dumb_mode = 1;
+				use_input = 0;
+				background = 1;
+				break;
+
+			case 'n':
+				strmcpy(nickname, optarg, NICKNAME_LEN);
+				break;
+
+			case 'x': /* x_debug flag */
+				x_debug = (unsigned long)0x0fffffff;
+				break;
+
+			case 'z':
+				strmcpy(username, optarg, NAME_LEN);
+				break;
+
+			case 'B':
+				load_ircrc_right_away = 1;
+				break;
+
+			case 'c':
+				malloc_strcpy(&channel, optarg);
+				break;
+
+			case 'H':
+				tmp_hostname = optarg;
+				break;
+
+			case 'N':
+				auto_connect = 0;
+				break;
+				
+			default:
+			case 'h':
+			case '?':
+				fputs(switch_help, stderr);
+				exit(1);
+		} /* End of switch */
+	}
+	
+
+
+#else /* end new parse */

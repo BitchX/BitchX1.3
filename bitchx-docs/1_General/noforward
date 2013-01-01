@@ -1,0 +1,20 @@
+Synopsis:
+   unforward 
+
+Description:
+   This command will remove the forward of msgs sent to another nick or 
+   another channel. 
+
+Examples:
+   To unforward to a nick:
+      /unforward nick
+
+   To unforward to a channel:
+      /unforward #channel
+
+See Also:
+   addforward(1) noforward(1) 
+
+Restrictions:
+   This could possibly get you in trouble in some cases. Use with caution.
+

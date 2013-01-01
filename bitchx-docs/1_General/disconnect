@@ -1,0 +1,19 @@
+Synopsis:
+   disconnect [<server number> [<reason>]]
+
+Description:
+   This command disconnects you from your server, but does not actually
+   make the client quit.  If you are connected to multiple servers in
+   multiple windows, the client will only close the connection to the
+   current server.
+
+Examples:
+   To disconnect from your current server:
+      /disconnect
+
+   To disconnect from server 2 in your server list:
+      /disconnect 2 I'll be back later!
+
+See Also:
+   reconnect(1); server(1)
+

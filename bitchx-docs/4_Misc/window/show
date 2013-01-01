@@ -1,0 +1,10 @@
+Synopsis:
+   window show <refnum>
+
+Description:
+   This makes the specified hidden window visible again.  If the specified
+   window is already visible, the command has no effect.
+
+See Also:
+   window(4) hide, hide_others
+

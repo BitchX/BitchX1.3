@@ -1,0 +1,22 @@
+Synopsis:
+   set status_hold [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the
+   current window has HOLD_MODE turned on, and there are lines of text
+   waiting in the queue to be displayed.
+
+   This string is represented by %H in the STATUS_FORMAT string.  The %H
+   is treated literally within STATUS_HOLD.
+
+Examples:
+   Customizing the message indicating lines are being held:
+      /set status_hold Held Lines: 
+
+See Also:
+   set(4) hold_mode, status_format, status_hold_lines; window(4) hold_mode
+
+Other Notes:
+   When lines are held, both this setting and STATUS_HOLD_LINES are
+   activated.
+

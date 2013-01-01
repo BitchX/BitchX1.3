@@ -1,0 +1,13 @@
+Synopsis:
+   load man
+
+Description:
+   This script creates a man-like interface to the EPIC help files. It will
+   search all subdirectories for a particular topic.
+
+See Also:
+   help(1); load(5)
+
+Other Notes:
+   This script was written by Dawid Kuroczko.
+

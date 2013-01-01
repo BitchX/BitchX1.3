@@ -1,0 +1,41 @@
+Synopsis:
+   $onchannel([<channel>|*])
+
+Technical:
+   This function returns a list of users currently on the specified channel.
+   It will only operate for channels that the client is currently on.
+
+Practical:
+   This function basically does the same thing as NAMES, except is much
+   faster.  However, it only functions on the client's current channels.
+   If no channel is specified, the current is used.  Similarly, a "*" will
+   expand to the current channel.
+
+Returns:
+   list of nicknames on specified channel, or nothing if error
+
+Examples:
+   $onchannel()                  shows users on current channel
+   $onchannel(*)                 also shows users on current channel
+   $onchannel(#foobar)           shows users on #foobar if client is there
+
+Aliases:
+   The $chanusers() function is identical in operation to $onchannel().
+
+See Also:
+   names(2)
+
+Bugs:
+   There is a long-standing bug in many servers that can lead to erroneous
+   output from this function.  These servers limit the length of numeric
+   353 (RPL_NAMEREPLY) to 510 characters.  When the nickname list exceeds
+   this, the server uses multiple 353s.  Unfortunately, they will truncate
+   any nickname that would end up exceeding the 510th character.  This
+   function uses 353 to generate it's initial nickname list, so it is
+   likely that it will return chopped nicknames on large channels.  This is
+   an unavoidable server bug.
+
+Other Notes:
+   This function will fail on channels with mode +a set (ircd 2.9 servers),
+   as those channels do not permit a listing of users.
+

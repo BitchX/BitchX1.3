@@ -1,0 +1,28 @@
+Synopsis:
+   $pattern(<pattern> <word list>)
+   $rpattern(<word> <pattern list))
+
+Technical:
+   The $pattern() function is used to reduce a list of words to only those
+   matching the given pattern.  It is paired with $rpattern(), which does
+   exactly the opposite, matching a word to a list of patterns.  If no
+   matches are found, an empty string is returned.
+
+Practical:
+   These functions are similar to $match() and $rmatch(), except that they
+   return a list of all matches, not just an index to the best match.  This
+   is useful when you know that more than one item may match, and you want
+   to see all matches, not just the best.
+
+Returns:
+   list of matching words/patterns, or empty string if none match
+
+Examples:
+   $pattern(*oo* foobar blah booya)       returns "foobar booya"
+   $pattern(*a* hello there bob)          returns nothing
+   $rpattern(booya *oo* b* *erf)          returns "*oo* b*"
+   $rpattern(booya *u* foo* *bar)         returns nothing
+
+See Also:
+   filter(6); match(6); rfilter(6); rmatch(6)
+

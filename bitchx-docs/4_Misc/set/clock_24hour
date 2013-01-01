@@ -1,0 +1,12 @@
+Synopsis:
+   set clock_24hour [on|off|toggle]
+
+Description:
+   When turned on, this setting causes the status bar clock to be shown
+   in 24-hour format (military style).  When off, the clock will display
+   "AM" or "PM" to designate the true time.  The clock is displayed in
+   the %Z expando in the status bar.
+
+See Also:
+   set(4) clock, status_clock
+

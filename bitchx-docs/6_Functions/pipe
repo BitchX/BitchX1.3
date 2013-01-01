@@ -1,0 +1,16 @@
+Synopsis:
+   $pipe(<program>)
+
+Technical:
+   This function executes <program> and returns its output. It is defined in
+   the pipe(8) script. 
+   
+Practical:
+   It's an easy way to grab the output of a program quickly.
+
+Returns:
+   <program>'s output
+   
+See Also:
+   exec(5)
+

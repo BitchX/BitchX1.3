@@ -1,0 +1,18 @@
+Synopsis:
+   bind <key> scroll_backward
+
+Description:
+   This function allows the user to move backwards in the client's lastlog
+   one page at a time.  The percentage of the screen that makes up a page is
+   defined by the set(4) scrollback_ratio variable. This is useful for
+   reviewing events as they happened, in a manner easier than LASTLOG
+   provides.
+
+   This function requires that SCROLL be on in order to function.  The
+   SCROLL_START function must be used to use the scrollback feature, and
+   SCROLL_END must be used to exit it.
+   
+See Also:
+   bind(4) scroll_end, scroll_forward, scroll_start; lastlog(1); set(4)
+   hold_mode, scroll, scrollback_ratio
+

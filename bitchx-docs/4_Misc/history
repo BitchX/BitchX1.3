@@ -1,0 +1,39 @@
+Synopsis:
+   history [<number>]
+   ! [<history number|history match>]
+
+Description:
+   Command history is a useful little feature that allows you to
+   quickly recall commands previously executed.  The conventions
+   followed are similar to those of the GNU bash or Cornell's tcsh Unix
+   command shells.  There are two versions of this command, one which
+   just lists out the command history, and another which actually
+   recalls a specific command for use on the input line.
+
+   The HISTORY command is the simple version.  All it does is spit out
+   a list of commands you've previously entered (the exact number is
+   determined by your HISTORY setting).  You can limit the number of
+   items to list, or just list all of them.  Each item is assigned a
+   unique index number, which can be referred to by !.  This list can
+   be saved for later use, if you have HISTORY_FILE set to something.
+
+   The more complex version is the ! command.  Based on the input you
+   give it, it searches through your command history list and finds the
+   first item that matches your query and puts it on the input line for
+   immediate use.  You can search based on a partial string (such as a
+   command name, so search for the last use of it), or an index number.
+
+Examples:
+   To list the 50 most recent items in your command history:
+      /history 50
+
+   To find the most recent use of the MSG command:
+      /!/msg
+
+   To use item 37 in your command history:
+      /!37
+
+See Also:
+   bind(4) forward_history, backward_history, shove_to_history; set(4)
+   history, history_file
+

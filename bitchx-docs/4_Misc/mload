@@ -1,0 +1,15 @@
+Synopsis:
+   mload <menu file> [<menu file> ...]
+
+Description:
+   This command loads the specified menu files.  Menus are a convenient way
+   to offer access to commands or specialized online help.  See the Menus
+   help file for information about creating menus.
+
+See Also:
+   Menus(7); bind(4) enter_menu; mlist(4); set(4) menu
+
+Restrictions:
+   Currently, menus cannot be unloaded.  They can, however, be clobbered by
+   loading a new menu on top of an existing name.
+

@@ -1,0 +1,22 @@
+Synopsis:
+   window server [-ssl] <server>[:[<port>][:[<password>][:[<nickname>]]]]
+
+Description:
+   This command works in a similar manner as the SERVER command, except
+   the new server only applies to the current window.  This provides a
+   convenient mechanism for being on multiple servers at once.
+
+   The server name is the only required argument.  Any or all of the other
+   may be specified as desired, however a colon must separate each
+   argument, even if one is missing (see the examples below).
+
+Examples:
+   To connect to server irc.foo.com on port 6665:
+      /window server irc.foo.com:6665
+
+   To connect to server irc.foo.com with the nickname JoeBob:
+      /window server irc.foo.com:::JoeBob
+
+See Also:
+   server
+

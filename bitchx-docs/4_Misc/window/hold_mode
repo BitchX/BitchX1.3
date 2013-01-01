@@ -1,0 +1,12 @@
+Synopsis:
+   window hold_mode <on|off|toggle>
+
+Description:
+   This sets the hold mode for the current window (see SET HOLD_MODE for a
+   description of hold mode).  All new windows are created using the SET
+   HOLD_MODE value as a default.  If multiple windows exist, then SET
+   HOLD_MODE only affects the current window.
+
+See Also:
+   flush(2); set(4) hold_mode
+

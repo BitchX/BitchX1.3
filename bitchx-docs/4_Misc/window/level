@@ -1,0 +1,27 @@
+Synopsis:
+   window level [<levels>]
+
+Description:
+   This sets what type of messages are displayed in the current window.
+   The actual levels to display may consist of a comma-delimited list
+   of valid levels (see SET LASTLOG_LEVEL for a complete description).
+   If no level is specified, the current is displayed.
+
+   For windows that only display certain types of information, the rest
+   is not actually discarded.  Rather, it will go to a window that is
+   set to display such information, or lacking that, the current window.
+   To actually hide information from the screen, see the ON command.
+
+Examples:
+   To make the current window display only public and misc. messages:
+      /window level public,crap
+
+See Also:
+   set(4) lastlog_level; window(4) lastlog_level
+
+Other Notes:
+   By default, all windows start out with a LEVEL of ALL.  However, if the
+   PHONE #define was enabled (in config.h) at compile time, this default
+   is NONE.  The string returned by evaluating $info(o) will contain a 'p'
+   if PHONE was enabled.
+

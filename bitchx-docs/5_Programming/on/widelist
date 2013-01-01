@@ -1,0 +1,14 @@
+Synopsis:
+   on [<modes>]widelist [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered when the client receives server output from a
+   LIST command, when given with the -wide switch.
+
+Parameters:
+   $0-   channel list, of format #channel(n), where 'n' is the number of
+         users on the channel
+
+See Also:
+   list(2); on(5) list
+

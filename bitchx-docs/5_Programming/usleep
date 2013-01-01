@@ -1,0 +1,12 @@
+Synopsis:
+   usleep <microseconds>
+
+Description:
+   This suspends the client for the specified number of microseconds. During
+   this time, the client does absolutely nothing; it quite literally goes
+   to sleep.  In general, it is most useful in non-interactive automated
+   scripts, and even these cases are fairly rare.
+
+See Also:
+   sleep(5); pause(5); timer(5); wait(5)
+

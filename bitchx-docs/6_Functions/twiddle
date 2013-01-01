@@ -1,0 +1,26 @@
+Synopsis:
+   $twiddle(<tilde-expansion>)
+
+Technical:
+   This function is used to do tilde-expansion on the given name.  The tilde
+   is required.  If a user exists on the system with a home directory, the
+   full path of that directory is returned.  If the user does not exist,
+   nothing is returned.  If a tilde is not the first character, the input is
+   returned.
+
+Practical:
+   This is useful for ensuring that files will be written to your home
+   directory, regardless of the current directory.
+
+Returns:
+   full path of home directory if user exists, nothing if not, input if error
+
+Examples:
+   $twiddle(~)                  returns your home directory
+   $twiddle(~jvs)               returns home directory for user jvs
+   $twiddle(~nosuchuser)        no such user, returns nothing
+   $twiddle(blah)               bad input, returns "blah"
+
+See Also:
+   Environment(7); cd(4)
+

@@ -1,0 +1,17 @@
+Synopsis:
+   $status(<refnum> <status line>)
+
+Technical:
+   This function returns the actual status bar for a specific window.
+
+Returns:
+   full status line for the specified window
+
+Other Notes:
+   Inactive windows don't have their status bar updated, so it may not always
+   be 100% accurate. <status line> is a choice of 0 or 1, where 1 is the bottom
+   status line when set(4) status_double is ON.
+
+See Also:
+   set(4) status_double; set(4) status_format; on(5) status_update
+

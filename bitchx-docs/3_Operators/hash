@@ -1,0 +1,14 @@
+Synopsis:
+   hash
+
+Description:
+   This command is primarily for debugging the irc server.  It is used to
+   profile the server's internal use of its hashed records.  It does not
+   actually do anything useful on the network, and is of little use to
+   anyone other than server programmers.
+
+Restrictions:
+   The protocol HASH command is only available (or at least only produces
+   useful output) when the irc server is compiled in debug mode.  Its use
+   is limited to irc operators.
+

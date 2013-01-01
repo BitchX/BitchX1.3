@@ -1,0 +1,23 @@
+Synopsis:
+   abort [<filename>]
+
+Description:
+   This command causes two things to happen, after which the client exits
+   immediately.
+
+   First, a SAVE is performed, with the data dumped either to the specified
+   file, or to "irc.aborted" if none.  Second, it will drop a core file in
+   the current directory.
+
+   This command is used mainly for debugging purposes.
+
+See Also:
+   quit(1); save(5)
+
+Restrictions:
+   The core file will only be produced if the EPIC_DEBUG #define is enabled
+   in the source file config.h at compile time.  It is disabled by default.
+
+Other Notes:
+   Although it uses SAVE, this command will not clobber the .ircrc file,
+   unless it happens to be the filename specified.

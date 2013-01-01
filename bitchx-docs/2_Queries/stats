@@ -1,0 +1,45 @@
+Synopsis:
+   stats <type> [<server>]
+
+Description:
+   This queries the server for specific statistical information.  This
+   can include a list on specific people allowed to connect to the
+   server, those not allowed to connect, clients allowed to become
+   operators on that server, etc.
+
+   If a server is not specified, the current is queried.  Note that the
+   STATS type is not preceded with a hyphen.
+
+Options:
+   c   C/N lines; these lines define what servers are allowed to link to
+          the network via the queried server
+   h   H/L lines; these define what servers may connect as hubs or leaves
+   k   K lines; these define who may not connect to the server
+   i   I lines; these define who is allowed to connect to the server
+   l   this shows a concise breakdown of the amount of data passed between
+          the server and its clients
+   m   this shows how many times each protocol command has been used
+   o   O lines; these define who may become an irc operator
+   u   this shows the server's current uptime
+   y   Y lines; these define the various client/server connection classes
+
+Restrictions:
+   Some servers disallow or restrict the use of the STATS command.  This
+   is generally due to abuse of some kind.  Most often, the server will
+   not allow remote queries.  This is not the case for most servers,
+   though.
+
+See Also:
+   load(5) tls
+
+Other Notes:
+   There are two types of O lines, global and local.  If the STATS report
+   shows an O, it is global, and a o is local.  Local operators only have
+   operator status and powers on their own server.
+
+   There are two types of I lines as well, though only on networks using
+   ircd2.9 code (not to be confused with Undernet's ircu2.9).  An I is a
+   normal I line.  An i is a restricted line, meaning any matching client
+   will be given user mode +r.  This means that the client cannot change
+   its nickname or have operator status in any channel.
+

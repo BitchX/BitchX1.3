@@ -1,0 +1,12 @@
+Synopsis:
+   set floating_point_math [on|off|toggle]
+
+Description:
+   When turned on, EPIC becomes capable of handling floating-point math
+   operations.  In truth, all math is done in floating-point, except the
+   normal behavior is to convert everything to integers before actually
+   displaying them.
+
+See Also:
+   Expressions(7)
+

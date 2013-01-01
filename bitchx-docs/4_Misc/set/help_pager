@@ -1,0 +1,15 @@
+Synopsis:
+   set help_pager [on|off|toggle]
+
+Description:
+   When turned on, the client will pause after every windowful of help,
+   much like HOLD_MODE.  When off, the help will scroll until the end of
+   the file has been reached.
+
+See Also:
+   help(1); set(4) help_service, hold_mode; window(4) hold_mode
+
+Other Notes:
+   This setting has no effect when receiving help from a help service on
+   the irc network.  Use HOLD_MODE instead.
+

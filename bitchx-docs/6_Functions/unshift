@@ -1,0 +1,32 @@
+Synopsis:
+   $shift(<variable name>)
+   $unshift(<variable name> <word> [<word> ...])
+
+Technical:
+   These functions are used to add or remove words to or from the beginning
+   of a variable.  The $shift() function removes the first word (and any
+   space padding) from the beginning of the variable and returns the word.
+   The $unshift() function prepends the given string to the variable, and
+   returns the resultant string.
+
+   Note that the variable name itself must be used, without any leading
+   '$' character.
+
+Practical:
+   These functions are more efficient means of adding or removing data to
+   or from a variable than assigning the variable's value to itself.  They
+   are identical to the SHIFT and UNSHIFT commands, except that they also
+   have return values.
+
+Returns:
+   shift:   word "shifted" off of the variable
+   unshift: resultant string after function call
+
+Examples:
+   $unshift(foo blah)             prepends "blah" to $foo
+   $shift(foo)                    removes "blah" from $foo and returns it
+   $unshift(foo bar  booya)       prepends "bar  booya" to $foo
+
+See Also:
+   pop(6); push(6); shift(5); unshift(5)
+

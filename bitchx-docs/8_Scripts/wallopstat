@@ -1,0 +1,23 @@
+Synopsis:
+   load wallopstat
+
+Description:
+   This script provides several commands for selectively filtering certain
+   types of WALLOPS messages.
+
+     Alias      Description                                               
+     /loud-     make user wallops appear normally
+     /loud+     make oper wallops appear normally
+     /loudS     make server wallops appear normally
+     /silent-   put user wallops in status line
+     /silent+   put oper wallops in status line
+     /silentS   put server wallops in status line
+
+See Also:
+   load(5); silent(8); wallops(2)
+
+Other Notes:
+   This script is based on the original silent script by Carl von Loesch
+   (lynx).  This version was written by Peter Hellmonds (snoopy),
+   hellmond@phoenix.princeton.edu.
+

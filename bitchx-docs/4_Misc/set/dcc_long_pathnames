@@ -1,0 +1,16 @@
+Synopsis:
+   set dcc_long_pathnames [on|off|toggle]
+
+Description:
+   When turned on, this variable will cause the client to display the
+   full pathnames of all files being transferred to or from the client
+   via DCC.  When off, only the filenames are shown, not their parent
+   directories.
+
+See Also:
+   dcc(1) list
+
+Other Notes:
+   This setting does not affect the actual filename, only how it is
+   displayed.
+

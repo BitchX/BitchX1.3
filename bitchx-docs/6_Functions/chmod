@@ -1,0 +1,21 @@
+Synopsis:
+   $chmod(<file> <mode>)
+
+Technical:
+   This function provides an interface to the Unix system call chmod(2).  It
+   applies the given mode to the file specified.  Refer to your Unix system
+   manual for more information (usually "man 2 chmod").  The mode must be in
+   numeric format.
+
+Practical:
+   This function is used to change the access permissions on a given file.
+   A discussion of Unix file permissions is beyond the scope of this
+   document; refer to your system's manual page for chmod(1) or chmod(2).
+
+Returns:
+   -1   error
+    0   permissions changed successfully
+
+See Also:
+   umask(6)
+

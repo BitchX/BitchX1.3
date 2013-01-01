@@ -1,0 +1,238 @@
+diff -uNr sent-upstream/as-sent-last/include/config.h ircii-pana-1.0-0c15/include/config.h
+--- sent-upstream/as-sent-last/include/config.h	Sat Jan  8 04:19:04 2000
++++ ircii-pana-1.0-0c15/include/config.h	Sun Jan  9 06:40:56 2000
+@@ -571,7 +571,7 @@
+ #define WANT_DETACH ON	/* this is here for the detach/re-attach code
+ 			   which is essentially a mini-screen */
+ #define ALLOW_DETACH ON
+-
++#define DEFAULT_DETACH_ON_HUP ON
+ 
+ #undef OLD_RANDOM_BEHAVIOR   /* semi randomness for randm() */
+ 
+diff -uNr sent-upstream/as-sent-last/include/modval.h ircii-pana-1.0-0c15/include/modval.h
+--- sent-upstream/as-sent-last/include/modval.h	Tue Jan  4 01:54:48 2000
++++ ircii-pana-1.0-0c15/include/modval.h	Sun Jan  9 06:01:54 2000
+@@ -306,6 +306,7 @@
+ #define get_window_server(x) ((int) (global[GET_WINDOW_SERVER]((unsigned int)x)))
+ #define set_window_server(x, y, z) ((void) (global[SET_WINDOW_SERVER]((int)x, (int)y, (int)z)))
+ #define window_check_servers ((void (*)())global[WINDOW_CHECK_SERVERS])
++#define window_close_server ((void (*)(int))global[WINDOW_CHECK_SERVERS])
+ #define change_window_server(x, y) ((void) (global[CHANGE_WINDOW_SERVER]((int)x, (int)y))) 
+ #define set_level_by_refnum(x, y) ((void) (global[SET_LEVEL_BY_REFNUM]((unsigned int)x, (int)y)))
+ #define message_to(x) ((void) (global[MESSAGE_TO]((unsigned int)x)))
+diff -uNr sent-upstream/as-sent-last/include/struct.h ircii-pana-1.0-0c15/include/struct.h
+--- sent-upstream/as-sent-last/include/struct.h	Tue Jan  4 02:27:26 2000
++++ ircii-pana-1.0-0c15/include/struct.h	Sun Jan  9 06:13:17 2000
+@@ -593,6 +593,7 @@
+ 	unsigned int	refnum;		/* the unique reference number,
+ 					 * assigned by IRCII */
+ 	int	server;			/* server index */
++	int	last_server;		/* previous server index */
+ 	int	top;			/* The top line of the window, screen
+ 					 * coordinates */
+ 	int	bottom;			/* The botton line of the window, screen
+diff -uNr sent-upstream/as-sent-last/include/vars.h ircii-pana-1.0-0c15/include/vars.h
+--- sent-upstream/as-sent-last/include/vars.h	Tue Jan  4 02:27:26 2000
++++ ircii-pana-1.0-0c15/include/vars.h	Sun Jan  9 06:41:24 2000
+@@ -103,6 +103,7 @@
+ 	DEOPFLOOD_TIME_VAR,
+ 	DEOP_ON_DEOPFLOOD_VAR,
+ 	DEOP_ON_KICKFLOOD_VAR,
++	DETACH_ON_HUP,
+ 	DISPATCH_UNKNOWN_COMMANDS_VAR,
+ 	DISPLAY_VAR ,
+ 	DISPLAY_ANSI_VAR,
+diff -uNr sent-upstream/as-sent-last/include/window.h ircii-pana-1.0-0c15/include/window.h
+--- sent-upstream/as-sent-last/include/window.h	Fri Oct 22 01:48:21 1999
++++ ircii-pana-1.0-0c15/include/window.h	Sun Jan  9 06:03:52 2000
+@@ -31,6 +31,10 @@
+ #define ON 1
+ #define TOGGLE 2
+ 
++#define WINDOW_NO_SERVER	-1
++#define WINDOW_DLL		-2
++#define WINDOW_SERVER_CLOSED	-3
++
+ 	Window 	*new_window 			(struct ScreenStru *);
+ 	void	delete_window			(Window *);
+ 	void	add_to_invisible_list		(Window *);
+@@ -71,7 +75,6 @@
+ 	char	*get_bound_channel		(Window *);
+ 	int	get_window_server		(unsigned);
+ 	void	set_window_server		(int, int, int);
+-	void	window_check_servers		(void);
+ 	void	set_level_by_refnum		(unsigned, unsigned long);
+ 	void	message_to			(unsigned long);
+ 
+@@ -145,6 +148,7 @@
+ const	char	*query_host (void);
+ const	char	*query_cmd (void);
+ 	void	window_check_servers(void);
++	void	window_close_server(int old_server);
+ 	void	window_change_server(int, int);
+ 	void	make_window_current_by_winref(int);
+ 	void	make_window_current_by_desc(char *);
+diff -uNr sent-upstream/as-sent-last/source/commands.c ircii-pana-1.0-0c15/source/commands.c
+--- sent-upstream/as-sent-last/source/commands.c	Tue Jan  4 01:43:35 2000
++++ ircii-pana-1.0-0c15/source/commands.c	Sun Jan  9 06:05:49 2000
+@@ -1075,7 +1075,7 @@
+ 	set_server_reconnect(from_server, 1);
+ 	close_server(from_server,(args && *args) ? args : "Reconnecting");
+ 	clean_server_queues(from_server);
+-	window_check_servers();
++	window_close_server(from_server);
+ 	servercmd(NULL, scommnd, empty_string, NULL);
+ 
+ }
+diff -uNr sent-upstream/as-sent-last/source/irc.c ircii-pana-1.0-0c15/source/irc.c
+--- sent-upstream/as-sent-last/source/irc.c	Sat Jan  8 04:19:04 2000
++++ ircii-pana-1.0-0c15/source/irc.c	Sun Jan  9 06:49:38 2000
+@@ -543,6 +543,14 @@
+ 	detachcmd(NULL, NULL, NULL, NULL);
+ }
+ 
++void set_detach_on_hup(Window *dummy, char *unused, int value)
++{
++	if(value)
++		my_signal(SIGHUP, sig_detach, 0);
++	else
++		my_signal(SIGHUP, irc_exit_old, 0);
++}
++
+ /* shows the version of irc */
+ static	void versionreply(void)
+ {
+@@ -1506,7 +1514,7 @@
+ #endif
+ 	my_signal(SIGQUIT, SIG_IGN, 0);
+ #ifdef WANT_DETACH
+-	my_signal(SIGHUP, sig_detach, 0);
++	set_detach_on_hup(NULL, NULL, DEFAULT_DETACH_ON_HUP);
+ #else
+ 	my_signal(SIGHUP, irc_exit_old, 0);
+ #endif
+diff -uNr sent-upstream/as-sent-last/source/numbers.c ircii-pana-1.0-0c15/source/numbers.c
+--- sent-upstream/as-sent-last/source/numbers.c	Sat Jan  1 19:24:50 2000
++++ ircii-pana-1.0-0c15/source/numbers.c	Sun Jan  9 06:06:34 2000
+@@ -1105,7 +1105,7 @@
+ 		if (do_hook(current_numeric, "%s %s", from, *ArgList))
+ 			display_msg(from, ArgList);
+ 		close_server(from_server, empty_string);
+-		window_check_servers();
++		window_close_server(from_server);
+ 		if (from_server == primary_server)
+ 			get_connected(from_server + 1, from_server);
+ 		break;
+@@ -1149,7 +1149,7 @@
+ 			display_msg(from, ArgList);
+ 				
+ 		close_server(from_server, empty_string);
+-		window_check_servers();
++		window_close_server(from_server);
+ 		if (server_list_size() > 1)
+ 			remove_from_server_list(klined);
+ 		if (klined == primary_server && (server_list_size() > 0))
+diff -uNr sent-upstream/as-sent-last/source/parse.c ircii-pana-1.0-0c15/source/parse.c
+--- sent-upstream/as-sent-last/source/parse.c	Tue Jan  4 02:30:07 2000
++++ ircii-pana-1.0-0c15/source/parse.c	Sun Jan  9 06:06:48 2000
+@@ -1166,7 +1166,7 @@
+ 
+ 	close_server(from_server,empty_string);
+ 	clean_server_queues(from_server);
+-	window_check_servers();
++	window_close_server(from_server);
+ 	set_input_prompt(current_window, get_string_var(INPUT_PROMPT_VAR), 0);
+ 	if (strchr(from, '.'))
+         {
+diff -uNr sent-upstream/as-sent-last/source/server.c ircii-pana-1.0-0c15/source/server.c
+--- sent-upstream/as-sent-last/source/server.c	Tue Jan  4 01:43:35 2000
++++ ircii-pana-1.0-0c15/source/server.c	Sun Jan  9 06:25:16 2000
+@@ -257,6 +257,7 @@
+ 						times = 1;
+ 						i++;
+ 					}
++					window_close_server(i);
+ 					get_connected(i, old_serv);
+ 					break;
+ 				}
+@@ -1162,7 +1163,7 @@
+ 			    return;
+ 			}
+ 			close_server(i, "closing server");
+-			window_check_servers();
++			window_close_server(i);
+ 		}
+ 		else
+ 			get_connected(from_server - 1, from_server);
+@@ -2100,6 +2101,7 @@
+ 		clear_channel_list(i);
+ 		close_server(i, message);
+ 		server_list[i].eof = 1;
++		window_close_server(i);
+ 	}
+ done:
+ 	window_check_servers();
+diff -uNr sent-upstream/as-sent-last/source/vars.c ircii-pana-1.0-0c15/source/vars.c
+--- sent-upstream/as-sent-last/source/vars.c	Tue Jan  4 02:27:26 2000
++++ ircii-pana-1.0-0c15/source/vars.c	Sun Jan  9 06:52:18 2000
+@@ -95,6 +95,8 @@
+ static	void	set_nat_address (Window *, char *, int);
+ extern	void	debug_window (Window *, char *, int);
+ 	
++extern	void	set_detach_on_hup (Window *, char *, int);
++
+ /*
+  * irc_variable: all the irc variables used.  Note that the integer and
+  * boolean defaults are set here, which the string default value are set in
+@@ -199,6 +201,7 @@
+ 	{ "DEOPFLOOD_TIME",0,		INT_TYPE_VAR,	DEFAULT_DEOPFLOOD_TIME, NULL, NULL, 0, VIF_BITCHX },
+ 	{ "DEOP_ON_DEOPFLOOD",0,	INT_TYPE_VAR,	DEFAULT_DEOP_ON_DEOPFLOOD, NULL, NULL, 0, VIF_BITCHX },
+ 	{ "DEOP_ON_KICKFLOOD",0,	INT_TYPE_VAR,	DEFAULT_DEOP_ON_KICKFLOOD, NULL, NULL, 0, VIF_BITCHX },
++	{ "DETACH_ON_HUP",0,		BOOL_TYPE_VAR,	DEFAULT_DETACH_ON_HUP, NULL, set_detach_on_hup, 0, 0 },
+ 	{ "DISPATCH_UNKNOWN_COMMANDS",0,BOOL_TYPE_VAR,	DEFAULT_DISPATCH_UNKNOWN_COMMANDS, NULL, NULL, 0, 0 },
+ 	{ "DISPLAY",0,			BOOL_TYPE_VAR,	DEFAULT_DISPLAY, NULL, NULL, 0, 0 },
+ 	{ "DISPLAY_ANSI",0,		BOOL_TYPE_VAR,	DEFAULT_DISPLAY_ANSI, NULL, toggle_reverse_status, 0, 0 },
+diff -uNr sent-upstream/as-sent-last/source/window.c ircii-pana-1.0-0c15/source/window.c
+--- sent-upstream/as-sent-last/source/window.c	Tue Jan  4 02:27:26 2000
++++ ircii-pana-1.0-0c15/source/window.c	Sun Jan  9 06:18:15 2000
+@@ -1784,7 +1784,7 @@
+ 		if ((window = get_window_by_refnum(refnum)) == NULL)
+ 			window = current_window;
+ 		old = window->server;
+-		if (misc)
++		if (misc || old == WINDOW_SERVER_CLOSED)
+ 		{
+ 			while ((traverse_all_windows(&tmp)))
+ 			{
+@@ -1850,6 +1850,30 @@
+ 	}
+ 	update_all_status(current_window, NULL, 0);
+ 	cursor_to_input();
++}
++
++/*
++ * window_close_server: this is like window_check_servers but it gets called
++ * with old_server as the refnum of a server that just got closed.  It marks
++ * every window that used to be connected to old_server as WINDOW_SERVER_CLOSED
++ * and sets last_server for those windows.  It doesn't touch windows that
++ * already had no server.
++ */
++
++void window_close_server(int old_server)
++{
++	Window	*tmp;
++	int	cnt, max, i, not_connected, prime = -1;
++
++	tmp = NULL;
++	while ((traverse_all_windows(&tmp)))
++	{
++		if (tmp->server == old_server)
++		{
++			tmp->server = WINDOW_SERVER_CLOSED;
++			tmp->last_server = old_server;
++		}
++	}
+ }
+ 
+ /*

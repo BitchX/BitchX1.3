@@ -1,0 +1,19 @@
+Synopsis:
+   $isconnected([<server refnum>])
+
+Technical:
+   This function tells wether a server is fully connected and ready to
+   receive data. If no arguments are given, the last server to send you data
+   is assumed.
+
+Returns:
+   1   If <server refnum> is connected and ready
+   else returns -1
+
+Examples:
+   /window refnum 1 server irc.primenet.com
+   $isconnected(1)              returns 1
+
+See Also:
+   servername(6)
+

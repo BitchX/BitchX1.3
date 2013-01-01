@@ -1,0 +1,7 @@
+Synopsis:
+   dcc autorename
+
+Description:
+   DCC AUTORENAME toggles on/off the dcc autorename of files that exist and
+   autoget is on.
+

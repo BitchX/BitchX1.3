@@ -1,0 +1,7 @@
+Synopsis:
+   dcc showpaths
+
+Description:
+   DCC SHOWPATHS toggles on/off the display of pathnames when /dcc LIST is
+   used.
+

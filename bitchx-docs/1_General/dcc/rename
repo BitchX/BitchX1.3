@@ -1,0 +1,25 @@
+Synopsis:
+   dccrename [<nick>] <name> [<new name>]
+   dccrename -chat <nick> <new nick>
+
+
+Description:
+   This renames an incoming file from a DCC GET connection, or optionally
+   a nick in a DCC CHAT. For files, this is useful if one with the same name
+   already exists, so that it doesn't get overwritten. If the new name isn't
+   specified, it is assumed the name given is the new name, and it is applied
+   to the oldest existing DCC GET connection.
+
+Options:
+   -chat      rename a nick in DCC CHAT instead of a file
+
+Examples:
+   To rename file foo to bar from joebob:
+      /dcc rename joebob foo bar
+
+   To rename joebob to jimbob in a DCC CHAT:
+      /dcc rename -chat joebob jimbob
+
+See Also:
+   dcc(1) get, list; set(4) dcc_store_path
+

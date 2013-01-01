@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> send_line
+
+Description:
+   This causes pmpaste to be invoked to add the current contents
+   of the system clipboard to the input line.
+
+See Also:
+   pmpaste(5)
+

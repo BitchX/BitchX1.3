@@ -1,0 +1,247 @@
+.TH BitchX 1 "March 22, 2001" "" ""
+.SH NAME
+BitchX \- The Ultimate IRC Client
+.SH SYPNOSIS
+.B BitchX
+[-aAbBcdfFHilLnNpPqrvxZ]
+.SH DESCRIPTION
+.B BitchX
+is a VERY heavily modified ircII client.  It includes many things such as
+built in CDCC (XDCC) offering, built in flood protection, etc.  It is easier
+to script things in
+.B BitchX
+because unlike plain, vanilla ircII, half the script does not have to be
+devoted to changing the appearance of ircII.  It also includes many other
+new features, such as port scanning, advanced TCL, a CD player, a mail
+client, screening process, etc.
+
+.B BitchX - Based on
+.B EPIC
+Software Labs
+.B epic ircII (1998).
+Version (BitchX-1.0c18) -- Date (20010108).
+
+.SH OPTIONS
+.TP
+.I -a
+Adds default servers and command line servers to server list.
+.TP
+.I -A
+Do not display the startup ansi.
+.TP
+.I -b
+Load .bitchxrc or .ircrc after connecting to a server.
+.TP
+.I -B
+Force 
+.B BitchX
+to fork and return you to a shell. pid check on.
+.TP
+.I -c <channel>
+Joins <channel> on startup.
+.TP
+.I -d
+Runs
+.B BitchX
+in "dumb" terminal mode.
+.TP
+.I -f
+Your terminal uses flow controls (^S/^Q), so
+.B BitchX
+shouldn't.
+.TP
+.I -F
+Your terminal doesn't use flow control (default).
+.TP
+.I -H <hostname>
+Uses the virtual hostname if possible.
+.TP
+.I -i
+Ignores your autojoin entries.
+.TP
+.I -l <file>
+Loads <file> in place of your .ircrc.
+.TP
+.I -L <file>
+Loads <file> in place of your .ircrc and expands $expandos
+.TP
+.I -n <nickname>
+Nickname to use
+.TP
+.I -N
+Do not auto-connect to the next server.
+.TP
+.I -p <port>
+Default server connection port (usually 6667).
+.TP
+.I -P
+Toggle check pid.nickname for running program.
+.TP
+.I -q
+Does not load .ircrc or .bitchxrc.
+.TP
+.I -r <file>
+Load <file> as list of servers.
+.TP
+.I -v
+Tells you about the clients version.
+.TP
+.I -x
+Run
+.B BitchX
+in "debug" mode.
+.TP
+.I -Z
+Use NAT address when doing dcc.
+
+.SH ENVIRONMENT
+.TP
+.BR BitchX
+uses many environment variables to configure the client.  These can be set
+by editing your ~/.profile or ~/.bash_login (if you're using a /bin/bash
+shell) and adding ``export VARNAME="var value"''.  Or, if you are using the
+tcsh shell you can set these by editing ~/.tcshrc and adding 
+``setenv VARNAME "var value"''.  Below is a list of variables.
+.PP
+.TP
+.BR IRCNICK
+sets the default IRC nickname. eg, export IRCNICK="mynick"
+.TP
+.BR USER
+sets the default username to use.  If not set, it uses a default value of
+"unknown" - This will only work under NON-UNIX operating systems.
+.TP
+.BR IRCUSER
+same as
+.BR USER
+.TP
+.BR IRCHOST
+sets the virtual hostname to use.
+.TP
+.BR IRC_HOST
+same as
+.BR IRCHOST
+.TP
+.BR IRCNAME
+sets the name that appears in the "realname" field on your /whois.  The
+default value is "* I'm to lame to read BitchX.doc *".
+.TP
+.BR IRCSERVER
+sets the default IRC server to use.
+.TP
+.BR IRCPORT
+sets the default IRC port to use.  Usually 6667.
+.TP
+.BR IRCPATH
+sets the path from which files are loaded.  Default is ~/.BitchX/
+.TP
+.BR IRCUMODE
+sets your default usermode.  Default is "+iw"
+.TP
+.BR IRCRC
+sets the filename to be used in place of ~/.bitchxrc or ~/.ircrc
+.TP
+.BR IRCLIB
+sets the 
+.B BitchX 
+library path (Used for some small example scripts).
+.TP
+.BR IRC_SERVERS_FILE
+sets the name of the IRC server list that is loaded before any other lists.
+.TP
+.BR IRCFINGER
+sets your CTCP FINGER information.
+.PP
+.SH FILES
+.TP
+.I ~/.bitchxrc
+Loaded by
+.B BitchX
+when it is started.
+.TP
+.I ~/.ircrc
+If 
+.BR ~/.bitchxrc 
+is not there, this file is loaded on startup instead.
+.TP
+.I ~/.ircservers
+Contains a list of IRC servers to cycle through.
+.TP
+.I /usr/local/lib/bx/
+System-wide configuration dir.
+.TP
+.I ~/.BitchX/BitchX.sav
+Personal configuration file.
+.TP
+.I ~/.BitchX/BitchX.ircnames
+Default random real name.  NOTE: Must be copied from /usr/local/lib/bx/
+.TP
+.I ~/.BitchX/BitchX.formats
+Personal 
+.B BitchX 
+display formats.
+.TP
+.I ~/.BitchX/BitchX.reasons
+Default random kick messages.  NOTE: Must be copied from /usr/local/lib/bx/
+.TP
+.I ~/.BitchX/BitchX.quit
+Default random quit messages.  NOTE: Must be copied from /usr/local/lib/bx/
+.TP
+.I /usr/local/lib/bx/BitchX.help
+.B BitchX 
+help file.
+.TP
+.I ~/.BitchX/screens
+Screen storage for a detached
+.BR BitchX
+session.
+.PP
+
+.SH OBTAINING
+You can always download the newest version of
+.B BitchX
+by joining #BitchX on EFNet and typing "/offers" in the channel window.  To
+check what the latest version is type "!explain latest" and the bot will
+tell you.  You can also ftp to 
+.B ftp.BitchX.com 
+to get the latest client, scripts, tcl objects, documentation, and many other
+useful items.  You can also point your browser to 
+.B http://www.BitchX.com
+for some more things.
+.PP
+.SH BUGS
+Please report all bugs to an op on #BitchX on EFNet, e-mail panasync or send
+an e-mail to the mailing list.
+
+.SH MAILING LIST
+There is a BitchX mailing list, to subscribe simply send an e-mail to:
+.B majordomo@lists.BitchX.com 
+with only the words "subscribe BitchX" in the body.  You will receive
+another mail to confirm this and once you have replied you can post to the
+list by sending e-mail to
+.B bitchx@lists.BitchX.com.
+This is a helpful place for bug reports
+
+.SH MAN PAGE ORIGINAL AUTHOR
+Wichert Akkerman
+.B <wakkerma@debian.org>
+
+.SH MAINTAINER
+Robert Durdle - Dragoon@EFNet
+.B <robert@durdle.com>
+
+dialtone
+.B <dialtone@chemlab.org>
+
+.SH BitchX Author
+Colten Edwards
+.B <edwards@bitchx.dimension6.com>
+.PP
+panasync
+
+.SH Responsible for ports to other OS's
+Brian Smith
+.B <dbsoft@technologist.com>
+.PP
+nuke
+

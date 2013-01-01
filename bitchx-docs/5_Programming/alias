@@ -1,0 +1,103 @@
+Synopsis:
+   alias [[-]<alias name> [<commands>]]
+
+Description:
+   ALIAS is one of ircII-EPIC's most powerful user interfaces.  It allows
+   the user to execute an arbitrary series of commands with one single
+   command.
+
+   It actually serves a dual purpose.  The primary usage is as described,
+   a convenient mechanism for issuing multiple commands in succession.
+   It may also be used to define custom functions that can be used in
+   conditional or assignment statements.  The real power of aliases comes
+   from the fact that the client allows aliases to overload built-in
+   commands (but not built-in functions).
+
+   Usage
+      Aliases are used just like normal commands (and functions).  They
+      may be called from the input line by prepending the command character
+      (see CMDCHARS) to them, or may be used in a script.  Likewise,
+      scripted functions may be called using the normal $name() notation.
+      Aliases have no functional differences between built-in commands and
+      functions.
+
+   Syntax
+      Alias definitions with multiple commands may delimit the commands
+      with semicolons, or the commands may span multiple lines if
+      surrounded with curly braces.  Users familiar with C/C++ or Perl
+      programming will note numerous similarities in the command syntax.
+      Like those languages, routines and functions are distinguished by
+      whether the alias has a return value; functions do, routines don't.
+
+      Aliases of both types may also accept arbitrary parameters, called
+      expandos.  They are used just like variables, and are numbered
+      sequentially, starting with 0 (zero).
+
+   Current aliases may be displayed by only giving the alias name in the
+   command; all aliases matching the name are returned (such that "foo"
+   might return aliases "foo" and "foobar").  If no alias name is given,
+   all aliases are displayed.  An alias may be removed by prepending its
+   name with a hyphen (-).
+
+   As mentioned previously, the client's builtin commands may be overloaded
+   by aliases.  This naturally poses a problem when one needs to use the
+   real command, and needs to be sure it isn't some alias.  The simple
+   answer is to use the "//command" form.  That is, the client will skip
+   alias expansion for any command when it is preceded by the any command
+   character twice.  Other methods include STACK, or avoiding command
+   overloading in the first place.
+
+Examples:
+   To create an alias that overloads a command, and calls it too:
+      alias lusers {
+         echo ======= User Information for ${[$*] ? [$*] : S}
+         //lusers $*
+         echo ======= End User Information
+      }
+
+   To create a function that returns the sum of two inputs:
+      alias sum {
+         @ function_return = [$0] + [$1]
+      }
+
+   To create an alias that uses the new function:
+      alias showsum {
+         echo *** The sum of $0 and $1 is $sum($0 $1)
+      }
+
+   An alternate way of definite the same alias:
+      alias showsum echo The sum of $0 and $1 is $sum($0 $1)
+
+   To use the new /showsum command to compute a sum:
+      /showsum 4 5
+
+   Using the alias as in the previous example will display the following:
+      *** The sum of 4 and 5 is 9
+
+See Also:
+   assign(5); say(1); send(5); set(4) cmdchars; stack(5)
+
+Restrictions:
+   As mentioned above, aliases can overload commands, but not functions.
+   Alias names can consist of any character that isn't already a meta
+   character for EPIC (the @ symbol, square brackets, curly braces, semi-
+   colons, parenthesis, etc.).  Note, however, that functions will not
+   when the name contains certain characters.  A good rule of thumb is to
+   limit alias names to alphanumeric characters (and the underscore).
+
+Bugs:
+   The exact syntax rules for alias structures (see ASSIGN for information
+   about structures) is somewhat ambiguous.  Structures can be represented
+   as either name.sub or name[sub], but neither notation is guaranteed to
+   work in all instances.  Functions, for instance, do not work with the
+   latter.  This isn't necessarily a bug, but a feature of the syntax that
+   may produce some unexpected results.
+
+Other Notes:
+   Like C, whitespace in scripts is generally not significant (there are
+   exceptions, such as with literal text to be ECHOed).  An alias can
+   literally be defined on one line, or on as many lines as desired.
+   Code indentation is not required, though is done by convention, as
+   with most structured languages.  Braces in multiline aliases may be
+   placed anywhere, as in C.
+

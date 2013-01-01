@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]send_msg [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a MSG to another user.
+   It is only triggered when sending messages to individual clients, not
+   to channels.
+
+Parameters:
+   $0    nickname message is sent to
+   $1-   text of message sent
+
+See Also:
+   msg(1); on(5) msg
+

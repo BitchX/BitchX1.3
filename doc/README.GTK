@@ -1,0 +1,107 @@
+GTKBitchX is no longer supported.  It is bloated and eats a lot of CPU.
+
+If you have problems with the GTK client do not ask us for help.  The GTK
+client has not been updated or supported and we will no longer support it
+in BitchX2
+
+
+Minimum requirements for gtkBitchX:
+
+GTK and GLIB 1.2.0
+<http://www.gtk.org/>
+ 
+imlib 1.9.4
+<http://www.labs.redhat.com/imlib/>
+ 
+pthreads
+ 
+zvt from gnome-libs 1.0 (1.2 fixes the scrolling bug)
+<http://www.gnome.org/>
+ 
+esound (ESD) 0.2.5 and audiofile 0.1.5 for sound support
+<http://www.tux.org/~ricdude/EsounD.html>
+<http://www.68k.org/~michael/audiofile/>
+ 
+Building GTK:
+ 
+./configure --with-gtk
+ 
+For ESD sound support:
+./configure --with-gtk --enable-sound
+
+Known bugs:
+
+Paste doesn't work in MDI mode.
+When the menu is added during window creation it screws up the size of 
+	the window.  I need to find a way to delay adding of the menu
+	until the window size has been solidified.
+
+Changes:
+
+Closed stdin/stdout/stderr to prevent problems with the 
+	starting terminal on gtkBitchX exit.
+Fixed background operation on Linux (and possibly others).
+	SIGTTOU would be called repeatedly on Linux, on
+	FreeBSD using nothing() would stop it's occurance.
+	It now uses SIG_IGN instead of nothing().
+Fixed a sizing bug with the nicklist enabled.
+Added tab highlighting in MDI mode thanks to DavidW2.
+Added a graphical about box and window icons courtesy of DavidW2.
+Added MDI code using the GTK notebook widget.  This is not quite
+	what I had originally envisioned but it will work for the
+	time being.
+Determined that the size bug is caused by creating the menu at
+	the same time as the window.  The window is too small by the
+	height of the menu.  Workaround in the works.
+Fixed a bug with ESD not finding the sound files.
+Code merged back into the main source.
+Added ESD sound support to allow $mciapi(playfile filename) to function
+	as it does in PMBitchX.
+Fixed a bug where the font sizes were not saved when gtkbx falls back
+	to the default fonts.  Pointed out by sideshow and MNC.
+Fixed the window #1 corruption problem.  It turned out to be in my
+	failsafe code which was to make sure there was a screen to send
+	the text to.
+Reimplemented shared menu code.  It now works as designed however when
+	changing a shared menu it recreates the menus which results in
+	excessive drawing.  I am looking for a way to prevent the
+	redrawing (or at least reduce it).  Also looking for a way to
+	improve the look of the checks... currently "X".
+Added shared menu code from the PM version and then removed it because
+	GTK does not allow internal sharing of widgets.  I guess I'll have
+	to code a database of menus and widgets which are theoretically
+	the same. (that won't work either because once it's attached it
+	can't be changed).
+Bits are now used to store menu types to facilitate having more than
+	one type for a menu item.
+Merged with the new BitchX 1.0 beta source.
+Rewrote the tputs code so it's definition won't conflict on some systems.
+Fixed a bug which was coring on first window creation in very rare 
+	conditions.
+Readded the flash code to attempt to solve a weird charset problem.
+Reentrancy is impossible until gtk becomes thread safe so I added two, 
+	functions gui_mutex_lock() and gui_mutex_unlock() to allow 
+	plugins to call gtk functions safely.
+Removed SIGUSR1 signal trapping on glibc 2.0 systems, because SIGUSR1
+	and SIGUSR2 are used by threads.  
+Removed bxzvt.h and added a fix for the zvtterm.h header.  Zed (zvt 
+	author) will be adding this fix to the current codebase but
+	the fix is still required for previous installations.
+Changes to configure to allow clean compiling on *BSD, and remove 
+	temporary files.
+Zed also has proportional fonts working, so proportional fonts will
+	be supported by gtkBitchX if using a version of zvt which 
+	supports proportional fonts. I'll note which versions do when
+	they are available.
+Implemented /exec -start for unix.
+Implemented /window font <fontname> to allow the font to be set via 
+	a script, and to maintain OpenChat compatibility.
+Tried to fix the window clear bug... mostly got it working... seems to
+	clear the first line of window #1.
+
+If you notice any other bugs, or have any questions email me at
+dbsoft@technologist.com or visit #BitchX on EFNet.
+
+Thanks!
+
+Brian Smith

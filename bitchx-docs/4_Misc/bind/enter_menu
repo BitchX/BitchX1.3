@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> enter_menu
+
+Description:
+   This function causes the client to enter the menu specified by the
+   MENU variable.  Of course, this menu must have already been loaded.
+
+See Also:
+   Menus(7); mload(4); set(4) menu
+

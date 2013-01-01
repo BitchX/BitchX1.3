@@ -1,0 +1,15 @@
+Synopsis:
+   window back
+
+Description:
+   This makes the most recent current window the current window again.  If
+   that window happens to be hidden, it is swapped with the current window.
+
+   WINDOW BACK is similar in function to WINDOW LAST, but differs in that
+   it deals with the most recent current window; LAST deals with the
+   windows in numerical order.  In other words, the previous window is not
+   necessarily the previous current window.
+
+See Also:
+   window(4) goto, last, next, previous, refnum, swap
+

@@ -1,0 +1,12 @@
+Synopsis:
+   $getuid()
+
+Technical:
+   Gets the current user id, similar to the Unix system call.
+
+Returns:
+   current userid
+
+See Also:
+   getgid(6); getpgrp(6); getlogin(6)
+

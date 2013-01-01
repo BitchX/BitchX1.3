@@ -1,0 +1,24 @@
+Synopsis:
+   $strftime(<format>)
+
+Technical:
+   This function returns the current time with a user-definable format.  It
+   calls the library function strftime(), so the exact tokens available
+   will vary from system to system, and the output will vary by locale;
+   consult your system manual page for strftime(3) for more information.
+
+Practical:
+   This function is useful for extracting certain bits on information
+   about the current date and time without needing to parse the entire
+   string itself in script.
+
+Returns:
+   current time, dependent on format specified
+
+Examples:
+   $strftime(%d %B %Y)          might return "13 December 1996"
+   $strftime(%x at %X)          might return "12/13/96 at 16:45:42"
+
+See Also:
+   stime(6); time(6)
+

@@ -1,0 +1,40 @@
+Synopsis:
+   saveirc [<options>]
+
+Description:
+   SAVEIRC is used to record the client's current configuration to an
+   external file; if none is specified, the ~/.bitchxrc is used, or the name
+   of the file specified on the command line with the -l switch.  The
+   command does not save information such as nickname or user mode, or
+   any setting that requires server interaction (except NOTIFY).
+
+   The client by default will save all types of configurable settings to
+   the external file.  It can be set, however, to only save certain
+   types of settings.  The options may be abbreviated unambiguously.
+
+Options:
+   -alias        saves any aliases or alias structures present
+   -assign       saves any variables or variable structures present
+   -bind         saves any added key bindings
+   -notify       saves the current NOTIFY list
+   -on           saves all defined hooks
+   -set          saves any modified SET variables
+   -all          all of the above (default)
+
+   -append       append to the end of the file, rather than overwriting
+   -file <file>  save settings to the specified file
+
+Examples:
+   To save everything to a backup .bitchxrc:
+      /saveirc -all -file ~/.bitchxrc.safe
+
+   To only save internal variables and key bindings:
+      /saveirc -b -s
+
+See Also:
+   Command_Line_Args(7); load(5); stub(5)
+
+Other Notes:
+   This command will clobber any existing file it saves to.  Care should be
+   taken to avoid unintentionally wiping an .bitchxrc that took days to write.
+

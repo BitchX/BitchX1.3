@@ -1,0 +1,24 @@
+Synopsis:
+   $getitem(<array> <item#>)
+   $igetitem(<array> <index#>)
+
+Technical:
+   These functions are used to fetch data held in the given array.  The
+   $getitem() function retrieves data based on its item number in the array
+   (counting from zero, the order in which the data was entered).  The
+   $igetitem() function retrieves it based on its index number (counting
+   from zero, in a sorted order).  These functions only affect arrays
+   created with $setitem().
+
+Practical:
+   These functions are used to get an item in an array.  The applications
+   for these function should be obvious.  The $igetitem() function, in
+   particular, is useful for showing an array's contents in alphabetical
+   order.
+
+Returns:
+   array item data, or empty string if array or item is not found
+
+See Also:
+   Arrays(7); indextoitem(6); itemtoindex(6); setitem(6)
+

@@ -1,0 +1,18 @@
+Synopsis:
+   load modes
+
+Description:
+   This script is mostly of historical significance.  It does in script what
+   it now available with the MODE_STRIPPER setting and the MODE_STRIPPED
+   hook.  Use them instead, they are far more efficient.
+
+   The script implements a script-based mode stripper, meaning it takes the
+   arguments received by the MODE hook and breaks them down into their
+   individual mode changes, allowing them to be processed more easily.
+
+See Also:
+   load(5); on(4) mode, mode_stripped; set(4) mode_stripper
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

@@ -1,0 +1,18 @@
+Synopsis:
+   on [<modes>]raw_irc [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This is easily the most flexible hook available in the client.  It allows
+   any arbitrary string to be hooked from the server's raw output.  It is
+   useful for overriding the client's default behavior when it otherwise
+   wouldn't permit it, or for hooking information when the available named
+   hooks won't do.
+
+Parameters:
+   $0    server sending message (usually the client's current server)
+   $1    protocol command used
+   $2-   arguments, if any, to $1
+
+See Also:
+   quote(5)
+

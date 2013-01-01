@@ -1,0 +1,24 @@
+Synopsis:
+   $rigmask(<address>)
+
+Technical:
+   This function is effectively the reverse of igmask(6). It takes a
+   nick!user@host as an argument, and returns whichever patterns on the
+   ignore(1) list match.
+
+Returns:
+   all ignorance list entries that would be triggered by <address>
+
+Examples:
+   /ignore *.foo.com ALL
+   /ignore fnord!*@* MSGS
+
+   /eval echo $rigmask(user!something@bar.foo.com)
+     *.FOO.COM
+   
+   /eval echo $rigmask(fnord!blah@this.is.a.really.long.host.foo.com)
+     *.FOO.COM FNORD!*@*
+
+See Also:
+   ignore(1); igmask(6); igtype(6); rigtype(6)
+

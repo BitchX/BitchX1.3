@@ -1,0 +1,21 @@
+Synopsis:
+   $close(<file descriptor>)
+
+Technical:
+   This function unbinds the given file descriptor (previously returned by
+   the $open() function) from the underlying file, causing the file to be
+   committed to disk if necessary.  An error is returned if it is passed a
+   file descriptor not produced by an $open() call.
+
+Practical:
+   This function is used to close a file that was opened for reading or
+   writing by $open().  Data corruption may result if the client exits
+   before all open files are closed.
+
+Returns:
+   -1   error
+    0   file closed successfully
+
+See Also:
+   open(6); read(6); write(6)
+

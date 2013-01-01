@@ -1,0 +1,40 @@
+Synopsis:
+   $setitem(<array> <item#> <data>)
+
+Technical:
+   This function creates a new cell in the specified array.  If the array
+   does not exist, the client will try to create it.
+
+Practical:
+   This function is the single doorway into EPIC's arrays.  It must be used
+   to create or add to an array.  The array name may be anything,
+   consisting of any characters (even spaces, if escaped) and being of any
+   length.  In general, though, it is usually advisable to limit array
+   names to printable characters.
+
+   The item number is the cell in which to place the new data.  It must be
+   no higher than the number of the next available cell (see $numitems()
+   for a trick to get this).  If the cell exists, it is overwritten.  If
+   the array is to be created, the item number must be 0 (zero).  Thus,
+   all array items are numbered from 0.
+
+   The data may be anything at all.  The client will preserve the case of
+   any data entered.
+
+Returns:
+   -2    could not find item number, or item number too large
+   -1    could not find array, or item number not 0 for new array
+    0    existing item was overwritten
+    1    new array created
+    2    new item number added to existing array
+
+Examples:
+   $setitem(foo 1 blah)           returns -1, no such array
+   $setitem(foo 0 blah blah)      returns 1, new array created
+   $setitem(foo 1 fubar booya)    returns 2, new item added
+   $setitem(foo 5 booya)          returns -2, item number too large
+   $setitem(foo 0 ha ha)          returns 0, item overwritten
+
+See Also:
+   Arrays(7); delitem(6); getitem(6); numitems(6)
+

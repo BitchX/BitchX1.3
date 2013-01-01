@@ -1,0 +1,24 @@
+Synopsis:
+   $servports(<server name/refnum>)
+
+Technical:
+   This function returns the remote and local port assignments for the
+   connection to the specified server.
+
+Returns:
+   the remote and local port assignments for the specified server connection,
+   separated by a space
+   
+   if the specified server is not connected, returns default remote port and
+   0 for the local port.
+
+Examples:
+   $serverports(0)               /* could return "6667 1054", where 6667 is
+                                    the remote port and 1054 is the local */
+
+   $servername(6127)             /* assuming 6127 is an invalid refnum,
+                                    returns "6667 0" */
+
+See Also:
+   server(1); servnum(6); winserv(6)
+

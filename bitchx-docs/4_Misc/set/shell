@@ -1,0 +1,14 @@
+Synopsis:
+   set shell [<program>]
+
+Description:
+   When the EXEC command is used, the program named in this variable is
+   spawned to execute the desired command.  This is generally a command
+   shell of some sort, though it doesn't necessarily have to be one.
+
+   If the shell requires special command-line switches, they may be given
+   in the SHELL_FLAGS variable.
+
+See Also:
+   exec(5); set(4) shell_flags
+

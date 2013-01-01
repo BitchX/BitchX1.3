@@ -1,0 +1,10 @@
+Synopsis:
+   set show_end_of_msgs [on|off|toggle]
+
+Description:
+   When turned on, this setting causes the client to display messages from
+   the server indicating that a command's output has completed.  This is
+   mostly useful for commands, such as NAMES or LIST, that can generate
+   quite a bit of output.  It is also useful for determining if a command
+   generated any output at all.
+

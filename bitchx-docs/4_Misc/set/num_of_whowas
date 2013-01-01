@@ -1,0 +1,11 @@
+Synopsis:
+   set num_of_whowas [<number>]
+
+Description:
+   This setting controls how many replies are displayed from the WHOWAS
+   command, or as a result of having AUTO_WHOWAS turned on.  If set to 0
+   (zero), all replies are displayed.
+
+See Also:
+   set(4) auto_whowas; whowas(2)
+

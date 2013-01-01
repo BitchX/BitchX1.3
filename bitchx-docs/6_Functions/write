@@ -1,0 +1,28 @@
+Synopsis:
+   $write(<fd> <text>)
+   $writeb(<fd> <text>)
+
+Technical:
+   This function writes the given text to the given file descriptor.  A
+   newline is automatically appended to the text.  The $writeb() variant
+   does the same thing, except the newline is not automatically appended.
+
+Practical:
+   This function is useful for saving information to an external file.  It
+   is most often used in scripts for saving configuration settings and the
+   like.  The $writeb() function is useful for writing to binary files, or
+   for writing lines to a file incrementally.
+
+Returns:
+     -1   if file descriptor does not exist
+   > -1   number of bytes written (text length plus newline, if applicable)
+
+Examples:
+   $write(7 blah blah)                 writes "blah blah" plus NL to fd "7"
+   $write(foo bar)                     "foo" not an fd, writes nothing
+   $writeb(7 blah blah)                writes "blah blah" to fd "7"
+   $writeb(foo bar)                    "foo" not an fd, writes nothing
+
+See Also:
+   close(6); open(6); read(6)
+

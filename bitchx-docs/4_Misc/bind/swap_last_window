@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> swap_last_window
+
+Description:
+   This function swaps the current window with the most recently hidden
+   window.  If no windows are hidden, this function has no effect.
+
+See Also:
+   bind(4) swap_next_window, swap_previous_window; window(4) hide, next,
+   swap
+

@@ -1,0 +1,22 @@
+Synopsis:
+   window scroll on|off|toggle
+
+Description:
+   This control the scroll mode of the current window.  If it is off, the
+   window scrolls normally.  If it is on, the window will pause after a
+   windowful of text has been displayed with no interaction from the
+   user; pressing the return key will resume scrolling (which may stop
+   again if the scroll buffer has more lines than can be displayed in the
+   window).
+
+   The scroll mode of new windows defaults to the current setting of
+   HOLD_MODE.
+
+See Also:
+   set(4) hold_mode
+
+Other Notes:
+   This command is fairly obsolete.  The equivalent SET command performs
+   the same action.  This command will still work, of course, but the
+   client will inform the user that it has been deprecated.
+

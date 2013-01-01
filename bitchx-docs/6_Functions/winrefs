@@ -1,0 +1,13 @@
+Synopsis:
+   $winrefs()
+
+Technical:
+   This function returns the refnums of all currently opened windows,
+   including hidden and invisible.
+
+Returns:
+   space-separated list of window refnums
+
+See Also:
+   winnum(6)
+

@@ -1,0 +1,10 @@
+Synopsis:
+   window hide
+
+Description:
+   This "hides" the current window from view.  It still exists and functions
+   normally, but it takes up no space on the screen.
+
+See Also:
+   window(4) hide_others, show
+

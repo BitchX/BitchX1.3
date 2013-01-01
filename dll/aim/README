@@ -1,0 +1,7 @@
+Quite a bit borrowed from the napster module written by panasync. 
+libtoc (backened) was written (put together) by me also, and is mostly
+composed of code from gaim (see freshmeat).
+
+bx.patch is a small patch to modify bx to allow custom module completion
+routines. If not patched, just remove -DBITCHX_PATCH from CFLAGS in the
+Makefile

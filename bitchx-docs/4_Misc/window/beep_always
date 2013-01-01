@@ -1,0 +1,12 @@
+Synopsis:
+   window beep_always <on|off|toggle>
+
+Description:
+   This setting determines whether the current window will beep (assuming
+   the main BEEP setting is turned on).  If this setting is turned on, all
+   beeps will be passed, regardless of whether the beeping window is
+   visible.
+
+See Also:
+   beep(4); set(4) beep
+

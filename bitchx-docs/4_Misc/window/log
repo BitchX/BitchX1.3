@@ -1,0 +1,15 @@
+Synopsis:
+   window log <ON|OFF|TOGGLE>
+
+Description:
+   This controls whether or not the messages sent to the current window
+   are written to an external logfile.  By default, the logfile name is the
+   setting of SET LOGFILE (by default, "irc.log"), with the window's name
+   appended to it (or, in the absence of a name, the string "Window#").
+   Thus, if window 3 was called "foobar", the logfile would be called
+   "irc.log.foobar".  If it didn't have a name, the file would be
+   "irc.log.Window3".
+
+See Also:
+   set(4) log, logfile; window(4) logfile
+

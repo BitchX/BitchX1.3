@@ -1,0 +1,25 @@
+Synopsis:
+   nslookup [-cmd { ... }] nick1 [[nick2] [nick3] ...]
+
+Description:
+   This command will attempt to lookup a hostname, ip or using the internal 
+   userhost queue, a nick on irc. As well you can lookup multiple
+   hosts|ips|nicks. A alias or cmd may be specified which is then performed
+   on each. If a failure occurs, then the failing name is returned, whereas
+   on success, the name and the associated ip's are returned. There is also
+   a hook which can be used only upon those nslookups without a -cmd.
+
+Examples:
+   To nslookup a nick:
+      /nslookup nick
+
+   To nslookup multiple nicks:
+      /nslookup nick1 nick2 nick3
+
+   To nslookup a nick and perform a command:
+      /nslookup -cmd { echo $G $* } nick1 
+
+See Also:
+   dns userip ON NSLOOKUP
+
+

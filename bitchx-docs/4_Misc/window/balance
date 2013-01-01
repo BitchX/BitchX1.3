@@ -1,0 +1,10 @@
+Synopsis:
+   window balance
+
+Description:
+   This resizes all visible ircII windows such that they are as close as
+   possible to being equal in size.  Their order on screen is not changed.
+
+See Also:
+   window(4) grow, shrink, size
+

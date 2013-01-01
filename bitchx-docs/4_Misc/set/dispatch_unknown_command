@@ -1,0 +1,10 @@
+Synopsis:
+   set dispatch_unknown_command [on|off|toggle]
+
+Description:
+   When this is set ON, all commands unknown to the client will be sent to the
+   server.
+
+See Also:
+   quote(5).
+

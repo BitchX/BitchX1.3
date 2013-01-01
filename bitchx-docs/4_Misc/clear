@@ -1,0 +1,19 @@
+Synopsis:
+   clear [-all|-hidden|-visible] [-unhold]
+
+Description:
+   This command clears the current window of all text.  It is useful for
+   wiping a screen that has rendered improperly (such as due to a bad
+   termcap entry) or that contains sensitive information (such as one's
+   OPER password).
+
+Options:
+   -all      clears all windows, not just the current one
+   -hidden   clears all hidden windows
+   -visible  clears all visible windows
+   -unhold   sets the window's HOLD_MODE off as well
+
+See Also:
+   unclear(4); bind(4) clear_screen; set(4) hold_mode;
+   window(4) hold_mode
+

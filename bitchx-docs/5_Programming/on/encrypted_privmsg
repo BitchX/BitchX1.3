@@ -1,0 +1,29 @@
+Synopsis:
+   on [<modes>]encrypted_privmsg [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a MSG encrypted with
+   CTCP SED.  This is how the ENCRYPT command normally works.
+
+Parameters:
+   $0    nickname of message sender
+   $1-   message received
+
+Examples:
+   To clearly distinguish encrypted MSGs from unencrypted ones:
+      on ^encrypted_privmsg '% $N *' {
+         echo *$0* V[CRYPT]V $2-
+      }
+
+See Also:
+   encrypt(4); msg(1); on(5) encrypted_notice, msg
+
+Restrictions:
+   This hook is subject to the same protocol restrictions as the MSG
+   hook.
+
+Other Notes:
+   When used with the silent or quiet modes, this hook will suppress the
+   normal output for MSGs.  Care should be used, as it can also jumble
+   public hooks.
+

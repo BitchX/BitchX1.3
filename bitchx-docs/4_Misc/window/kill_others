@@ -1,0 +1,10 @@
+Synopsis:
+   window kill_others
+
+Description:
+   This works just like WINDOW KILL, except it kills off all visible windows
+   except the current one.  Hidden windows are unaffected.
+
+See Also:
+   window(4) kill
+

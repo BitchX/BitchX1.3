@@ -1,0 +1,13 @@
+Synopsis:
+   shitlist 
+
+Description:
+   Displays the shitlist.
+
+Examples:
+
+   /shitlist
+
+See Also:
+   addshit(1); unshit(1);
+

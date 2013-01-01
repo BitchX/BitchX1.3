@@ -1,0 +1,21 @@
+Synopsis:
+   $stripansi(<text>)
+
+Technical:
+   This function strips out any occurrences of the ESC character from the
+   input text.
+
+Practical:
+   This function is mostly useful for cleaning any output that will be sent
+   to a display window when DISPLAY_ANSI is turned on.  The function is no
+   different from $strip, except it only strips out ESCs.
+
+Returns:
+   input text with ESCs removed
+
+Examples:
+   $stripansi($*)             make sure default input has no ESCs
+
+See Also:
+   set(4) display_ansi; strip(6); stripansicodes(6); stripc(6)
+

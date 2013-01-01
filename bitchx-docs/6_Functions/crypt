@@ -1,0 +1,30 @@
+Synopsis:
+   $crypt(<string> <salt>)
+
+Technical:
+   Given an arbitrary string and a "salt" (a randomizer), this function
+   returns the input string in a one-way encrypted form.  This function
+   depends on the availability of a local crypt(3) library function.  Only
+   the first 8 characters of the input string are significant.  The salt
+   is a two-character string, and may be composed of any combination of
+   any alphanumeric character, a period (.), or a forward-slash (/).
+   Additional characters may be available, depending on the crypt(3) in
+   use at your site.
+
+Practical:
+   This function is primarily used for encrypting passwords, Unix style.
+   It is helpful if the input salt is itself sufficiently random.  Case is
+   preserved in both the salt and input string.
+
+Returns:
+   encrypted input text, or nothing if error
+
+Example:
+   $crypt(foobar ab)              returns "foobar" encrypted with salt "ab"
+
+Other Notes:
+   As mentioned above, this function relies completely on the availability
+   of a local crypt(3) library function.  This function is not available
+   on some systems.  Refer to your system's manual pages for more
+   information.
+

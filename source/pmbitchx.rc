@@ -1,0 +1,155 @@
+#define INCL_WINSYS
+#define INCL_WINSTDDLGS
+#define INCL_WINSTDSPIN
+#define INCL_NLS
+#define INCL_SW
+
+#include <os2.h>
+#include "..\include\pmbitchx.h"
+
+ICON    IDM_MAINMENU    "pmbitchx.ico"
+BITMAP  IDM_LOGO        "..\\doc\\bitch52.bmp"
+
+DLGTEMPLATE FONTDIALOG 
+BEGIN
+    DIALOG "Change font", FONTDIALOG, 160, 170, 124, 143, FS_NOBYTEALIGN |
+                FS_DLGBORDER | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE,
+                FCF_TITLEBAR | FCF_SYSMENU
+	BEGIN
+        CONTROL "OK",                  DID_OK, 9, 6, 51, 14, WC_BUTTON,
+                                            BS_PUSHBUTTON | BS_DEFAULT |
+                                            WS_TABSTOP | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Cancel",              DID_CANCEL, 63, 6, 51, 14, WC_BUTTON,
+                                            BS_PUSHBUTTON | WS_TABSTOP |
+                                            WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Sample",              LB_FONTLIST, 5, 53, 113, 85, WC_LISTBOX,
+                                            WS_GROUP | WS_TABSTOP | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Save as default font", CB_DEFAULT, 9, 38, 108, 10, WC_BUTTON,
+                                            BS_AUTOCHECKBOX | WS_GROUP |
+                                            WS_TABSTOP | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Change for all windows", CB_CHANGEFORALL, 9, 25, 107, 10,
+                                            WC_BUTTON, WS_TABSTOP | WS_TABSTOP |
+                                            BS_AUTOCHECKBOX | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+	END
+END
+
+DLGTEMPLATE PROPNBK 
+BEGIN
+    DIALOG "PMBitchX Properties", PROPNBK, 54, 121, 306, 149, FS_NOBYTEALIGN |
+                FS_DLGBORDER | WS_CLIPSIBLINGS | WS_SAVEBITS | WS_VISIBLE,
+                FCF_TITLEBAR | FCF_SYSMENU
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "",                    ID_PROP, 4, 24, 298, 120, WC_NOTEBOOK,
+                                            BKS_BACKPAGESTR | BKS_MAJORTABTOP |
+                                            BKS_ROUNDEDTABS |  0x800 |
+                                            BKS_STATUSTEXTLEFT |
+                                            BKS_TABTEXTCENTER | BKS_SOLIDBIND |
+                                            WS_TABSTOP | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans Bold"
+        DEFPUSHBUTTON "Dismiss",               DID_OK, 130, 5, 38, 12
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+
+    END
+END
+
+DLGTEMPLATE NBKP_SETS1
+BEGIN
+    DIALOG "", NBKP_SETS1, 0, 0, 275, 74, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "",                    SETS1, 10, 12, 113, 58, WC_LISTBOX,
+                                            LS_NOADJUSTPOS | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Entry",               EF_ENTRY1, 140, 51, 103, 10,
+                                            WC_ENTRYFIELD, ES_MARGIN | ES_AUTOSCROLL |
+                                            WS_TABSTOP | WS_VISIBLE | WS_DISABLED
+                CTLDATA 8, 1023, 0, 0
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "On/Off",              CB_ONOFF1, 140, 21, 38, 10, WC_BUTTON,
+                                            BS_AUTOCHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+    END
+END
+
+DLGTEMPLATE NBKP_SETS2
+BEGIN
+    DIALOG "", NBKP_SETS2, 0, 0, 275, 74, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "",                    SETS2, 10, 12, 113, 58, WC_LISTBOX,
+                                            LS_NOADJUSTPOS | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Entry",               EF_ENTRY2, 140, 51, 103, 10,
+                                            WC_ENTRYFIELD, ES_MARGIN | ES_AUTOSCROLL |
+                                            WS_TABSTOP | WS_VISIBLE | WS_DISABLED
+                CTLDATA 8, 1023, 0, 0
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "On/Off",              CB_ONOFF2, 140, 21, 38, 10, WC_BUTTON,
+                                            BS_AUTOCHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+    END
+END
+
+DLGTEMPLATE NBKP_SETS3
+BEGIN
+    DIALOG "", NBKP_SETS3, 0, 0, 275, 74, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "",                    SETS3, 10, 12, 113, 58, WC_LISTBOX,
+                                            LS_NOADJUSTPOS | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Entry",               EF_ENTRY3, 140, 51, 103, 10,
+                                            WC_ENTRYFIELD, ES_MARGIN | ES_AUTOSCROLL |
+                                            WS_TABSTOP | WS_VISIBLE | WS_DISABLED
+                CTLDATA 8, 1023, 0, 0
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "On/Off",              CB_ONOFF3, 140, 21, 38, 10, WC_BUTTON,
+                                            BS_AUTOCHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+    END
+END
+
+DLGTEMPLATE NBKP_SETS4
+BEGIN
+    DIALOG "", NBKP_SETS4, 0, 0, 275, 74, FS_NOBYTEALIGN | NOT FS_DLGBORDER
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "",                    SETS4, 10, 12, 113, 58, WC_LISTBOX,
+                                            LS_NOADJUSTPOS | WS_VISIBLE
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Entry",               EF_ENTRY4, 140, 51, 103, 10,
+                                            WC_ENTRYFIELD, ES_MARGIN | ES_AUTOSCROLL |
+                                            WS_TABSTOP | WS_VISIBLE | WS_DISABLED
+                CTLDATA 8, 1023, 0, 0
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "On/Off",              CB_ONOFF4, 140, 21, 38, 10, WC_BUTTON,
+                                            BS_AUTOCHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+    END
+END
+
+DLGTEMPLATE NBKP_OSSETTINGS
+BEGIN
+    DIALOG "", NBKP_OSSETTINGS, 0, 0, 275, 74, FS_NOBYTEALIGN |
+                NOT FS_DLGBORDER
+    PRESPARAMS PP_USER, "9.WarpSans Bold"
+    BEGIN
+        CONTROL "Long Filenames",   CB_LFN, 20, 58, 97, 10, WC_BUTTON,
+                                            BS_CHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+                PRESPARAMS PP_FONTNAMESIZE, "9.WarpSans"
+        CONTROL "Sound",          CB_SOUND, 20, 45, 54, 10, WC_BUTTON,
+                                            BS_CHECKBOX | WS_TABSTOP |
+                                            WS_VISIBLE | WS_DISABLED
+    END
+END

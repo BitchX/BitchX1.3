@@ -1,0 +1,54 @@
+Compile-Time Options Available for BitchX                                
+
+BitchX supports numerous configuration options that may be selectively 
+included or excluded from the client at compile time.  Since many of these 
+enable or disable certain special features, it is useful to script writers 
+to be able to find out what options are present while the client is running.
+
+The $info() function, used with the `O' command (`oh', not `zero'), will
+return a text string that represents these options.  Each option is assigned
+unique letter or number to identify it.  The options represented are most
+of the #define options in the client's config.h file.  The default settings
+would produce the following string:  2cefgnxz
+
+This is a list of the #define options represented.  The letter designating
+each option is listed, followed by its #define name, and whether it is
+enabled or disabled by default in the config.h.
+
+  b  NO_BOTS (disabled)
+       if enabled, the -b command-line option is not available
+  c  CONTROL_C_COLOR (disabled)
+       if enabled, control-c color code parsing is available
+  d  DEBUG (disabled)
+       if enabled, the client will spew out general debugging info
+  e  EXEC_COMMAND (enabled)
+       if enabled, the /exec command is available
+  f  USE_FLOW_CONTROL (enabled)
+       if enabled, the tty does flow control (disabled, ircII does it)
+  g  INCLUDE_GLOB_FUNCTION (enabled)
+       if enabled, the $glob() function is available
+  i  MIRC_BROKEN_DCC_RESUME (disabled)
+       if enabled, the client supports DCC RESUME
+  k  HACKED_DCC_WARNING (disabled)
+       if enabled, client tries to warn if an incoming DCC request may be
+       from a bogus address (hostname/handshake mismatch)
+  m  NEW_CONTROL_C_COLOR
+       if enabled, the client supports /SET COLOR instead of /SET
+       CONTROL_C_COLOR
+  n  ALLOW_LONG_NICKNAMES (enabled)
+       if enabled, allows nicks up to 30 characters (a la DALnet)
+  o  ENFORCE_STRICTER_PROTOCOL (disabled)
+       if enabled, disallows using /kick, /msg, etc. in response to a /who
+       or /whois
+  q  QUIT_ON_OPERATOR_KILL (disabled)
+       if enabled, the client will exit if oper /kill'ed
+  r  RESTRICTED (disabled)
+       if enabled, /exec is disabled, and novice mode is forced
+  s  STRIP_EXTRANEOUS_SPACES (disabled)
+       if enabled, leading spaces on numeric expandos are stripped off
+  u  UNAME_HACK (disabled)
+       if enabled, your system type is not shown in /ctcp version (a
+       generic "*IX" is shown instead)
+  z  ALLOW_STOP_IRC (enabled)
+       if enabled, allows the client process to be suspended
+ 

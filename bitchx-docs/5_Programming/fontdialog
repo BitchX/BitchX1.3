@@ -1,0 +1,12 @@
+Synopsis:
+   fontdialog  <all windows> <default>
+
+Description:
+   FONTDIALOG creates a dialog which allows you to choose the font
+   for the current window or all windows.  The two parameters can be
+   ommited.  They are either 0 or 1.  If it is 1 the check button in
+   the dialog is checked, if it is 0 it is unchecked.
+
+See Also:
+   filedialog(5) properties(5) popupmsg(5) 
+

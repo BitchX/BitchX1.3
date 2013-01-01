@@ -1,0 +1,15 @@
+Synopsis:
+   uping <server>
+
+Description:
+   This form of ping is similar to the Unix ping command.  It tests the
+   relative distance a server is from you on the Internet, which is useful
+   for detecting the source of irc lag or netsplits.
+
+See Also:
+   ping(1); rping(3)
+
+Restrictions:
+   This command is limited to irc operators.  Additionally, it is limited
+   to the Undernet, and servers using recent ircu server code.
+

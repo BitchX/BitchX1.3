@@ -1,0 +1,21 @@
+Synopsis:
+   load autokick
+
+Description:
+   This script loads a trio of aliases for maintaining a simple list of
+   people to automatically kick and ban from the current channel upon
+   joining it.
+
+     Alias           Description                                          
+     /autokick <x>   add user to auto-kick list
+     /kicknban <x>   kick and ban user from current channel
+     /unkick <x>     remove user from auto-kick list
+
+   The script also loads the GUH script to do part of the work.
+
+See Also:
+   guh(8); kick(1); load(5); mode(1)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

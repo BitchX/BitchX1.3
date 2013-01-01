@@ -1,0 +1,19 @@
+Synopsis:
+   $numarrays()
+
+Technical:
+   This function shows the total number of arrays created by $setitem().
+   It takes no arguments, and ignores any passed to it.
+
+Practical:
+   This function is used to show how many arrays currently exist.  This
+   might be useful if the arrays were named in a sequential order, thus
+   allowing you to know what the next available number is.
+
+Returns:
+   > 0   number of current arrays
+     0   no arrays found
+
+See Also:
+   Arrays(7); getarrays(6); setitem(6)
+

@@ -1,0 +1,20 @@
+Synopsis:
+   $pid()
+   $ppid()
+
+Technical:
+   This pair of functions return the client's current Unix process id, and
+   its parent's process id, respectively.
+
+Practical:
+   These functions don't have much practical value.  One possible use might
+   be to add a CTCP command that returns their values, allowing one to
+   remotely kill a client that is responsive on the network, but not from
+   the keyboard.
+
+Returns:
+   client process's pid/ppid
+
+See Also:
+   exec(5)
+

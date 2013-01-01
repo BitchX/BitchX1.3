@@ -1,0 +1,16 @@
+Synopsis:
+   set status_scrollback [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar while in
+   scrollback.
+
+   This string is represented as %K in the STATUS_FORMAT string.
+
+Examples:
+   Customizing the scrollback indicator:
+      /set status_chanop [Scrolling]
+
+See Also:
+   mode(1); set(4) status_format
+

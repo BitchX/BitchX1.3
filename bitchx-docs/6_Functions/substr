@@ -1,0 +1,20 @@
+Synopsis:
+   $substr(<substring> <search string>)
+   $rsubstr(<substring> <search string>)
+
+Technical:
+   These functions search for <substring> in <search string> and return the
+   index to it. rsubstr is identical to substr, except it searches from
+   the end to the beginning.
+
+Practical:
+   They can be used to search for specific things in output from a server,
+   or as an alternative to $match(*substring* searchstring).
+
+Returns:
+   -1 if <substring> not found in <search string>
+   index to <substring> in <search string> if found
+
+See Also:
+   match(6); rmatch(6)
+

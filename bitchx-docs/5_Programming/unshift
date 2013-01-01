@@ -1,0 +1,20 @@
+Synopsis:
+   unshift <variable name> <word>
+   shift   <variable name>
+
+Description:
+   UNSHIFT prepends the given word (or words) to the given variable,
+   padded with a single space.  The variable name itself may not contain
+   a leading '$'; the command uses the variable itself, not the expanded
+   contents.  If the variable does not exist, it is created containing
+   the given word(s) (just as if ASSIGN were used).
+
+Aliases:
+   SHIFT is the exact opposite of UNSHIFT, in that it chops off the first
+   word in the variable.  If there is only one word in the variable, the
+   variable is deleted.  Both UNSHIFT and SHIFT are functionally equivalent
+   to the $unshift() and $shift() functions, respectively.
+
+See Also:
+   assign(5); pop(5); push(5)
+

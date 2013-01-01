@@ -1,0 +1,11 @@
+Synopsis:
+   setenv <var-name> <value>
+
+Description:
+   SETENV sets the environment variable <var-name> for EPIC's current process
+   and all processes /exec'd under it. It isn't extremely useful, but is
+   provided for completeness.
+
+See Also:
+   assign(5) Environment(7); Expressions(7);
+

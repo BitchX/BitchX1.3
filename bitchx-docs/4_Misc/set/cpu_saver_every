@@ -1,0 +1,15 @@
+Synopsis:
+   set cpu_saver_every [<minutes>]
+
+Description:
+   This determines how often the client will update status bar, check the
+   time, and check the notify list.
+
+See Also:
+   set(4) cpu_saver_after
+
+Other Notes:
+   When CPU Saver is enabled, the status bar isn't updated and the notify list
+   isn't checked. If either this value or set(4) cpu_saver_every is 0,
+   CPU Saver mode will not activate.
+

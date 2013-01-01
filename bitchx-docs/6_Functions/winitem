@@ -1,0 +1,29 @@
+Synopsis:
+   $winitem(<window name/refnum>)
+
+Technical:
+   This function takes a window description as an argument and returns that
+   window's information.
+
+Returns:
+	0 - refnum
+        1 - name or <none>
+        2 - server number or -1
+        3 - channel or <none>
+        4 - query  or <none>
+        5 - waiting channel or <none>
+        6 - menu name or <none> (GUI only)
+        7 - 1 window visible 0 if hidden or minimized
+        8 - number of columns
+        9 - number of rows
+	10 - window font (GUI only)
+	11 - window x coordinate relative to desktop (GUI only)
+	12 - window y coordinate relative to desktop (GUI only)
+	13 - window width (GUI only)
+	14 - window height (GUI only)
+	15 to 18 are <none> 
+        19 and more are window levels
+
+See Also:
+   window(4) lastlog, level; set(4) lastlog, lastlog_level
+

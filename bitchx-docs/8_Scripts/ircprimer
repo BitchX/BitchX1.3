@@ -1,0 +1,23 @@
+Synopsis:
+   load ircprimer
+
+Description:
+   This is one of several sample .ircrc files provided with the client.
+   This particular one is from the IRCprimer, supplied by the author for
+   educational purposes.  refer to the IRCprimer itself for more
+   information.  Version 1.1 of the Primer is available in PostScript,
+   LaTeX, and plain text formats via anonymous ftp from:
+
+                 FTP Site : Directory                     
+      grasp1.univ-lyon1.fr : /pub/doc/english/beginner/irc/
+              nic.funet.fi : /pub/unix/irc/docs/
+             cs-ftp.bu.edu : /irc/support
+         coombs.anu.edu.au : /pub/irc/docs
+
+See Also:
+   alias(8); basical(8); bigcheese(8); load(5)
+
+Other Notes:
+   This script, and the IRCprimer, were written by Nicolas Pioch (Nap),
+   pioch@poly.polytecnique.fr.
+

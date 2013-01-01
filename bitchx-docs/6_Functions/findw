@@ -1,0 +1,23 @@
+Synopsis:
+   $findw(<word> <wordlist>)
+
+Technical:
+   This function searches <wordlist> for <word> and returns the place it was
+   found. If <word> isn't in <wordlist>, -1 is returned.
+
+Practical:
+   This function should put many scripters to ease, as it has been written
+   into many scripts :)
+
+Returns:
+   index to <word> in <wordlist>
+
+Examples:
+   $findw(very epic is a very scriptable client)         /* returns 3 */
+   
+   assign test blah hmm foo bar
+   eval echo $word($findw(hmm $test) $test)              /* returns "hmm" */
+   
+See Also:
+   word(6).
+

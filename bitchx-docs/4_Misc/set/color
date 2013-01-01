@@ -1,0 +1,12 @@
+Synopsis:
+   set color [on|off|toggle]
+
+Description:
+   When turned on, the client will parse ^C color codes as used by several
+   GUI clients (ircle, mIRC). This requires a compile-time option in config.h
+   to be defined. The default is OFF. When OFF, color codes will be filtered
+   out of all output, and their color values ignored.
+
+See Also:
+   echo(5)
+

@@ -1,0 +1,35 @@
+Synopsis:
+   load recursion
+
+Description:
+   This script primarily serves as a working example of how to write
+   recursive aliases.  The examples provided fairly suitable for everyday
+   use (though only irc operators may use some of them).
+
+     Alias         Description                                            
+     /conbunch     CONNECT an arbitrary number of servers to current one
+     /iterate      run given command once for each argument
+     /kickbunch    KICK an arbitrary number of people from current channel
+     /opalot       (de)op any number of people
+     /squitbunch   SQUIT an arbitrary number of servers
+     /versbunch    VERSION an arbitrary number of nicknames or servers
+
+Examples:
+   To ping several people at once:
+      /iterate ping joebob jimbob toejam junebug
+
+   To deop several jerks in the currentchannel:
+      /opalot - jerk1 jerk2 jerk3 jerk4 jerk5
+
+See Also:
+   connect(3); fe(8); kick(1); load(5); mode(1); set(4) max_recursions;
+   squit(3); version(2)
+
+Restrictions:
+   The MAX_RECURSIONS setting limits the number of times an alias may call
+   itself.
+
+Other Notes:
+   The need for recursion has largely been depricated in EPIC with the
+   introduction of FE.  This script was written by Ian Frechette (Daemon),
+   frechett@spot.colorado.edu.

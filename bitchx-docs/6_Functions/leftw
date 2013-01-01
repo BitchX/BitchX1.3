@@ -1,0 +1,27 @@
+Synopsis:
+   $leftw(<count> <word list>)
+   $rightw(<count> <word list>)
+
+Technical:
+   These functions are used to return a slice of the input list, from either
+   the beginning or end of the list.  It returns the indicated number of
+   words from the beginning or the end of the list.
+
+Practical:
+   This is mostly useful when you know you always want to get a certain
+   number of starting or ending words in a list, regardless of what they
+   are.  They are analogous to $left() and $right(), except they operate on
+   whole words instead of characters.
+
+Returns:
+   list of words from beginning or end of word list
+
+Examples:
+   $leftw(2 hello there how are you?)         returns "hello there"
+   $leftw(-1 hello there bob)                 returns nothing
+   $leftw(7 hello there bob)                  returns "hello there bob"
+   $rightw(2 hello there how are you?)        returns "are you?"
+
+See Also:
+   midw(6); restw(6)
+

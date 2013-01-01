@@ -1,0 +1,41 @@
+Synopsis:
+   $indextoitem(<array> <index number>)
+   $itemtoindex(<array> <item number>)
+
+Technical:
+   These functions are used to convert between array item numbers are index
+   numbers.
+
+   Item numbers are counted incrementally as items are added to an array,
+   starting at 0 (zero).  Each new item uses the next available item number;
+   if there are 5 items in an array, the next item that may be added is item
+   number 5 (remember that we count from zero... 5 items is 0..4).
+
+   Index numbers represent each items position in the array when sorted.
+   Items are sorted based on their ascii values.  This is generally
+   alphabetical; however, since it is based on ascii values, all capital
+   letters are sorted after all lowercase letters.  It follows a sorting
+   algorithm similar to the $sort() function's.
+
+Practical:
+   The $indextoitem() function converts an index number in the given array
+   to its corresponding item number; $itemtoindex() does just the opposite.
+   This is mostly useful in conjunction with $igetitem() or $ifinditem(),
+   allowing an array to be dealt with in a logical order.
+
+Returns:
+     -2   cannot find index/item number in array
+     -1   cannot find named array
+   > -1   item number corresponding to given index number (and vice verse)
+
+Examples:
+   $setitem(booya 0 hello)
+   $setitem(booya 1 goodbye)
+   $itemtoindex(booya 0)                 returns 1
+   $indextoitem(booya 1)                 returns 0
+   $itemtoindex(foobar 0)                returns -1
+   $itemtoindex(booya 100)               returns -2
+
+See Also:
+   Arrays(7); ifinditem(6); igetitem(6); setitem(6); sort(6)
+

@@ -1,0 +1,24 @@
+Synopsis:
+   on [<modes>]leave [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a client (the user's or any other) is
+   observed leaving a channel (but not signing off from irc).
+
+Parameters:
+   $0    the nickname of the person leaving the channel
+   $1    the channel left by the person
+
+Examples:
+   To distinguish the client from other users leaving a channel:
+      on ^leave "*" {
+         if ( [$0] == N ) {
+            echo *** You have left channel $1
+         } {
+            echo *** $0 \($userhost()\) has left channel $1
+         }
+      }
+
+See Also:
+   part(1); userhost(6)
+

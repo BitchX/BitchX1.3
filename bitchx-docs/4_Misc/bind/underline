@@ -1,0 +1,16 @@
+Synopsis:
+   bind <key> underline
+
+Description:
+   This function toggles the current underline setting.  Due to internal
+   limitations of the client, UNDERLINE is displayed as a _ on the input line,
+   regardless of the key it is bound to.
+
+See Also:
+   bind(4) blink, bold, highlight_off, reverse;
+   set(4) underline_video
+
+Other Notes:
+   Underlined text can be typed at any time, but it will only be displayed
+   if UNDERLINE_VIDEO is on.
+

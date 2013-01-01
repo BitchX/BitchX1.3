@@ -1,0 +1,16 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> clientinfo [<ctcp command>]
+
+Description:
+   This lets you find out what CTCP commands another client knows how
+   to deal with.  You can get a more detailed explanation of the CTCP
+   commands understood by specifying the desired command.
+
+Examples:
+   To get more information on VERSION from Joebob:
+      /ctcp joebob clientinfo version
+
+Other Notes:
+   Some CTCP commands, DCC, ERRMSG and SED in particular, are not meant
+   to be used manually.  The results can be unpredictable.
+

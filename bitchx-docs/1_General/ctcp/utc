@@ -1,0 +1,19 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> utc <time value>
+
+Description:
+   This is a convenient means by which to send another client the current
+   time in your locale without requiring them to request it first.  The
+   time value sent is in the same format as used with CTCP PING.
+
+Examples:
+   To send another client the current time in your time zone (note that
+   EVAL is necessary to expand $time() to the actual value when used from
+   the input line):
+      /eval ctcp nickname utc $time()
+
+Other Notes:
+   CTCP UTC is used primarily by robots or other automatons.  Unlike
+   other CTCP commands, an automatic reply is not generated.  Instead,
+   it appears to the recipient as a normal MSG.
+

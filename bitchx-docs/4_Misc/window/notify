@@ -1,0 +1,15 @@
+Synopsis:
+   window notify
+
+Description:
+   This turns on notification for the current window.  This means that,
+   should the current window ever be hidden, a message will be displayed
+   in the new current window indicating activity in hidden window.
+
+   The notification can be limited to certain types of messages; see
+   WINDOW NOTIFY_LEVEL.  Contrary to the name, this command has nothing
+   to do with the NOTIFY command.
+
+See Also:
+   window(4) notify_level
+

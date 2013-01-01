@@ -1,0 +1,25 @@
+Synopsis:
+   $tdiff(<seconds>)
+   $tdiff2(<seconds>)
+
+Technical:
+   This converts an integer value to a human-readable string showing the
+   elapsed time in days, hours, minutes, and seconds.  The only difference
+   between the functions is that $tdiff2() is more compact.  Negative
+   numbers and decimals are permitted, though there probably isn't much use
+   for them.
+
+Practical:
+   This function is useful for showing how much time has elapsed since a
+   particular event.  For instance, it can convert your idle time from the
+   number of seconds to a more readable form.
+
+Returns:
+   human-readable string representing elapsed time
+
+Examples:
+   $tdiff(248576)      returns "2 days 21 hours 2 minutes 56 seconds"
+   $tdiff2(248576)     returns "2d 21h 2m 56s"
+   $tdiff(-248576)     returns "-2 days -21 hours -2 minutes -56 seconds"
+   $tdiff2(-248576)    returns "-2d -21h -2m -56s"
+

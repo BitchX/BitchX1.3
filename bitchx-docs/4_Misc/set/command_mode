@@ -1,0 +1,26 @@
+Synopsis:
+   set command_mode [on|off|toggle]
+
+Description:
+   When turned on, this causes the client to behave somewhat like a MUD
+   client.  The default input (when no command character is used) runs
+   a command instead of sending text to the current channel or query.
+
+   The normal leading "/" may be included with the command, but it is
+   not required in this mode.  Additionally, if the leading character
+   is a "'", the remaining text in the input buffer is passed as the
+   argument to SEND.
+
+   The client behaves normally when COMMAND_MODE is off.
+
+Examples:
+   To send a message to the current channel or query:
+      send Hi there!
+      'Hi there!
+
+   To force a message to be sent to the current channel during a query:
+      say Hi there!
+
+See Also:
+   load(5) action, mudlike; say(1); send(5)
+

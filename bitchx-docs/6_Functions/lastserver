@@ -1,0 +1,28 @@
+Synopsis:
+   $lastserver()
+
+Technical:
+   This function shows the name of the last server to send you a message of
+   any kind.  It only has an effect inside hooks.
+
+Practical:
+   This function shows the name of the server sending the current message.
+   Like $userhost(), it s only useful inside hooks.  It might be used to
+   indicate when a message is no coming from the current server.
+
+Returns:
+   server name
+
+Examples:
+   To indicate that a remote server is sending the NAMES reply:
+      on ^names "*" {
+         if ( lastserver() == S ) {
+            echo *** On $0: $1- \(from $lastserver()\)
+         } {
+            echo *** On $0: $1-
+         }
+      }
+
+See Also:
+   userhost(6)
+

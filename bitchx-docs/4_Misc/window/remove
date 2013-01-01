@@ -1,0 +1,17 @@
+Synopsis:
+   window remove <name>
+
+Description:
+   This stops further messages from the specified name from being sent to
+   the current window.  This only applies to names that have been
+   specifically ADDed to the window list.  The name can be a nickname or
+   a channel, and multiple names may be specified at once by delimiting
+   then with commas.
+
+Examples:
+   To remove channel #blah and joebob from the current window list:
+      /window add #blah,joebob
+
+See Also:
+   window(4) add
+

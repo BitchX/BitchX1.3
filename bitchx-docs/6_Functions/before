@@ -1,0 +1,29 @@
+Synopsis:
+   $after([<count>] <char> <text>)
+   $before([<count>] <char> <text>)
+
+Technical:
+   These functions return their respective input strings up to or following
+   the specified occurrence of the given character.  If no "count" is given,
+   1 (one) is assumed.  If the count is negative, the functions look for
+   the specified instance of the given character from the end of the text.
+
+Practical:
+   These functions are among the most useful additions to ircII present in
+   EPIC.  They conveniently permit you to extract parts of a string based
+   on its content, not the position of key characters.  This is useful for
+   parsing through a nick!user@host pattern, or some other pattern with
+   well-defined delimiters.
+
+Returns:
+   after:  input text after specified occurrence of given character
+   before: input text before specified occurrence of given character
+
+Examples:
+   $after(@ hop!jnelson@wicked.neato.org)     returns "wicked.neato.org"
+   $after(-1 ! hop!jnelson@wicked.neato.org)  returns "hop"
+   $after(2 . hop!jnelson@wicked.neato.org)   returns "org"
+   $after(-2 . hop!jnelson@wicked.neato.org)  returns "neato.org"
+   $before(@ hop!jnelson@wicked.neato.org)    returns "hop!jnelson"
+   $before(-1 e hop!jnelson@wicked.neato.org) returns "hop!jnelson@wicked.n"
+

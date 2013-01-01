@@ -1,0 +1,27 @@
+Synopsis:
+   back <back message>]
+
+Description:
+   This command marks you as being "back".  It is used to tell people that
+   you currently back paying attention to your screen.  You might use it
+   after you have taken a nap, a shower, gotten some food. When you mark 
+   yourself as back, your status bar will show remove the value of 
+   STATUS_AWAY to reflect this; this is "(Away)" by default.
+
+Examples:
+   To mark yourself away:
+      /back I'm here right now
+
+See Also:
+   load(5) away; set(4) beep_when_away, show_away_once, status_away,
+   send_away_msg; who(2); whois(2)
+
+Restrictions:
+   AWAY status (and messages) is only  through the network once,
+   when it is first set.  The implication of this is that, if the AWAY was
+   set during a netsplit, when the netsplit heals, the reconnecting servers
+   will not be aware of the AWAY status.  Thus, anyone on those servers
+   using WHO or WHOIS will not know you are away.  In addition, servers
+   will impose a limit to the length of the AWAY message; this is usually
+   80 characters; test it on your server to be certain.
+

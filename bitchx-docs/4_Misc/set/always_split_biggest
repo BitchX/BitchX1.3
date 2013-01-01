@@ -1,0 +1,12 @@
+Synopsis:
+   set always_split_biggest [on|off|toggle]
+
+Description:
+   When turned on, this setting causes all new windows to split the largest
+   window on-screen in half to make room for it.  If off, the current
+   window is split, unless it is too small to accommodate both windows, in
+   which case the largest will be split anyway.
+
+See Also:
+   window(4) new
+

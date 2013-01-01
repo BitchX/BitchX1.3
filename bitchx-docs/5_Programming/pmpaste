@@ -1,0 +1,13 @@
+Synopsis:
+   pmpaste <options>
+
+Description:
+   PMPASTE reads the current system clipboard and adds it to the 
+   current channel.  Possible options:
+        -input = add the text on the clipboard to the input line
+        -topic = set the topic with the text on the clipboard
+        -smart = get the most text onto a line as possible
+
+See Also:
+   paste(5) 
+

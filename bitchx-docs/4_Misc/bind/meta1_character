@@ -1,0 +1,23 @@
+Synopsis:
+   bind <key> meta1_character
+
+Description:
+   This function allows the user to access an alternate keymap.  When the
+   key bound to this function is pressed, the next key pressed can be
+   assigned a new meaning.  This allows for a sequence of keys to be bound
+   to a function, such that only that combination of keys will execute
+   the function.  This is how escape sequences are entered.
+
+Aliases:
+   META2, META3, and META5 through META19_CHARACTERs are identical
+   in function as META1_CHARACTER.  META4_CHARACTER has some special
+   characteristics described in its own help file.
+
+See Also:
+   bind(4) meta4_character
+
+Restrictions:
+   At most, key sequences may contain 2 keys.  For longer sequences (such
+   as those required to control the arrow keys), one of the pair must be
+   composed of 2 keys as well.
+

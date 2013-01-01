@@ -1,0 +1,38 @@
+Synopsis:
+   comment [<anything>]
+
+Description:
+   This is exactly what it says, a comment.  It does nothing.  It is useful
+   in scripts for explaining bits of code, adding disclaimers or copyright
+   notices, etc.
+
+   There are also several symbolic comments.  Both the # and : characters
+   may be used to designate comments.  There is no functional difference
+   between any of them.  Additionally, EPIC supports C /* */ multiline
+   comments.
+
+Examples:
+   These are some comments:
+      comment this was the first comment
+      # this is a newer comment
+      : this is a new comment too, but it isn't used much
+      /* this is an elite comment unique to EPIC */
+
+See Also:
+   set(4) comment_hack
+
+Restrictions:
+   In order to facilitate the use of older scripts (those designed for old
+   or non-EPIC clients), the default behavior is to recognize C-like
+   comments only if they start at the beginning of a line.  This allows
+   for '/*' sequence to appear in ECHOed text, etc.  This default can be
+   changed to the traditional C behavior by setting COMMENT_HACK off.
+   There is no restriction on where the closing '*/' may appear.  Also,
+   unlike C, a command may not begin before a comment, and end after it;
+   the /* */ effectively acts like a line terminator.
+
+Other Notes:
+   Executing an alias whose name begins with a '*' by calling it as '/*'
+   will lose, as it will be interpreted as a comment.  The solution here is
+   to limit alias names to alphanumeric characters.
+

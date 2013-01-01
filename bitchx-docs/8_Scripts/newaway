@@ -1,0 +1,15 @@
+Synopsis:
+   load newaway
+
+Description:
+   This script does essentially the same thing that SHOW_AWAY_ONCE does.
+   It suppresses the 301 server numeric if the same one is received more
+   than once.  It will display changes in AWAY messages.
+
+See Also:
+   away(1); load(5); on(5) 301; set(4) show_away_once
+
+Other Notes:
+   This script was written by Matthew Green (phone).  The author explicitly
+   places the script in the public domain.
+

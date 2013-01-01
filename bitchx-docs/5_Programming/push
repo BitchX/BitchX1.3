@@ -1,0 +1,20 @@
+Synopsis:
+   push <variable name> <word>
+   pop  <variable name>
+
+Description:
+   PUSH appends the given word (or words) to the given variable, padded
+   with a single space.  The variable name itself may not contain a
+   leading '$'; the command uses the variable itself, not the expanded
+   contents.  If the variable does not exist, it is created containing
+   the given word(s) (just as if ASSIGN were used).
+
+Aliases:
+   POP is the exact opposite of PUSH, in that it pops off the last word
+   in the variable.  If there is only one word in the variable, the
+   variable is deleted.  Both PUSH and POP are functionally equivalent
+   to the $push() and $pop() functions, respectively.
+
+See Also:
+   assign(5); shift(5); unshift(5)
+

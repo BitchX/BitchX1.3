@@ -1,0 +1,14 @@
+Synopsis:
+   info [<server>]
+
+Description:
+   This command doesn't serve much interactive purpose.  Rather, it shows
+   some information about the creators of and contributors to irc, both
+   to the ircII client and the ircd server, as well as irc in general.
+   It first shows information about the client, then it queries the
+   server for similar information.
+
+   A server may be queried, though it doesn't make too much sense, since
+   most servers on any given network will be running the same (or close)
+   server software, so the response would be the same.
+

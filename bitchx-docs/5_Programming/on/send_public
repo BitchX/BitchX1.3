@@ -1,0 +1,14 @@
+Synopsis:
+   on [<modes>]send_public [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a regular, public
+   message to any channel it is on.
+
+Parameters:
+   $0    the channel the message is sent to
+   $1-   text of message sent
+
+See Also:
+   on(5) public; say(1)
+

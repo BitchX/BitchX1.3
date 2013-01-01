@@ -1,0 +1,17 @@
+Synopsis:
+   load columns
+
+Description:
+   This script reformats private and channel messages (sent and received)
+   such that they are given a columnar appearance.  All messages are
+   formatted to the 11th column in the display.
+
+   This script was used to demonstrate the $[]var notation.  It includes
+   the $format() function.
+
+See Also:
+   Special_Vars(7); load(5) functions
+
+Other Notes:
+   This script was written by Mike Sandrof (BigCheese).
+

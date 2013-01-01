@@ -1,0 +1,22 @@
+Synopsis:
+   $servername(<index>)
+
+Technical:
+   This function associates a server name with the given index number, as
+   shown in the client's internal server list.
+
+Practical:
+   This function is used to convert from a server's index number to its
+   real name.  This is useful for converting output from other functions,
+   such as $winserv().
+
+Returns:
+   name of server, if any
+
+Examples:
+   $servername(0)               returns name of default server
+   $servername($winserv())      returns name of current server
+
+See Also:
+   server(1); servnum(6); winserv(6)
+

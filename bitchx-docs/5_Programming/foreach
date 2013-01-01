@@ -1,0 +1,43 @@
+Synopsis:
+   foreach [-]<structure> <variable> { <action> }
+
+Description:
+   The FOREACH command is a loop type that iterates through the items in
+   a variable (or alias, see below) structure.  This is often useful for
+   purging an entire structure, or for searching through it for a certain
+   piece of data.
+
+   Variables in the action field are normally not expanded until actual
+   execution of the action.  They can be forced to expand early by quoting
+   the opening curly brace with a backslash: \{
+
+   If a hyphen (-) is prepended to the structure name, the FOREACH loop
+   will try to iterate through an alias structure instead of a variable
+   structure.  This is primarily useful for purging alias structures.
+
+Examples:
+   Simple usage of FOREACH, assuming $blah is a structure two levels deep:
+      foreach blah xx {
+         foreach blah.${xx} yy {
+            echo $blah[$xx][$yy]
+         }
+      }
+
+   To purge an alias structure called booya:
+      foreach -booya xx {
+         alias -booya[$xx]
+      }
+
+See Also:
+   fe(5); fec(5); until(5); while(5)
+
+Restrictions:
+   Structures may be referenced as either $var.${subvar}.${subvar} or
+   $var[$subvar][$subvar] (with any number structure levels, of course).
+   The notation $var.$subvar.$subvar parses as $var[${subvar.$subvar}],
+   which of course is incorrect, and should not be used.
+
+Other Notes:
+   The action portion does not necessarily need to do anything, though there
+   isn't much point in using the command without it.
+

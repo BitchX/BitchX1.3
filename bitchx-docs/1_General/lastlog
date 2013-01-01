@@ -1,0 +1,60 @@
+Synopsis:
+   lastlog [-] [-<flag>] [--<flag>] [<pattern>] [<number of entries [<start>]]
+
+Description:
+   LASTLOG allows you to view messages that were on your screen at one
+   time but have since scrolled off.  This is convenient is you aren't
+   on a terminal capable of maintaining its own scrollback buffer, or
+   if you accidentally used CLEAR before reading a message.
+
+   LASTLOG only returns data saved in your client's lastlog buffer. 
+   This is limited by both your LASTLOG setting, which specifies how
+   many lines to save, and the LASTLOG_LEVEL setting, which says what
+   types of messages to save.  It can return a specified number of
+   lines, any lines which match a given pattern, or any combination. 
+   Additionally, the output can be limited to a specific type, and
+   multiword patterns are allowed (by surrounding the whole thing in
+   double quotes), as are wildcards.
+
+   If the first argument is a single hyphen (-), the output will not be
+   surrounded by "Lastlog:" and "End of Lastlog" messages.
+
+Options:
+   -action        CTCP ACTIONs
+   -all           all qualifying levels
+   -crap          anything not covered above
+   -ctcp          CTCPs (except ACTIONs and DCC stuff)
+   -dcc           DCC connection and status messages
+   -literal       search for a literal string
+   -max <num>     only returns <num> matches
+   -msg           private messages
+   -note          NOTEs
+   -notice        NOTICEs
+   -opnote        operator notifications
+   -public        public channel conversation
+   -reverse       display the log backwards; from the END to the BEGINNING
+   -snote         server notices
+   -wall          WALLs (deprecated since WALL is no longer supported)
+   -wallop        WALLOPs
+   -userlog1 - 4  anything XECHOed under USERLOG1 - USERLOG4
+
+   A double hyphen in front of a flag disables the output of that level.
+
+Examples:
+   To list all private messages from JoeBob:
+      /lastlog -msg joebob
+
+   To list all public messages from JoeBob in the last 100 lines
+      /lastlog -public joebob 100
+
+   To list all occurrences of the phrase "ircII-EPIC is cool" from 100
+   to 600 lines ago:
+      /lastlog "ircII-EPIC is cool" 100 500
+
+   To list everything *except* messages:
+      /lastlog -all --msgs
+
+See Also:
+   set(4) lastlog, lastlog_level, log, logfile; window(4) lastlog_level,
+   log, logfile
+

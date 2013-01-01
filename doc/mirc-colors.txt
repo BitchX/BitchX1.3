@@ -1,0 +1,51 @@
+About Control-C colors
+
+If your client was compiled with #define CONTROL_C_COLORS and you have
+/SET CONTROL_C_COLORS ON, then you can use the control-c colors feature.
+The general syntax is:
+
+color-seq-start := "^C" [number] ["," number]
+color-seq-end   := "^C"
+
+The first "number" is a positive integer at least 0 and not more than 15.
+The colors correspond to the ANSI color schema:
+
+	0 - black 	1 - red		2 - green	3 - yellow
+	4 - blue	5 - magenta	6 - cyan	7 - white
+
+The colors 8 through 15 are the corresponding "bold" versions of the colors
+above, whatever that may be for your terminal.
+
+The "standard" as imposed by mIRC forbids an empty leading value.  This
+implementation imposes this draconian restriction.  In fact, it is treated
+as an end-of-color delimiter.  So there.
+
+If you wish to defeat the color codes, you can have them filtered out by
+doing /SET CONTROL_C_COLORS OFF.
+
+
+OUR REVISIONS TO THE "STANDARD":
+
+The syntax of colors has been modified to:
+
+color-seq-start := "\003" + color-term + ["," color-term]
+color-term      := ["0" + ["0..9"] | "1" + ["0..5"] ] | ["2..9"] | [""]
+color-seq-end   := "\003"
+
+Specifically, this implementation guarantees that at least zero and at most
+two character will ever be used to construct the color code.  If the first
+character is a 0, then the second character will be used if it is a number.
+If the first character is a 1, then the second character will be used only if
+it is a number at least 0 and at most 5.  A comma following the first color
+term will only be "eaten" if it is followed by another valid term.
+
+Either the first term or the second term may be empty.  If either term (but
+not both) are ommitted, then no change will occur for that modifier.  If both
+terms are omitted, the comma must also be omitted, and all color attributes 
+will be terminated.
+
+It is hoped that this clarification will allow the deterministic use of color
+codes (if you always use two digit codes, then you will never have a problem
+with the color codes munching too many characters.)
+
+-end of file-

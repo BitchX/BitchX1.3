@@ -1,0 +1,15 @@
+Synopsis:
+   window previous
+
+Description:
+   This sets the current window to the previous numbered window.  Windows
+   are numbered sequentially, so if the current window is 3, this command
+   will set window 2 as the current.  If the window happens to be the
+   first in the list, the last becomes the current.  If the previous
+   window is hidden, it becomes the current window by swapping itself
+   with the old current window.
+
+See Also:
+   bind(4) previous_window, swap_previous_window; window(4) back, goto, last,
+    next, refnum, swap
+

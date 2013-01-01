@@ -1,0 +1,25 @@
+Synopsis:
+   $winserv([<window>])
+
+Technical:
+   This function returns the index to the current server for the specified
+   window number or name.  If no window is specified, the current is assumed.
+
+Practical:
+   This function is a convenient way for a script to know what the current
+   server is.  It returns the index in the server list, which can then in
+   turn be fed to $servername() to translate it to the real server name.
+
+Returns:
+   > -1   index of server in server list
+     -1   window does not exist
+
+Examples:
+   $winserv(1)                 returns current server for window #1
+   $winserv(main)              returns current server for window "main"
+   $winserv()                  returns current server for current window
+   $winserv(-2)                window #-2 does not exist, return -1
+
+See Also:
+   lastserver(6); myservers(6); servername(6); servnum(6); servports(6)
+

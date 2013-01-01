@@ -1,0 +1,20 @@
+Synopsis:
+   $stripansicodes(<text>)
+
+Technical:
+   This function will "normalize" <text> in two ways, according to the value
+   of the set(4) DISPLAY_ANSI variable.
+   
+   If DISPLAY_ANSI is ON, all ANSI escape codes will be either converted into
+   logical codes (^C colors, ^B bolds, etc) or removed entirely.
+   
+   If DISPLAY_ANSI is OFF, the escape will be mangled into a reverse '['
+   character, and the rest of the code is left intact.
+
+Returns:
+   <text> with its ANSI sequences processed according to the value of
+   DISPLAY_ANSI
+
+See Also:
+   set(4) display_ansi; strip(6); stripansi(6); stripc(6); printlen(6)
+

@@ -1,0 +1,23 @@
+Synopsis:
+   pretend <arguments>
+
+Description:
+   The PRETEND command allows the client to "pretend" it received the given
+   arguments from the server.  It is intended only to be used inside a hook
+   action.  One possible use for this might be a highly customized scripted
+   DCC system.  It is mostly only of use with RAW_IRC.
+
+Examples:
+   To convert all CTCP ACTIONs to normal messages:
+      on raw_irc "% PRIVMSG % :AACTION *A" {
+         pretend $0-2 :(ACTION) $strip(A $4-)
+      }
+
+See Also:
+   fake-dcc(8); hook(5); on(5) raw_irc, send_to_server
+
+Other Notes:
+   As previously mentioned, this command is only designed to be used as
+   part of a hook action.  Its behavior when not used in this manner is
+   undefined.
+

@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> erase_to_beg_of_line
+
+Description:
+   This function erases all text from (but not including) the cursor to
+   the beginning of the input line.
+
+See Also:
+   bind(4) erase_line, erase_to_end_of_line
+

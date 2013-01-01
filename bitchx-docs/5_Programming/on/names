@@ -1,0 +1,18 @@
+Synopsis:
+   on [<modes>]names [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives server output from
+   the NAMES command.
+
+Parameters:
+   $0    channel name
+   $1-   nicknames of (visible) users on the channel
+
+See Also:
+   names(2); on(5) 353, 366
+
+Other Notes:
+   This hook is not triggered by the implicit NAMES done when the client
+   joins a channel.  Hook the 353 numeric instead.
+

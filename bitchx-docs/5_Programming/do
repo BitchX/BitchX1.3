@@ -1,0 +1,34 @@
+Synopsis:
+   do <commands>
+   do { <commands> } [while (<condition>)]
+
+Description:
+   In its base form, DO behaves much like EVAL.  It evaluates its input
+   once, then executes it.  It is superior in some respects, however.  For
+   instance, it can cope with complex commands (multiple commands within
+   curly braces).
+
+   Furthermore, DO has the ability to mimic the WHILE command.  While the
+   operation is not identical, it is similar.  It only differs in that the
+   condition is evaluated after each loop iteration, so the loop is
+   guaranteed to run for at least one iteration.
+
+See Also:
+   To force expansion of some variable $foo:
+      /do echo the variable $$foo expands to $foo
+
+   To run the same command in indefinite number of times, but at least once:
+      assign blah 2
+      do {
+         echo $blah is lower than 3
+      }
+      while ( blah = rand(5) < 3 )
+
+See Also:
+   eval(5); while(5)
+
+Other Notes:
+   This command is mostly supported for compatibility with previous ircII
+   clients.  Internally, it uses more resources than EVAL, so it isn't of
+   much practical use, save for its looping ability.
+

@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]status_update [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the status bar of a visible window
+   **in dumb mode** is updated.
+
+Parameters:
+   $0    Refnum of the window whose status bar was updated
+   $1    Which status bar has changed, 0 or 1
+   $2-   The actual status bar that has been updated
+
+See Also:
+   set(5) status_double; set(5) status_format.
+

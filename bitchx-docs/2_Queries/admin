@@ -1,0 +1,22 @@
+Synopsis:
+   admin [<server|nickname>]
+
+Description:
+   This command is used to display various administrative information
+   about a particular server.  Typically such information will include
+   the name of the organization running the server, its geographic
+   location, and a method of contacting someone in charge of it.
+
+   If the server name is omitted, the client's current server is used.
+   If a nickname is given, that client's server is queried.
+
+Examples:
+   To get the administrative information of JoeBob's server:
+      /admin joebob
+
+   To get the administrative information of server irc.foobar.com:
+      /admin irc.foobar.com
+
+See Also:
+   motd(2)
+

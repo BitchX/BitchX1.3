@@ -1,0 +1,23 @@
+Synopsis:
+   on [<modes>]disconnect [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the ckient is disconnected from a server,
+   and it is unable to reconnect to the server itself (assuming the
+   AUTO_RECONNECT setting is turned on).  This would be any situation in
+   which the client would normally print the following message:
+
+      *** Use /SERVER to connect to a server
+
+Parameters:
+   $0    server disconnected from
+
+Examples:
+   To customize the disconnection message:
+      on ^disconnect "*" {
+         echo *** Disconnected from $0 at $Z
+      }
+
+See Also:
+   disconnect(1); set(5) auto_reconnect
+

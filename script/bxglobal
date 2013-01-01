@@ -1,0 +1,10 @@
+# global bitchx script
+
+if (gtkbitchx())
+{
+	^load menu.bx
+	^set nicklist on
+}
+
+# We should probably do some other things here like set flood protection to
+# some reasonable defaults so no one will complain.

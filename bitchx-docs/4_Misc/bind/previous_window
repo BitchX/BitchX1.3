@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> previous_window
+
+Description:
+   This function causes the client to change the current window to the one
+   immediately above the current one in the window list.  If the current
+   window is the first in the list, the last becomes the current window.
+
+Aliases:
+   This key function has the same effect as the WINDOW PREVIOUS command.
+
+See Also:
+   bind(4) next_window, swap_previous_window; window(4) previous
+

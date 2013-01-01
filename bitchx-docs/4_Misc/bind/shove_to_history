@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> shove_to_history
+
+Description:
+   This function causes the current input buffer to be placed in the
+   history buffer.  The command itself is not actually executed.  This
+   is useful for remembering a partially complete command, such that
+   it can be completed at a later time.
+
+See Also:
+   bind(4) backward_history, forward_history; history(4)
+

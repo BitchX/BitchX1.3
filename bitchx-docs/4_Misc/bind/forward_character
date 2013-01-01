@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> forward_character
+
+Description:
+   This function causes the cursor to move right by one character.  It has
+   no effect if the cursor is at the end of the input line.
+
+See Also:
+   bind(4) backward_character
+

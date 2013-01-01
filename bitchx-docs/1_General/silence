@@ -1,0 +1,41 @@
+Synopsis:
+   silence [[+|-]<nick!user@host>]
+   silence [<nick>]
+
+Description:
+   SILENCE is similar in many respects to IGNORE, except that it is
+   server-based.  What this means is the server will never even send you
+   messages from anyone you have SILENCEd, whereas it will with IGNORE,
+   where your client is responsible for filtering the messages out.  This
+   has the advantage of not bogging your client down with excessive data
+   as it tries to filter out messages.
+
+   The default behavior is to SILENCE a nick!user@host pattern, and if
+   such a pattern is not passed as the argument, it must be prepended with
+   a plus ('+') to be added to your silence list.  If a pattern is prepended
+   with a minus ('-'), it will be removed from your silence list.  If you
+   only specify a nickname, you can list the patterns in the silence list
+   owned by that nickname.  If no arguments are given, your own silence list
+   is displayed.
+
+Options:
+   +   add a pattern to your silence list
+   -   remove a pattern from your silence list
+
+Examples:
+   To add someone to your silence list:
+      /silence *!*jerk@*.moron.org
+
+   To remove someone from your silence list:
+      /silence -*!*friend@*.bestbuds.com
+
+   To see the silence list for FooBar:
+      /silence foobar
+
+See Also:
+   ignore(1); on(5) silence
+
+Restrictions:
+   This command is limited to Undernet-based servers (i.e. it won't work on
+   EFnet).
+

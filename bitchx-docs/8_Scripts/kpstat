@@ -1,0 +1,14 @@
+Synopsis:
+   load kpstat
+
+Description:
+   This script is based on KILLPATH.  In fact, it is identical, save that
+   the KILL messages are put in the status bar, instead of being displayed
+   in the current window.
+
+See Also:
+   kill(3); killpath(8); load(5)
+
+Other Notes:
+   Refer to the KILLPATH helpfile for credits.
+

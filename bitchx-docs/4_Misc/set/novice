@@ -1,0 +1,17 @@
+Synopsis:
+   set novice [on|off|toggle]
+
+Description:
+   This is a security option.  When turned on, it prevents the user from
+   interactively setting any hooks, and issues an automatic PART if the
+   client is on a channel and a JOIN is issued (allowing the user to use
+   only one channel at a time).
+
+See Also:
+   New_User(7); on(5); set(4) security
+
+Other Notes:
+   This setting does not prevent hooks from being set from within loaded
+   files.  It only prevents them from being set (or viewed) from the
+   input line.
+

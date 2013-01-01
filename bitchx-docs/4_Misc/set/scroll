@@ -1,0 +1,19 @@
+Synopsis:
+   set scroll [on|off|toggle]
+
+Description:
+   When turned on, the client will scroll text in a continuous, flowing
+   fashion.  Old messages are progressively moved to the top of the
+   screen (and off of it) as new text is added to the bottom.
+
+   When turned off, the client will overwrite old text with new text,
+   screen by screen.  This is primarily aimed at users with extremely
+   dumb terminals (or terminal emulations) that cannot handle simple
+   scrolling.  Typical behavior of such terminals includes repeated
+   overwriting of the last line in the display, instead of scrolling
+   the text upward.  It is also useful for users on extremely slow links
+   (such as old 2400 bps modems), as it tends to be a bit quicker.
+
+See Also:
+   set(4) scroll_lines, scrollback, scrollback_ratio
+

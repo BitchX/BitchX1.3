@@ -1,0 +1,23 @@
+Synopsis:
+   $rename(<source> <destination>)
+
+Technical:
+   This function gives the specified file a new name.  Files cannot be
+   moves to different directories with this function.
+
+Practical:
+   Naturally, this function is useful any time a file needs to be renamed.
+   One use for it might be to back up your .ircrc before doing a SAVE, just
+   in case something goes wrong before the command is completed.
+
+Returns:
+    0   file renamed successfully
+   -1   error during rename attempt
+
+Examples:
+   $rename(~/.ircrc ~/.ircrc.bak)              returns 0 if successful
+   $rename(/etc/passwd /etc/hahaha)            probably will return -1
+
+See Also:
+   fexist(6); unlink(6)
+

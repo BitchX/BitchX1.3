@@ -1,0 +1,14 @@
+Synopsis:
+   load log
+
+Description:
+   This script serves mainly as an example of how to use WAIT to get the
+   output of a process.  In this particular case, an alias /log will run
+   "uptime" and log the output, if its first argument is "on".
+
+See Also:
+   exec(5); load(5); wait(5)
+
+Other Notes:
+   The name of this script's author is not known.
+

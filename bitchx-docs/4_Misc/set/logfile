@@ -1,0 +1,11 @@
+Synopsis:
+   set logfile [<filename>]
+
+Description:
+   This variable sets the name of the file the client will log to when the
+   LOG variable is on.  This setting can be overridden by a logfile setting
+   for a specific window.
+
+See Also:
+   set(4) log; window(4) logfile
+

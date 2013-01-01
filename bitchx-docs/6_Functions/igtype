@@ -1,0 +1,25 @@
+Synopsis:
+   $igtype(<ignore pattern>)
+
+Technical:
+   Takes an entry from the ignore(1) list as an argument, and returns all
+   levels for that pattern.
+
+Returns:
+   space-separated list of ignore levels for <ignore pattern>
+
+Examples:
+   /ignore nobody!fnord@more.nothing.com MSGS NOTICES
+
+   /assign temp $igmask(*fnord*)   /* assigns "NOBODY!FNORD@MORE.NOTHING.COM"
+                                      to $temp */
+   
+   $igtype($temp)                  /* returns " MSGS NOTICES" */
+
+See Also:
+   ignore(1); rigmask(6); igmask(6); rigtype(6)
+
+Other Notes:
+   This command does *NOT* do matching. The igmask(6) function must be used
+   to get a complete ignore pattern for $igtype.
+

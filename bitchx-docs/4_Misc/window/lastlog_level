@@ -1,0 +1,20 @@
+Synopsis:
+   window lastlog_level [<levels>]
+
+Description:
+   This works similarly to WINDOW LEVEL, except the levels specified
+   determine what the client will save to its lastlog buffer for that
+   window.  If no level is specified, the current setting for the window
+   is displayed.
+
+   The list of levels to use may be any of those allowed for WINDOW
+   LEVEL.  A comma-delimited list may be used to specify more than one
+   level at once.
+
+Examples:
+   To only remember private messages and notices for the current window:
+      /window lastlog_level msg,notice
+
+See Also:
+   set(4) lastlog_level; window(4) level
+

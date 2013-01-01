@@ -1,0 +1,18 @@
+Synopsis:
+    $addtabkey(<nick>)
+
+Technical:
+    This function will add the specified nick into the tab key list
+
+Practical:
+    By pressing tab you can cycle through the nicks that just messaged you 
+    or nicks that are on the channel. addtabkey will add the specified nick 
+    to the list. 
+
+Returns:
+    Nothing
+
+
+Examples:
+    $addtabkey(panasync)            will add panasync to tab key list
+    $addtabkey()                    won't return or do anything 

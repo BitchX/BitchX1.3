@@ -1,0 +1,88 @@
+Synopsis:
+   set status_format [<text>]
+
+Description:
+   This setting defines the appearance of the data in the status bar.  A
+   great deal of information can be displayed in the status bar, such as
+   the current time of day, the current channel name and its modes, the
+   target of a query, and much more.
+
+   The ever-changing data in the status bar is displayed with a series
+   of special expandos.  Each expando has a particular purpose.  Keep in
+   mind that these expandos are case-sensitive.
+
+     Text    Expands To           |  Text    Expands To                 
+      %A   * $STATUS_AWAY         |   %0    * $STATUS_USER
+      %B  +* $STATUS_HOLD_LINES   |   %1    * $STATUS_USER1
+      %C  +* $STATUS_CHANNEL      |   %2    * $STATUS_USER2
+      %D   * DCC transfer status  |   %3    * $STATUS_USER3
+      %F  +* $STATUS_NOTIFY       |   %4    * $STATUS_USER4
+      %H   * $STATUS_HOLD         |   %5    * $STATUS_USER5
+      %K  +* $STATUS_SCROLLBACK   |   %6    * $STATUS_USER6
+      %I   * $STATUS_INSERT       |   %7    * $STATUS_USER7
+      %M  +* $STATUS_MAIL         |   %8    * $STATUS_USER8
+      %N     current nickname     |   %9    * $STATUS_USER9
+      %O   * $STATUS_OVERWRITE    |   %{1}0 * $STATUS_USER10
+      %Q  +* $STATUS_QUERY        |   %{1}1 * $STATUS_USER11
+      %R     window refnum/name   |   %{1}2 * $STATUS_USER12 (..and so on)
+      %S  +* $STATUS_SERVER       |   %+   +* $STATUS_MODE
+      %T  +* $STATUS_CLOCK        |   %*    * $STATUS_OPER
+      %U   * $STATUS_USER         |   %@    * $STATUS_CHANOP
+      %V     client version       |   %=    * $STATUS_VOICE
+      %W   * $STATUS_WINDOW       |   %#   +* $STATUS_UMODE
+      %X   * $STATUS_USER1        |   %>      right-justifies further text
+      %Y   * $STATUS_USER2        |   %%      literal '%'
+      %Z   * $STATUS_USER3        |   %.    * /WINDOW STATUS_SPECIAL
+
+   All expandos are have a "map" level. The level can be specified by
+   %{map}expando, where map is the map level and expando is the single
+   character expando. The expandos specified above are in map level 0,
+   which is assumed if no map level is specified. This means %{0}S means
+   the same thing as %S.
+
+   Note that STATUS_USER - STATUS_USER3 have 2 (two) expandos associated
+   with them.  This is for convenience, as the remaining user-definable
+   expandos are only referenced by number.  The duplicates cannot be set
+   independently. The STATUS_USER expandos defined in the map level
+   of their respective tens-digit. This is especially important for those
+   above 9, which *must* have their map level specified.  For example,
+   STATUS_USER15 would be specified as %{1}5.
+
+   The expandos marked by asterisks (*) are only displayed when certain
+   conditions are met.  Refer to their respective help files for further
+   information.  The %D expando has no help file; it is present only when
+   the client is transferring a file over DCC.  It displays the file being
+   sent, and shows how much has been sent.
+
+   The expandos marked by a plus (+) can also be expanded within their
+   associated variable independently of the status bar.  This means that
+   including a literal %expando in the variable will expand its contents
+   before it is placed in the status bar, instead of displaying the literal
+   text "%expando".
+
+   The normal behavior is to cause the last character in the status bar to
+   repeat until the the of the line.  This can be disabled by turning on
+   the STATUS_NO_REPEAT setting, or by making the last character in
+   STATUS_FORMAT a space.  No repetition is done if the right-alignment
+   expando is used.
+
+   If the current window happens to have DOUBLE turned on (double status
+   line), then this setting is ignored, in favor of STATUS_USER1 and
+   STATUS_USER2.  The former applies to the top line, the latter to the
+   bottom.  They are otherwise the same as STATUS_FORMAT.
+
+Examples:
+   A common status bar configuration:
+      /set status_format *%R* %H%=%@%N%*%S%# %C%+%Q %O%M%A%T%W %D *
+
+   A common doubled status bar configuration:
+      /set status_format1 *%R* %H%=%@%N%*%S%# %C%+%Q %O%M%A%T %D *
+      /set status_format2 %W %X %Y $Z *
+
+See Also:
+   dcc(1); set(4) status_away, status_channel, status_chanop, status_clock,
+   status_hold, status_hold_lines, status_scrollback, status_insert,
+   status_mail, status_mode, status_no_repeat, status_notify, status_oper,
+   status_overwrite, status_query, status_server, status_umode, status_user,
+   status_voice, status_window; window(4) double, status_special;
+

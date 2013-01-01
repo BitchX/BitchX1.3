@@ -1,0 +1,11 @@
+Synopsis:
+   window shrink <lines>
+
+Description:
+   This makes the current window decrease in size by the specified number
+   of lines.  Any other visible windows are increased in size accordingly
+   to accommodate the current window.
+
+See Also:
+   window(4) balance, grow, size
+

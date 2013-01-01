@@ -1,0 +1,23 @@
+Synopsis:
+   $winnum(<winname>)
+
+Technical:
+   This returns the window reference number of the window name specified
+   by <winname>. If no arguments are passed, it defaults to the current
+   window. This value will always match the value of STATUS_WINDOW in
+   the window's status bar.
+
+Practical:
+   This function is mainly useful for scripts, allowing them to know at any
+   given time what the current window is.
+
+Returns:
+   window number of the window specified by <winname>, or if no arguments are
+   passed, the window number of the current window.
+
+Examples:
+   $winnum()               returns number of current window
+
+See Also:
+   set(4) status_window; winnam(6)
+

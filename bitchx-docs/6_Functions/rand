@@ -1,0 +1,28 @@
+Synopsis:
+   $rand(<maximum>)
+
+Technical:
+   This function generates a pseudo-random number that no larger than the
+   given maximum.  The $srand() function should be used first to reduce
+   the predictability of the function.  If maximum is less than 1, the
+   host's MAX_INT is used (the largest unsigned int it can handle); this
+   maximum depends on the operating system and hardware platform of the
+   host.
+
+Practical:
+   Random numbers have a seemingly endless list of possible uses.  Common
+   ones for ircII and EPIC include picking some random, automated signoff
+   message, connecting to a random server, etc.  Used with $crypt(),
+   it can also be used to do some simple encryption.
+
+Returns:
+   random integer of range 0..maximum
+
+Examples:
+   $rand(50)             returns a random number no larger than 50
+   $rand(-1)             returns a random number no larger than MAX_INT
+   $rand()               returns nothing
+
+See Also:
+   srand(6)
+

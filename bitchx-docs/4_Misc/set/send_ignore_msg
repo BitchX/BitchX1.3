@@ -1,0 +1,17 @@
+Synopsis:
+   set send_ignore_msg [on|off|toggle]
+
+Description:
+   When turned on, any ignored user that sends a private message to the
+   client will be sent a notice stating that the user is being ignored.
+   When turned off, the user is not made aware of the IGNORE setting.
+
+See Also:
+   ignore(1)
+
+Other Notes:
+   Caution should be exercised with this setting.  If the user is being
+   ignored for flooding, the automated notices sent by the client may
+   very well flood the client off irc.  Unless there is a compelling
+   reason to do otherwise, this setting should be turned off.
+

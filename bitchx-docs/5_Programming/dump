@@ -1,0 +1,26 @@
+Synopsis:
+   dump [all|alias|variables|on]
+
+Description:
+   This purges all aliases, variables, and/or hooks in the client's current
+   memory.  This is useful if a script is not behaving as expected, letting
+   the use dump everything and reload the script without restarting the
+   client.  It is also useful for dumping any scripts that the client loads
+   automatically upon startup.
+
+   If no specific data type is specified, 'all' is used as the default.
+
+Options:
+   alias       purges all aliases in memory
+   variables   purges all variables in memory
+   on          purges all hooks in memory
+   all         all of the above
+
+Bugs:
+   The client will not return an error message if an invalid type is given.
+   In fact, it will report that the given type was indeed dumped!
+
+Other Notes:
+   This command does not affect the .ircrc or any other file in any way.
+   It only affects the client's current state.
+

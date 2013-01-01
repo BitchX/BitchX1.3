@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> backward_word
+
+Description:
+   This function moves the cursor backward until it reaches the beginning
+   of a word.  If the cursor is currently in the middle of a word, it is
+   shifted to the beginning of that word.  If it is already at the
+   beginning of a word, or on whitespace of any kind, it is moved back to
+   the previous word.  It has no effect if the cursor is at the beginning
+   of the first word.
+
+See Also:
+   bind(4) forward_word
+

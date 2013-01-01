@@ -1,0 +1,16 @@
+Synopsis:
+   awaymsg [<msg>]
+
+Description:
+   AWAYMSG allows you to specify the message used when you auto set away.
+
+Examples:
+   To set your away msg:
+      /awaymsg we are away now.
+
+   To remove your away msg:
+      /awaymsg  
+
+See Also:
+   away(1); back(1)
+

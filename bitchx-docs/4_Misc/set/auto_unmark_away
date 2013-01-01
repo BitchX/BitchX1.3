@@ -1,0 +1,13 @@
+Synopsis:
+   set auto_unmark_away [on|off|toggle]
+
+Description:
+   When turned on, this will cause the client to unmark the client as
+   being away with the server if the SEND_LINE key function is used (in
+   other words, if a message is sent to the server).  If off, the client
+   will only try to remove its away status with an AWAY is issued with
+   no arguments.
+
+See Also:
+   away(1); bind(4) send_line
+

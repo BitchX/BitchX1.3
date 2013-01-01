@@ -1,0 +1,18 @@
+Synopsis:
+   summon <user>[@<server>]
+
+Description:
+   SUMMON, as its name indicates, is used to summon someone to irc.  It
+   most resembles a Unix talk request, except the user is prompted to join
+   the irc network instead of initiate a talk connection.
+
+   Note that the input must be the recipient's username (e.g. login name).
+   Irc servers on the networks are the only hosts that can be directed to
+   issue a SUMMON.  If no irc server is specified, the current is used.
+
+Other Notes:
+   As with USERS, this command outlived its usefulness years ago.  It is
+   one of the few remaining relics from the days when the only irc users
+   were those with local servers.  Few, if any, servers have this feature
+   enabled anymore.
+

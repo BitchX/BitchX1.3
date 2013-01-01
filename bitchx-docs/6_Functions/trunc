@@ -1,0 +1,22 @@
+Synopsis:
+   $trunc(<precision> <float>)
+
+Technical:
+   This function truncates the given decimal number to the given precision,
+   rounding up or down as appropriate.
+
+Practical:
+   This function is useful for rounding floating-point numbers.  It may be
+   used any time, though it is usually most useful when FLOATING_POINT_MATH
+   is turned on.
+
+Returns:
+   truncated number
+
+Examples:
+   $trunc(2 3.141592654)                 returns "3.14"
+   $trunc(5 3.54)                        returns "3.54000"
+
+See Also:
+   set(4) floating_point_math
+

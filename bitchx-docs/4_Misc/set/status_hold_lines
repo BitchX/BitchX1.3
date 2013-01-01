@@ -1,0 +1,23 @@
+Synopsis:
+   set format_hold_lines [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the
+   current window has HOLD_MODE set, and there are queued lines waiting to
+   be displayed.  This variable displays the number of lines held (in
+   multiples of 10).  If no lines are being held, nothing is displayed.
+
+   This string is represented by %B in the STATUS_FORMAT string.  It will
+   expand inside STATUS_HOLD_LINES to the number of lines held.
+
+Examples:
+   Setting the appearance of the string:
+      /set status_hold_lines %B
+
+See Also:
+   set(4) hold_mode, status_format, status_hold; window(4) hold_mode
+
+Other Notes:
+   When lines are held, the client will activate this setting and the
+   STATUS_HOLD setting.
+

@@ -1,0 +1,12 @@
+Synopsis:
+   $getgid()
+
+Technical:
+   Gets the current group id, similar to the Unix system call.
+
+Returns:
+   current groupid
+
+See Also:
+   getuid(6); getpgrp(6); getlogin(6)
+

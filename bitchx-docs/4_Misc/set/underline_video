@@ -1,0 +1,12 @@
+Synopsis:
+   set underline_video [on|off|toggle]
+
+Description:
+   When turned on, the client will permit underlined text to be displayed.
+   The ^U (control-u) character is used to switch underlining on and off.
+   When turned off, the ^U will appear as a U.
+
+See Also:
+   bind(4) blink, bold, highlight_off, reverse, underline;
+   set(4) blink_video, bold_video, reverse_video, underline_video
+

@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> refresh_screen
+
+Description:
+   This function causes the client to redraw the screen line by line.  It
+   is mostly only useful when another process sends data to the client's
+   tty, which sometimes corrupts the screen display (but not the actual
+   contents).
+
+See Also:
+   bind(4) refresh_inputline
+

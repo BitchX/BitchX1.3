@@ -1,0 +1,39 @@
+Synopsis:
+   xecho [<switch> [<arg>] [<switch> [<arg>] ...]] [--] <text>
+
+Description:
+   XECHO works just like ECHO, except that it may also accept certain
+   switches to give more control over where the text is send.  Currently,
+   text can be sent explicitly to the current window, to any arbitrary
+   window, and can be set to only be displayed in windows with a certain
+   level set.
+
+Options:
+   -banner          display the $banner in front of the text
+   -current         send text to current window
+   -level <level>   only echo text if target window has specified level
+   -raw             send raw text to the screen, no formatting whatsoever
+   -window <name>   send text to specified window (name or number)
+   -nolog           do not allow the text to be logged
+   -say             do not output text if called as ^xecho
+   --               literal; disabled argument parsing for all text to
+                    the right of the double hyphens
+
+Examples:
+   To echo text to the current window:
+      xecho -c This text will appear in the current window
+
+   To send only crap and server notices to a window called `misc'
+      xecho -l snotice,crap -w misc This appears in the misc window
+
+   To change the titlebar of an xterm:
+      eval xecho -r $chr(27)]2\;Your titlebar has been changed.$chr(7)
+
+   To output text beginning with a hyphen:
+      xecho -- -= This text is treated literal =-
+   outputs:
+      -= This text is treated literal =-
+
+See Also:
+   echo(5); set(4) level; window(4) level
+

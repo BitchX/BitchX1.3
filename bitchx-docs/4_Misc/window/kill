@@ -1,0 +1,12 @@
+Synopsis:
+   window kill
+
+Description:
+   This destroys the current ircII window (i.e. one created with WINDOW NEW).
+   Like WINDOW DELETE, it does not make the client leave any channels it was
+   on in the killed window, but it will disconnect from servers.  The last
+   window left cannot be killed.
+
+See Also:
+   window(4) create, delete, NEW
+

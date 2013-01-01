@@ -1,0 +1,10 @@
+Synopsis:
+   set client_information [<text>]
+
+Description:
+   The contents of this variable are appended to the client's default
+   CTCP VERSION reply.
+
+See Also:
+   ctcp(1) version
+

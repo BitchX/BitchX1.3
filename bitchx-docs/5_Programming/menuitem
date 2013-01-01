@@ -1,0 +1,21 @@
+Synopsis:
+   menuitem <menu name> <options> <optional refnum> "Menu Text" { code }
+
+Description:
+   MENUITEM Appends a menuitem to the end of the specified menu.  
+   The possible options are: 
+        -f = framed (PM only - draws a thin line around the text)
+        -s = static (unselectable)
+        -d = default (PM only - conditional cascade menus)
+        -b = break (starts a new vertical line)
+   The optional refnum is used for setting checks on menuitems.
+   The menu text is what shows up on the menu.  If you put "separator"
+   instead of menu text a horizontal break will be created. Place
+   a ~ before a character in the menu text to make an accellerator out
+   of that key. (i.e. ALT-character will select that menu item)
+   Code is a code fragment to be executed when this menu item 
+   is selected.
+
+See Also:
+   menu(5) submenu(5) popupmenu(5)
+

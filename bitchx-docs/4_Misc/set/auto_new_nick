@@ -1,0 +1,16 @@
+Synopsis:
+   set auto_new_nick [on|off|toggle]
+
+Description:
+   When turned on, this setting will cause the client to try to auto-
+   matically generate a new nickname during connection to a server if the
+   default choice is not available.  The new nickname is based on the
+   chosen nickname, and the client may try up to 9 to 17 variations of it
+   before giving up and prompting for a new nickname to be typed in.
+
+   If it is turned off, the client will always prompt for a new nickname
+   to be typed in if the client cannot use the default choice.
+
+See Also:
+   nick(1); on(5) disconnect, 436; server(1); window(4) server
+

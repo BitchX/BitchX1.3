@@ -1,0 +1,28 @@
+Synopsis:
+   $fromw(<word> <list of words>)
+   $tow(<word> <list of words>)
+
+Technical:
+   These two functions are used to filter a range of words from the given
+   input string.  The $fromw() function starts at the first occurrence of the
+   specified word, and returns it and all that follow it.  The $tow()
+   function is the opposite, returning all words up to and including the
+   search word.
+
+Practical:
+   The mnemonic for these functions are "from word" and "to word".  The
+   most important distinction is that they include the search word in the
+   return string, where functions like $afterw() and $beforew() do not.
+
+Returns:
+   list of words
+
+Examples:
+   $tow(two one two three)           returns "one two"
+   $tow(four one two three)          returns nothing, "four" not in list
+   $fromw(two one two three)         returns "two three"
+   $fromw(four one two three)        returns nothing, "four" not in list
+
+See Also:
+   afterw(6); beforew(6)
+

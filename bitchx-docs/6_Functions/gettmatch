@@ -1,0 +1,15 @@
+Synopsis:
+   $gettmatch(<array> <pattern>)
+
+Technical:
+   This function returns the best match of <pattern> within the array
+   of strings specified by <array>.  This is different than getmatches(6),
+   which returns all matches.
+
+Returns:
+   best wildcard match of <pattern> within the array <array>
+
+See Also:
+   Arrays(7); getmatches(6); getrmatches(6); igetmatches(6);
+   igetrmatches(6)
+

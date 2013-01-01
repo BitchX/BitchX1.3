@@ -1,0 +1,17 @@
+Synopsis:
+   set show_numerics [on|off|toggle]
+
+Description:
+   When turned on, for any server response that includes a numeric reply
+   or error code, the client will prepend that number to the message it
+   displays, in lieu of the usual "***" shown.  This is mostly only used
+   for informational purposes, though it can be useful in learning how
+   the server works.
+
+See Also:
+   on(5)
+
+Other Notes:
+   Not all server replies have numeric codes.  Additionally, the client
+   may suppress some, if the client has a named hook for that reply.
+

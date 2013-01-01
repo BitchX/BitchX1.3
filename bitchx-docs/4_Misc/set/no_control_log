@@ -1,0 +1,11 @@
+Synopsis:
+   set no_control_log [on|off|toggle]
+
+Description:
+   When turned on, the client will strip all non-printable characters from
+   the logfile. When off, the default behavior of outputting directly to
+   the logfile is used.
+
+See Also:
+   lastlog(1); set(4) logfile
+

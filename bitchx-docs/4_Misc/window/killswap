@@ -1,0 +1,11 @@
+Synopsis:
+   window killswap
+
+Description:
+   This swaps the current window with the last one that was hidden, then
+   kills off the swapped window.  As with WINDOW KILL, channels are not
+   left, but servers are.
+
+See Also:
+   window(4) kill, swap
+

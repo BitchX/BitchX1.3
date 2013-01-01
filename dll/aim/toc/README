@@ -1,0 +1,5 @@
+Most of this code is from gaim, I just hacked it up a bit to un gtkify it
+and separated it from the interface code. Anyway, I plan to completely
+seperate this from the interface code and release it so anyone can add a
+aim client to whatever they like.
+

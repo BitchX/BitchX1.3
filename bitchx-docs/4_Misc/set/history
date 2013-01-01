@@ -1,0 +1,17 @@
+Synopsis:
+   set history [<number>]
+
+Description:
+   This setting controls the number of commands to be stored in the
+   client's internal history buffer.  Setting it to 0 (zero) effectively
+   disables command history.  However, the client will continue to save
+   commands to an external file unless HISTORY_FILE is disabled as well.
+
+   A command is inserted into the history buffer when it is executed, or
+   when the SHOVE_TO_HISTORY key function is used.  The history buffer
+   is not purged when HISTORY is disabled.
+
+See Also:
+   bind(4) backward_history, forward_history, shove_to_history;
+   history(4); set(4) history
+

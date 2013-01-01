@@ -1,0 +1,31 @@
+Synopsis:
+   $getopt(<optopt var> <optarg var> <opt string> <argument list>)
+
+Technical:
+   Processes a list of switches and args.  Returns one switch char each time
+   it's called, sets $<optopt var> to the char, and sets $<optarg var> to the
+   value of the next argument if the switch needs one.
+
+   Syntax for <opt string> and <argument list> should be identical to
+   getopt(3).  A ':' in <opt string> is a required argument, and a "::" 
+   is an optional one.  A '-' by itself in <argument list> is a null 
+   argument, and switch parsing stops after a "--"
+
+   If a switch requires an argument, but the argument is missing, $getopt()
+   returns a '-'  If a switch is given which isn't in the opt string, the
+   function returns a '!'  $<optopt var> is still set in both cases.
+
+Returns:
+   Returns a switch char.
+
+Examples:
+   while (option = getopt(optopt optarg "ab:c:" $*)) {
+        switch ($option) {
+                (a) {echo * option "$optopt" used}
+                (b) {echo * option "$optopt" used - $optarg}
+                (c) {echo * option "$optopt" used - $optarg}
+                (!) {echo * option "$optopt" is an invalid option}
+                (-) {echo * option "$optopt" is missing an argument}
+        }
+   }
+

@@ -1,0 +1,13 @@
+Synopsis:
+   load compl.mods
+
+Description:
+   This script is actually a set of functions designed to interface with
+   the COMPLETE script.  It is not intended for interactive use.
+
+See Also:
+   complete(8); load(5)
+
+Other Notes:
+   This script was written by Ian Frechette (Daemon).
+

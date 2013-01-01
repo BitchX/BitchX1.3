@@ -1,0 +1,12 @@
+Synopsis:
+   set suppress_from_remote_server [on|off|toggle]
+
+Description:
+   When turned off, the client will include the name of the server replying
+   to a remote query, such as STATS or WHOIS.  When turned on, the client
+   does not display this information.
+
+Other Notes:
+   This setting does not affect the ability of the client to hook various
+   server replies.  It only affects the client's default behavior.
+

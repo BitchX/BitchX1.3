@@ -1,0 +1,12 @@
+Synopsis:
+   set channel_name_width [<number>]
+
+Description:
+   This variable sets the maximum width a channel's name may use on the
+   client's status bar.  If set to 0 (zero), there is no limit on the
+   length of the channel's name.  This variable also affects the default
+   display of LIST and NAMES output.
+
+See Also:
+   list(2); names(2); set(4) status_channel, status_format
+

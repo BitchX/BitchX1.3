@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> swap_previous_window
+
+Description:
+   This function swaps the current window with the first previous hidden
+   window in the window list.  It has no effect if no windows are hidden.
+
+See Also:
+   bind(4) previous_window, swap_last_window, swap_next_window; window(4)
+   hide, previous, swap
+

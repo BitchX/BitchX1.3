@@ -1,0 +1,19 @@
+Synopsis:
+   set status_mail [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when email is
+   present in the user's mailbox.  The mail does not necessarily need to
+   be new.  If the user's mailbox is empty, nothing is displayed.
+
+   This string is represented as %M in the STATUS_FORMAT string.  Within
+   STATUS_MAIL, the expando will expand to the number of messages in the
+   mailbox.
+
+Examples:
+   Customizing the string displayed when the mailbox contains messages:
+      /set status_mail Mail: %M
+
+See Also:
+   set(4) mail, status_format
+

@@ -1,0 +1,23 @@
+Synopsis:
+   on [<modes>]pong [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a protocol PONG
+   message.  Under normal circumstances, the sender will be a server.
+   However, clients are also allowed to send PONG messages to each other.
+   Since there is never any reason for a client to send a PONG to another
+   client, this hook can be useful for blocking PONG floods.
+
+Parameters:
+   $0    nickname sending the PONG
+   $1-   argument to PONG (usually the same as $0, but not necessarily)
+
+Examples:
+   To filter PONG messages from other clients:
+      on ^pong "*" {
+         if ( rmatch($0 %.%) ) echo *** Received protocol PONG from $0: $1-
+      }
+
+See Also:
+   quote(5)
+

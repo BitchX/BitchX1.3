@@ -1,0 +1,22 @@
+Synopsis:
+   on [#][<mode>]who [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered when the client receives server output from the
+   WHO command.  Each line received can trigger the hook.
+
+Parameters:
+   $0    channel the user is on, of '*' if none or if it is private
+   $1    nickname of user
+   $2    status of user: <G|H>[*][@|+]
+         | 'G' for gone (away), 'H' for here (not away), '*' for irc
+         | operator, '@' for channel operator, '+' for voice status
+   $3    username portion of user's address
+   $4    hostname portion of user's address
+   $5    user's server
+   $6    server hopcount from user
+   $7-   user's IRCNAME
+
+See Also:
+   who(2)
+

@@ -1,0 +1,18 @@
+Synopsis:
+   $fsize(<file>)
+
+Technical:
+   This function attempts to determine the size of the given file.  Tilde-
+   expansion is permitted.
+
+Practical:
+   This function is used to get the size of a file.  This can be useful
+   for seeing is a file exists, but has a zero length.
+
+Returns:
+     -1   file does not exists, or no read access
+   > -1   size of file
+
+See Also:
+   fexist(6)
+

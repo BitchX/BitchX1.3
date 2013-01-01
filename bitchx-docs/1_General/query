@@ -1,0 +1,28 @@
+Synopsis:
+   query [=]<nickname>
+   query %<process id|process name>
+
+Description:
+   Using the first form, QUERY starts a private conversation with the
+   nicknames specified (more than one allowed, see MSG for syntax).  All
+   it really does is make the client send normal typed messages to the
+   people specified instead of your current channel.  QUERY will work
+   over a DCC CHAT connection.
+
+   The second form is similar to the first, but it lets you continuously
+   communicate with a running EXECed process without the need for MSG
+   (just like querying a person).  Either the process id number, or the
+   name assigned to the process (if any) may be used.
+
+   Using QUERY with no arguments terminates the current QUERY, if any.
+
+Examples:
+   To start a private conversation with your significant other:
+      /query sweetypie
+
+   To cancel a running query:
+      /query
+
+See Also:
+   msg(1); exec(5)
+

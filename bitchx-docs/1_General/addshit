@@ -1,0 +1,25 @@
+Synopsis:
+   addshit <nick|nick!user@hostname> <channel|*> <levels> [reason]
+
+Description:
+   Adds <nick|nick!user@hostname> on <channel|*> with [shitlist level] and
+   optional [reason]. 
+   <channel> can have more than one via the use of of "," or * for all.
+   [shitlevels]: 
+       1 -          Deop user at all times
+       2 -          Kick user when they join the channel
+       3 -          Ban/Kick user when they join the channel
+       4 -          Ban user at all times
+       5 -          Perm ignore ALL from user
+
+Examples:
+
+   /addshit panasync #bitchx 3 go away 
+   would add panasync on the channel #bitchx only for a ban/kick on join.
+
+   /addshit panasync #bitchx,#mpeg3 5 go away
+   would add panasync on the channels #bitchx and #mpeg3. 
+
+See Also:
+   shitlist(1); unshit(1);
+

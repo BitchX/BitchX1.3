@@ -1,0 +1,34 @@
+Synopsis:
+   on [<modes>]flood [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client's internal flood detection
+   code is activated.  The client is "flooded" when it receives a large
+   number of messages (of any sort) in a relatively short period of time.
+
+Parameters:
+   $0    nickname of the flooder
+   $1    type of flood detected
+   $2    the channel (if any) they're flooding
+   $3-   content of the flood message
+
+Examples:
+   To automatically ignore flooders:
+      on ^flood "*" {
+         echo *** $1 flooding detected by $0
+         ignore $0 $1
+      }
+
+   To disable flood protection for network services:
+      on flood ^'\\[X W NickServ ChanServ\\] *'
+
+See Also:
+   set(4) flood_after, flood_rate, flood_users, flood_warning
+
+Other Notes:
+   It isn't uncommon for network problems to cause a great deal of data to
+   be sent to the client at once by the server.  Suspending the client for
+   awhile and then bringing it back can produce similar results.  Thus, it
+   it recommended that KICK or KILL be avoided as automated responses to
+   possible flooding.
+

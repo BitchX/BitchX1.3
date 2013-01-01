@@ -1,0 +1,10 @@
+Synopsis:
+   window logfile <filename>
+
+Description:
+   This sets the name of the logfile to use for the current window.  When
+   WINDOW LOG is on, data is appended to this file.
+
+See Also:
+   set(4) log, logfile; window(4) log
+

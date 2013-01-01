@@ -1,0 +1,35 @@
+Synopsis:
+   nick [<new nickname>]
+
+Description:
+   The NICK command allows you to change your current nickname to something
+   else.  If you choose a nickname that is already in use, you will receive
+   an error message to that effect, and your nickname will not be changed.
+   Nicknames are not case-sensitive.
+
+   If you do not specify a new nickname, your current one is displayed.
+
+Examples:
+   To change your nick to foobar:
+      /nick foobar
+
+   To display your current nickname:
+      /nick
+
+See Also:
+   on(5) channel_nick, nickname; set(4) auto_new_nick
+
+Restrictions:
+   Nicknames on IRC are restricted to 9 characters in total length (except
+   on DALnet, where the limit is 30).  All nicknames must begin with a
+   letter, and then may be followed by any letter, number or any of the
+   following characters: - _ \ | [ ] { } ` ^
+
+Other Notes:
+   The special allowance for 30-character nicknames requires the client
+   to be compiled with the #define "ALLOW_LONG_NICKNAMES" enabled.  This
+   is done by default, but if for some reason the person compiling the
+   client has disabled it, any attempts to use a nickname longer than 9
+   characters will be truncated to 9 characters.  This can be circumvented
+   by using the raw server NICK command: /quote nick <new nick> 
+

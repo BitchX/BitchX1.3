@@ -1,0 +1,14 @@
+Synopsis:
+   bind <key> clear_screen
+
+Description:
+   This function clears the current window of all text.  Additionally, it
+   will restart the window if it has been stopped by HOLD_MODE or the key
+   function TOGGLE_STOP_SCREEN.
+
+Aliases:
+   This function is effectively equivalent to "CLEAR -unhold".
+
+See Also:
+   bind(4) refresh_screen; clear(4); set(4) hold_mode; window(4) hold_mode
+

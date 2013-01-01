@@ -1,0 +1,37 @@
+Synopsis:
+   load keybinds
+
+Description:
+   This is a generic set of key bindings, suitable for everyday use.
+
+     Key      Meta Keys             | Key      Convenient Keys             
+     ESC      meta1_character       | ESC-c    clear_screen
+     ^d       meta2_character       | ESC-i    join last channel invited to
+                                    | ESC-l    leave current channel
+     Key      Cursor Keys           | ESC-r    refresh_screen
+     ESC-.    end_of_line           | ^d-^j    flush pending buffer
+     ESC-,    beginning_of_line     |
+                                    | Key      VT100-Type Keys            
+     Key      Standard Bindings     | ESC-[    meta2_character
+     ESC-i    toggle_insert_mode    | ^[-[-1   meta3_character
+     ^b       bold                  | ^[-[-2   meta5_character
+     ^c       switch_channels       | ^[-[-3   meta6_character
+     ^h       backward_character    | ^[-[-4   meta7_character
+     ^w       next_window           | ^[-[-5   meta8_character
+     ^?       backspace             | ^[-[-6   meta9_character
+                                    | DEL      delete_character
+     Key      Erasing Keys          | END      end_of_line
+     ^d-^a    erase_line            | HOME     beginning_of_line
+     ^d-^d    erase_line            | INS      toggle_insert_mode
+     ^d-^e    erase_to_end_of_line  | PGDN     page_down
+     ^d-^p    delete_previous_word  | PGUP     page_up
+     ^d-^w    delete_next_word      |
+     ^d-^y    yank_from_cutbuffer   |
+     ^u       erase_line            |
+
+See Also:
+   bind(4); clear(4); commander(8); join(1); load(5); part(1)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

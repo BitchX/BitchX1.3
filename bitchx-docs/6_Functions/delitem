@@ -1,0 +1,28 @@
+Synopsis:
+   $delitem(<array> <item#>)
+
+Technical:
+   This function is used to delete an entry from an array created with
+   $setitem().  If the item deleted is the only one present in the array,
+   the array is deleted too.  If the item is not the last item in the
+   array, all items beyond it (with higher item numbers) are shifted down
+   by one to fill in the gap.
+
+Practical:
+   This function is used to delete items from an array.  The uses for this
+   are pretty obvious.  If you add items to an array, it follows that you
+   might want to remove them, too.
+
+Returns:
+   -2   if the item does not exist in the array
+   -1   if the array does not exist
+    0   on success
+
+Examples:
+   $delitem(array 2)             deletes item 2 from array "array"
+   $delitem(fake_array 4)        error, "fake_array_ does not exist
+   $delitem(array -2)            error, item -2 does not exist
+
+See Also:
+   Arrays(7); getitem(6); setitem(6)
+

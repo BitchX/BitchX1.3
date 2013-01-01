@@ -1,0 +1,168 @@
+Synopsis:
+   mode <your nickname|channel> [<+|-><mode> [<mode parameter(s)>]]
+
+Description:
+   Both channels and users have modes associated with them.  For channels,
+   they determine who is a channel operator, the number of people who may
+   join the channel, who may not enter the channel, and myriad other
+   things.  For users, they determine whether the user will is an IRC
+   operator, whether the user will receive special server notices, etc.
+
+   Modes are enabled when prepended with a "+", and disabled when with a
+   "-".  Modes may be clustered as well.  When clustering modes, all mode
+   changes are specified first, then their parameters (see the examples
+   below).
+
+Options:
+   Standard User Modes:
+      i   When enabled, you are "invisible" to NAMES and WHO queries from
+            anyone not on a channel common to you.  Additionally, you are
+            also hidden from WHOIS unless your exact nickname is specified.
+      o   When enabled, this gives you IRC operator status (however, see
+            restrictions below).
+      s   When enabled, you will receive special server notices (such as
+            nickname collisions, fake modes, etc.).
+      w   When enabled, you will receive IRC operator WALLOPS, as well as
+            notices of any remote CONNECTs or SQUITs.
+
+   Standard Channel Modes:
+      b   When enabled, this prevents the specified nick!user@host mask
+            from entering the channel.  If only the @host portion is
+            specified, "*!*" is prepended; if only user@host is specified,
+            "*!" is prepended; if the mask does not contain a "@", it is
+            assumed to be a nickname, and a !*@* is appended.  When used
+            with no arguments, the channels list of "bans" is displayed.
+      i   When enabled, users may only join the channel if INVITEd.
+      k   When enabled, users may only join the channel if they specify
+            the proper "key" (which is specified when +k is set).
+      l   When enabled, only the specified number of users may enter the
+            channel.
+      m   When enabled, only users with +o or +v may speak on the channel.
+      n   When enabled, public messages from outside the channel are not
+            allowed.
+      o   When enabled, grants the specified nickname channel operator
+            status.
+      p   When enabled, the channel is made private.  The channel name
+            will not show up in WHO, WHOIS, NAMES, or LIST replies (though
+            users who are not +i will still be shown in NAMES, the channel
+            name is simply masked as "Private").
+      s   When enabled, makes the channel secret.  This is the same as +p,
+            except the channel will not show up in any WHO/WHOIS/etc.
+            queries from a person not on the channel.  Anyone who is on a
+            +s channel is effectively invisible, as per user mode +i.
+      t   When enabled, only channel operators may set a topic.
+      v   When enabled, grants the specified nickname voice status.
+
+Examples:
+   To receive operator WALLOPS and server notices (both examples are
+   equivalent):
+      /mode your_nick +sw
+      /mode your_nick +s+w
+
+   To set a channel limit (the number is arbitrary):
+      /mode #channel +l 35
+
+   To make someone a channel operator:
+      /mode #channel +o theirnick
+
+   To set a ban, a key, and to remove chanop status from someone:
+      /mode #channel +bk-o *!*some@*.ban.com Secret_Key foobar
+
+See Also:
+   chanmode(6); deop(4); invite(1); key(6); kick(1); on(5) mode,
+   mode_stripped; oper(4); set(4) mode_stripper; usermode(6); wallops(4)
+
+Restrictions:
+   Only channel operators may set modes for a channel (though anyone may
+   view them), and only you may set or view your personal user modes.
+   Additionally, the user mode +o may NOT be set with MODE, you must use
+   the OPER command.  However, it may be removed with -o (see DEOP as
+   well).
+
+   Also note that some server variants do not allow for redundant mode
+   changes, such as "+oo foobar foobar".  This shouldn't cause too many
+   problems though, since you can easily reverse a mode if you wish to set
+   it again, such as "-o+o foobar foobar", which is allowed.
+
+   Finally, note that mode changes are limited to a maximum of 4 total
+   parameters.  Thus you could give +o to 3 people and set +l, but you
+   could not do those and set +k as well, since that would involve 5
+   parameters.
+
+Other Notes:
+   On Undernet servers, the maximum number of parameters for MODE is 6.
+   Additionally, some server versions have extra modes that may be used.
+   Keep in mind that these do not apply everywhere, so you should check
+   what software version your server is using to be sure (see VERSION).
+
+   Undernet servers (ircu2.9.x):
+      User Modes:
+         d   When enabled, your client does not receive any public messages
+               from any channel you are on. (mnemonic: deaf mode)
+         k   No-kick mode.  Any client with this mode may not be kicked from
+               any channel it applies to.  Limited to services.
+
+   DALnet servers (ircu2.9.x+DAL, DAL4.x)
+      User Modes:
+         g   Allows operators to see all OPER attempts, and failed server
+               connects.  Allows all users to see nickname collisions.
+         h   Shows operators the arguments to any protocol HELP command
+               issued.  Server numeric 310 is returned in WHOIS to denote
+               +h users.
+
+   IRC 2.9 servers (irc2.9.x):
+      User Modes:
+         r   When enabled, the client cannot be a channel operator (even if
+               it is the first to join), nor can it change nicknames.  This
+               mode is automatic if the connecting client has a matching i:
+               line.  This mode cannot be reversed once enabled.
+        (s)  Version 2.9 servers do not have a +s user mode.
+
+      Channel Modes:
+         a   When enabled, this makes the channel anonymous.  Nicknames are
+               hidden (and thus nick changes are not shown), and no other
+               channel modes are permitted.  Note that this can seriously
+               confuse the client...
+
+   EFnet +CS servers (irc2.8.x+CSr27 and beyond):
+      User Modes:
+         b   When enabled, shows connects from potential bots, and attempts
+               with invalid usernames.
+         c   When enabled, shows all clients connecting and disconnecting
+               from your server.  Limited to irc operators.
+         d   When enabled, shows connects where the username given and the
+               client's ident response differ.
+         f   When enabled, shows all "Fake MODE" and "Nickname Collision"
+               notices.
+         k   When enabled, shows all global and local operator kills.
+         l   When enabled, shows connect attempts from clients that exceed
+               their connect class (Y:line) limit.
+        (r)  Replaced by +bdl after CSr25.
+         s   When enabled, it shows any miscellaneous server notices that
+               are not shown with modes bcdfklu (even if they are not
+               enabled).
+         u   When enabled, shows all unauthorized connect attempts, as well
+               as connect attempts when the server has reached its maximum
+               connection limit.
+
+   EFnet /th servers (irc2.8/th):
+      User Modes:
+         c   When enabled, shows all clients connecting and disconnecting
+               from your server.  Limited to IRC operators.
+         d   Debug mode, displays miscellaneous messages.  Limited to irc
+               operators.
+         k   When enabled, shows all server kills
+         n   Shows all local nickname changes.  Limited to irc operators.
+         r   When enabled, shows all rejected connections.
+         s   When enabled, it shows any miscellaneous server notices that
+               are not shown with modes ckr, including operator kills
+         y   Spy mode, informs operators of all LINKS, STATS, and TRACE
+               commands issued, and of any failed MSG commands.
+
+   AnotherNet servers
+      User Modes:
+         c   Show all [dis]connections, possible clones, and invalid logins
+         f   Show all DCC handshakes (mnemonic: file transfers)
+         h   Makes operator completely invisible to all normal users;
+             mainly meant for channel services (mnemonic: hidden)
+

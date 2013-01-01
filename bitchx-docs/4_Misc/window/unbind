@@ -1,0 +1,11 @@
+Synopsis:
+   window unbind [<channel>]
+
+Description:
+   This unbinds a channel from the current window, assuming it had been
+   previously bound to it.  If a channel is not specified, then the
+   channel(s) currently bound to the window (if any) are unbound.
+
+See Also:
+   window(4) bind, channel
+

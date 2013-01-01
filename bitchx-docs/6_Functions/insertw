@@ -1,0 +1,24 @@
+Synopsis:
+   $insertw(<index> <word> <text>)
+
+Technical:
+   This function inserts the given word into the given text, in the position
+   indicated by the given index.  It returns the resultant string.  The
+   index counts from 0 (zero).
+
+Practical:
+   This function is used when you want to insert a word into an existing
+   text string (usually held in a variable).  This could be useful as a
+   pseudo-unshift mechanism; using an index of 0 would yield the same
+   results as $unshift(), but in truth any offset could be used (thus
+   keeping the first few words intact, and unshifting the rest).
+
+Returns:
+   input text with word inserted
+
+Examples:
+   $insertw(1 blah hi there bob)       returns "hi blah there bob"
+
+See Also:
+   remw(6); unshift(6)
+

@@ -1,0 +1,22 @@
+Synopsis:
+   trace [<server>]
+
+Description:
+   This works something like the Unix traceroute utility.  It displays
+   the route from the client's current server to a remote one.  It
+   additionally will display any irc operators currently on the remote
+   server, as well as any other servers connected to it.
+
+   If no server is specified, the connections (operator, server) to the
+   current server are displayed.  This is a convenient method of finding
+   a local irc operator.
+
+   TRACE can also be used to determine where a network bottleneck is if
+   traffic to some users appears particularly slow.  If the output stops
+   before completion, it can be assumed that the problem probably lies
+   with the last server that replied to the trace, or the next one
+   downstream.
+
+See Also:
+   load(5) tls
+

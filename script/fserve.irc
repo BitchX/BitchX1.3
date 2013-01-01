@@ -1,0 +1,20 @@
+/set dcc_autoget on
+/set auto_away off
+/set flood_protection off
+/set dcc_dldir ~/fserve
+/set dcc_uldir ~/fserve
+/loadtcl ~/file.tcl
+/echo fserve script loaded, type /fhelp for the help crap
+/alias fhelp {
+{/tcl echohelp;}
+}
+
+/alias update {/tcl update;}
+/alias usermax {/tcl set maxusers $0;}
+/alias sendmax {/tcl set maxsends $0;}
+/alias persist {/tcl set thechannel $0;}
+/alias fsoff {/tcl fserveoff;}
+/alias fson {/tcl fserveon;}
+/alias fstimer {/tcl toggletimer;}
+/alias fssay {/tcl settimer $0-;}
+/alias fssave {/tcl writeconfig;}

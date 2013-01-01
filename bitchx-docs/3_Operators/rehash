@@ -1,0 +1,14 @@
+Synopsis:
+   rehash
+
+Description:
+   This command is used to force the current server to reload it's ircd.conf
+   configuration file.  This is useful for effecting configuration changes
+   without starting a new server.
+
+See Also:
+   restart(3)
+
+Restrictions:
+   This command is limited to irc operators on the server to be REHASHed.
+

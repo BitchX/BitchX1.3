@@ -1,0 +1,21 @@
+Synopsis:
+   $eof(<file descriptor>)
+
+Technical:
+   This function tests whether the client is currently at the end of the
+   file pointed to by the given file descriptor.  The only valid input is
+   a file descriptor returned by the $open() function.
+
+Practical:
+   This function is used to see if the end of a file has been reached.
+   This is mostly useful while reading a file, such that it can be closed
+   once the end is reached.
+
+Returns:
+   -1   error, no such file descriptor
+    0   not at end of file
+    1   end of file reached
+
+See also:
+   close(6); open(6); read(6)
+

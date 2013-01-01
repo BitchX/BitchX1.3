@@ -1,0 +1,17 @@
+Synopsis:
+   $cexist(<command>)
+
+Technical:
+   This function tells wether or not a built-in command exists.
+   
+Practical:
+   This can be used to emulate a built-in command in older versions of epic
+   that may not support it.
+
+Returns:
+   1   If the built-in command <command> exists
+   0   If <command> doesn't exist
+   
+See Also:
+   fnexist(6)
+

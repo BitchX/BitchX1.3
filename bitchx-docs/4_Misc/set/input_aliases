@@ -1,0 +1,33 @@
+Synopsis:
+   set input_aliases [on|off|toggle]
+
+Description:
+   This setting controls how variables and functions are expanded when used
+   directly on the input line.  When turned on, references to them are
+   treated as though the command was passed through EVAL; then are expanded
+   inline before being passed to the calling command as arguments.
+
+   This setting will not automatically expand items inside parentheses or
+   curly braces, however.  The opening brace or parenthesis must be
+   quoted with the quote character, '\', for expansion to occur.  Nested
+   braces or parenthesis must be double quoted, and so on.
+
+Examples:
+   Assuming INPUT_ALIASES is on, $0 is "foo", and $blah is "bar":
+      ${[$0]}               expands to "foo"
+      ${[$blah]}            expands to "bar"
+      ${blah}               expands to "bar", too
+      ${ blah == [bar] }    expands to "1"
+      ${ [$0] == [foo] }    expands to "1"
+      ${ [$0] == [bar] }    expands to "0"
+      ${ [$0](booya) }      expands to the return value of $foo(booya)
+
+See Also:
+   Expressions(7); Special_Vars(7); eval(5)
+
+Other Notes:
+   The behavior of INPUT_ALIASES is different when used inside a loaded
+   script.  Variables and functions must use EVAL for inline expansion.
+   Instead, this setting causes the standard numeric expandos to return
+   the command line arguments used to start the client.
+

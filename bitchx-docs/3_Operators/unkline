@@ -1,0 +1,9 @@
+Synopsis:
+   unkline <user@host>
+
+Description:
+   UNKLINE is used to remove a ban on a client from the irc server.
+
+Restrictions:
+   This command is limited to irc operators.  
+

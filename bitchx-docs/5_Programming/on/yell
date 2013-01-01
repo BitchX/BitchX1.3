@@ -1,0 +1,11 @@
+Synopsis:
+   on [<modes>]yell [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This is hooked by fairly useless but necessary in beta yell()s. They
+   are present in the client for debugging purposes, and scripters may not
+   want them to appear. ON ^yell will suppress their output.
+
+Parameters:
+   $0-    text of the yell()
+

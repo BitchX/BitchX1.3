@@ -1,0 +1,84 @@
+Synopsis:
+   ignore [<nick | user@host>] [[-|+|^]<message type(s)>]
+   ignore [<nick!user@host>]   [[-|+|^]<message type(s)>]
+   ignore [<channel>]          [[-|+|^]<message type(s)>]
+
+Description:
+   The IGNORE command has two primary uses; filtering out messages that
+   are unwanted, and highlighting messages of particular importance.  The
+   default method is to filter messages out.
+
+   Messages can be filtered based on any nick!user@host pattern, as well
+   as just by nick (a "!*@*" will be appended to complete the pattern) or
+   just by user@host (a "*!" will be prepended).  Messages can be filtered
+   at the channel level, too.
+
+   Messages can also be filtered based on context, so you could ignore all
+   INVITEs from a person and still receive all other messages from that
+   person.  Alter- nately, you could ignore all INVITEs from everyone except
+   a specified person.
+
+   IGNORE will apply a filter based on the best possible match.  Thus, if
+   you are ignoring *!*@*.net and *!*foobar@*.slurpee.net, and someone
+   with an nick!user@host mask of BigFoob!foobar@grape.slurpee.net sends
+   you a message, IGNORE will use *!*foobar@*.slurpee.net to determine how
+   to filter the message.  This will prove useful, as shown in the example
+   below.
+
+   Using IGNORE with no arguments displays the list of patterns you are
+   ignoring or highlighting, as well as the type of messages for each
+   pattern.
+
+Options:
+   ctcps      filter in/out all CTCPs received
+   invites    filter in/out all INVITEs received
+   msgs       filter in/out all MSGs received (but not CTCPs)
+   notes      filter in/out all NOTEs received
+   notices    filter in/out all NOTICEs received
+   public     filter in/out public channel conversation
+   wallops    filter in/out operator WALLOPS
+   crap       anything else not listed above
+   all        everything listed above
+   none       remove pattern from list of filtered patterns
+
+Examples:
+   To ignore everything from foobar:
+      /ignore foobar all
+
+   To ignore everything except public conversation from foobar:
+      /ignore foobar all -publics
+
+   To highlight all private messages from foobar (it is displayed
+   highlighted with whatever you have set HIGHLIGHT_CHAR to):
+      /ignore foobar +msgs
+
+   To ignore all NOTICEs except those from foobar's site:
+      /ignore * notices
+      /ignore *!*@*.slurpee.net ^notices
+
+   To remove *!*foobar@*.slurpee.net from your ignore list:
+      /ignore *!*foobar@*.slurpee.net none
+
+   To highlight people joining and leaving, mode changes, etc. for a channel:
+      /ignore #channel +crap
+
+See Also:
+   set(4) highlight_char, send_ignore_msg; silence(1); igmask(6);
+   rigmask(6); igtype(6); rigtype(6)
+
+Restrictions:
+   IGNORE is a client command.  All it does is hide messages sent to you by
+   the person you want to ignore.  However, your server is actually still
+   sending the messages to you, so while it works fine to ignore someone
+   who is annoying you, it is not very effective when dealing with abusive
+   users who insist on flooding you or the channel you're on.  On some
+   servers, however, there is a mechanism to ignore a person at the server
+   level, using a command called SILENCE.  SILENCE is limited to the
+   Undernet, and servers derived from or compatible with it.
+
+Other Notes:
+   When removing a person from your ignorance list, you must specify the
+   pattern to remove exactly as you originally entered it or as it appears
+   in your ignorance list (case insensitive).  IGNORE does no pattern
+   matching in this respect.
+

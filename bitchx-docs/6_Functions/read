@@ -1,0 +1,27 @@
+Synopsis:
+   $read(<fd> [<length>])
+
+Technical:
+   This function is used to read data from a file pointed to by the given
+   file descriptor.  The file descriptor is returned when the file is
+   opened for reading with the $open() function.  If a second argument is
+   passed, that many bytes are read and returned; otherwise, it reads up
+   to the next newline.
+
+Practical:
+   This function is the general-purpose interface to reading file contents.
+   The normal usage is to just read a file line by line.  However, since
+   you can also read an arbitrary number of bytes, it can also be used to
+   read binary files (finding a use for this is left as an exercise for the
+   user).
+
+Returns:
+   data read from file, or nothing on error
+
+Examples:
+   $read(4)                           returns next line from fd 4
+   $read(4 30)                        returns next 30 bytes from fd 4
+
+See Also:
+   close(6); open(6); randread(6)
+

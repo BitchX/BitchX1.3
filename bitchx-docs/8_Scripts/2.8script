@@ -1,0 +1,41 @@
+Synopsis:
+   load 2.8script
+
+Description:
+   This is one of the default script loaded when the client is started; it
+   is loaded from GLOBAL.  It redefines the returned messages from STATS
+   queries and in channel ban lists.  It contains several aliases; those
+   whose names are the same as builtin commands are intended to enhance
+   them.
+
+     Alias     Description                                                
+     /cinfo    reports who compiled client -> $info(c)
+     /invite   channel name optional
+     /join     channel prefix optional, no args follows last invite
+     /leave    channel prefix optional, no args leaves current
+     /mode3    unlimited number of arguments to single mode
+     /topic    channel name optional, channel prefix optional
+
+Examples:
+   To join channels #foo, #bar, and &blah:
+      /join foo,bar,&blah
+
+   To give channel mode +o to your 5 best friends in #blah:
+      /mode3 #blah +ooo joebob jimbob junebug orville wilbur
+
+   To set the topic on the curent channel:
+      /topic Welcome to our channel!
+
+See Also:
+   global(8); info(6); invite(1); join(1); leave(1); load(5); mode(1);
+   stats(2); topic(1)
+
+Bugs:
+   The /mode3 alias requires that the mode to be set contain a triple mode,
+   if 3 or more people are to receive the mode.  For instance, the script
+   would partially fail if '+o' were used in the above example.
+
+Authors:
+   Numerous people have contributed to this script over the years.  The most
+   recent enhancements are from Jeremy Nelson (hop), jnelson@acronet.net.
+

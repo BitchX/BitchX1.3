@@ -1,0 +1,16 @@
+Synopsis:
+   continue
+
+Description:
+   Continue skips certain loops. In a for() or while(), continue will jump to
+   the end of the current loop and continue to the next iteration.
+
+Examples:
+   for (@loop=0,loop<=10,@loop++) {
+     if (loop==4) continue
+     echo $loop of 10, skipping 4.
+   }
+
+See Also:
+   alias(5); break(5); return(5); for(5); while(4) until
+

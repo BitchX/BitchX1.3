@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> unstop_all_windows
+
+Description:
+   This functions turns off HOLD_MODE for all windows.  If a window was
+   stopped with TOGGLE_STOP_WINDOW, it is restarted.
+
+See Also:
+   bind(4) toggle_stop_window; set(4) hold_mode; window(4) hold_mode
+

@@ -1,0 +1,14 @@
+Synopsis:
+   load prefix
+
+Description:
+   This script causes all channel messages (sent and received) to be
+   prefixed with the channel name.  It also puts the current channel name
+   in the input prompt.
+
+See Also:
+   load(5); set(4) input_prompt
+
+Other Notes:
+   This script was written by Carl von Loesch (lynx).
+

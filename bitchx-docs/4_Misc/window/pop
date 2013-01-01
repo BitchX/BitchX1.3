@@ -1,0 +1,12 @@
+Synopsis:
+   window pop
+
+Description:
+   This pops the top window off the window stack and makes it the current
+   window.  If that window is hidden, it is made visible.  If it no longer
+   exists, the next window on the stack is tried until an existing one is
+   found.  If the stack is empty, the current window is left unchanged.
+
+See Also:
+   window(4) push, stack
+

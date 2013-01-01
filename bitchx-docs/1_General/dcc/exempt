@@ -1,0 +1,19 @@
+Synopsis:
+   dcc exempt [+nickname] [nickname1]
+
+Description:
+   DCC EXEMPT bypasses /set dcc_autoget and allows the nick to send a
+   file even when autoget is off.
+
+
+
+Example
+   To add a nick to your exempt list:
+       /dcc exempt +joe
+
+   To remove a nick from your exempt list:
+       /dcc exempt joe
+
+   To display your exempt list:
+       /dcc exempt
+

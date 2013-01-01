@@ -1,0 +1,13 @@
+Synopsis:
+   set encrypt_program [<program>]
+
+Description:
+   This features allows the user to specify an alternate means of
+   encrypting (and decrypting) messages when ENCRYPT is used.  Both the
+   sender and the recipient must use the same program for this to work
+   properly.  In order to function with the client, the program must
+   take the encryption key as the first command-line argument.
+
+See Also:
+   encrypt(5)
+

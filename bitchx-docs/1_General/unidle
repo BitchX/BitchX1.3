@@ -1,0 +1,11 @@
+Synopsis:
+   unidle [#channel]
+
+Description:
+   This command removes the idle client checking.
+
+Examples:
+   To remove idle checking from a channel:
+      /unidle #channel
+
+

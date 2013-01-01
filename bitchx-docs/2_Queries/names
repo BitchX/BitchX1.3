@@ -1,0 +1,51 @@
+Synopsis:
+   names [<switch> [<arg>] [<switch> [<arg>] ...]] [<channel>]
+
+Description:
+   NAMES returns a list of users on the specified channel.  The user list
+   will include a + or @ prepended to those nicks that are +v or +o in
+   that channel, respectively.
+
+   If an exact channel name is given, only information about that channel
+   is returned.  If a '*' is used as the channel name, the current
+   channel is used.  Otherwise, the client will request a NAMES listing
+   for all known channels.
+
+   The client can search for specific channels or channels with certain
+   characteristics.  If a glob pattern is given for the channel name, all
+   channels matching that pattern are shown.  The list can be limited to
+   channels with only a certain number of users, or those that are private
+   or public.  Multiple switches may be used at once.
+
+   NAMES output is affected by channel modes.  If a channel has mode +p,
+   then its name will be masked in the output.  However, it can still be
+   displayed normally if the exact channel name is known.  If the channel
+   has mode +s, then it will not appear in any NAMES output, whether the
+   exact name is known or not.  These limitations only apply to users not
+   on the channels in question (i.e. a user on a +s channel can use NAMES
+   for that channel normally).
+
+Options:
+   -min <n>   shows channels with no less than n users
+   -max <n>   shows channels with no more than n users
+   -public    shows public channels only
+   -private   shows private channels only
+   -all       overrides any previous -public or -private switch
+                
+Examples:
+   To show users on all channels with 3 to 15 users:
+      /names -min 3 -max 15
+
+   To show users on public channels with "help" in the name:
+      /names -public #*help*
+
+See Also:
+   on(5) names
+
+Other Notes:
+   Unless a specific channel name is given, the client will send a NAMES
+   request for all channels and filter the output locally.  This is worth
+   noting because large networks can easily have upwards of 2,000 channels
+   at any given moment.  Parse such a large list will greatly slow the
+   client.
+

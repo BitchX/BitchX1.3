@@ -1,0 +1,26 @@
+Synopsis:
+   on [<modes>]kick [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes another client (or
+   itself!) being kicked from a channel.
+
+Parameters:
+   $0    nickname of user kicked from channel
+   $1    nickname of user kicking $0 from channel
+   $2    channel kick observed on
+   $3-   kick message
+
+Examples:
+   To distinguish who is being kicked on a channel:
+      on ^kick "*" {
+         if ( [$0] == N ) {
+            echo *** You have been kicked from $2 by $1 \($3-\)
+         } {
+            echo *** $0 has been kicked from $2 by $1 \($3-\)
+         }
+      }
+
+See Also:
+   kick(1)
+

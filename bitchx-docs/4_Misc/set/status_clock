@@ -1,0 +1,19 @@
+Synopsis:
+   set status_clock [<text>]
+
+Description:
+   This variable sets the text displayed in the status bar when CLOCK is
+   turned on.  If the CLOCK setting is turned off, nothing is displayed.
+
+   This string is represented as %T in the STATUS_FORMAT string.  It will
+   expand in the STATUS_CLOCK string as well.
+
+Examples:
+   Customizing the appearance of the clock in the status bar:
+      /set status_clock %T
+
+See Also:
+   ctcp(1) time; time(2); set(4) clock, clock_24hour, status_format
+
+Other Notes:
+   The display of the current time is affected by the CLOCK_24HOUR setting.

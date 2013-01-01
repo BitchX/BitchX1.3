@@ -1,0 +1,24 @@
+Synopsis:
+   set display_ansi [on|off|toggle]
+
+Description:
+   When turned on, this setting will cause the client to allow escape
+   sequence color and highlight codes to be passed to the display window.
+   All other recognizable escape sequences will be removed.
+
+   If turned off, the behavior is to convert all instances of ^[ (the ESC
+   character) to [.
+
+   This setting only affects the display window, not the status bar. This has
+   the advantage of allowing ECHO and other commands to display special ANSI
+   escape sequences for color and highlighting, etc.
+
+   Note that this setting is meaningless unless set(4) color is turned ON.
+
+See Also:
+   set(4) color, display; echo(5); xecho(5)
+
+Other notes
+   Also note that due to ircII-EPIC's new behavior of removing all unrecognized
+   escape sequences, the client is no longer vulnerable to "flash" attacks and
+   such evil ANSI codes that could scramble a vt100-compatible display.

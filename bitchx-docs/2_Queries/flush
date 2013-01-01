@@ -1,0 +1,20 @@
+Synopsis:
+   flush
+
+Description:
+   This discards any data pending in the client's hold buffer when HOLD_MODE
+   is on (and HOLD_MODE is then turned off).  This includes server messages,
+   and messages generated internally by the client (such as by NOTIFY).  The
+   client then discards all server messages received, until one full second
+   passes without receiving anything from the server.  It is most useful for
+   flushing server output from commands that generate a lengthy reply, such
+   as LINKS or LIST or WHO.
+
+See Also:
+   set(4) hold_mode
+
+Other Notes:
+   FLUSH is a blocking command (meaning the client can't do anything until
+   the command is done), so it may cause the client to ping timeout from
+   your server.  It does not actually tell the server to stop sending data.
+

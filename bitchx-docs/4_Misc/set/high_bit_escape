@@ -1,0 +1,11 @@
+Synopsis:
+   set high_bit_escape [0|1|2]
+
+Description:
+   This controls how the client handles 8-bit characters. If set to 0, the
+   client will strip the 8th bit, yielding only a 7-bit ascii character. If
+   set to 1, and the 'km' termcap value is set (it should be), the client will
+   treat the character as an ESC-X sequence, where X is the character stripped
+   to its 7th bit. If set to 2, the client will treat the 8-bit character as
+   any other, and not perform any special parsing.
+

@@ -1,0 +1,23 @@
+#From: Joost Vunderink <jvunder@wins.uva.nl>
+#Subject: Auto-query update on nickchange
+
+#Hello panasync!
+
+#I am Garion, and I have asked you some questions on #bitchx to be able to
+#automatically follow any nickchanges observed in channels in your queries.
+#After a lot of puzzling I finally got something to work and I thought that
+#you might be interested in it.
+#Here is the script:
+
+# If someone changes their nick and you have a query with that person in
+# a hidden window, the query changes as well with the following script.
+      on -nickname "*" {
+        if ( querywin($0) > 0 ) {
+	  @ winnum = querywin($0)
+	  xeval -win $winnum {
+	    query $1
+	  }
+	}  
+      }
+
+

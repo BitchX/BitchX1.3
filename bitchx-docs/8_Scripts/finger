@@ -1,0 +1,23 @@
+Synopsis:
+   load finger
+
+Description:
+   This script provides a front-end to the Unix finger command.  Finger is
+   a service that can provide general information about a user from another
+   site, such as his/her real name, when the person last logged in, etc.
+   The alias has the following syntax:
+
+      /finger [[-h] <nickname>] [[user]@full.hostname]
+
+   If a nickname is specified, the script will try to figure out the user's
+   address, and will finger it.  It will finger @host if the -h switch is
+   given.  Alternately, an address or hostname may be given, as per the
+   traditional Unix finger syntax.
+
+See Also:
+   exec(5); load(5)
+
+Other Notes:
+   This script was originally written by Ian Frechette (Daemon).  It has
+   been revised for use with EPIC by Jeremy Nelson (hop), jnelson@acronet.net.
+

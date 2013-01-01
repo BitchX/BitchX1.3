@@ -1,0 +1,11 @@
+Synopsis:
+   bantype [<N|B|H|D|S|I>] 
+
+Description:
+   BANTYPE will set the default type of ban to use when you various ban
+   commands and when banning someone automatically.
+
+Examples:
+   /bantype s
+
+See Also:

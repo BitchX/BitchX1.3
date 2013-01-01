@@ -1,0 +1,18 @@
+Synopsis:
+   set status_window [<text>]
+
+Description:
+   This variable sets the string displayed in the client's status bar for
+   the current window.  It will only be displayed in the current window.
+   All other windows will have nothing displayed.
+
+   This string is represented as %W in the STATUS_FORMAT string.  It is
+   treated literally in STATUS_WINDOW.
+
+Examples:
+   Setting a custom string to indicate the current window:
+      /set status_window ::ACTIVE::
+
+See Also:
+   set(4) status_format
+

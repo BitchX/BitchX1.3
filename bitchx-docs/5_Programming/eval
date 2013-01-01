@@ -1,0 +1,23 @@
+Synopsis:
+   eval <commands>
+
+Description:
+   EVAL takes the commands given it and passes them through EPIC's internal
+   inline parser before executing them.  This means that variables will be
+   expanded once, and the command terminator (;) is honored.  This has the
+   same effect as executing a command with INPUT_ALIASES turned on.
+
+Examples:
+   To force the display of a variable when not inside an alias:
+      eval echo The variable's value is $foo
+
+See Also:
+   set(4) input_aliases
+
+Other Notes:
+   Care should be taken when using EVAL with untrusted input.  If EVAL
+   must be used, it is important to first strip out any characters that
+   have special meaning to the inline parser, such as ';'.  Using EVAL in
+   this manner can very easily lead to a hijacked client or compromised
+   account.
+

@@ -1,0 +1,27 @@
+Synopsis:
+   $igmask(<mask>)
+
+Technical:
+   Scriptable interface to the list of users on the ignore(1) list.
+
+Practical:
+   This function would be ideal in a script that redefines the ignore(1)
+   command. The script could display the list of ignores, or even tell the
+   user if they're ignoring the same user twice.
+
+Returns:
+   space separated list of entries in the ignore list matching <mask>
+
+Examples:
+   /ignore foo!bar@test.org ALL
+   /ignore nobody!fnord@more.nothing.com MSGS
+
+   /eval echo $igmask(*foo*)
+     FOO!BAR@TEST.ORG
+   
+   /eval echo $igmask(*)
+     FOO!BAR@TEST.ORG NOBODY!FNORD@MORE.NOTHING.COM
+
+See Also:
+   ignore(1); rigmask(6); igtype(6); rigtype(6)
+

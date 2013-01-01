@@ -1,0 +1,48 @@
+Synopsis:
+   note <command> [&<password>] [+|-<flags>] [<arguments>]
+
+Description:
+   NOTE is a sort of turbo-charged messaging system for irc.  In short, it
+   achieves at the server level what the client attempts to do with MSG
+   and NOTIFY.  The messaging system resembles modern voice mail systems
+   (except in text); messages can be sent, stored, or set for deferred
+   delivery.  The client notification system works like NOTIFY, except
+   with greater accuracy and flexibility.
+
+   The most common uses of NOTE are its SPY and SEND functions.  SPY is
+   similar to NOTIFY, except it can accept a full address to spy on, not
+   just a nickname.  SEND, as its name implies, sends a note to a user; if
+   that user is not currently online, it will be delivered if the user logs
+   onto irc within a set time period.
+
+   When referring to a particular user, NOTE can deal with the standard
+   nick!user@host notation.  Wildcards are allowed, and any portion may be
+   omitted, so long as the identifier remains unambiguous.
+
+Examples:
+   To send a note to Joebob (whose account is jbriggs@drivein.com):
+      /note send joebob!jbriggs@drivein.com Hey there!  Great movie!
+
+   To spy on anyone from blah.com for the next 30 days:
+      /note spy +30 *!*@*.blah.com A blah.com user is active
+
+Aliases:
+   Most NOTE commands are aliases to NOTE USER with certain flags applied.
+
+See Also:
+   msg(1); notice(1); notify(1)
+
+Restrictions:
+   NOTE is not available everywhere.  It is used primarily on Undernet,
+   though even there it is not fully deployed.  No servers on EFnet are
+   known to support NOTE.  There is much debate over whether the usefulness
+   of NOTE outweighs its potential for invasion of privacy, to say nothing
+   of it requiring enough server resources to make its use prohibitive.  A
+   discussion of the various NOTE commands is beyond the scope of these
+   help files.
+
+Other Notes:
+   NOTE was originally developed in 1990 by jarle@stud.cs.uit.no (Wizible
+   on irc).  Wizible is the authoritative source of information for this
+   command.
+

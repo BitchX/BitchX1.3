@@ -1,0 +1,13 @@
+Synopsis:
+   set notify_on_termination [on|off|toggle]
+
+Description:
+   When turned on, this setting causes the client to display a message
+   when an EXECed process has terminated, and with what exit code.
+
+See Also:
+   exec(5)
+
+Other Notes:
+   This setting does not affect, nor is it affected by, the EXEC_EXIT hook.
+

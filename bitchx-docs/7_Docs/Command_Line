@@ -1,0 +1,31 @@
+Command Line Usage of BitchX                                               
+
+The BitchX irc client has a number of options available to it from the command
+line.  The basic command-line syntax is:
+
+   BitchX [<switches>] [<nickname> [<server list>]]
+
+The nickname may be at most 30 characters long.  The server list may be a
+space-delimited list of server addresses.  Each server name may use the
+server:port notation if a port other than the default (usually 6667) is
+desired.  The available switches are as follows:
+
+   -b         loads ~/.ircrc at client startup, instead of on connect
+   -c <chan>  makes client join given channel on startup (if possible)
+   -p <port>  set a different default port (normally 6667)
+   -f         let terminal handle flow control (^S/^Q)
+   -F         let the client handle flow control (default)
+   -s         do not connect on startup, but show server list instead
+   -S         use a separate server processes, ircserv
+   -d         run the client in "dumb" terminal mode
+   -q         skip loading of ~/.ircrc startup file
+   -a         add default servers and command line servers to server list
+   -x         run the client in "debug" mode
+   -v         print the client's version string and exit
+   -b         force the client to fork and return you to your shell
+   -l <file>  loads <file> in place of your .ircrc
+   -L <file>  loads <file> in place of your .ircrc and expands $ expandos
+
+Unlike other Unix programs, switches for BitchX cannot be combined. 
+Something like "-db" is not allowed, "-d -b" must be used.
+

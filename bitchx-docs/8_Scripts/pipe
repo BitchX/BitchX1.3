@@ -1,0 +1,10 @@
+Synopsis:
+   load pipe
+
+Description:
+   This script implements the pipe(6) function to capture output from an
+   /exec'd command and return in a function.
+
+See Also:
+   exec(5); on(5) exec
+

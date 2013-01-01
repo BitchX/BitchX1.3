@@ -1,0 +1,20 @@
+Synopsis:
+   load funnyban
+
+Description:
+   This script loads a single alias, /funnyban.  It takes two argument,
+   a nickname, and an integer (which is optional, the default is 2).
+   It determines the address of the user, and replaces every 2 characters
+   (or the number specified) with an asterisk (*), starting with the
+   first.  A ban on the resultant pattern is then placed on the current
+   channel.
+
+   This script automatically loads the GUH script.  In the words of its
+   author, this script is S L O W.
+
+See Also:
+   load(5); mode(1)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

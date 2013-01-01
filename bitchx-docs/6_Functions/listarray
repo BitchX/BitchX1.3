@@ -1,0 +1,13 @@
+Synopsis:
+   $listarray(<array>)
+
+Technical:
+   Attempts to list the contents of a particular array if it exists.
+
+Returns:
+    empty if no array is found or nothing is in the array
+    otherwise returns the contents of the array
+
+See Also:
+   Arrays(7); getitem(6); setitem(6)
+

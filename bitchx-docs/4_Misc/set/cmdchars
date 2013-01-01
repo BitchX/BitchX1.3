@@ -1,0 +1,11 @@
+Synopsis:
+   set cmdchars [<characters>]
+
+Description:
+   This variable sets all characters that may be used as a command
+   character on the input line.  Any number of characters may be
+   specified, and the slash '/' will always be assumed.
+
+See Also:
+   set(4) command_mode
+

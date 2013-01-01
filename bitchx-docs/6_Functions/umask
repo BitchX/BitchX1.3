@@ -1,0 +1,24 @@
+Synopsis:
+   $umask(<mask>)
+
+Technical:
+   This function sets the default file umask used when creating and writing
+   files with EPIC's builtin file functions.  The umask sets the permission
+   bits to block when writing.  Essentially, the resultant permission bits
+   would be the default minus the umask.
+
+Practical:
+   This function is used to set the default file permissions.  The $chmod()
+   function is affected by it.
+
+Returns:
+   previous umask, or nothing if no new umask is given
+
+Examples:
+   $umask(77)                 sets default permissions to 700
+   $umask(2)                  sets default permissions to 775
+   $umask()                   error, no mask, returns nothing
+
+See Also:
+   chmod(6)
+

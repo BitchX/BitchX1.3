@@ -1,0 +1,12 @@
+Synopsis:
+   set beep_max [<number>]
+
+Description:
+   This variable sets the maximum number of beeps that the client will
+   make audible in any single message.  When set to 0 (zero), the client
+   does not suppress any beeps.  Set the BEEP variable off to suppress
+   all beeps.
+
+See Also:
+   beep(4); set(4) beep, beep_on_msg, beep_when_away
+

@@ -1,0 +1,15 @@
+Synopsis:
+   set shell_limit [<number>]
+
+Description:
+   This setting is used to limit the amount of data returned by an EXECed
+   command. The client will only display the specified number of lines of
+   output, then will close the process.  This is mostly useful to prevent
+   doing something accidentally that will generate gobs of output, such
+   as recursively listing the root directory.
+
+   If set to 0 (zero), the client does not limit the amount of output.
+
+See Also:
+   exec(5)
+

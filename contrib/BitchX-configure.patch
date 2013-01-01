@@ -1,0 +1,19 @@
+diff -ru BitchX/configure.in BitchX.AX/configure.in
+--- BitchX/configure.in	Tue Jan  4 07:43:35 2000
++++ BitchX.AX/configure.in	Wed Jan 19 17:54:30 2000
+@@ -290,6 +290,15 @@
+ 
+   if test x"$blahhack" = x"1"; then
+     blahhack=0
++    AC_MSG_CHECKING(for tputs in ncurses/termcap.h)
++    AC_EGREP_CPP([tputs( |        |\()],[#include <ncurses/termcap.h>
++  ], [ AC_DEFINE(HAVE_TERMCAP_H)
++       AC_MSG_RESULT(yes)
++       havetputs=1 AC_CHECK_HEADER(ncurses/termcap.h)], blahhack=1; AC_MSG_RESULT(no))
++  fi
++
++  if test x"$blahhack" = x"1"; then
++    blahhack=0
+     AC_MSG_CHECKING(for tputs in curses.h)
+     AC_EGREP_CPP([tputs( |        |\()],[#include <curses.h>
+   ], [ AC_DEFINE(USING_CURSES) 

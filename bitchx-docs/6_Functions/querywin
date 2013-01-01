@@ -1,0 +1,18 @@
+Synopsis:
+   $querywin(<target>)
+
+Technical:
+   This function returns the window owning the query target <target>, or
+   nothing if there are no queries for <target>.
+
+Returns:
+   the window refnum of the window owning <target>
+
+Examples:
+   /window refnum 2
+   /query =person
+   /eval echo $querywin(=person)                    /* returns 2 */
+
+See Also:
+   query(1)
+

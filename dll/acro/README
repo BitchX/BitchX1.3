@@ -1,0 +1,17 @@
+First public release of a dll-ized version of my TCL acromania script.
+You need the BitchX include files for it to compile (duh).
+Seems to work fine in testing, alert me of any problems.
+
+                    ************ WARNING ************
+DO NOT /UNLOADDLL WHILE A GAME IS IN PROGRESS, YOUR CLIENT WILL CORE!
+If you MUST stop a game in progress, FIRST KILL THE TIMER(S) and unload it.
+Maybe panasync will take these race conditions into account someday :)...
+                    ************ WARNING ************
+
+
+Greetz to (in NO particular order) dh, hammz, scoop, hammz, oweff, shewp
+ice-man, sideshow, BlackJac, fudd, shade, psykotyk, MHacker, Sheik, easyme
+macker, |Fingers|, mrr, Timer, and anyone else I'm forgetting (let me know)
+
+Major super-kudo greets to panasync, without his help I never would have got
+this working properly, and of course for making bX in the first place.. =)

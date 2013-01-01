@@ -1,0 +1,22 @@
+Synopsis:
+   $uniq(<list of words>)
+
+Technical:
+   This function takes an arbitrary list of arguments and returns all that
+   are unique.  The output is in the same order as the input, using the
+   first occurrence of each word.
+
+Practical:
+   This function is useful for weeding out duplicates from a list of words
+   (such as a list of nicknames for a tabscript).
+
+Returns:
+   list of unique words from input list
+
+Examples:
+   $uniq(one two three two one)       returns "one two three"
+   $uniq(blah blah blah)              returns "blah"
+
+See Also:
+   remw(6); remws(6);
+

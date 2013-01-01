@@ -1,0 +1,96 @@
+Programming in BitchX                                                       
+
+This short (very short) document describes BitchX/EPIC's programming language
+(some would argue it's but a scripting language) and how to use it.
+
+The first thing to remember about scripts is that command characters are
+not required for commands!  In fact, their use is discouraged, as it only
+makes more work for the client when parsing the command.  There is, of
+course, an exception to this rule (but only one).  Because the client allows
+commands to be overloaded by aliases, there needs to be a way to access the
+original command.  This is done by giving the command character twice.  For
+instance:
+
+   alias mode {
+      if ( (index(#&+ $0) == 0) || ([$0] == N) ) {
+         //mode $*
+      } {
+         //mode $C $*
+      }
+   }
+
+The above alias overloads the builtin MODE command.  It first checks whether
+the first argument passed was a channel name or your own nickname.  If so,
+it executes the real MODE command using the arguments given.  Otherwise, it
+executes the real MODE command for the current channel.  Note that, because
+the command character can be changed, it is recommended that $K be used in
+lieu on a '/', as it will always represent the current command character:
+
+   $K${K}mode $C $*
+
+Certain characters have special meaning in scripts and inside certain
+commands that they don't necessarily have on the input line.  The semicolon
+(;), when used inside any {} command construct (from an alias, key binding,
+hook, timer action, etc.), acts as a command separator.  For example:
+
+   alias blah {
+      on hook * echo hooked: $*;echo oops!
+   }
+
+When the /blah alias is run, "oops!" will be displayed.  However, we didn't
+want that.  We wanted it to be displayed whenever the HOOK command was
+called.  The solution is the quote, or escape, the semicolon with the
+backslash:
+
+   alias blah {
+      on hook * echo hooked: $*\;echo oops!
+   }
+
+Naturally, the backslash (\) is another character with special meaning in
+scripts (but, again, not on the input line).  It quote, or escapes, the
+character immediately in front of it.  Escaping characters takes away any
+special meaning they might have (such as with semicolons, above).  One neat
+side effect from this is that it permits line-continuation in expressions:
+
+   if ( foo == 1 && \
+        bar == 2 )      { ... }
+
+Speaking of quoting characters, the client's quoting rules can be confusing.
+In general, everything works as described above; quote special characters to
+use them in text context.  However, the rules change when the client needs
+to parse a command more than once.  USERHOST is a classic example of this.
+Let's say we've created this alias:
+
+   alias foo userhost $0 -cmd echo ($*)
+
+That won't do at all, because both $expandos are parsed once, before the
+command is even executed, which isn't what we want.  So we need to do some
+quoting on the -cmd part:
+
+   alias foo userhost $0 -cmd echo \($$*\)
+
+Note that we quoted the '$' with the form '$$'.  This is a special expando
+that expands to a single '$'.  We could have escaped it with a backslash,
+but the $$ expando is faster.  Anyway, that alias won't work either.  Why?
+Because the parentheses cause the whole statement to be parsed twice, so
+we're right back where we started.  We need to add another level of quoting
+to the parentheses:
+
+   alias foo userhost $0 -cmd echo \\\($$*\\\)
+
+After the initial parse run, the parenthesis are still quoted, because '\\'
+expands to '\', and '\(' expands to '(', which together make '\('.  After the
+command is executed, the ECHO command is then parsed, this time correctly.
+
+Other miscellaneous tips:
+
+   1) Use variable and alias structures.
+   2) Indent your code consistently.  It will be easier to update later.
+   3) Comment your code.  So you'll know what you did a year from now.
+   4) Use serial numbered hooks whenever possible.
+   5) For server output, use the "end" message instead of a WAIT command.
+   6) Read the client documentation! :)
+
+Refer to Section 5 of these helpfiles for information about specific
+commands.  Refer to Section 6 for the client's builtin functions.
+

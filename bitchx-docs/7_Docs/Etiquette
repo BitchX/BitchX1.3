@@ -1,0 +1,79 @@
+                              Etiquette on irc                    
+                                   - or -
+            How to Avoid Getting Yourself Kicked out of Channels  
+
+Original Authors:    Lea Viljanen     (LadyBug) <viljanen@kreeta.helsinki.fi>
+                     Ari Husa         (luru)    <so-luru@tolsun.oulu.fi>
+Modified By:         Troy Rollo       (Troy)    <troy@plod.cbme.unsw.oz.au>
+Further Modified By: James Sneeringer (CrowMan) <jvs@ocslink.com>
+
+
+1) Language
+
+   The most widely spoken and understood language on irc is English.  This
+   does not mean it is the only language on irc!  Far from it, in fact.  In
+   general, it is ok to speak any language.  The usual protocol is to use a
+   language that is understood by the majority of the channel you're in.
+
+   Some channels prefer that only a single language, or select group of
+   them, be used in their channel.  This is particularly true of channels
+   dedicated to particular countries.  They may tolerate other languages,
+   but their preference naturally lies with their native tongue.  These
+   channels may even have a topic set that says what the channel's
+   preferred language is.
+
+2) Hello and Goodbye
+
+   It is not necessary to greet each and every person that joins a channel
+   you're on.  On a busy channel, this would quickly become annoying, as
+   everyones' screens become filled up with "hello" messages, and nothing
+   else.  If you feel inclined to greet someone that you don't know, send
+   a private message with the /msg command.
+
+   Having established that a screenful of greetings is A Bad Thing, it
+   follows that automated greetings are worse.  A drawback of the client's
+   ability to react to any arbitrary event with an arbitrary action is
+   that it is often misused.  While you may only be trying to be polite to
+   everyone, you are in fact being just the opposite.  Automated greetings
+   are impersonal at best.
+
+3) Channel Discussion
+
+   As a general rule, there is no general rule about what sort of discussion
+   may be taking place on a channel at any given time.  Usually, the topic
+   of discussion will be related in some way to the channel's name.  People
+   on #perl probably answer questions about the Perl programming language
+   and discuss new features.  However, this is not always the case!
+
+   The best strategy is to watch the discussion for a bit to get an idea of
+   what the channel is really all about.  Unless you know otherwise (such
+   as from the channel topic), you should always feel free to contribute to
+   the conversation, though you should take care not to try to force the
+   discussion in a direction that it isn't flowing toward.
+
+4) } { | ` ~ ] [ \ @ ^
+
+   No, it isn't line noise, and no, someone didn't make a typing error.  On
+   irc, there is a large population of users from Scandinavian countries,
+   and the above characters represent letters in their alphabet.  Since not
+   everyone has access to a terminal that can use or display the real
+   letters, these characters are instead substituted.
+
+      {     is an A with 2 dots over it (ä)
+      }     is an A with a small circle above it (å)
+      |     is either an O with 2 dots over it or an O with a dash (/)
+            through it (either ö or ø)
+      `     is an e with an accent over it (é)
+      ~     is an u with 2 dots over it (ü)
+
+      [, ], \, @ and ^ are the preceding five letters in upper case.
+
+   Of course, the irony here is that the French and German mappings are not
+   the same.  Oh well...
+
+5) ATTENTION!
+
+   If you remember nothing else from this document, remember this.  People
+   on irc form their opinions about you based solely on your actions,
+   writings, and comments on irc.  Think before you type.
+

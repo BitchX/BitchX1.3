@@ -1,0 +1,24 @@
+Synopsis:
+   on [<modes>]mail [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client detects that the user has new
+   email locally.  It relies on MAIL being non-zero.
+
+Parameters:
+   $0    number of new email messages
+   $1    total number of email messages in user's mailbox
+
+Examples:
+   To keep the new mail message grammatically correct:
+      on ^mail "*" {
+         echo *** You have $0 new message${[$0] > 1 ? [s] : []}, $1 total
+      }
+
+See Also:
+   set(4) mail
+
+Other Notes:
+   This hook has no control over the extended output given when MAIL is set
+   to 2.
+

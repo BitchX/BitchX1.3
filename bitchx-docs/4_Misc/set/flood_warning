@@ -1,0 +1,12 @@
+Synopsis:
+   set flood_warning [on|off|toggle]
+
+Description:
+   When turned on, the client will display a message to the user to that
+   effect (who is flooding, what type, etc.).  If off, the client does
+   not warn the user that flood protection has kicked in, unless a custom
+   message is returned from within the FLOOD hook.
+
+See Also:
+   on(5) flood; set(4) flood_after, flood_rate, flood_users
+

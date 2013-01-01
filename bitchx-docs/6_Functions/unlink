@@ -1,0 +1,25 @@
+Synopsis:
+   $unlink(<file> [<file> ...])
+
+Technical:
+   This function is roughly equivalent to the C library unlink() call.  It
+   deletes the given files from the filesystem.  Standard shell tilde-
+   expansion is permitted.
+
+Practical:
+   This function is used to delete files.  One possible use might be to
+   remove old client log files.  Any tilde (~) found in the filename is
+   converted to the user's home directory.
+
+Returns:
+    0    successful
+   >0    number of files that could not be unlinked
+
+Examples:
+   $unlink(~/.ircmotd)     force client to see client motd on next startup
+   $unlink(/etc/passwd)    will probably return >0
+
+Restrictions:
+   Naturally, filesystem permissions will limit what the user can and cannot
+   unlink.
+

@@ -1,0 +1,20 @@
+Synopsis:
+   sc [<-all> [<channel>]
+
+Description:
+   SC returns a list of users on the specified channel or current channel.  
+   The user list will include a + or @ prepended to those nicks that are +v 
+   or +o in that channel, respectively. 
+
+Options:
+   -all       shows all channels
+                
+Examples:
+   To show all users on the current channel:
+      /sc
+   To show users on a non-current channel:
+      /sc #ircii
+
+See Also:
+   on(5) names n
+

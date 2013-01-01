@@ -1,0 +1,224 @@
+Expression Syntax in BitchX                                              
+
+This document describes the "expression" context of a statement, as used with
+the ${} expando, the @ operator, and the FOR, IF, UNLESS, UNTIL, and WHILE
+commands.
+
+The normal context is "text", meaning everything is assumed to be plain text,
+unless it is preceded by a '$'.  With "expression" context, everything is
+assumed to be a variable unless contained in square brackets '[]'.  To enter
+expression context explicitly while in text context, use the ${} notation.
+Unlike text context, whitespace is not significant in expression context
+(but see below).
+
+The @ operator is a special case that allows any arbitrary expression to be
+evaluated.  Unlike the other commands listed above, however, the return
+value of the expression is always thrown away.  In many cases, the behavior
+of @ is much like that of EVAL.  The following statements are equivalent:
+
+   @ foo = 3
+   @ ::foo = 3                      # two colons declare GLOBAL variables
+   eval (foo = 3)
+
+Also note the use of variables local to a script's current scope. These could
+be assigned with the local(5) command as opposed to assign(5) for global
+variables. They can also be created with the @ operator (as shown above).
+The following statements are equivalent:
+
+   @ :foo = 3                       # one colon declares LOCAL variables
+   local foo 3
+
+BitchX's expression syntax is modeled after that of C++, and BitchX's 
+operators (in general) hold the same precedence as they do in C++.  Most 
+of the C/C++ operator set is represented in BitchX, and their operation is
+the same.  The following operators, from highest to lowest precedence, 
+are supported:
+
+       1:   ()   []
+       2:   !    ~    ++   --
+       3:   *    /    %    **
+       4:   +    -    ##
+       5:   <    <=   >    >=   <<    >>
+       6:   ==   !=
+       7:   &
+       8:   ^
+       9:   |
+      10:   &&
+      11:   ^^
+      12:   ||
+      13:   ?:
+      14:   =    +=   -=   *=   /=   %=   &=   ^=   |=   #=   #~  =~   !~
+      15:   ,
+
+The string concatenation operators, ##, #=, and #~, are a special case, as they
+are not present in C or C++.  As their name indicates, they are used to join
+two or more strings together, end to end.  For example:
+
+   @ foo  = [foo] ## [bar]              /* sets $foo to "foobar" */
+   @ foo #= [blah]                      /* sets $foo to "foobarblah" */
+   @ foo #~ [hmm]                       /* sets $foo to "hmmfoobarblah" */
+
+Also like C/C++, parentheses may be used to force certain parts of the
+expression to be evaluated first (mainly in the event that the user wishes
+for it to evaluate in an order other than that of operator precedence).
+Parentheses may be nested.  For example, if some variable $foo is set to 3:
+
+   foo * 4 + 5                          /* returns 17 */
+   foo * (4 + 5)                        /* returns 27 */
+   4 + ((foo + 9) / 3)                  /* returns 8 */
+
+All assignment operators always return the value assigned, which allows for
+the assignment of multiple variables at once.  Keep in mind that expressions
+are evaluated right to left.  For example, if $foo is 12 and $bar is 11:
+
+   @ foo += bar *= 2                    /* $bar is 22, $foo is 34 */
+
+Since the release of the EPIC4 pre-betas, the client has been growing ever
+more perlish. Like perl, the =~ and !~ operators match with wildcards. =~ is
+a direct opposite of !~, where it returns true if the patterns patch, while
+!~ returns false. In this example, $bar is "epic":
+   
+   @ foo = bar =~ [*pi*]               /* returns 1 */
+   @ foo = bar !~ [*z*]                /* returns 1 */
+
+The various bitwise operators are of special interest also. Assuming $foo is 12
+and $bar is 11:
+
+   foo & bar                            /* returns 8 */
+   foo | bar                            /* returns 15 */
+   foo ^ bar                            /* returns 7 */
+
+The exponential operator takes numbers to various powers. It is especially
+useful, since many script writers create a $power() function for this purpose.
+It supports negative and fractional exponents as long as the system's math
+library (libm) does. Assuming $foo is 9:
+
+   foo ** 2                             /* returns 81 */
+   foo ** 0.5                           /* returns 3 */
+
+The {pre,post}fix {in,de}crement operators are big timesavers that C and C++
+users everywhere swear by.  They have also been known to swear at them, for
+reasons you will soon see.  Assume $foo is 5, each column shows 3 ways of
+doing the same thing, from least efficient to most efficient:
+
+   @ foo  = foo + 1                     @ foo  = foo - 1
+   @ foo += 1                           @ foo -= 1
+   @ foo++                              @ foo--
+
+However, these operators have pitfalls, which are mainly discovered by those
+who do not understand how they work.  Both may either prefix or postfix a
+variable; prefix causes it to evaluate before the operation, postfix causes
+it to evaluate aster.  For the examples shown above, it makes no difference.
+However, it does make a difference in this example:
+
+   while ( foo++ < 10 ) { ... }
+
+The expression is evaluated for whether $foo is less than 10, and then $foo
+is incremented.  If the autoincrement operator was instead used in prefix
+form, $foo would be incremented before the expression was evaluated, which
+would cause the loop to have one less iteration.
+
+Another pitfall of the autoincrement and decrement operators is the
+ambiguity introduced by insufficient whitespace when used in conjunction
+with addition and subtraction operators.  Consider the following:
+
+   @ foo    = 4
+   @ bar    = 8
+   @ foobar = foo+++bar
+
+How should one interpret the last assignment?  Should it really look like
+${foo++ + bar} or ${foo + ++bar}?  It's hard to tell.  The best solution is
+to not write code that looks so silly and unreadable.  Add a couple spaces,
+and there is no ambiguity.  (The answer is, the first one.)
+
+Another popular operator familiar to most C/C++ programmers is the tertiary
+operator (sometimes referred to as the alternation operator).  It performs
+a function similar to IF, except is much more compact and efficient.  We'll
+let $foo be 5 again:
+
+   @ bar = foo > 3 ? 1 : 0              /* sets $bar to 1 */
+   @ bar = foo > 8 ? 1 : 0              /* sets $bar to 0 */
+
+Functions (builtin and scripted) can also be used within expressions.  The
+function will be evaluated, and its return value is used in the expression:
+
+   @ foo = pattern(b* foo bar blah)     /* sets $foo to "bar blah" */
+
+All functions implicitly use a special operator, ().  That is, the pair of
+parentheses themselves compose an operator, though of course it is somewhat
+different in nature from more traditional operators like '+' or '<' or '&'.
+Functions (aliases with return values) require the () to function properly.
+
+A similar operator is [], which is used for alias and variable structures.
+We've already seen that it can be used to explicitly switch the evaluation
+context to text.  This can be extended to structure elements, such that
+they can be expanded on the fly:
+
+   @ foo.1.1 = foo
+   @ foo.1.2 = bar
+   alias blah echo $foo[1][$0]
+   /blah 2                              /* expands to $foo.1.2 -> "bar" */
+
+The same can be applied to aliases and functions as well.  Because of the
+nature of the [] operator, anything may be expanded inside it, variables and
+functions alike.
+
+Operator parse tree:
+
+       NU_POIX    = varexp++                     |
+                    varexp--                     |
+                    NU_EXPR   
+       NU_EXPR    = NU_ASSN
+       NU_ASSN    = varexp  = NU_ASSN            |
+                    varexp += NU_ASSN            |
+                    varexp -= NU_ASSN            |
+                    varexp *= NU_ASSN            |
+                    varexp /= NU_ASSN            |
+                    varexp %= NU_ASSN            |
+                    varexp &= NU_ASSN            |
+                    varexp ^= NU_ASSN            |
+                    varexp |= NU_ASSN            |
+                    varexp #= NU_ASSN            |
+                    NU_TERT
+       NU_TERT    = NU_COMP ? NU_COMP : NU_COMP  |
+                    NU_CONJ
+       NU_CONJ    = NU_CONJ && NU_CONJ           |
+                    NU_CONJ || NU_CONJ           |
+                    NU_CONJ ^^ NU_CONJ           |
+                    NU_BITW
+       NU_BITW    = NU_COMP & NU_COMP            |
+                    NU_COMP | NU_COMP            |
+                    NU_COMP ^ NU_COMP            |
+                    NU_COMP
+       NU_COMP    = NU_COMP == NU_COMP           |
+                    NU_COMP != NU_COMP           |
+                    NU_COMP >  NU_COMP           |
+                    NU_COMP >= NU_COMP           |
+                    NU_COMP <  NU_COMP           |
+                    NU_COMP <= NU_COMP           |
+                    NU_ADD
+       NU_ADD     = NU_ADD +  NU_ADD             |
+                    NU_ADD -  NU_ADD             |
+                    NU_ADD ## NU_ADD             |
+                    NU_MULT
+       NU_MULT    = NU_MULT * NU_MULT            |
+                    NU_MULT / NU_MULT            |
+                    NU_MULT % NU_MULT            |
+                    NU_UNIT
+       NU_UNIT    = token NUX_MODIF              |
+                    unaryop token                |
+                    ( NU_EXPR )                  |
+                    [ expression ] NUX_MODIF     |
+                    NU_PRIX
+       NU_PRIX    = ++varexp                     |
+                    --varexp
+
+       NUX_MODIF  = ( expression ) NUX_MODIF     |
+                    [ expression ] NUX_MODIF
+
+       unaryop    = !                            |
+                    ~
+
+See Also:
+   Patterns(7); Programming(7); Special_Vars(7)
+

@@ -1,0 +1,19 @@
+Synopsis:
+   $msar(/<search>/<replace>/ ... /<text>)
+
+Technical:
+   This function works much like sar(6), but handles multiple search
+   and replace arguments. The first character, a '/' in this case, can be
+   any character not appearing in <text>.
+
+Returns:
+   the resultant string
+
+Examples:
+   $msar(/as/xy/asdf)                 returns "xydf"
+   $msar(/as/xy/yd/42/asdf)           returns "x42f"
+   $msar(/e/he/pi/ll/c/o/epic)        returns "hello"
+
+See Also:
+   tr(6); sar(6)
+

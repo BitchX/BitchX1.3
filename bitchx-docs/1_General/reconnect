@@ -1,0 +1,20 @@
+Synopsis:
+   reconnect [<reason>]
+
+Description:
+   This causes the client to disconnect from the current server and
+   immediately reconnect.  The net effect is the same as that of using
+   DISCON (or DISCONNECT) and then SERVER with the previous server name
+   or number.
+
+   RECONNECT is often useful for changing your REALNAME (the same as
+   your $IRCNAME environment variable, if set).  As with QUIT, you may give
+   a signoff reason.
+
+See Also:
+   discon(1); disconnect(1); realname(4); server(1); set(4) realname
+
+Restrictions:
+   RECONNECT does not allow you to specify which server to reconnect to,
+   if you are connected to more than one.
+

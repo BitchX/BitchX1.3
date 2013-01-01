@@ -1,0 +1,10 @@
+Synopsis:
+   set scrollback [<lines>]
+
+Description:
+   This variable determines how many lines maximum the scrollback buffer
+   can be. The default is 1024.
+
+See Also:
+   set(4) scrollback_ratio, scroll_lines, scroll
+

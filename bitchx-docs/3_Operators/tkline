@@ -1,0 +1,12 @@
+Synopsis:
+   tkline <seconds> <user@host>[,<user@host>] :<comment>
+
+Description:
+   TKLINE is used to forcibly remote a client from the server. After
+   "seconds" has passed the server will remove the temporary kline. 
+   Multiple user@host's may be specified using a , delimited list. A colon
+   is the start of the comment.
+
+Restrictions:
+   This command is limited to irc operators.  
+

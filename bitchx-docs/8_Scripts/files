@@ -1,0 +1,17 @@
+Synopsis:
+   load files
+
+Description:
+   This script is meant as a working example of the posssible uses of EPIC's
+   various builtin file-access functions.  Three aliases are provided:
+
+     Alias
+     /cat      like the Unix command, it displays the named file
+     /grep     like the Unix command, it searches for pattern $0 in files $1-
+     /log_it   writes an arbitrary line to file $0
+
+See Also:
+   close(6); load(5); open(6); read(6); write(6)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.

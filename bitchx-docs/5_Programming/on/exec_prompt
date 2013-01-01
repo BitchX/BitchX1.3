@@ -1,0 +1,25 @@
+Synopsis:
+   on [<modes>]exec_prompt [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever an EXECed process displays a "prompt".
+   More precisely, it is triggered when the process returns any line of
+   output that is not terminated by a newline.  This is generally the case
+   with interactive commands, such as nslookup(1).
+
+Parameters:
+   $0   process number of name of the EXECed process
+   $1   prompt string to look for
+
+Examples:
+   To hook the prompt when using nslookup interactively:
+      on ^exec_prompt "% >" {
+         assign foo $0
+         input "nslookup> " {
+            msg %${foo} $*
+         }
+      }
+
+See Also:
+   exec(5); input(5); on(5) exec, exec_errors, exec_exit
+

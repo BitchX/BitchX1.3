@@ -1,0 +1,21 @@
+Synopsis:
+   load msg
+
+Description:
+   This script sets some key bindings to make sending a message to someone
+   quicker.
+
+     Key
+     meta2-?   send to last person you WHOISed
+     meta2-!   send to last person NOTIFY saw that signed onto irc
+     meta2-.   send to last person you sent a MSG to
+     meta2-,   send to last person who sent you a MSG
+
+See Also:
+   Special_Vars(7); bind(4) meta2_character; load(5); msg(1); notify(1);
+   whois(2)
+
+Other Notes:
+   This script was written by The_Edge.  It was later modified for use with
+   EPIC by Jeremy Nelson (hop), jnelson@acronet.net.
+

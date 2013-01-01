@@ -1,0 +1,12 @@
+Synopsis:
+   $servnum(<server name>)
+
+Technical:
+   This function gives the server refnum for the <server name> specified.
+
+Returns:
+   refnum for <server name>, or -1 if invalid
+
+See Also:
+   server(1); servername(6); winserv(6); servports(6)
+

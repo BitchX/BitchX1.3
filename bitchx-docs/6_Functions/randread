@@ -1,0 +1,17 @@
+Synopsis:
+   $randread(<fd>)
+
+Technical:
+   This function reads a random line from a file opened with the $open()
+   function.
+
+Practical:
+   This function has many novelty uses: random messages for /quit, /kick,
+   /part, or /topic.
+
+Returns:
+   data read from file, or nothing on error
+
+See Also:
+   close(6); open(6); read(6)
+

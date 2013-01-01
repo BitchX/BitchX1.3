@@ -1,0 +1,19 @@
+Synopsis:
+   on [<modes>]signoff [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client observes another client on
+   a common channel signing off from irc.  It only hooks once per user,
+   not once per channel.
+
+Parameters:
+   $0    nickname of person signing off
+   $1-   signoff message
+
+See Also:
+   on(5) channel_signoff, exit; quit(1)
+
+Other Notes:
+   This hook is only triggered for other users.  To hook your own signoff,
+   use the EXIT hook.
+

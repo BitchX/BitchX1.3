@@ -1,0 +1,8 @@
+Synopsis:
+   window discon
+
+Description:
+   This forces a window to never be bound to any server. When this is on,
+   no server event will trigger output to the window, only an xecho
+   specifying the window's refnum will output to it.
+

@@ -1,0 +1,17 @@
+Synopsis:
+   ctcp [=]<nick>|<channel> ping <current time>
+
+Description:
+   This command is used to give you a general idea of how much "lag"
+   (delays due to network congestion) is between you and another client.
+   The current time is represented as an integer which is the number of
+   seconds since 1 January 1970.  The current time in this format can
+   be obtained with the $time() function.
+
+Aliases:
+   The PING command is identical to using CTCP PING with $time() as
+   the "time" argument.
+
+See Also:
+   load(5) oldping; ping(1)
+

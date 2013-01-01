@@ -1,0 +1,32 @@
+Synopsis:
+   scans [<-sort> <-host> <-nick> <s|v|o|n|i|f|s>] [<match>] [<channel>]
+
+Description:
+   SCANS returns a list of users on the specified channel.  The user list
+   will include a + or @ prepended to those nicks that are +v or +o in
+   that channel, respectively. The current channel is used if no channel is
+   specified. This scan is taken from the internal lists kept for each 
+   channel, which means there is no lag.
+
+Options:
+   -sort      nicklist is not sorted and shown in the order the client has
+   -host      nicklist is sorted by hostname
+   -nick      nicklist is sorted by nickname
+   v          voiced users
+   o          opped users
+   n          non-opped users
+   i          ircops
+   f          users on your userlist
+   s          users that are on your shitlist
+   match      nicks are matched against a pattern
+
+Examples:
+   To show users on all a channels with voice:
+      /scans v
+
+   To show users on all a channels with voice and a pattern:
+      /scans v *ick*
+
+See Also:
+   on(5) names sc n scani scanv scano scann scanf scans
+

@@ -1,0 +1,12 @@
+Synopsis:
+   parsekey <key function>
+
+Description:
+   This command allows direct access to the functions normally bound to
+   special keys via the BIND command.  It is useful for using rarely-
+   used key functions that are not bound to a particular key.  Any of
+   the functions that may be bound to a key may be used.
+
+See Also:
+   bind(4)
+

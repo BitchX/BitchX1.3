@@ -1,0 +1,14 @@
+Synopsis:
+   load troy
+
+Description:
+   This is Troy's .ircrc file.  It has many very useful features, including
+   tabkey and killpath, and has many other useful hints for aspiring ircII
+   script coders.
+
+See Also:
+   load(5); ircrc(8); lynx_ircrc(8); tabkey(8)
+
+Other Notes:
+   This script was written by Troy Rollo (Troy).
+

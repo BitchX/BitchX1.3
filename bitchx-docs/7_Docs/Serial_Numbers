@@ -1,0 +1,26 @@
+Using Hooks with Serial Numbers                                             
+
+One of the neat things about ON hooks is that multiple hooks of the same
+type may be given different priorities.  A serial number may be any number,
+positive or negative; zero is the default and should not be used directly.
+The numbers themselves don't really matter, rather their relation to other
+serial numbers is what's important.  For example:
+
+   on   hook    "*" echo foobar
+   on #-hook -5 "*" echo booya
+   on #-hook  5 "*" echo yadda yadda yadda
+
+Then, when any HOOK command is issued, the following three lines will be
+displayed, in this order:
+
+   booya
+   foobar
+   yadda yadda yadda
+
+In general, it is always advisable to use serial numbers, if for no other
+reason than to prevent hooks from conflicting with each other.  This is
+particularly true of the TIMER hook, which should always use serial numbers.
+
+See Also:
+   on(5)
+

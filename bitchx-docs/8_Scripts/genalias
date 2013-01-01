@@ -1,0 +1,45 @@
+Synopsis:
+   load genalias
+
+Description:
+   This is a set of generic aliases suitable for everyday use.  It supplies
+   the following aliases:
+
+     Alias     Description                                                
+     /+        gives channel mode +v and +o to up to 3 people
+     /-        removes chanop status for up to 3 people in current channel
+     /!        kicks specified person from current channel
+     /!!       adds person to autokick list (requires AUTOKICK)
+     /!!!      kicks up to 3 people from current channel with same reason
+     /a+       turns INPUT_ALIASES on
+     /a-       turns INPUT_ALIASES off
+     /ban      sets a ban for given pattern in current channel
+     /bbl      sets the client away, expects time or return as argument
+     /boot     kick a user from current channel, with a silly remark
+     /brb      sets the client away
+     /chops    shows channel operators in current channel
+     /client   does a CTCP CLIENTINFO on another user
+     /close    closes a DCC SEND connection with specified user
+     /cycle    leave and rejoin the same channel
+     /finger   does a CTCP FINGER on another user
+     /get      same as DCC GET
+     /i        invites a user to the current channel
+     /log      same as WINDOW LOG
+     /m        sets a mode for the current channel
+     /n        change nicknames
+     /nws      set user mode -sw
+     /recho    echoes text after evaluating it once
+     /script   same as DCC SEND, except it searches the IRCPATH for the file
+     /send     same as DCC SEND
+     /umode    set the client's user mode
+     /ws       set user mode +sw
+
+   It also provides a single function, $when(), which computes the elapsed
+   time between the current and an arbitrary time in the past.
+
+See Also:
+   autokick(8); load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

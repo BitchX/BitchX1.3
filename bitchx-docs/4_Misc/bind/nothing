@@ -1,0 +1,7 @@
+Synopsis:
+   bind <key> nothing
+
+Description:
+   This function causes the specified key to do nothing, effectively
+   disabling it.
+

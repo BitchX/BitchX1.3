@@ -1,0 +1,23 @@
+Synopsis:
+   oper [<nick> [<password>]]
+
+Description:
+   The OPER command is used to gain irc operator status on the current
+   server, with the stipulation that the specified (or current) nickname
+   and password match an O: line entry in the server's configuration.
+   If a password is not specified, the client will prompt for one.
+
+See Also:
+   deop(3); mode(1)
+
+Restrictions:
+   Unlike DEOP, the MODE command cannot be used to gain operator status.
+
+Other Notes:
+   Specifying the password on the input line is not recommended, for many
+   reasons, the most obvious being that anyone with a line of sight to your
+   monitor can see what your password is.  When the client prompts for a
+   password, it does not display it as it is typed.  Further, the client's
+   command history may be written to a file, which would compromise the
+   password if the history file is world-readable.
+

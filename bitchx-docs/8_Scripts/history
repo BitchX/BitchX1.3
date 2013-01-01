@@ -1,0 +1,27 @@
+Synopsis:
+   load history
+
+Description:
+   This clever script allows for special escape sequence to be used inside
+   the current input line.  The sequences refer to the previous line
+   entered on the input line.  The binding ^k-h may be used to toggle the
+   history function on and off.
+
+     Escape         Description                                           
+     !$             expands to the last word in the previous line
+     !0 !1 ... !9   expand to the first ten words in the last line entered
+     !*             expands to all but the first word in the previous line
+
+Examples:
+   To ban an abusive user from several channels:
+      /mode #channel1 +b *!*jerk@*.lusers.com
+      /mode #channel2 +b !$
+      !0 #channel3 !2 !3
+
+See Also:
+   history(4); load(5)
+
+Other Notes:
+   This script was written by Matthew Green (phone), mrg@mame.mu.oz.au, and
+   Ian Frechette (Daemon), frechett@spot.colorado.edu.
+

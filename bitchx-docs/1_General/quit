@@ -1,0 +1,20 @@
+Synopsis:
+   quit [<quit message>]
+
+Description:
+   This ends your irc session.  If a quit message is supplied, it will
+   be displayed to anyone else on any channel you were on before
+   quitting.  If one isn't specified, the client's version string is
+   used.
+
+Examples:
+   To quit from irc with a message:
+      /quit I'll be back soon!
+
+Aliases:
+   BYE, EXIT and SIGNOFF are identical in operation to QUIT.
+
+See Also:
+   bind(4) quit_irc; discon(1); disconnect(1); on(5) channel_signoff, quit,
+   signoff
+

@@ -1,0 +1,5 @@
+
+SHELL = @SHELL@
+
+default:
+	$(SHELL) ./configure --with-plugins

@@ -1,0 +1,13 @@
+Synopsis:
+   set inverse_video [on|off|toggle]
+
+Description:
+   This setting controls how inverted text is displayed in the input line
+   and the display window.  If it is turned on, the REVERSE key function
+   (usually ^V) will toggle inverse video on and off.  If off, it will
+   strip out all REVERSEs In the displayed text, effectively disabling
+   reversed text.
+
+See Also:
+   bind(4) highlight_off, reverse; set(4) bold_video, underline_video
+

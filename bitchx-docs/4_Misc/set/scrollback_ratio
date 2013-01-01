@@ -1,0 +1,11 @@
+Synopsis:
+   set scrollback_ratio [<percent>]
+
+Description:
+   This variable determines what percent of the screen will scroll every time
+   you scroll a window's contents up or down. This value should be between
+   10 and 100, as the client silently truncates it to those extremes.
+
+See Also:
+   set(4) scroll, scroll_lines; bind(4) scroll_backward, scroll_forward
+

@@ -1,0 +1,9 @@
+Synopsis:
+   set xterm <program>
+
+Description:
+   Sets which X terminal program /window create uses.
+
+See Also:
+   window(4) create
+

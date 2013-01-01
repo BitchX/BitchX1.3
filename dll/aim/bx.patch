@@ -1,0 +1,294 @@
+--- .//dll/fserv/fserv.c.orig	Tue Jan 18 21:00:07 2000
++++ .//dll/fserv/fserv.c	Tue Jan 18 21:00:19 2000
+@@ -1162,7 +1162,7 @@
+         add_module_proc(HOOK_PROC, "Fserv", NULL, "*", MSG_LIST, 1, NULL, search_proc);
+         add_module_proc(HOOK_PROC, "Fserv", NULL, "*", PUBLIC_OTHER_LIST, 1, NULL, search_proc);
+ 
+-	add_completion_type("fsload", 3, FILE_COMPLETION);
++	add_completion_type("fsload", 3, FILE_COMPLETION,NULL);
+ 
+ 	add_timer(0, empty_string, get_dllint_var("fserv_time"), 1, impress_me, NULL, NULL, -1, "fserv");
+ 	strcpy(FSstr, cparse(FS, NULL, NULL));
+@@ -1177,4 +1177,4 @@
+ 	put_it("%s for help with this fserv, /fshelp", FSstr);
+ 	return 0;
+ }
+- 
+\ No newline at end of file
++ 
+--- .//dll/nap/nap.c.orig	Wed Jan 19 14:17:52 2000
++++ .//dll/nap/nap.c	Tue Jan 18 21:01:34 2000
+@@ -2139,8 +2139,8 @@
+ 	add_module_proc(VAR_PROC, nap_name, "napster_format", NULL, STR_TYPE_VAR, 0, set_numeric_string, NULL);
+ 	add_module_proc(VAR_PROC, nap_name, "napster_dir", NULL, STR_TYPE_VAR, 0, NULL, NULL);
+ 
+-	add_completion_type("nload", 4, FILE_COMPLETION);
+-	add_completion_type("nreload", 4, FILE_COMPLETION);
++	add_completion_type("nload", 4, FILE_COMPLETION,NULL);
++	add_completion_type("nreload", 4, FILE_COMPLETION,NULL);
+ 
+ 	naphelp(NULL, NULL, NULL, NULL, NULL);
+ 	sprintf(buffer, "$0+Napster %s by panasync - $2 $3", nap_version);
+--- .//include/module.h.orig	Tue Jan 18 01:24:49 2000
++++ .//include/module.h	Tue Jan 18 20:29:36 2000
+@@ -633,7 +633,14 @@
+ 	CHECK_EXT_MAIL,
+ 	DEFAULT_OUTPUT_FUNCTION,
+ 	DEFAULT_STATUS_OUTPUT_FUNCTION,
+-	NUMBER_OF_GLOBAL_FUNCTIONS
++	NUMBER_OF_GLOBAL_FUNCTIONS,
++
++/* window.c again */
++	WINDOW_QUERY,
++
++/* input.c again */
++
++	OVERWRITE_TABKEY_COMP
+ };
+ 
+ extern Function_ptr global_table[];
+--- .//include/modval.h.orig	Tue Jan 18 16:50:22 2000
++++ .//include/modval.h	Tue Jan 18 20:28:58 2000
+@@ -360,7 +360,8 @@
+ #define getnextnick(x, y, z, a) ((NickTab *) (global[GETNEXTNICK]((int)x, (char *)y, (char *)z, (char *)a)))
+ #define getchannick(x, y) ((char *) (global[GETCHANNICK]((char *)x, (char *)y)))
+ #define lookup_nickcompletion(x, y) ((NickList *) (global[LOOKUP_NICKCOMPLETION]((ChannelList *)x, (char *)y)))
+-#define add_completion_type(x, y, z) ((int) (global[ADD_COMPLETION_TYPE]((char *)x, (int)y, (enum completion)z)))
++#define add_completion_type(x, y, z, a) ((int) (global[ADD_COMPLETION_TYPE]((char *)x, (int)y, (enum completion)z, a)))
++#define overwrite_tabkey_comp(a,b) (global[OVERWRITE_TABKEY_COMP](a,b))
+ 
+ /* names.c */
+ #define is_channel(x) ((int) (global[IS_CHANNEL]((char *)x)))
+--- .//include/input.h.orig	Tue Jan 18 16:23:49 2000
++++ .//include/input.h	Thu Jan 20 17:05:28 2000
+@@ -157,11 +157,15 @@
+ 	DCC_COMPLETION,
+ 	LOAD_COMPLETION,
+ 	SERVER_COMPLETION,
+-	CDCC_COMPLETION
++	CDCC_COMPLETION,
++	CUSTOM_COMPLETION,
++	TABKEY_OVERWRITE
+ };
+ 
+-	char	*get_completions	(enum completion, char *, int *, char **);
+-	int	add_completion_type	(char *, int, enum completion);
++	char	*get_completions	(enum completion *, char *, int *, char **, char * (*)(int, char *, int *, char **));
++	int	add_completion_type	(char *, int, enum completion, char * (*)(int, char *, int *, char **));
++
++void overwrite_tabkey_comp(int (*)(int, char *, int *, char **), char * (*)(int, char *, int *, char **));
+ 
+ extern	NickTab *tabkey_array;
+ extern	NickTab *autoreply_array;
+--- .//source/modules.c.orig	Tue Jan 18 01:38:07 2000
++++ .//source/modules.c	Tue Jan 18 20:53:49 2000
+@@ -423,6 +423,7 @@
+ 	global_table[RECALCULATE_WINDOW_CURSOR]	= (Function_ptr) recalculate_window_cursor;
+ 	global_table[MAKE_WINDOW_CURRENT]	= (Function_ptr) make_window_current;
+ 	global_table[CLEAR_SCROLLBACK]		= (Function_ptr) clear_scrollback;
++	global_table[WINDOW_QUERY]		= (Function_ptr) window_query;
+ 	
+ 	global_table[RESET_DISPLAY_TARGET]	= (Function_ptr) reset_display_target;
+ 	global_table[SET_DISPLAY_TARGET]	= (Function_ptr) set_display_target;
+@@ -475,6 +476,7 @@
+ 	global_table[GETCHANNICK]		= (Function_ptr) getchannick;
+ 	global_table[LOOKUP_NICKCOMPLETION]	= (Function_ptr) lookup_nickcompletion;
+ 	global_table[ADD_COMPLETION_TYPE]	= (Function_ptr) add_completion_type;
++	global_table[OVERWRITE_TABKEY_COMP]	= (Function_ptr) overwrite_tabkey_comp;
+ 		
+ /* names.c */			
+ 	global_table[IS_CHANOP]			= (Function_ptr) is_chanop;
+--- .//source/input.c.orig	Tue Jan 18 15:58:30 2000
++++ .//source/input.c	Thu Jan 20 20:10:02 2000
+@@ -62,6 +62,9 @@
+ NickTab *tabkey_array = NULL, *autoreply_array = NULL;
+ 
+ 
++int (*do_over_write_tabkey_complete)(int, char *, int *, char **) = NULL;
++char * (*over_write_tabkey_complete_func)(int, char *, int *, char **) = NULL;
++
+ 
+ const int WIDTH = 10;
+ 
+@@ -2119,7 +2122,8 @@
+ 	struct _ext_name_type *next;
+ 	char *name;
+ 	int len;
+-	enum completion type;
++	enum completion type;	
++	char * (*comp_func)(int, char *, int *, char **); 
+ } Ext_Name_Type;
+ 
+ Ext_Name_Type *ext_completion = NULL;
+@@ -2161,7 +2165,14 @@
+ 	return NULL;
+ }
+ 
+-char *get_completions(enum completion type, char *possible, int *count, char **suggested)
++void overwrite_tabkey_comp(int (*check)(int, char *, int *, char **) , char * (*overwrite)(int, char *, int *, char **) ) 
++{
++	do_over_write_tabkey_complete = check;
++	over_write_tabkey_complete_func = overwrite;
++	return;
++}
++
++char *get_completions(enum completion *t, char *possible, int *count, char **suggested, char * (*cf)(int, char *, int *, char **))
+ {
+ char *booya = NULL;
+ char *path = NULL;
+@@ -2169,6 +2180,7 @@
+ glob_t globbers;
+ int numglobs = 0, i;
+ int globtype = GLOB_MARK;
++enum completion type = *t;
+ 
+ #if defined(__EMX__) || defined(WINNT)
+ 	if (possible && *possible)
+@@ -2191,6 +2203,18 @@
+ 		case TABKEY_COMPLETION:
+ 		{
+ 			NickTab *n = tabkey_array;
++			/*
++			 * bad hack
++			 * better idea would be to make this into a list
++			 * and allow multiple modules to create over writes
++			 * then, go to the first module that says it wants to
++			 * do a tab_complete 
++			 */
++			if ( do_over_write_tabkey_complete != NULL && over_write_tabkey_complete_func != NULL && do_over_write_tabkey_complete((int) type, possible, count, suggested) ) {
++				*t = TABKEY_OVERWRITE;
++				return over_write_tabkey_complete_func((int) type, possible, count, suggested);
++			}
++			/* put_it("opted not do!"); */
+ 			*count = 0;
+ 			if (possible)
+ 			{
+@@ -2377,6 +2401,18 @@
+ #endif
+ 			break;
+ 		}
++		case CUSTOM_COMPLETION: 
++		{
++			char *c;
++			if ( cf == NULL ) {
++				return NULL; 
++				/* put_it("CF IS NULL!"); */
++			}
++			c = cf((int)type, possible, count ,suggested);
++			/* put_it(c); */
++			return c;
++			break;
++		}
+ 		default:
+ 			return NULL;
+ 	}
+@@ -2507,6 +2543,7 @@
+ int got_space = 0;
+ char *get = NULL;
+ Ext_Name_Type *extcomp = ext_completion;
++char * (*cf)(int, char *, int *, char **) = NULL;
+ 
+ 	/* 
+ 	 * is this the != second word, then just complete from the 
+@@ -2597,6 +2634,7 @@
+ 						case CDCC:
+ 							if (wcount == 2 || wcount == 3)
+ 								type = CDCC_COMPLETION;
++								
+ 							break;
+ 					}
+ 					break;
+@@ -2609,6 +2647,7 @@
+ 					if (!my_strnicmp(p, extcomp->name, extcomp->len))
+ 					{
+ 						type = extcomp->type;
++						cf = extcomp->comp_func; 
+ 						break;
+ 					}
+ 				}
+@@ -2628,7 +2667,7 @@
+ #endif
+ do_more_tab:
+ 	count = 0;
+-	if ((get = get_completions(type, possible, &count, &suggested)))
++	if ((get = get_completions(&type, possible, &count, &suggested, cf)))
+ 	{
+ 		char buffer[BIG_BUFFER_SIZE+1];
+ 		char *p = NULL;
+@@ -2640,8 +2679,11 @@
+ 				p = extract(get_input(), 0, wcount - 2);
+ 			else if (suggested && *suggested)
+ 				p = m_3dup("/", suggested, "");
+-			if (type == TABKEY_COMPLETION)
++				
++			if (type == TABKEY_COMPLETION) 
+ 				snprintf(buffer, BIG_BUFFER_SIZE, "%s %s%s%s ", (p && *p == '/') ? p : "/m", get, (p && (*p != '/'))?space:empty_string, (p && (*p != '/'))?p:empty_string);
++			else if ( type == TABKEY_OVERWRITE ) 
++				snprintf(buffer, BIG_BUFFER_SIZE, "%s",get);
+ 			else
+ 			{
+ 				if (wcount == 1 && got_space)
+@@ -2729,10 +2771,11 @@
+ 				case SERVER_COMPLETION:
+ 				case TABKEY_COMPLETION:
+ 				case CHAN_COMPLETION:
++				case CUSTOM_COMPLETION:
+ 				{
+ 					char *n, *use = get;
+ 					n = new_next_arg(use, &use);
+-					count = 0;
++					count = 0;					
+ 					while (n && *n)
+ 					{
+ 						strmcat(buffer, n, BIG_BUFFER_SIZE);
+@@ -2750,6 +2793,7 @@
+ 						put_it("%s", convert_output_format(fget_string_var(FORMAT_COMPLETE_FSET),"%s", buffer));
+ 					break;
+ 				}
++				case TABKEY_OVERWRITE:
+ 				case NO_COMPLETION:
+ 					break;
+ 				default:
+@@ -2776,15 +2820,16 @@
+ 	return;
+ }
+ 
+-int add_completion_type(char *name, int len, enum completion type)
++int add_completion_type(char *name, int len, enum completion type, char * (*cf)(int, char *, int *, char **)) 
+ {
+-Ext_Name_Type *new;
++	Ext_Name_Type *new;
+ 	if (!find_in_list((List **)&ext_completion, name, 0))
+ 	{
+ 		new = (Ext_Name_Type *)new_malloc(sizeof(Ext_Name_Type));
+ 		new->name = m_strdup(name);
+ 		new->len = len;
+ 		new->type = type;
++		new->comp_func =cf;
+ 		add_to_list((List **)&ext_completion, (List *)new);
+ 		return 1;
+ 	}
+--- .//source/functions.c.orig	Tue Jan 18 16:44:28 2000
++++ .//source/functions.c	Thu Jan 20 17:10:53 2000
+@@ -7020,8 +7020,9 @@
+ #ifdef WANT_TABKEY
+ char *ret, *possible;
+ int count = 0; /* 6 */
++enum completion comp_type = 3;
+ 	possible = next_arg(input, &input);
+-	ret = get_completions(3, possible, &count, NULL);
++	ret = get_completions(&comp_type, possible, &count, NULL, NULL);
+ 	return m_sprintf("%d %s", count, ret ? ret : empty_string);
+ #else
+ 	RETURN_EMPTY;
+@@ -7033,8 +7034,9 @@
+ #ifdef WANT_TABKEY
+ char *ret, *possible;
+ int count = 0;/* 4 */
++enum completion comp_type = 7;
+ 	possible = next_arg(input, &input);
+-	ret = get_completions(7, possible, &count, NULL);
++	ret = get_completions(&comp_type, possible, &count, NULL, NULL);
+ 	return m_sprintf("%d %s", count, ret ? ret : empty_string);
+ #else
+ 	RETURN_EMPTY;

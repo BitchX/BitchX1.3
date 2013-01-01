@@ -1,0 +1,65 @@
+Karll's Array Suite                                                         
+
+BitchX and EPIC supports a large number of different data types.  Among the 
+least used, and least understood, are Karll's arrays.  This is mostly due to 
+the lack of publicized documentation for them.  No more.
+
+IrcII has long supported an array type.  These are best identified as hash
+arrays (or associative arrays, for Perl hackers).  However, Karll's arrays
+are different, more in line with the traditional notion of an array.  Due to
+how BitchX stores information, these arrays are not like normal variables or
+hashes, and require special function to access and manipulate them.
+
+Arrays are indexed sequentially, starting with 0 (zero).  An array is
+created when item 0 in a previously nonexistent array is defined:
+
+   $setitem(booya 0 random data)
+
+This sets element 0 of array "booya" to the text string "random data".
+Further items may be added sequentially; the next new element in the array
+must be 1, and anything above 1 will result in an error.  Existing array
+elements may be freely overwritten:
+
+   $setitem(booya 0 other data)
+
+Now element 0 of array "booya" contains the string "other data".  Any item
+may be deleted from the array.  If the deleted element is not the last one
+in the array (the one with the highest item number), all items after it
+are shifted down by one; this prevents an array from having "holes" in it.
+
+   $setitem(booya 1 new data)
+   $delitem(booya 0)
+
+This first adds a new element, then deletes the first element.  The result
+is an array that is one item in size.  Item 1 become item 0.
+
+One powerful feature of arrays not present in hashes is the ability to
+search through the array elements for random data.  The simplest methods are
+probably already familiar to you.  They operate in much the same manner as
+the $match() and $rmatch() functions.  Given that some array "blah" held
+the following items (in order, from 0):
+
+   james@merlin.ocslink.com  nelson@nemesis.acronet.net
+   foobar@blah.booya.com     jbriggs@bigscreen.drivein.com
+
+One could then use $matchitem() to find the element that best matches an
+arbitrary input pattern.  Similarly, if an array contained a set of wildcard
+patterns, $rmatchitem() could find which one best matched some non-wildcard
+string.
+
+The most powerful searching feature is $finditem().  Like the matching
+functions, it runs through an array looking for an item that matches the
+input string.  However, it looks for an exact match, and is sensitive to
+case.  This function uses a binary search algorithm, and is quite fast.
+
+The other feature of note is an array's ability to be sorted on the fly.
+All array elements have an item number (the order in which it was added) and
+an index number (it's sorted position in the array).  Array elements are
+fetched by item number with $getitem() and by index number with $igetitem().
+The result is that you can sequentially print out an array's elements using
+$igetitem(), and they will be sorted automatically.
+
+There is more to these arrays than is presented here.  Each function used to
+access and manipulate them is fully documented in Section 6 of these help
+files.  Refer to that section for more information.
+

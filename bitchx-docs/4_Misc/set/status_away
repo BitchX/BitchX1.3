@@ -1,0 +1,19 @@
+Synopsis:
+   set status_away [<text>]
+
+Description:
+   This variable sets the format of the string displayed in the status bar
+   when the client is marked as being away.  If the client is not away,
+   nothing is displayed in the status bar.
+
+   This value is represented by %A in the STATUS_FORMAT string.  The %A
+   has no special meaning in the STATUS_AWAY string itself (it will only
+   expand in STATUS_FORMAT).
+
+Examples:
+   Customizing the AWAY indicator on the status bar:
+      /set status_away (Away)
+
+See Also:
+   away(1); set(4) status_format
+

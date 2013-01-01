@@ -1,0 +1,20 @@
+Synopsis:
+   $reverse(<word list>)
+
+Technical:
+   This returns the input list in reverse order it was entered.
+
+Practical:
+   There aren't many obvious uses for this function.  One possibility might
+   be a simple two-way encoding scheme, to deter any eyes that might be
+   spying on your conversation.
+
+Returns:
+   input list reversed character for character
+
+Examples:
+   $reverse(welcome to our channel)         returns "lennahc ruo ot emoclew"
+
+See Also:
+   revw(6)
+

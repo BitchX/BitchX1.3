@@ -1,0 +1,21 @@
+Synopsis:
+   notice [=]<nickname> <text to send>
+   notice <channel> <text to send>
+   notice %<process id|process name> <text to send>
+
+ 
+Description:
+   NOTICE is functionally equivalent to MSG.  Like MSG, it may send to
+   a person or a channel, and may send to more than one target.  The command
+   was primarily intended as a message type that guaranteed no automated
+   responses.  See MSG for more information.
+
+See Also:
+   msg(1); on(5) notice, public_notice, send_notice
+
+Restrictions:
+   The IRC protocol explicitly prohibits any client from automatically
+   responding to NOTICE with a MSG, CTCP, another NOTICE, or anything
+   else, and ircII-EPIC will do everything in its power to prevent you
+   from doing it :)
+

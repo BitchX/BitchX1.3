@@ -1,0 +1,22 @@
+Synopsis:
+   $strlen(<string>)
+
+Technical:
+   This function is used to determine the length, in characters, of a given
+   string.
+
+Practical:
+   This function is effectively the same as the $@var notation, except that
+   $@var only works for variables, not functions or automatic expandos.
+
+Returns:
+   >0   number of characters in string
+    0   no string given
+
+Examples:
+   $strlen($1-3)                  returns length of args $1 to $3
+   $strlen(epic is cool)          returns "12"
+
+See Also:
+   Special_Vars(7); numwords(6)
+

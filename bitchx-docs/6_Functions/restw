@@ -1,0 +1,23 @@
+Synopsis:
+   $restw(<count> <word list>)
+
+Technical:
+   The $restw() function returns the given list with the specified number
+   of words at the beginning of the input list removed.
+
+Practical:
+   This function is mostly useful when you know you want to always remove
+   the first few words from an input string, regardless of what they are,
+   and when there are a varying number of total arguments.
+   
+Returns:
+   input list with given number of leading words removed
+
+Examples:
+   $restw(2 hello there how are you?)       returns "how are you?"
+   $restw(-1 hello there how are you?)      returns nothing
+   $restw(6 hello there how are you?)       returns nothing
+
+See Also:
+   leftw(6); rightw(6)
+

@@ -1,0 +1,27 @@
+Synopsis:
+   on [<modes>]input [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a command is entered on the input line,
+   or when text is sent to a channel or query.
+
+   This is a very powerful mechanism of the client.  Used intelligently,
+   it permits a very fine degree of control over the text entered on the
+   input line.  Used carelessly, and it can easily disable the client.
+   Use with caution.
+
+   If a silent hook is set, one can use a loaded script to do preprocessing
+   of the input line.
+
+Parameters:
+   $0-   text of input line entered
+
+Examples:
+   To emulate the INPUT_ALIASES setting:
+      on ^input "*" {
+         eval $*
+      }
+
+See Also:
+   set(4) input_protection
+

@@ -1,0 +1,12 @@
+Synopsis:
+   set max_recursions [<number>]
+
+Description:
+   This setting limits the number of times a function or alias can call
+   itself before returning or exiting.  This is a safety precaution to
+   prevent the client from looping infinitely.  Setting this variable to
+   0 (zero) effectively disables alias recursion.
+
+See Also:
+   load(5) recursion
+

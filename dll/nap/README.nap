@@ -1,0 +1,343 @@
+
+
+Well here's my attempt at a "napster" client. Mine is a plugin for BitchX
+and should work with 1.0c11 or 1.0c12. This source should be untar'd in the
+BitchX/dll directory in order to find certain files that are required.
+There will be a compile error in include/modval.h of 1.0c11 and 1.0c12, 
+requiring you to edit the file and add a ( to the #define for strmopencat. 
+This is what the line should look like.
+
+#define strmopencat ((char * (*)())global[STRMOPENCAT])
+
+After you have compiled BitchX with plugin support (./configure
+--with-plugins) and have installed the client with either make install or
+make install_local, you can then /loaddll nap  which loads the plugin into
+the client. At this point, you have a bunch of new /set's and a few new
+commands.
+
+There is a /set napster_user and a /set napster_pass to set the username and
+password you use with the server. You will need to set these to a unique
+name and password. IF after you run set these 2 variables and /napster,
+recieve an error msg about Invalid Password, it means the username is taken.
+
+There is also a /napster command which actually connects you to the server.
+The /napster command can also take a -create flag which tells the napster
+server to create the account. /n<tab> will display a list of commands
+(starting with the letter N) of which ALL the nap plugin commands are
+included. /set napster will display ALL the set's.
+
+
+We also have a list of functions specific to napster and a whole set of
+hook's for use in a scripted environment. /on module "NAP *"  where the
+first arg is NAP, second is a function are available for scripts to be
+written.
+
+[Functions]
+
+	$md5(open_file_des [size]) 
+		size defaults to 300000
+
+	$napchannel() 
+		returns current channel
+
+	$nraw(num [args])
+		sends a raw command to the server.
+		returns -1 on error.
+		returns 0 if no args for command.
+		returns len of args.
+
+	$nhotlist([nick|nick(s)])
+		returns current hotlist with no args.
+		returns hotlist info if nick is specified. 
+
+	$nap_connected()
+		returns empty or the server we are connected to.
+
+	$nonchannel(channel [nick|nick(s)]);
+		returns all nicks on the channel if no other arg specified.
+		returns info on nicks specified.
+
+	$nonchan(channel)
+		are we on this channel?. 0 or 1
+
+	$ntopic(channel)
+		returns the topic for the specified channel.
+
+	$mp3time(seconds)
+		pretty prints the seconds.
+
+[Commands]
+n command args
+	command can be one of raw, whois. raw is for sending raw server
+	numerics and is meant for testing.
+               
+napster [-create] [user] [pass] [host] [port]
+	This command will attempt to find the best server and connect you to
+	it. with -create, it will attempt to create an account using the
+	/set napster_user and /set napster_pass variables.
+
+nbrowse nick
+	Attempts to get the filelist that nick is offering.
+
+nclose
+	Close the current napster connection.
+
+nconnect <server:port> | <server port>
+	Attempt to connect to a known server.
+	
+ndel <*|#>
+	Deletes the numbered download.
+
+necho [-x] args
+	Will display text using the internal window display routine. -x
+	displays text without the "prompt"
+
+ninfo [nick]
+	Will display whois info about nick, or yourself if no nick
+	specified.
+
+nget [-request] [-browse] <#>
+	Attempt to get the # file from the request or the browse list
+
+nglist
+	Display list of current uploads and downloads.
+
+njoin [channelname]
+	Join the channelname specified, or if none and we are on a
+	channel(s), then switch current channels.
+
+nlist
+	Displays all the channel's available.
+
+nload [-recurse][-share][-file [filename]][-save [filename]] dir | dir(s)
+	-recurse is a toggle which turns on/off recursive directory
+	searching. It can appear anywhere, and turns on/off recursion until 
+	the end of the directory paths or until the next occurance.
+	-share will add the files as they are found to the napster server
+	database
+	-file  will load a file called shared.dat(default) from your
+	~/.BitchX or CTOOLZ_DIR. This file is in the same format as the
+	linux napster save file. A filename can be specified in it's place
+	-save  will attempt to save a file using the same as the information
+	in -file
+
+nmsg nick msg
+	sends a msg to nick.
+
+
+
+npart [channelname]
+	Attempts to part or leave the [channelname] or if no channelname is
+	specified it leaves the current channel.
+
+nprint
+	Prints a list of the mp3's in a nice format.. /set napster_format
+	can be used to change this format. More documentation needed here.
+
+nreconnect
+	Attempts to re-connect to the current server.
+
+nreload [-recurse] dir | dir(s)
+	Removes the old list of mp3's and then scans the directories
+	specified. See [nload].
+
+nrequest nick filename
+	If you know the exact filename on "nick" then you can directly
+	request it without going through the browse.
+	
+nsave
+	This saves ~/.BitchX/Napster.sav which is all your current set's.
+
+nsay msg
+	Say msg on the current channel.
+	
+nscan
+	Display the nicks on the current channel.
+
+nsound 
+	same arg's are nsearch. The differance is that a soundex is
+	performed and requested. This is an opennap feature.
+
+nsearch [-maxresults #][-bitrate|-maxbitrate|-minbitrate #]
+		(20,24,32,48,56,64,98,112,128,160,192,256,320)
+		[-freq|-minfreq|-maxfreq #]
+		(8000,11025,12000,16000,22050,24000,32000,44100,48000)
+		[-linespeed|-minlinespeed|-maxlinespeed #] (0-11) 
+		[-type video/zip/audio]
+		pattern
+	
+	Search for "pattern" on your napster server.. You can then use /nget
+	to receive files.
+** NOTE napster servers have an error where more than 100 results will never
+	be returned.
+
+nshare
+	After a /nload you might want to actually share the files with your
+	friends.
+
+ntopic [topic]
+	Displays or attempts to set the current channel topic.
+
+npass <nick password>
+	Command to change your password.
+
+nping <nick>
+	Will ping a nick giving an indication of server response time.
+
+nstats
+	Display statistics gathered during the operation of napster plugin.
+
+nignore <nick|-nick>
+	This will ignore everything this particular nick might do to you.
+	-nick will remove the ignore.
+
+necho [-x] <args>
+	output args to the napster window. -x is raw output.
+
+nadmin <command> [args]
+	This command is used for admins and elite etc. <command> is one of
+	the following:
+
+	annouce <args>
+		This is a command for moderators and admins.
+
+	kill <nick>
+		This is a command for moderators and admins.
+
+	muzzle <nick>
+		This is a command for moderators and admins.
+
+	muzzle <nick>
+		This is a command for moderators and admins.
+
+	nuke <nick>
+		This is a command for moderators and admins.
+
+	opsay <msg>
+		This is a command for moderators and admins.
+
+	setdataport <nick port>
+		This is a command for moderators and admins.
+
+	setlinespeed <nick #>
+		This is a command for moderators and admins.
+
+	setuserlevel <nick level>
+		This is a command for moderators and admins.
+
+	unban <nick>
+		This is a command for moderators and admins.
+
+	unnuke <nick>
+		This is a command for moderators and admins.
+
+	ban <nick>
+		This is a command for moderators and admins.
+
+	banlist
+		Display current list of server bans.
+
+	version
+		grab the server version.
+
+[following are opennap specific]
+	connect <host> <port> [<remote server>]
+		attempts to connect to the server on <port>
+
+	disconnect <host> <reason>
+		delink server from net.
+		
+	killserver <server> <reason>
+		shutdown server
+		
+	removeserver <servername> <reason>
+		remove server from table of allowed servers
+
+	config <variable> [<value>]
+		attempts to set a server variable
+
+	reload
+		reloads the default variables from the config file
+
+
+The Following set's are available.
+
+              napster_dataport [6699]
+	Set's your dataport for filesends.
+
+                   napster_dir
+	Set's your base directory for /nload
+
+          napster_download_dir ~
+	Set's the location for your downloaded files.
+
+                 napster_email blah@hrm.test
+	Set's your email address for login
+
+		napster_send_limit 5
+	Set the max send's allowed.
+
+		napster_max_send_nick
+	Set the max sends to one nick allowed at one time. Should be smaller
+	than "napster_send_limit"
+
+                napster_format 
+	Set's the output of the /nprint command.
+		%%  will print a % sign.
+		%b  bitrate
+		%s  filesize
+		%t  print mp3 time in minutes/seconds.
+		%T  print raw time in seconds.
+		%f  print base name of the file.
+		%F  print raw filename
+		%M  print md5 checksum
+		%S  print mode of mp3.
+		%H  print frequency
+		%h  print raw frequency
+		\n  start a newline
+		\t  put a tab in the output.
+
+                  napster_host server.napster.com
+	Set's the napster server for lookups.
+
+           napster_max_results 100
+	Set's the MAX number of results for /nsearch. 
+
+       napster_names_nickcolor %K[%w$[12]0%K]
+	Set's the format for the nicks when you /njoin or /nscan a channel
+	A double space in the format will be replaced with a "color" code
+	based on the speed of the user.
+
+               napster_numeric 
+	Set's the numeric prompt
+
+                  napster_pass 
+	Set's the password you will use on the server.
+
+                  napster_port 8875
+	Set's the port for /set napster_server
+
+                napster_prompt [Nap]
+	Set's the prompt when outputting a napster line.
+
+          napster_show_numeric OFF
+	Set's display of numerics on/off
+
+                 napster_speed 3
+	Set's your connection speed. values are 0-11.
+
+                  napster_user 
+	Set's the username you will use on the server.
+
+                napster_window OFF
+	Set's a private window for napster
+
+         napster_window_hidden OFF
+	Set's the private window hidden.
+
+                 napster_share ON
+	Turn's on/off sharing of music. shared files will however stay in
+	the database.
+
+						panasync
+						Colten Edwards

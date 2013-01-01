@@ -1,0 +1,10 @@
+Synopsis:
+   bind <key> erase_line
+
+Description:
+   This function clears the contents of the input line.  The data cleared
+   is not preserved in the command history.
+
+See Also:
+   bind(4) erase_to_beg_of_line, erase_to_end_of_line
+

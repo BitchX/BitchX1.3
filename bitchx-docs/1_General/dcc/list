@@ -1,0 +1,26 @@
+Synopsis:
+   dcc list
+
+Description:
+   This displays all current and pending DCC connections in a table format.
+   The data listed includes the type of DCC connection, the remote client
+   nickname, status (whether it has actually started or not), when the
+   connection began (if at all), how much data has been transferred over
+   the link, and any extra arguments present (such as the name of a file
+   being transferred between clients). Two differant types of display may
+   be chosen for displaying the information displayed.
+
+Examples:
+   To show a list of current DCC connections:
+      /dcc list
+
+Aliases:
+   DCC LIST operates the same as DCC with no arguments.
+
+See Also:
+   dcc(1) close; set(4) dcc_bar_type; on(5) dcc_list
+
+Other Notes:
+   For file transfers, LIST will show the filename being transferred.
+   Display of the full path can be toggled with DCC SHOWPATHS.
+

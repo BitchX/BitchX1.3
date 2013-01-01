@@ -1,0 +1,23 @@
+Synopsis:
+   ircuser <username>
+
+Description:
+   This lets the user specify what username to send to irc servers when
+   connecting to the network.  Naturally, it requires that the client
+   have this set before actually connecting to the network.
+
+See Also:
+   reconnect(1)
+
+Restrictions:
+   This command is generally useless for users on hosts that use identd
+   (RFC 1413).  Most modern irc servers query the host's identd server
+   to (try to) obtain the user's real username, and will ignore what the
+   client sends it.
+
+Other Notes:
+   Yes, this is one of the more controversial elements of EPIC.  It's
+   intent is to provide privacy for those who desire it.  Those who use
+   it for abusive purposes can expect to be dealt with accordingly on
+   the servers and networks they use.
+

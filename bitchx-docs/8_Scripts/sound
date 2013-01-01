@@ -1,0 +1,22 @@
+Synopsis:
+   load sound
+
+Description:
+   This script attempts to emulate the /sound command of mIRC.  When the
+   client receives a CTCP SOUND request, it will attempt to play the
+   sound file specified.  This requires that a variable $PLAYWAV be
+   defined to the location of an external program that can play .wav
+   files.  A sound may be sent with the /sound command:
+
+     /sound <target>|* <wav file> [<action text>]
+
+   If the target is "*", then the sound is sent to the current channel
+   or query.
+
+See Also:
+   ctcp(1); load(5)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net, with
+   some help from Tjerk Vonck on the semantics of the command.
+

@@ -1,0 +1,16 @@
+Synopsis:
+   set notify_interval <seconds>
+
+Description:
+   This determines how often the notify list is sent to the server to be
+   checked.
+
+See Also:
+   away(1); bind(4) send_line
+
+Other Notes:
+   This value does not change the client's default behavior of checking the
+   notify list on the top of every minute, however, it does change how many
+   minutes will skip checking the list. For this variable, a multiple of 60
+   is advised, and a value less than 60 will be ignored.
+

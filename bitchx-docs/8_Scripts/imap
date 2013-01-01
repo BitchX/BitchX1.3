@@ -1,0 +1,33 @@
+Synopsis:
+   load imap
+
+Description:
+   This script is designed to present the user with a topological view of
+   the current irc network, from the perspective of any server on the
+   network.  It contains 2 (two) commands that may be called directly:
+
+     Command             Description                                      
+     /gomap [<serv>]     displays the current server map; if a server name
+                         | is given, the script will attempt to show the map
+                         | from that server's perspective, else the current
+                         |  is assumed
+     /initmap [<serv>]   initialized the map database; the output may be
+                         | limited to a set of servers if one or more server
+                         | masks are supplied (as with LINKS)
+
+See Also:
+   links(2); load(5); map(2)
+
+Restrictions:
+   The script does not know how to deal with server masks gracefully (as it
+   only relies on LINKS output).  The result is that the map may not be
+   complete.
+
+Other Notes:
+   Undernet, and networks using ircu-based server code, provides a builtin
+   MAP command, which does essentially the same thing as this script, only
+   orders of magnitude faster, and is more accurate.
+
+   This script was written by Ian Frechette (Daemon), with inspiration from
+   Carlo Kid (Run).
+

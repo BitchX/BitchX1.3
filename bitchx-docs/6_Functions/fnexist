@@ -1,0 +1,17 @@
+Synopsis:
+   $fnexist(<function>)
+
+Technical:
+   This function tells wether or not a built-in function exists.
+   
+Practical:
+   This can be used to emulate a built-in function in older versions of epic
+   that may not support it.
+
+Returns:
+   1   If the built-in function <function> exists
+   0   If <function> doesn't exist
+   
+See Also:
+   cexist(6)
+

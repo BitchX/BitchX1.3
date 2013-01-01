@@ -1,0 +1,19 @@
+Synopsis:
+   set help_window [on|off|toggle]
+
+Description:
+   When turned on, this setting will cause the client to create a new
+   window to display help files in when HELP is used.  The window creation
+   will obey the ALWAYS_SPLIT_BIGGEST setting.  The window will be killed
+   when the user is finished using help.
+
+   If off, the client will display the help in the current window.
+
+See Also:
+   help(1); set(4) always_split_biggest, help_prompt
+
+Bugs:
+   This setting does not work well when HELP_PROMPT is turned off, as it
+   will end the HELP command immediately, this killing the new window
+   immediately.
+

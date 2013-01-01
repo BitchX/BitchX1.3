@@ -1,0 +1,1215 @@
+You might find useful information in this file, even though it is outdated.
+
+Please visit http://faq.bitchx.org/ for current FAQ and Documentation.
+
+
+		
+		Welcome to the documentation for BitchX for 
+ 		Windows 95/98/2000/NT/UNIX/OS/2/MacOS
+
+BitchX is written and supported by me Colten Edwards (aka panasync@efnet).
+BitchX represents a quite alot of my free time in the last 4 years.
+I only hope that you enjoy using the client. It was written because of the
+lack of what I considered a nice client under unix. Nice meaning a client
+that included source and had features that were typically scripted adding to
+the memory usage and cpu usage of the defacto client of the time ircii-2.8.
+I had looked at epic 3, but considered it flawed at the time I looked at it.
+After muddling around the ircii-2.8 source for several months I was able to
+come up with something that added a few new features and thus BitchX was
+born. At first BitchX was passed from person to person on irc as source
+until finally a distribution bot was created to help. The very first
+versions of BitchX I consider to be more than a little lame at this time but
+that was then and this is now. The current versions of BitchX will compile
+on more and more platforms, running for long periods of time. Something
+unheard of with ircii-2.8. BitchX is epic compatible, meaning that scripts
+written for epic will generally run without any modifications to the script
+at all. BitchX has alot more "features" than epic itself making it a
+hybrid. At one point in time source from pluto's version of comstud's
+version of ircII was used in BitchX, but that is no longer the case..
+
+BitchX includes alot of useful commands and functions for both the user and
+the scripter. Internally the nick, flood and friends lists are held in 
+hashed lists to make accessing them very quick compared to typical linked 
+lists used in ircII. Some of this code has been contributed by Sheik of 
+Ctoolz fame and some has been cooperated on with this same author. The 
+internal xdcc/cdcc (cdcc meaning written in c as opposed to script) lists 
+are extremely functional and modifiable by the scripter. The first version 
+of cdcc was written by me and then replaced with cdcc written by Ananda. I
+doubt he'd recognize the code that he contributed to BitchX. Everything is
+configurable on the display using /fset and /wset commands. fset was
+unwittingly contributed by hellshock (aka kraig) after he renamed my source
+and coded /fset along with some other war "features" (cavlink). This was
+known as hADES for which no source was released. I liked the idea so I coded
+my own which functioned like his. Surprisingly enough he liked my code so
+much more than his that he used it in his own client after which the source
+was released. 
+
+I'd like to take a quick opportunity to thank all those that have made
+BitchX so much a success. It actually surpassed any of my own expectations
+which were just to create a better ircII. Enjoy the client, and remember one
+thing when you visit #bitchx on efnet, we are all volunteers. So answering
+your questions may either be not possible or we've answered our daily 
+quota (tired). It's not that we are not interested.
+
+[Win95 notes]
+Many people over the past year have tried to port BitchX to a Win95/NT
+environment, but nobody has ever been successful to my knowledge. Success
+depended on a working select() and alarm() function from the underlying c
+libraries, and until CYGNUS released their beta 18 unix emulation library,
+this port was not feasible without rewriting large portions of the code.
+More information about CYGNUS can be found at www.cygnus.com, as well you
+can download their emulation libraries and tools at the same place. YES you
+too can port your favorite unix programs. One other block that I found
+when starting this port was that there term handling wasn't quite upto
+handling a screen intensive program like BitchX. Compiling ncurses or
+termcap was a possibility but the underlying term handling still couldn't do
+everything that was required of it. So I looked at the linux console driver
+and used it as an example of how to emulate the features we need in order
+to use a program like BitchX. Newer versions of the CYGWIN.DLL are available
+from http://www.lexa.ru/sos
+
+[General BitchX notes]
+BitchX the client.
+
+Starting BitchX is as simple as typing BitchX at a command prompt or
+clicking on a icon. BUT there are some options which I'll list below.
+
+Usage: BitchX [switches] [nickname] [server list]
+	[nickname] can be at most 9 chars unless you have the source
+	[server list] whitespace separated list of servers irc.vol.com:6666
+	[switches] can be one or more of the following.
+	-c <channel> 	Join channel on startup.
+	-b		load bx-rc or irc-rc after connecting to a server.
+	-p <port>	use <port> as the default port for the server
+	-d		use BX in dumb mode
+	-q		does not load irc-rc or bx-rc
+	-r <file>	loads <file> as a list of servers
+	-a		adds default servers and command line servers
+	-v		show BitchX's version
+	-l <file>
+	-L <file>	Load <file> in place of bx-rc and irc-rc files.
+			-L expands environment variables placed in it.
+note. there are other switches that are os-type specific. ie -H under unix
+for virtual hostname support. As well there might be other 
+
+[Windows]
+As well we have a few environment variables that should be setup so that
+things will run smooth. (Remember this is a unix client port). One
+thing that really helps this client is the existance of what's called a
+$HOME directory. This is where the special character ~ (tilde) points to
+in a unix enviroment. All the following need tobe set in either
+autoexec.bat or the WinNT registry. Remember that changes to the
+autoexec.bat file do not take effect until either you run the autoexec.bat
+file or reboot the system. ~/bx-rc is the default startup file for the
+client itself (where ~ means the HOME directory)
+
+
+[Unix]
+All the following can be or will be set in your environment already.
+Depending on what type of shell you use for your account, will determine 
+how these variables are set and what files you'll need to edit in order to
+set them. For bash(gnu) the command is export whereas tcsh uses setenv. Also
+filenames will range from .login to .cshrc or .bashrc or .bash_login. A
+little detective work will be necessary (hint: ls -a) in order to figure
+this out. As well the changes won't take effect until you re-login to the
+account. ~/.bitchxrc or ~/.ircrc are the files that are loaded by the client
+when we start. 
+ex. 
+bash:
+	export IRCNICK=
+	export IRCSERVER=
+window/dos:
+	set IRCNICK=
+	set IRCSERVER=
+	set HOME=
+
+PLEASE be aware that anything that is channel dependant placed in the
+startup files will NOT take effect. This is because we preload these files
+as well as any scripts before we connect to a server and join any channels.
+
+
+HOME		Sets the default directory where files are loaded and stored
+		ex.  set HOME=/edwards
+
+IRCNICK		Sets the default nickname to use
+
+USER
+IRCUSER		Sets the default "username" to use. "Unknown" is set if not
+		found. THIS ONLY WORKS UNDER NON-UNIX OS'S.
+
+IRCHOST
+IRC_HOST	Sets the virtual host name to use. Don't worry about this
+		one unless you need it.
+IRCNAME		Sets the "name". when doing a /whois nick it is displayed
+		next to the nick. also known as the realname.
+
+IRCSERVER	Sets the default server to use
+
+IRCPORT		Sets the default port to use. Usually 6667 or 6666
+
+IRCPATH		Sets the path from which files are /load'd ie scripts.
+		ex.  ".:~/irc" sets current directory and $HOME/irc as the
+		directories to use when loading files.
+
+IRCUMODE	Sets the default usermode
+
+IRCRC		Sets the filename to use in place of irc-rc
+
+IRCLIB		Sets the BitchX library path. (Used for some small example
+		scripts).
+
+IRC_SERVERS_FILE Sets the name of the irc-servers file that is loaded first
+		before any other	
+
+IRCFINGER	Sets your ctcp finger information. 
+
+[Windows notes]
+Unfortunately all the paths below can not be used like a DOS pathname yet.
+So we need to fudge a few things. An example dos path is c:\winnt\system32
+which would translate into a CYGNUS path of //c/winnt/system32. If all you
+are going to use is c: drive then /winnt/system32 is fine.
+
+irc-rc
+bx-rc		This is used to load a default script when starting the
+		client. This file is in the $HOME directory.
+
+bx-conf		This directory is created in the $HOME directory
+		the first time the client is run. The BitchX.hlp, BitchX.qt
+		BitchX.qk files should be placed here. As well certain files
+		are created by the client - BitchX.awy (your away msg log),
+		BitchX.sav (/saveall creates this file) which contains
+		your settings which are reloaded when you restart the client.
+		It also contains your userlist, shitlist, auto-join list,
+		bot-list, lame nick list etc.
+
+
+irc-serv	List of servers which are loaded by the client. File is in
+		the $HOME directory and has one server per line.
+
+[Windows]
+Currently a identd server will be required to use the client on most efnet
+servers. I will look at the possibility of adding a small identd server to
+the client internally. Of course if your root running some unix variant,
+then many differant options exist for a identd server. Pick one and install
+it. Personally I like cidentd which is available from sunsite.unc.edu.
+Although cidentd is known to have several buffer overrun problems, these are
+relatively easy to fix. (replacing strcpy()'s with strncpy()'s). There is
+apparently a exploit floating around for this as well...
+
+
+Most of the BitchX scripts will currently run with this windows client. 
+Your only problem will be to get someone to actually give you a non-tar'd 
+non gzip'd version. At some point I will make it so that you can just
+download a package of all the scripts in one zip file. Currently the 
+following popular scripts are being written  evolver, dRK, neon apple, 
+mdk and crackrock. I'm sure there are many many more that I've missed.
+
+
+All the following command are available from within BitchX. Documentation on
+these commands can be found in one of two places. BitchX.help and the epic
+help files which are also available in html format.
+
+BitchX: Commands:
+
+#               
+	A comment. Actually meant for script usage.
+
+4OP [nick]
+	ops the nick specified 4 times.
+:               
+	A comment. Actually meant for script usage.
+
+ABORT          
+	This is not a terribly useful command. What it does is abort the
+	client and drop you back to the shell.
+
+ABOUT           
+	Display the about screen for the client with some a list of some of
+	the people who have helped to make bitchx what it is.
+
+ADDFORWARD [nick|#channel]
+	Forwards all msgs recieved to another nick or channel.
+
+ADDIDLE         
+
+ADDLAMENICK    
+ADDNOFLOOD      
+ADDSHIT         
+ADDUSER         
+ADDWORD        
+ADMIN           
+AJOIN           
+AJOINLIST       
+ALIAS          
+ASSIGN          
+AWAY            
+AWAYLOG         
+B              
+BACK            
+BAN             
+BANSTAT         
+BANTYPE        
+BANWORDS        
+BEEP            
+BHELP           
+BIND           
+BK              
+BKI             
+BLESS           
+BREAK          
+BYE             
+C               
+CALL            
+CBOOT          
+CD              
+
+CDCC            
+Another command with alot of various parts to it. Only one command at a time
+can be done however. /cdcc by itself will display this list however.
+	CHANNEL   - public timer channel. Channels can be a comma separated
+		list of channels.
+	DESCRIBE  - change description of pack
+	DOFFER    - remove pack from the offer list
+	LIST      - list the packs you have offered
+	LOAD      - load packs saved to .cdcc.save or specified name
+	MINSPEED  - minspeed for cdcc ( #.##)
+	NOTICE    - notify the channel of offered packs
+	OFFER     - add a pack to the offer list
+	PLIST     - publicly list your offered packs
+	QUEUE     - view entries in the send queue
+	SAVE      - save your offerlist to .cdcc.save or specified name
+	SEND      - send a pack to user
+	RESEND    - re-send a pack to user
+	TSEND     - tdcc send a pack to user
+	TRESEND   - tdcc resend a pack to user
+	RESUME    - mirc resume
+	TIMER     - public list timer in minutes
+	NOTE      - add note to pack number
+	TYPE      - toggle between public and notice
+	ECHO      - toggle echo on/off
+	STATS     - display cdcc statistics
+	SECURE    - adds a password to a pack
+
+
+CHANNEL         
+CHANST         
+CHAT            
+CHGAOP          
+CHGCHAN         
+CHGLEVEL       
+CHGPASS         
+CHGPROT         
+CHGUH           
+CHOPS          
+CLEAR           
+CLEARAUTO       
+CLEARLOCK       
+CLEARTAB       
+CLINK           
+CLONES          
+CMSG            
+CONNECT        
+CONTINUE        
+CSAY            
+
+CSET            
+       #bitchx ................AINV     0
+       #bitchx ..........ANNOY_KICK   OFF
+       #bitchx .................AOP   OFF
+       #bitchx .........AUTO_REJOIN     1
+       #bitchx ...............BITCH   OFF
+       #bitchx ......COMPRESS_MODES   OFF
+       #bitchx ...........DEOPFLOOD    ON
+       #bitchx ......DEOPFLOOD_TIME    30
+       #bitchx ...DEOP_ON_DEOPFLOOD     3
+       #bitchx ...DEOP_ON_KICKFLOOD     3
+       #bitchx .............HACKING     0
+       #bitchx ...........JOINFLOOD    ON
+       #bitchx ......JOINFLOOD_TIME    50
+       #bitchx ...........KICKFLOOD    ON
+       #bitchx ......KICKFLOOD_TIME    30
+       #bitchx ......KICK_IF_BANNED    ON
+       #bitchx ............KICK_OPS    ON
+       #bitchx ...KICK_ON_DEOPFLOOD     3
+       #bitchx ...KICK_ON_JOINFLOOD     4
+       #bitchx ...KICK_ON_KICKFLOOD     4
+       #bitchx ...KICK_ON_NICKFLOOD     3
+       #bitchx ....KICK_ON_PUBFLOOD    30
+       #bitchx ............LAMELIST    ON
+       #bitchx ...........NICKFLOOD    ON
+       #bitchx ......NICKFLOOD_TIME    30
+       #bitchx ............PUBFLOOD   OFF
+       #bitchx PUBFLOOD_IGNORE_TIME    60
+       #bitchx .......PUBFLOOD_TIME    20
+       #bitchx ............SHITLIST    ON
+       #bitchx ............USERLIST    ON
+
+
+CTCP           
+CTOGGLE         
+CWHO            
+CWHOM           
+CYCLE          
+D               
+DATE            
+DBAN            
+DC             
+DCA             
+DCC             
+	This command has a lot of various options available to it. /dcc by
+itself will display all active dcc connections.
+	ACTIVE        AUTO          AUTO_RENAME   BOT           CHAT
+	LIST          GLIST         TSEND         SEND          RESEND
+	TRESEND       GET           TGET          REGET         TREGET
+	CLOSE         RENAME        RESUME        RAW           QUIET
+	STATS         PATHS         OVERWRITE     FTP           XRECV
+	XSEND         EXEMPT        HELP
+
+
+DCG            
+DCS             
+DCX             
+DEBUG           
+DEBUGFUNC      
+DEBUGHASH       
+DEBUGMSG        
+DEBUGUSER       
+DEOP           
+DEOPER          
+DESCRIBE        
+DEVOICE         
+DF             
+DIE             
+DISCONNECT      
+DME             
+DNS            
+DO              
+DOP             
+DS              
+DUMP           
+ECHO            
+ENCRYPT         
+EVAL            
+EVALSERVER     
+EXEC            
+EXIT            
+FE              
+FEC            
+FINGER          
+FK              
+FLUSH           
+FOR            
+FOREACH         
+FORWARD         
+FPORTS          
+FPROT          
+FSET            
+....................FORMAT_381 %K>%n>%W> You are now a %GIRC%n whore
+....................FORMAT_391 $G [$1] Channel is full
+....................FORMAT_443 $G [$1] Channel is full
+....................FORMAT_471 $G [$1] Channel is full
+....................FORMAT_473 $G [$1] Invite only channel
+....................FORMAT_474 $G [$1] Banned from channel
+....................FORMAT_475 $G [$1] Bad channel key
+....................FORMAT_476 $G [$1] You are not opped
+.................FORMAT_ACTION %Kð %W$1 %n$4-
+..............FORMAT_ACTION_AR %Kð %Y$1 %n$4-
+...........FORMAT_ACTION_OTHER %K* %n>%c$1 %n$3-
+........FORMAT_ACTION_OTHER_AR %K* %n>%c$1 %n$3-
+............FORMAT_ACTION_USER %K* %y>%c$1 %n$3-
+.........FORMAT_ACTION_USER_AR %K* %n>%c$1 %n$3-
+..................FORMAT_ALIAS Alias $[20.]0 $1-
+.................FORMAT_ASSIGN Assign $[20.]0 $1-
+...................FORMAT_AWAY  is away: ($3-) $1 $2
+...................FORMAT_BACK is back from the dead. Gone $1 hrs $2 min $3 secs
+...................FORMAT_BANS $[2]0 $[10]1 $[10]3 $[-5]numdiff($time() $4)  $2
+............FORMAT_BANS_HEADER #  Channel    SetBy        Sec  Ban
+..................FORMAT_BITCH %RBitch Mode Activated%n $1 $4 $5 on $3
+....................FORMAT_BOT $[2]0 $[2]1 $[11]2 $[10]3 $4
+.............FORMAT_BOT_FOOTER There are $1 on the BotList
+.............FORMAT_BOT_HEADER Aop Prot Bot         Channel    Hostname
+..................FORMAT_BWALL [%GBX-Wall%n/%W$1:$2%n] $4-
+........FORMAT_CHANNEL_SIGNOFF $G %nSignOff %W$1%n: $3 %K(%n$4-%K)
+................FORMAT_CONNECT $G Connecting to server $1/%c$2%n
+...................FORMAT_CSET %r$[-14]1 %R$[-20.]0 %w$[-5]2-
+...................FORMAT_CTCP %K>%n>%W> %G$1 %K[%g$2%K]%g requested $4- from $3
+.............FORMAT_CTCP_CLOAK %K>%n>%W> %C$1 %K[%c$2%K]%c requested $4- from $3
+........FORMAT_CTCP_CLOAK_FUNC %K>%n>%W> %C$1 %K[%c$2%K]%c requested $4- from $3
+...FORMAT_CTCP_CLOAK_FUNC_USER %K>%n>%W> %C$1 %K[%c$2%K]%c requested $4- from you
+.....FORMAT_CTCP_CLOAK_UNKNOWN %K>%n>%W> %C$1 %K[%c$2%K]%c requested unknown ctcp $4- from $3
+FORMAT_CTCP_CLOAK_UNKNOWN_USER %K>%n>%W> %C$1 %K[%c$2%K]%c requested unknown ctcp $4- from $3
+........FORMAT_CTCP_CLOAK_USER %K>%n>%W> %C$1 %K[%c$2%K]%c requested $4- from you
+..............FORMAT_CTCP_FUNC %K>%n>%W> %G$1 %K[%g$2%K]%g requested $4- from $3
+.........FORMAT_CTCP_FUNC_USER %K>%n>%W> %G$1 %K[%g$2%K]%g requested $4- from you
+.............FORMAT_CTCP_REPLY $G %nCTCP %W$3 %nreply from %n$1: $4-
+...........FORMAT_CTCP_UNKNOWN %K>%n>%W> %G$1 %K[%g$2%K]%g requested unknown ctcp $4- from $3
+......FORMAT_CTCP_UNKNOWN_USER %K>%n>%W> %G$1 %K[%g$2%K]%g requested unknown ctcp $4- from %g$3
+..............FORMAT_CTCP_USER %K>%n>%W> %G$1 %K[%g$2%K]%g requested $4- from you
+....................FORMAT_DCC 
+...............FORMAT_DCC_CHAT %K[%G$1%K(%gdcc%K)] %n$3-
+............FORMAT_DCC_CONNECT $G %RDCC%n $1 %nconnection with %W$2%K[%c$4, port $5%K]%n established
+..............FORMAT_DCC_ERROR $G %RDCC%n lost %w$1%w %rto $2 %K[%w$3-%K]
+...............FORMAT_DCC_LOST $G %RDCC%n %W$1%n:%g$2%n %K[%C$3%K]%n $4 $5 completed in $6 secs %K(%W$7 $8/sec%K)
+............FORMAT_DCC_REQUEST $G %RDCC%n $1 %K(%n$2%K)%n request from %W$3%K[%c$4 [$5:$6]%K]%n $8 $7
+.................FORMAT_DESYNC $G $1 is desynced from $2 at $0
+.............FORMAT_DISCONNECT $G Use %G/Server%n to connect to a server
+.......FORMAT_ENCRYPTED_NOTICE %K-%Y$1%K(%p$2%K)-%n $3-
+......FORMAT_ENCRYPTED_PRIVMSG %K[%Y$1%K(%p$2%K)]%n $3-
+..................FORMAT_FLOOD %Y$1%n flood detected from %G$2%K(%g$3%K)%n on %K[%G$4%K]
+............FORMAT_FRIEND_JOIN $G %R$1 %K[%c$2%K]%n has joined $3
+...................FORMAT_HELP $0-
+...................FORMAT_HOOK $0-
+..........FORMAT_IGNORE_INVITE %K>%n>%W> You have been invited to $1-
+.............FORMAT_IGNORE_MSG %K[%P$1%P$2%K(%p$3%K)]%n $4-
+........FORMAT_IGNORE_MSG_AWAY %K[%P$1%P$2%K(%p$3%K)]%n $4-
+..........FORMAT_IGNORE_NOTICE %K-%P$2%K(%p$3%K)-%n $4-
+............FORMAT_IGNORE_WALL %K%P$1%n $2-
+.................FORMAT_INVITE %K>%n>%W> $1 Invites You to $2-
+............FORMAT_INVITE_USER %K>%n>%W> Inviting $1 to $2-
+...................FORMAT_JOIN $G %C$1 %K[%c$2%K]%n has joined $3
+...................FORMAT_KICK $G %n$3 was kicked off $2 by %c$1 %K(%n$4-%K)
+..............FORMAT_KICK_USER %K>%n>%W> %WYou%n have been kicked off %c$2%n by %c$1 %K(%n$4-%K)
+...................FORMAT_KILL %K>%n>%W> %RYou have been killed by $1 for $2-
+..................FORMAT_LEAVE $G $1 %K[%w$2%K]%n has left $3 %K[%W$4%K]
+..................FORMAT_LINKS %K³%n$[24]0%K³ ³%n$[24]1%K³ ³%n$[3]2%K³ ³%n$[13]3%K³
+...................FORMAT_LIST $[12]1 $[-5]2   $[40]3-
+...................FORMAT_MAIL %K>%n>%W> You have new Mail
+...................FORMAT_MODE $G %nmode%K/%c$3 %K[%W$4-%K]%n by %W$1
+...........FORMAT_MODE_CHANNEL $G %nmode%K/%c$3 %K[%W$4-%K]%n by %W$1
+....................FORMAT_MSG %K[%P$1%K(%p$2%K)]%n $3-
+...............FORMAT_MSGCOUNT [$0-]
+.................FORMAT_MSGLOG [$[8]0] [$1] - $2-
+..............FORMAT_MSG_GROUP %K-%P$1%K:%p$2%K-%n $3-
+..................FORMAT_NAMES $G %K[%GUsers%K(%g$1%K:%g$2%K)]%c $3
+...........FORMAT_NAMES_BANNER 
+..............FORMAT_NAMES_BOT $G %K[%GBots%K(%g$1%K:%g$2%K)]%c $3
+.........FORMAT_NAMES_BOTCOLOR %K[%C$0%G$[10]1%K]
+...........FORMAT_NAMES_FOOTER 
+...........FORMAT_NAMES_FRIEND $G %K[%GFriends%K(%g$1%K:%g$2%K)]%c $3
+......FORMAT_NAMES_FRIENDCOLOR %K[%C$0%Y$[10]1%K]
+............FORMAT_NAMES_IRCOP $G %K[%GIrcOps%K(%g$1%K:%g$2%K)]%c $3
+........FORMAT_NAMES_NICKCOLOR %K[%B $[10]1%K]
+............FORMAT_NAMES_NONOP $G %K[%GNonChanOps%K(%g$1%K:%g$2%K)]%c $3
+...............FORMAT_NAMES_OP $G %K[%GChanOps%K(%g$1%K:%g$2%K)]%c $3
+..........FORMAT_NAMES_OPCOLOR %K[%C$0%n%B$[10]1%K]
+.............FORMAT_NAMES_SHIT $G %K[%MShitUsers%K(%m$1%K:%m$2%K)]%c $3
+........FORMAT_NAMES_SHITCOLOR %K[%C$0%n%R$[10]1%K]
+............FORMAT_NAMES_VOICE $G %K[%MVoiceUsers%K(%m$1%K:%m$2%K)]%c $3
+.......FORMAT_NAMES_VOICECOLOR %K[%Mv%B$[10]1%K]
+.................FORMAT_NETADD $G %nAdded: %W$1 $2
+................FORMAT_NETJOIN $G %nNetjoined: %W$1 $2
+...............FORMAT_NETSPLIT $G %nNetSplit detected: %W$1%n split from %W$2 %K[%c$0%K]
+........FORMAT_NETSPLIT_HEADER 
+...............FORMAT_NICKNAME $G %W$1 %nis now known as %c$3
+.........FORMAT_NICKNAME_OTHER $G %W$1 %nis now known as %c$4
+..........FORMAT_NICKNAME_USER %K>%n>%W> %WYou%K(%n$1%K)%n are now known as %c$3
+..............FORMAT_NICK_AUTO $0:$1-
+..............FORMAT_NICK_COMP $0:$1-
+...............FORMAT_NICK_MSG $0 $1 $2-
+.................FORMAT_NONICK %W$1%K:%n $3-
+...................FORMAT_NOTE ($0) ($1) ($2) ($3) ($4) ($5-)
+.................FORMAT_NOTICE %K-%P$1%K(%p$2%K)-%n $3-
+.............FORMAT_NOTIFY_OFF $[10]0 $[35]1 $[-6]2 $[-10]3 $4 $5
+..............FORMAT_NOTIFY_ON $[10]0 $[35]1 $[-6]2 $[-10]3 $4-
+.........FORMAT_NOTIFY_SIGNOFF $G %GSignoff%n by %r$[10]1%n at $0
+......FORMAT_NOTIFY_SIGNOFF_UH $G %GSignoff%n by %r$1%K!%r$2%n at $0
+..........FORMAT_NOTIFY_SIGNON $G %GSignon%n by %r$[-10]1%n at $0
+.......FORMAT_NOTIFY_SIGNON_UH $G %GSignon%n by %R$1%K!%R$2%n at $0
+...................FORMAT_OPER %C$1 %K[%c$2%K]%n is now %Wan%w %GIRC%n whore
+.....................FORMAT_OV %S %>[OperView] 
+.................FORMAT_PUBLIC %b<%n$1%b>%n $3-
+..............FORMAT_PUBLIC_AR %b<%Y$1%b>%n $3-
+.............FORMAT_PUBLIC_MSG %b(%n$1%K/%n$3%b)%n $4-
+..........FORMAT_PUBLIC_MSG_AR %b(%Y$1%K/%Y$3%b)%n $4-
+..........FORMAT_PUBLIC_NOTICE %K-%P$1%K:%p$3%K-%n $4-
+.......FORMAT_PUBLIC_NOTICE_AR %K-%G$1%K:%g$3%K-%n $4-
+...........FORMAT_PUBLIC_OTHER %b<%n$1%K:%n$2%b>%n $3-
+........FORMAT_PUBLIC_OTHER_AR %b<%Y$1%K:%n$2%b>%n $3-
+....................FORMAT_REL %K[%rmsg->$1%K]%n $4-
+...................FORMAT_RELM %K[%P%P$1%K(%p$2%K)]%n $4-
+...................FORMAT_RELN %K-%P$1%K(%p$2%K)-%n $4-
+...................FORMAT_RELS $1-
+..................FORMAT_RELSM %K[%rmsg%K(%R$1%K)] %n$2-
+..................FORMAT_RELSN %K[%rnotice%K(%R$1%K)] %n$2-
+............FORMAT_SEND_ACTION %Kð %W$1 %n$3-
+......FORMAT_SEND_ACTION_OTHER %Kð %n-> %W$1%n/%c$2 %n$3-
+..............FORMAT_SEND_AWAY [Away ($strftime($1 %a %b %d %I:%M%p))] [Current ($strftime($0 %a %b %d %I:%M%p))] [BX-MsgLog $2]
+..............FORMAT_SEND_CTCP %K[%rctcp%K(%R$1%K)] %n$2
+..........FORMAT_SEND_DCC_CHAT %K[%rdcc%K(%R$1%K)] %n$2-
+...............FORMAT_SEND_MSG %K[%rmsg%K(%R$1%K)] %n$3-
+............FORMAT_SEND_NOTICE %K[%rnotice%K(%R$1%K)] %n$3-
+............FORMAT_SEND_PUBLIC %p<%n$2%p>%n $3-
+......FORMAT_SEND_PUBLIC_OTHER %p<%n$2%K:%n$1%p>%n $3-
+.................FORMAT_SERVER $G%n $1: $2-
+............FORMAT_SERVER_MSG1 $G%n $1: $2-
+.......FORMAT_SERVER_MSG1_FROM $G%n $1: $2-
+............FORMAT_SERVER_MSG2 $G%n $1-
+.......FORMAT_SERVER_MSG2_FROM $G%n $1-
+..........FORMAT_SERVER_NOTICE %G!%g$1%G%n $2-
+......FORMAT_SERVER_NOTICE_BOT Possible bot: %C$1 %K[%c$2-%K]%n
+.....FORMAT_SERVER_NOTICE_BOT1 Possible $1 bot: %C$2 %K[%c$3-%K]%n
+FORMAT_SERVER_NOTICE_BOT_ALARM $1 alarm activated: %C$2 %K[%c$3-%K]%n
+FORMAT_SERVER_NOTICE_CLIENT_CO Client Connecting: %C$1 %K[%c$2-%K]%n
+FORMAT_SERVER_NOTICE_CLIENT_EX Client Exiting: %C$1 %K[%c$2-%K]%n
+FORMAT_SERVER_NOTICE_CLIENT_IN Invalid username: %C$1 %K[%c$2-%K]%n
+FORMAT_SERVER_NOTICE_CLIENT_TE Terminating client for excess flood %C$1%K [%c$2-%K]%n
+.....FORMAT_SERVER_NOTICE_FAKE Fake Mode detected on $1 -> $2-
+....FORMAT_SERVER_NOTICE_GLINE %W$1%n added a new K-Line %K[%c$2%K]%n from $3 for $4-
+.....FORMAT_SERVER_NOTICE_KILL Foreign OperKill: %W$1%n killed %c$2%n %K(%n$3-%K)%n
+FORMAT_SERVER_NOTICE_KILL_LOCA Local OperKill: %W$1%n killed %c$2%n %K(%n$3-%K)%n
+....FORMAT_SERVER_NOTICE_KLINE %W$1%n added a new K-Line %K[%c$2%K]%n for $3-
+....FORMAT_SERVER_NOTICE_NICKC Nick collision: %W$1%n killed %c$2%n %K(%n$3-%K)%n
+.....FORMAT_SERVER_NOTICE_OPER %C$1 %K[%c$2%K]%n is now %Wa%w %GIRC%n whore
+...FORMAT_SERVER_NOTICE_REHASH %W$1%n is rehashing the Server config file
+....FORMAT_SERVER_NOTICE_STATS Stats $1: %C$2 %K[%c$3-%K]%n
+FORMAT_SERVER_NOTICE_TRAFFIC_H Entering high-traffic mode %K(%n$1 > $2-%K)%n
+FORMAT_SERVER_NOTICE_TRAFFIC_N Resuming standard operation %K(%n$1 $2 $3-%K)%n
+...FORMAT_SERVER_NOTICE_UNAUTH Unauthorized Connection from $1-
+....................FORMAT_SET %g$[-30.]0 %w$1-
+............FORMAT_SET_NOVALUE %g$[-30.]0 has no value
+...............FORMAT_SHITLIST  $[3]0 $[34]1 $[10]2  $3-
+........FORMAT_SHITLIST_FOOTER There are $1 users on the shitlist
+........FORMAT_SHITLIST_HEADER  lvl nick!user@host                     channels   reason
+................FORMAT_SIGNOFF $G %nSignOff: %W$1 %K(%n$3-%K)
+................FORMAT_SILENCE $G %RWe are $1 silencing $2 at $0
+..................FORMAT_SMODE $G %RServerMode%K/%c$3 %K[%W$4-%K]%n by %W$1
+.................FORMAT_STATUS %4%W$0-
+................FORMAT_STATUS1 %4%W$0-
+................FORMAT_STATUS2 %4%W$0-
+................FORMAT_STATUS3 %4%W$0-
+..................FORMAT_TIMER $G $[-5]0 $[-10]1 $[-6]2 $3-
+..................FORMAT_TOPIC $G Topic for %c$1%K:%n $2-
+...........FORMAT_TOPIC_CHANGE $G %W$1 %nhas changed the topic on channel $2 to%K:%n $3-
+....FORMAT_TOPIC_CHANGE_HEADER 
+............FORMAT_TOPIC_SETBY $G %ntopic set by %c$2%K [%c$stime($3)%K]
+............FORMAT_TOPIC_UNSET $G %ntopic unset by $1 on $2
+.............FORMAT_TRACE_OPER %R$1%n %K[%n$3%K]
+...........FORMAT_TRACE_SERVER %R$1%n $2 $3 $4 %K[%n$5%K]%n $6-
+.............FORMAT_TRACE_USER %R$1%n %K[%n$3%K]
+..................FORMAT_USAGE $G Usage: /$0  $1-
+...............FORMAT_USERLIST $[16]0 $[10]1 $[-10]2   $[-25]3 $[10]4
+........FORMAT_USERLIST_FOOTER There are $1 users on the userlist
+........FORMAT_USERLIST_HEADER level            nick       password     host                      channels
+...............FORMAT_USERMODE $G %nMode change %K[%W$4-%K]%n for user %c$3
+..................FORMAT_USERS %K[%n$[10]1%K]%K[%n%C$4%B$[9]2%K]%K[%n$[33]3%K] %K[%n$0%K]
+..............FORMAT_USERS_BOT 
+...........FORMAT_USERS_HEADER %K[ %WC%nhannel  %K][ %WN%wickname %K][%n %Wu%wser@host                       %K][%n %Wl%wevel         %K]
+.............FORMAT_USERS_SHIT %K[%n$[10]1%K]%K[%n%C$4%B$[9]2%K]%K[%n%r$[33]3%K]%K[%n$[-16]0%K]
+.............FORMAT_USERS_USER %K[%n$[10]1%K]%K[%n%C$4%B$[9]2%K]%K[%n%B$[33]3%K]%K[%n$0%K]
+................FORMAT_VERSION $0+$4$5 by panasync - $2 $3
+...................FORMAT_WALL %G!%g$1:$2%G!%n $3-
+.................FORMAT_WALLOP %G!%g$1$2%G!%n $3-
+................FORMAT_WALL_AR %G!%g$1:$2%G!%n $3-
+....................FORMAT_WHO %Y$[10]0 %W$[10]1%w %c$[3]2 %w$3%R@%w$4 ($6-)
+............FORMAT_WHOIS_ADMIN %K| %Wa%ndmin    : $0 - $1-
+.............FORMAT_WHOIS_AWAY %K| %Wa%nway     : $0 - $1-
+..............FORMAT_WHOIS_BOT %g| %Wb%not      : A:$0 P:$1 [$2] $3-
+.........FORMAT_WHOIS_CHANNELS %g| %Wc%nhannels : $0-
+...........FORMAT_WHOIS_FOOTER 
+...........FORMAT_WHOIS_FRIEND %g| %Wf%nriend   : F:$0 $1-
+...........FORMAT_WHOIS_HEADER %GÚÄÄÄÄÄ---%gÄ%G--%gÄÄ%G-%gÄÄÄÄÄÄ---%KÄ%g--%KÄÄ%g-%KÄÄÄÄÄÄÄÄÄ--- --  -
+.............FORMAT_WHOIS_HELP %K| %Wh%nelp     : $0 - $1-
+.............FORMAT_WHOIS_IDLE %K: %Wi%ndle     : $0 hours $1 mins $2 secs (signon: $stime($3))
+.............FORMAT_WHOIS_NAME %G³ %Wi%nrcname  : $0-
+.............FORMAT_WHOIS_NICK %G| %W$0 %K(%n$1@$2%K) %K(%W$3-%K)
+.............FORMAT_WHOIS_OPER %K| %Wo%nperator : $0 $1-
+.........FORMAT_WHOIS_REGISTER %K| %Wr%negister : $0 - $1-
+...........FORMAT_WHOIS_SERVER %K³ %Ws%nerver   : $0 ($1-)
+..........FORMAT_WHOIS_SERVICE %K| %Ws%nervice  : $0 - $1-
+.............FORMAT_WHOIS_SHIT %g| %Ws%nhit     : L:$0 [$1] $2 $3-
+...........FORMAT_WHOIS_SIGNON %K %Ws%nignon   : $0-
+.........FORMAT_WHOLEFT_FOOTER 
+.........FORMAT_WHOLEFT_HEADER %GÚÄÄÄÄÄ %WWho %GÄÄÄÄÄ%g---%GÄÄÄ%g--%GÄÄÄÄÄ%gÄ-%GÄÄ %WChannel%gÄÄÄ %wServer %G-%gÄÄ--%GÄÄ%g--%GÄÄÄÄ%g %wSeconds
+...........FORMAT_WHOLEFT_USER %G|%n $[-10]0!$[20]1 $[10]2 $[20]4 $3
+..........FORMAT_WHOWAS_HEADER %GÚÄÄÄÄÄ---%gÄ%G--%gÄÄ%G-%gÄÄÄÄÄÄ---%KÄ%g--%KÄÄ%g-%KÄÄÄÄÄÄÄÄÄ--- --  -
+............FORMAT_WHOWAS_NICK %G| %W$0%n was %K(%n$1@$2%K)
+...............FORMAT_WIDELIST $1-
+.............FORMAT_WINDOW_SET $0-
+
+
+FTP             
+	This is an actual ftp command that will allow you to login to a ftp
+server and download files. A query can be setup to make it easier to send
+commands to the ftp server. Also the <TAB> key keeps the ftp server in
+memory so that we can just press tab to bring up the ftp sitename. An
+example of this is  /msg -sunsite.unc.edu ls 
+notice that there is a - in front of the sitename. This is so that the
+client understands this is a ftp command and not a dcc(=).
+
+FUCK            
+FUCKEM         
+HASH            
+HELP            
+HISTORY         
+HOOK           
+HOST            HOSTNAME        I               IF             
+IG              IGH             IGHT            IGNORE         
+IGT             INFO            INPUT           INPUT_CHAR     
+INVITE          IRCHOST         IRCNAME         IRCUSER        
+ISON            J               JNW             JOIN           
+K               KB              KICK            KICKIDLE       
+KILL            L               LAMENICKLIST    LASTLOG        
+LEAVE           LINKS           LIST            LISTDLL        
+LK              LKW             LLOOK           LOAD           
+LOADDLL         LOADTCL         LOCAL           LS             
+LUSERS          M               MAP             MB             
+MD              MDOP            MDVOICE         ME             
+MESG            MK              MKB             MKNU           
+MODE            MODELOCK        MOP             MORE           
+MOTD            MSAY            MSG             MUB            
+MULT            MVOICE          N               NAMES          
+NEWNICK         NEWUSER         NICK            NOCHAT         
+NOPS            NOTE            NOTICE          NOTIFY         
+NSLOOKUP        NWHOIS          NWHOWAS         OFFERS         
+ON              OOPS            OP              OPER           
+ORIGNICK        OSTAT           OV              P              
+PARSEKEY        PART            PARTALL         PAUSE          
+PING            POP             PRETEND         PS             
+PURGE           PUSH            Q               QME            
+QUERY           QUEUE           QUIT            QUOTE          
+RANDOMNICK      RBIND           READLOG         RECONNECT      
+REDIRECT        REHASH          REINIT          REINITSTAT     
+REL             RELC            RELCR           RELCRT         
+RELCT           RELD            RELDT           RELI           
+RELIT           RELM            RELMT           RELN           
+RELNT           RELOAD          RELS            RELSM          
+RELSMT          RELSN           RELSNT          RELST          
+RELSTT          RELSW           RELSWT          RELT           
+RELTT           RELW            RELWT           REMLOG         
+REPEAT          REQUEST         RESET           RESTART        
+RETURN          RPING           SAVE            SAVEIRC        
+SAVELIST        SAY             SC              SCAN           
+SCANB           SCANF           SCANI           SCANN          
+SCANO           SCANS           SCANV           SEND           
+SENDLINE        SERVER          SERVLIST        
+
+SET            
+..........................AINV 0
+..........ALWAYS_SPLIT_BIGGEST ON
+....................ANNOY_KICK OFF
+...........................AOP OFF
+....................APPEND_LOG ON
+........................AUTOCK OFF
+...........AUTOKICK_ON_VERSION OFF
+.....................AUTO_AWAY ON
+................AUTO_AWAY_TIME 600
+.................AUTO_NSLOOKUP OFF
+................AUTO_RECONNECT ON
+...................AUTO_REJOIN 1
+.................AUTO_RESPONSE root
+....................AUTO_UNBAN 600
+..............AUTO_UNMARK_AWAY OFF
+...................AUTO_WHOWAS OFF
+..........................BEEP ON
+...................BEEP_ALWAYS OFF
+......................BEEP_MAX 3
+...................BEEP_ON_MSG MSGS
+................BEEP_WHEN_AWAY 0
+.........................BITCH OFF
+...................BITCHX_HELP ~/.BitchX/BitchX.help
+...................BLINK_VIDEO ON
+....................BOLD_VIDEO ON
+.......................BOT_LOG ON
+...................BOT_LOGFILE tcl.log
+......................BOT_MODE OFF
+....................BOT_PASSWD has no value
+....................BOT_RETURN has no value
+.......................BOT_TCL OFF
+..............CDCC_FLOOD_AFTER 3
+...............CDCC_FLOOD_RATE 4
+...................CDCC_PROMPT %GC%gDCC
+.................CDCC_SECURITY 0
+.....................CD_DEVICE has no value
+...........CHANGE_NICK_ON_KILL OFF
+............CHANNEL_NAME_WIDTH 10
+..............CHECK_BEEP_USERS OFF
+............CLIENT_INFORMATION  Keep it to yourself!
+.........................CLOAK 0
+.........................CLOCK ON
+..................CLOCK_24HOUR OFF
+..................CLOCK_FORMAT has no value
+                   CLONE_CHECK
+                   CLONE_COUNT
+......................CMDCHARS /
+..................COMMAND_MODE OFF
+..............COMMENT_BREAKAGE OFF
+................COMPRESS_MODES OFF
+...............CONNECT_TIMEOUT 30
+................CONTINUED_LINE 
+...............CPU_SAVER_AFTER 0
+...............CPU_SAVER_EVERY 0
+....................CTCP_DELAY 3
+.........CTCP_FLOOD_PROTECTION ON
+..................CTCP_VERBOSE ON
+....................CTOOLZ_DIR ~/.BitchX
+...................DCC_AUTOGET ON
+................DCC_AUTORENAME ON
+..................DCC_BAR_TYPE 0
+................DCC_BLOCK_SIZE 2048
+.....................DCC_DLDIR ~
+......................DCC_FAST ON
+.................DCC_GET_LIMIT 0
+..........DCC_MAX_AUTOGET_SIZE 2000000
+...............DCC_QUEUE_LIMIT 10
+................DCC_SEND_LIMIT 5
+.....................DCC_ULDIR ~
+.........................DEBUG 0
+................DEFAULT_REASON Bitch-X BaBy!
+.....................DEOPFLOOD ON
+................DEOPFLOOD_TIME 30
+.............DEOP_ON_DEOPFLOOD 3
+.............DEOP_ON_KICKFLOOD 3
+.....DISPATCH_UNKNOWN_COMMANDS OFF
+.......................DISPLAY ON
+..................DISPLAY_ANSI ON
+............DOUBLE_STATUS_LINE 1
+..........EIGHT_BIT_CHARACTERS ON
+...............EXEC_PROTECTION ON
+...............FAKE_SPLIT_PATS *fuck* *shit* *suck* *dick* *penis* *cunt* *haha* *fake* *split* *hehe* *bogus* *yawn* *leet* *blow* *screw* *dumb* *fbi*
+.......FLOATING_POINT_MATH_VAR OFF
+...................FLOOD_AFTER 4
+....................FLOOD_KICK ON
+..............FLOOD_PROTECTION ON
+....................FLOOD_RATE 5
+...................FLOOD_USERS 10
+.................FLOOD_WARNING OFF
+......................FTP_GRAB OFF
+..............FULL_STATUS_LINE ON
+.......................HACKING 0
+......................HACK_OPS OFF
+................HARD_UH_NOTIFY ON
+.................HEBREW_TOGGLE OFF
+....................HELP_PAGER ON
+.....................HELP_PATH /usr/local/lib/irc/help
+...................HELP_PROMPT ON
+...................HELP_WINDOW OFF
+.........HIDE_PRIVATE_CHANNELS OFF
+................HIGHLIGHT_CHAR INVERSE
+.......................HISTORY 100
+.....................HOLD_MODE OFF
+.................HOLD_MODE_MAX 0
+.....................HTTP_GRAB OFF
+....................IDENT_HACK .authlie
+....................IDLE_CHECK 120
+...................IGNORE_TIME 600
+........................INDENT ON
+.................INPUT_ALIASES OFF
+..................INPUT_PROMPT [$C] 
+..............INPUT_PROTECTION OFF
+...................INSERT_MODE ON
+.................INVERSE_VIDEO ON
+.....................JOINFLOOD ON
+................JOINFLOOD_TIME 50
+.....................KICKFLOOD ON
+................KICKFLOOD_TIME 30
+................KICK_IF_BANNED ON
+.............KICK_ON_DEOPFLOOD 3
+.............KICK_ON_JOINFLOOD 4
+.............KICK_ON_KICKFLOOD 4
+.............KICK_ON_NICKFLOOD 3
+..............KICK_ON_PUBFLOOD 30
+......................KICK_OPS ON
+......................LAMELIST ON
+.......................LASTLOG 1000
+..................LASTLOG_ANSI OFF
+.................LASTLOG_LEVEL ALL
+.........................LLOOK OFF
+...................LLOOK_DELAY 120
+.....................LOAD_PATH ~/.irc:/usr/local/lib/irc/script:~/.BitchX:.
+...........................LOG ON
+.......................LOGFILE IrcLog
+..........................MAIL 2
+.....................MAX_DEOPS 2
+.................MAX_IDLEKICKS 2
+................MAX_RECURSIONS 10
+.........................MIRCS OFF
+.................MODE_STRIPPER OFF
+......................MSGCOUNT 0
+........................MSGLOG ON
+...................MSGLOG_FILE BitchX.away
+..................MSGLOG_LEVEL MSGS NOTICES SEND_MSG
+.....NEXT_SERVER_ON_LOCAL_KILL OFF
+.....................NICKFLOOD ON
+................NICKFLOOD_TIME 30
+...............NICK_COMPLETION ON
+..........NICK_COMPLETION_CHAR 
+..........NICK_COMPLETION_TYPE 0
+................NOTIFY_HANDLER QUIET
+..................NOTIFY_LEVEL ALL
+.........NOTIFY_ON_TERMINATION OFF
+.................NO_CTCP_FLOOD ON
+............NO_FAIL_DISCONNECT OFF
+..................NUM_BANMODES 4
+.................NUM_OF_WHOWAS 4
+...................NUM_OPMODES 3
+....................OPER_MODES swfck
+.................ORIGNICK_TIME 5
+............................OV OFF
+......................PAD_CHAR 
+.....................PING_TYPE 1
+..............PROTECT_CHANNELS *
+......................PUBFLOOD OFF
+.................PUBFLOOD_TIME 20
+......................REALNAME * I'm to lame to read BitchX.doc *
+...................REASON_TYPE 1
+................REVERSE_STATUS OFF
+......................SAVEFILE has no value
+................SCREEN_OPTIONS has no value
+...................SCRIPT_HELP ~/.BitchX/BitchX.help
+....................SCROLLBACK 512
+..................SCROLL_LINES 1
+.................SEND_AWAY_MSG ON
+...............SEND_IGNORE_MSG OFF
+.................SERVER_PROMPT %G[$0]
+.........................SHELL /bin/sh
+...................SHELL_FLAGS -c
+...................SHELL_LIMIT 0
+......................SHITLIST ON
+...............SHITLIST_REASON Surplus Lamerz must go!!!!
+................SHOW_AWAY_ONCE ON
+............SHOW_CHANNEL_NAMES ON
+................SHOW_CTCP_IDLE ON
+..............SHOW_END_OF_MSGS OFF
+.................SHOW_NUMERICS OFF
+.............SHOW_NUMERICS_STR ùíù
+...............SHOW_STATUS_ALL OFF
+.............SHOW_WHO_HOPCOUNT OFF
+...................STATUS_AWAY  (zZzZ %A)
+..............STATUS_CDCCCOUNT [CDCC gets/%| offer/%|]
+................STATUS_CHANNEL %C
+.................STATUS_CHANOP @
+..................STATUS_CLOCK %T
+..............STATUS_CPU_SAVER  (%J)
+...............STATUS_DCCCOUNT [DCC  gets/%& sends/%&]
+..........STATUS_DOES_EXPANDOS OFF
+...................STATUS_FLAG 
+.................STATUS_FORMAT  [%T][%@%N%#%A]%M [%=%C%+%W] %Q %H%B%F 
+................STATUS_FORMAT1  [%T][%@%N%#%A]%M [%=%C%+%W] %Q %H%B%F 
+................STATUS_FORMAT2  %L %! %K %>%D %J[%u:%a:%f:%b:%h]
+................STATUS_FORMAT3 BitchX by panasync 
+...................STATUS_HOLD  -- more --
+.............STATUS_HOLD_LINES  (%B)
+.................STATUS_INSERT 
+....................STATUS_LAG [Lag %L]
+...................STATUS_MAIL [Mail: %M]
+...................STATUS_MODE (+%+)
+...............STATUS_MSGCOUNT  Aw[%^]
+...................STATUS_NICK %N
+.................STATUS_NOTIFY  [Act: %F]
+..............STATUS_NO_REPEAT ON
+...................STATUS_OPER *
+.............STATUS_OPER_KILLS [nk/%K ok/%K]
+..............STATUS_OVERWRITE (overtype) 
+..................STATUS_QUERY  [Query: %Q]
+.............STATUS_SCROLLBACK  (Scroll)
+.................STATUS_SERVER  via %S
+..................STATUS_TOPIC %-
+..................STATUS_UMODE (+%#)
+...................STATUS_USER  * type /help for help 
+..................STATUS_USER1 
+.................STATUS_USER10 
+.................STATUS_USER11 
+.................STATUS_USER12 
+.................STATUS_USER13 
+.................STATUS_USER14 
+.................STATUS_USER15 
+.................STATUS_USER16 
+.................STATUS_USER17 
+.................STATUS_USER18 
+.................STATUS_USER19 
+..................STATUS_USER2 
+..................STATUS_USER3 
+..................STATUS_USER4 
+..................STATUS_USER5 
+..................STATUS_USER6 
+..................STATUS_USER7 
+..................STATUS_USER8 
+..................STATUS_USER9 
+..................STATUS_USERS [O/%! N/%! I/%! V/%! F/%!]
+..................STATUS_VOICE +
+.................STATUS_WINDOW ^^^^^^^^
+..........SUPPRESS_SERVER_MOTD ON
+........................SWATCH COLLIDE,KILLS,MISMATCH,HACK,IDENTD,FAKES,UNAUTHS,CLIENTS,TRAFFIC,REHASH,KLINE,BOTS,OPER,SQUIT,SERVER,CONNECT,FLOOD,USER,STATS,NICK,ACTIVEK,CRAP
+...........................TAB ON
+.......................TAB_MAX 8
+...................TRANSLATION has no value
+...............UNDERLINE_VIDEO ON
+......................USERLIST ON
+......................USERMODE +iw
+..............USER_INFORMATION 
+..................WINDOW_QUIET OFF
+.........................XTERM has no value
+.................XTERM_OPTIONS -bg black -fg white -fn vga11x19
+...................XTERM_TITLE OFF
+..._CDCC_CLOSE_IDLE_SENDS_TIME 55
+..........._CDCC_MINSPEED_TIME 0
+..........._CDCC_PACKS_OFFERED 0
+
+
+SETAR           SETENV          SHIFT           SHITLIST       
+SHOOK           SHOWIDLE        SHOWLOCK        SHOWSPLIT      
+SHOWWORDKICK    SLEEP           SPING           SQUERY         
+SQUIT           STACK           STATS           STUB           
+SV              SWATCH          SWITCH          T              
+TBAN            TCL             TIGNORE         TIME           
+TIMER           TLOCK           
+
+TOGGLE          
+³   auto_nslookup [Off]    ctcp_flood_protection [ On]    beep        [ On]
+³   pubflood      [Off]    flood_protection      [ On]    kickflood   [ On]
+³   dcc_autoget   [ On]    flood_kick            [ On]    msglog      [ On]
+³   llook         [Off]    deopflood             [ On]    joinflood   [ On]
+|   auto_whowas   [Off]    verbose_ctcp          [ On]    nickflood   [ On]
+:   cloak         [Off]    operview              [Off]    shitlist    [ On]
+:   kick_ops      [ On]    annoy_kick            [Off]    userlist    [ On]
+|   hacking       [Off]    nick_completion       [ On]    auto_rejoin [ On]
+:   aop           [Off]    auto_away             [ On]    auto_reconn [ On]
+:   bitch         [Off]    dcc_fast              [ On]    kick_if_ban [ On]
+:   ftp_grab      [Off]    mircs                 [Off]    http_grab   [Off]
+:   display_ansi  [ On]    type /toggle <setting>         log         [Off]
+
+TOPIC          
+TRACE           TRACEKILL       TRACESERV       TYPE           
+U               UB              UMODE           UNAJOIN        
+UNBAN           UNBANWORD       UNFORWARD       UNIDLE         
+UNIG            UNIGH           UNKEY           UNLAMENICK     
+UNLESS          UNLOAD          UNLOADDLL       UNSCREW        
+UNSHIFT         UNSHIT          UNTIL           UNTOPIC        
+UNUSER          UNVOICE         UNWORDKICK      UPING          
+UPTIME          URL             USAGE           USER           
+USERHOST        USERINFO        USERLIST        USERS          
+USERSHOW        VER             VERSION         VOICE          
+W               WAIT            WALL            WALLCHOPS      
+WALLMSG         WALLOPS         WHICH           WHILE          
+WHO             WHOIS           WHOKILL         WHOLEFT        
+WHOWAS          WI              WII             WILM           
+WILN            
+
+WINDOW          
+This is another command with alot of optional parameters. /window by itself
+gives some information about the current window.
+
+ADD           BACK          BALANCE       BEEP_ALWAYS   BIND
+CHANNEL       CREATE        DELETE        DESCRIBE      DISCON
+DOUBLE        ECHO          FIXED         GOTO          GROW
+HELP          HIDE          HIDE_OTHERS   HOLD_MODE     KILL
+KILL_OTHERS   KILLSWAP      LAST          LASTLOG       LASTLOG_LEVEL
+LEVEL         LIST          LOG           LOGFILE       MOVE
+NAME          NEW           NEXT          NOSERV        NOTIFY
+NOTIFY_LEVEL  NUMBER        POP           PREVIOUS      PROMPT
+PUSH          QUERY         REFNUM        REMOVE        SERVER
+SET           SCRATCH       SCROLLBACK    SHOW          SHOW_ALL
+SHRINK        SIZE          SKIP          SPLIT         STACK
+SWAP          TRIPLE        UNBIND        UPDATE
+
+
+WORDLIST        
+
+WSET           
+...................STATUS_AWAY  (zZzZ %A)
+..............STATUS_CDCCCOUNT [CDCC gets/%| offer/%|]
+................STATUS_CHANNEL %C
+.................STATUS_CHANOP @
+..................STATUS_CLOCK %T
+..............STATUS_CPU_SAVER  (%J)
+...............STATUS_DCCCOUNT [DCC  gets/%& sends/%&]
+...................STATUS_FLAG 
+.................STATUS_FORMAT  [%T][%@%N%#%A]%M [%=%C%+%W] %Q %H%B%F 
+................STATUS_FORMAT1  [%T][%@%N%#%A]%M [%=%C%+%W] %Q %H%B%F 
+................STATUS_FORMAT2  %L %! %K %>%D %J[%u:%a:%f:%b:%h]
+................STATUS_FORMAT3 BitchX by panasync 
+...................STATUS_HOLD  -- more --
+.............STATUS_HOLD_LINES  (%B)
+....................STATUS_LAG [Lag %L]
+...................STATUS_MAIL [Mail: %M]
+...................STATUS_MODE (+%+)
+...............STATUS_MSGCOUNT  Aw[%^]
+...................STATUS_NICK %N
+.................STATUS_NOTIFY  [Act: %F]
+.............STATUS_OPER_KILLS [nk/%K ok/%K]
+..................STATUS_QUERY  [Query: %Q]
+.............STATUS_SCROLLBACK  (Scroll)
+.................STATUS_SERVER  via %S
+..................STATUS_TOPIC %-
+..................STATUS_UMODE (+%#)
+...................STATUS_USER  * type /help for help 
+..................STATUS_USER1 
+.................STATUS_USER10 
+.................STATUS_USER11 
+.................STATUS_USER12 
+.................STATUS_USER13 
+.................STATUS_USER14 
+.................STATUS_USER15 
+.................STATUS_USER16 
+.................STATUS_USER17 
+.................STATUS_USER18 
+.................STATUS_USER19 
+..................STATUS_USER2 
+..................STATUS_USER3 
+..................STATUS_USER4 
+..................STATUS_USER5 
+..................STATUS_USER6 
+..................STATUS_USER7 
+..................STATUS_USER8 
+..................STATUS_USER9 
+..................STATUS_USERS [O/%! N/%! I/%! V/%! F/%!]
+..................STATUS_VOICE +
+.................STATUS_WINDOW ^^^^^^^^
+
+WW              XDEBUG          XECHO           XEVAL          
+XQUOTE          XTRA            XTYPE                          
+
+
+BitchX: Functions:
+ABSSTRLEN       ADDTABKEY       AFTER           AFTERW         
+ALIASCTL        ANNOY           ASCII           BANONCHANNEL   
+BCOPY           BEFORE          BEFOREW         BITCHX         
+BMATCH          CENTER          CEXIST          CHANMODE       
+CHANNEL         CHANNICKS       CHANUSERS       CHANWIN        
+CHECKSHIT       CHECKUSER       CHMOD           CHNGW          
+CHOPS           CHR             CLOSE           CLOSESOCKET    
+CLUSTER         COMMON          CONNECT         CONVERT        
+COOL            COOL2           COPATTERN       COUNT          
+COUNTANSI       COUNTRY         CPARSE          CRYPT          
+CURPOS          CURRCHANS       DECODE          DELARRAY       
+DELITEM         DIFF            ELEET           ENCODE         
+EOF             EPIC            FEXIST          FILTER         
+FINDITEM        FINDW           FLASH           FNEXIST        
+FPARSE          FROMW           FSIZE           FTIME          
+GEOM            GETARRAYS       GETCDCC         GETENV         
+GETHOST         GETINFO         GETITEM         GETKEY         
+GETMATCHES      GETREASON       GETRMATCHES     GETTABKEY      
+GETVAR          GLOB            HELP            IDLE           
+IFINDFIRST      IFINDITEM       IGETITEM        INDEX          
+INDEXTOITEM     INFO            INSERTW         IPTONAME       
+IRCLIB          ISALPHA         ISBAN           ISCHANNEL      
+ISCHANOP        ISCONNECTED     ISDIGIT         ISIGNORED      
+ISNUM           ISOP            ISUSER          ISVOICE        
+ITEMTOINDEX     JOT             KEY             LASTMESSAGE    
+LASTNOTICE      LASTSERVER      LEFT            LEFTPC         
+LEFTW           LISTEN          LONGIP          MASK           
+MATCH           MATCHITEM       MID             MIDW           
+MIRCANSI        MKDIR           MSAR            MYCHANNELS     
+MYSERVERS       NAMETOIP        NOCHOPS         NOTIFY         
+NOTW            NUMARRAYS       NUMDIFF         NUMITEMS       
+NUMONCHANNEL    NUMSORT         NUMWORDS        ONCHANNEL      
+OPEN            OPENSOCKET      PAD             PASS           
+PATTERN         PID             POP             PPID           
+PUSH            QUERYWIN        RAND            RANDOMNICK     
+READ            REGCOMP         REGERROR        REGEXEC        
+REGFREE         READSOCKET      REMW            RENAME         
+REPEAT          RESTW           REVERSE         REVW           
+RFILTER         RIGHT           RIGHTW          RINDEX         
+RMATCH          RMATCHITEM      RMDIR           ROT13          
+RPATTERN        RSTRSTR         RWORD           SAR            
+SENDCDCC        SERVERNAME      SERVERNICK      SETINFO        
+SETITEM         SHIFT           SORT            SPLICE         
+SPLIT           SRAND           STATSPARSE      STATUS         
+STIME           STRFTIME        STRIP           STRIPANSI      
+STRIPANSICODES  STRIPMIRC       STRLEN          STRSTR         
+TDIFF           TDIFF2          TIME            TOLOWER        
+TOUPPER         TOW             TR              TRUNC          
+TWIDDLE         UHOST           UMASK           UNAME          
+UNIQ            UNLINK          UNSHIFT         UPTIME         
+USERHOST        USERMODE        UTIME           VERSION        
+WHICH           WINBOUND        WINCHAN         WINLEN         
+WINNAM          WINNICKLIST     WINNUM          WINREFS        
+WINSERV         WINSIZE         WINVISIBLE      WORD           
+WRITE           WRITEB          WRITESOCKET                    
+
+Tcl_CreateCommand(interp, "ircii",	tcl_ircii,	NULL,NULL);
+Tcl_CreateCommand(interp, "validuser",	tcl_validuser, NULL, NULL);
+Tcl_CreateCommand(interp, "pushmode",	tcl_pushmode, NULL, NULL);
+Tcl_CreateCommand(interp, "flushmode",	tcl_flushmode, NULL, NULL);
+Tcl_CreateCommand(interp, "lvarpop",	Tcl_LvarpopCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "lempty",	Tcl_LemptyCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "lmatch",	Tcl_LmatchCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "keyldel",	Tcl_KeyldelCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "keylget",	Tcl_KeylgetCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "keylkeys",	Tcl_KeylkeysCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "keylset",	Tcl_KeylsetCmd, NULL, NULL);
+Tcl_CreateCommand(interp, "maskhost",	tcl_maskhost,	NULL,NULL);
+Tcl_CreateCommand(interp, "onchansplit",tcl_onchansplit,NULL,NULL);
+Tcl_CreateCommand(interp, "servers",	tcl_servers,	NULL,NULL);
+Tcl_CreateCommand(interp, "chanstruct",	tcl_chanstruct,	NULL,NULL);
+Tcl_CreateCommand(interp, "channel",	tcl_channel,	NULL,NULL);
+Tcl_CreateCommand(interp, "channels",	tcl_channels,	NULL,NULL);
+Tcl_CreateCommand(interp, "isop",	tcl_isop,	NULL,NULL);
+Tcl_CreateCommand(interp, "getchanhost",tcl_getchanhost,NULL,NULL);
+Tcl_CreateCommand(interp, "matchattr",	matchattr,	NULL,NULL);
+Tcl_CreateCommand(interp, "finduser",	tcl_finduser,	NULL,NULL);
+Tcl_CreateCommand(interp, "findshit",	tcl_findshit,	NULL,NULL);
+Tcl_CreateCommand(interp, "date",	tcl_date,	NULL,NULL);
+Tcl_CreateCommand(interp, "getcomment",	tcl_getcomment, NULL,NULL);
+Tcl_CreateCommand(interp, "setcomment",	tcl_setcomment, NULL,NULL);
+Tcl_CreateCommand(interp, "time",	tcl_time,	NULL,NULL);
+Tcl_CreateCommand(interp, "ctime",	tcl_ctime,	NULL,NULL);
+Tcl_CreateCommand(interp, "dccstats",	tcl_dccstats,	NULL,NULL);
+Tcl_CreateCommand(interp, "onchan",	tcl_onchan,	NULL,NULL);
+Tcl_CreateCommand(interp, "chanlist",	tcl_chanlist,	NULL,NULL);
+Tcl_CreateCommand(interp, "unixtime",	tcl_unixtime,	NULL,NULL);
+Tcl_CreateCommand(interp, "putlog",	tcl_putlog,	NULL,NULL);
+Tcl_CreateCommand(interp, "putloglev",	tcl_putloglev,	NULL,NULL);
+Tcl_CreateCommand(interp, "rand",	tcl_rand,	NULL,NULL);
+Tcl_CreateCommand(interp, "timer",	tcl_timer,	NULL,NULL);
+Tcl_CreateCommand(interp, "killtimer",	tcl_killtimer,	NULL,NULL);
+Tcl_CreateCommand(interp, "utimer",	tcl_utimer,	NULL,NULL);
+Tcl_CreateCommand(interp, "killutimer",	tcl_killutimer,	NULL,NULL);
+Tcl_CreateCommand(interp, "timers",	tcl_timers,	NULL,NULL);
+Tcl_CreateCommand(interp, "utimers",	tcl_utimers,	NULL,NULL);
+Tcl_CreateCommand(interp, "putserv", 	tcl_putserv, 	NULL, NULL);
+Tcl_CreateCommand(interp, "putscr",	tcl_putscr,	NULL, NULL);
+Tcl_CreateCommand(interp, "putdcc",	tcl_putdcc,	NULL, NULL);
+Tcl_CreateCommand(interp, "putbot",	tcl_putbot,	NULL, NULL);
+Tcl_CreateCommand(interp, "putallbots",	tcl_putallbots,	NULL, NULL);
+Tcl_CreateCommand(interp, "bind",	tcl_bind,	(ClientData)0,NULL);
+Tcl_CreateCommand(interp, "binds",	tcl_tellbinds,	(ClientData)0,NULL);
+Tcl_CreateCommand(interp, "unbind",	tcl_bind,	(ClientData)1,NULL);
+Tcl_CreateCommand(interp, "strftime",	tcl_strftime,	NULL,NULL);
+Tcl_CreateCommand(interp, "cparse",	tcl_cparse,	NULL,NULL);
+Tcl_CreateCommand(interp, "userhost",	tcl_userhost,	NULL,NULL);
+Tcl_CreateCommand(interp, "getchanmode", tcl_getchanmode,NULL,NULL);
+Tcl_CreateCommand(interp, "msg",	tcl_msg,	NULL,NULL);
+Tcl_CreateCommand(interp, "say",	tcl_say,	NULL,NULL);
+Tcl_CreateCommand(interp, "desc",	tcl_desc,	NULL,NULL);
+Tcl_CreateCommand(interp, "notice",	tcl_msg,	NULL,NULL);
+Tcl_CreateCommand(interp, "bots",	tcl_bots,	NULL, NULL);
+Tcl_CreateCommand(interp, "clients",	tcl_clients,	NULL, NULL);
+Tcl_CreateCommand(interp, "rword",	tcl_alias, NULL, NULL);
+
+
+Well I think that's it for now. I will try and expand on this documentation
+in the future, documenting the very powerful / commands as well as some of
+the $functions() that the scripters are using. For right now though pressing
+/<esc><esc> or /<tab>  will bring up the complete list of commands and
+functions. The /bhelp command documents the most important / commands. But
+it does depend on the BitchX.hlp file and a properly setup $HOME directory.
+At some point in the near future a complete source package for BitchX will
+become available on a ftp/www site as well as for dcc in #bitchx channels.
+The current version of BX97 I've decided to make non-tcl due to a problem
+with a system crash in the dll's from CYGNUS.
+
+						Colten Edwards
+                				edwac@sk.sympatico.ca
+						panasync@efnet #bitchx
+
+
+If you really like the program and wish to help the author.
+	Box 275
+	Conquest,SK
+	S0L-0C0
+	Canada
+
+Hardware, donations, postcard, even job offers :)
+
+
+                            Favorite IRC Client
+                      Displaying results of the poll.
+               BitchX   [INLINE] [INLINE] [INLINE] 1386 / 36%
+                 Kirc   [INLINE] [INLINE] [INLINE] 148 / 3%
+                ircII   [INLINE] [INLINE] [INLINE] 713 / 18%
+                Mirc   [INLINE] [INLINE] [INLINE] 419 / 10%
+                 Virc   [INLINE] [INLINE] [INLINE] 180 / 4%
+                 Epic   [INLINE] [INLINE] [INLINE] 235 / 6%
+                Other   [INLINE] [INLINE] [INLINE] 507 / 13%
+                             3818 total votes.

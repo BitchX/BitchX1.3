@@ -1,0 +1,6 @@
+Synopsis:
+   loaddll <file>
+
+Description:
+   LOADDLL loads various plugins which have been written for BitchX. These
+   plugins add various functionality to the client.

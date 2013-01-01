@@ -1,0 +1,27 @@
+Synopsis:
+   on [<modes>]set [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever a /set is issued.
+
+Parameters:
+   $0    name of variable to be set.
+         will be "set-error" if an invalid SET variable was specified
+   $1-   value the variable will be set to.
+         will be "No such variable "FOO"", where FOO is the invalid SET
+	 variable if $0 is "set-error"
+
+Examples:
+   To make sure EXEC_PROTECTION stays on:
+      on ^set "exec_protection off" {
+         echo *** You cannot set EXEC_PROTECTION off!
+         set exec_protection on
+      }
+
+   To warn of all invalid /SET attempts:
+      on ^set "set-error *" {
+         echo *** $1-. Please try again
+      }
+See Also:
+   set(4)
+

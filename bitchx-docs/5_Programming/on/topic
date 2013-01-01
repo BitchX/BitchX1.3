@@ -1,0 +1,15 @@
+Synopsis:
+   on [<modes>]topic [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered when the topic is changed on any channel the
+   client is on.
+
+Parameters:
+   $0    nickname of person changing topic
+   $1    channel topic was changed on
+   $2-   new topic
+
+See Also:
+   on(5) 331, 332; topic(1)
+

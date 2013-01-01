@@ -1,0 +1,19 @@
+Synopsis:
+   set status_mode [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the
+   current channel has at least one mode set (not including +o or +v).
+   If no modes are set, nothing is displayed.
+
+   This string is represented as %+ in the STATUS_FORMAT string.  When
+   used inside STATUS_MODE, it will expand to the actual modes and their
+   arguments.
+
+Examples:
+   Customizing the appearance of the channel modes in the status bar:
+      /set status_mode Mode %+
+
+See Also:
+   mode(1); set(4) status_format
+

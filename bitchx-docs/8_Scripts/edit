@@ -1,0 +1,18 @@
+Synopsis:
+   load edit
+
+Description:
+   This useful, but simple, script allows the user to edit any arbitrary
+   loaded alias on the input line.  It creates a single alias, /edit,
+   which takes one argument, an alias name.  Furthermore, the alias name
+   may be abbreviated so long as it is not ambiguous.
+
+See Also:
+   alias(5); load(5)
+
+Other Notes:
+   This clever script was originally written by Charles Hannum (Mycroft),
+   mycroft@prep.ai.mit.edu.  It has been heavily revamped and simplified
+   by Jeremy Nelson (hop), jnelson@acronet.net, to take advantages of EPIC
+   features.
+

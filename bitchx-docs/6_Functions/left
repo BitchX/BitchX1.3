@@ -1,0 +1,28 @@
+Synopsis:
+   $left(<count> <text>)
+   $right(<count> <text>)
+
+Technical:
+   These functions return a slice of the given length from the input
+   string, either from the left side or the right side of the string.  The
+   functions do no padding, so it is more accurate to say that they will
+   return no more than the given number of characters, not necessarily
+   exactly the given amount.
+
+Practical:
+   The most common use for these functions is fetching a certain number of
+   characters from an arbitrary string, where the length is known, but the
+   contents are inconsequential.
+
+Returns:
+   substring no longer than specified length
+
+Examples:
+   $left(5 biklmnopstv)                     returns "biklm"
+   $left(15 biklmnopstv)                    returns "biklmnopstv"
+   $left(-2 biklmnopstv)                    returns nothing
+   $right(5 biklmnopstv)                    returns "opstv"
+
+See Also:
+   mid(6)
+

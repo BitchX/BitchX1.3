@@ -1,0 +1,11 @@
+Synopsis:
+   set warn_of_ignores [on|off|toggle]
+
+Description:
+   When turned on, the client will issue a warning message if the user
+   sends a message to a user that the client is ignoring.  When turned off,
+   the client does nothing.
+
+See Also:
+   ignore(1); msg(1)
+

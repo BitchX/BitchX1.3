@@ -1,0 +1,29 @@
+Synopsis:
+   $rmdir(<directory> [<directory> ...])
+
+Technical:
+   This function unlinks the specified directories from the filesystem.  As
+   with the normal shell mechanism, the directory must be empty before it
+   can be removed.  Tilde-expansion is permitted.
+
+Practical:
+   One practical use for this function might be to remove any temporary
+   directories created by a script installation program.  Other than that,
+   there aren't many common uses for this function.
+
+Returns:
+    0   successfully removed all directories given
+   >0   number of directories that could not be removed
+
+Examples:
+   $rmdir(~/temp)             returns 0 if ~/temp is empty
+   $rmdir(~/temp /etc)        probably will return 1, unless you're root
+
+See Also:
+   mkdir(6)
+
+Bugs:
+   When $rmdir() fails to some extent, it shows how many directories could
+   not be removed, but does not say which ones.  This isn't necessarily a
+   bug, but it could be bothersome.
+

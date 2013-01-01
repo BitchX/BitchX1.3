@@ -1,0 +1,33 @@
+Synopsis:
+   on [<modes>]dcc_connect [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client successfully establishes a
+   DCC connection with another client.  Currently, this is either a CHAT
+   or a SEND connection.
+
+Parameters:
+   $0    nickname of remote client
+   $1    type of DCC connection
+   $2    ip address of remote client
+   $3    port on the ip address the client is connected to
+   $4    file name (SEND only)
+   $5    file size (SEND only)
+
+Examples:
+   To customize the connection message:
+      on ^dcc_connect "*" {
+         echo *** DCC $1 connection with $0[$2:$3] established
+         if ( [$1] == [send] ) echo *** Transferring $4 \($5 bytes\)
+      }
+
+See Also:
+   dcc(1); on(5) dcc_lost, dcc_request
+
+Other Notes:
+   Note that establishing a DCC connection does not involve the irc network.
+   Thus, the $userhost() function will not work inside this hook.
+
+   For a DCC SEND connection, this will be hooked twice. Once with $1 being
+   SEND, and again being GET. This is for compatibility with bitchx.
+

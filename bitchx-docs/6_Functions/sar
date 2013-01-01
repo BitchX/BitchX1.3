@@ -1,0 +1,33 @@
+Synopsis:
+   $sar([i][g][r]/<search>/<replace>/<text>)
+
+Technical:
+   This function searches for the given search string in the given text, and
+   replaces if with the replacement text, if a match is found.  The field
+   delimiter may be any character; the first character found that is not a
+   'g' or 'r' is used.
+
+Practical:
+   This is the general purpose search-and-replace function.  It allows you
+   to look for any arbitrary text substring in any text string, and replace
+   it with another arbitrary substring.  Any of the strings may consist of
+   variables to expand at runtime.
+
+Returns:
+   resultant string
+
+Options:
+   i    do case-insensitive searches
+   g    replace all matches, not just the first
+   r    assume text is a variable name; assign return value to variable
+
+Examples:
+   @ foo = [foobarblah]
+   $sar(/oo/ee/booyamon)              returns "beeyamon"
+   $sar(/oo/ee/foofoo)                returns "feefoo"
+   $sar(g/oo/ee/foofoo)               returns "feefee"
+   $sar(r/oo/ee/foo)                  returns and sets $foo to "feebarblah"
+
+See Also:
+   tr(6); msar(6)
+

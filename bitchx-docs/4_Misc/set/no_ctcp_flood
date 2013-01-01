@@ -1,0 +1,15 @@
+Synopsis:
+   set no_ctcp_flood [on|off|toggle]
+
+Description:
+   When turned on, the client will only return at most one CTCP reply every
+   2 (two) seconds to any particular nickname.  Additional CTCP requests
+   within that time frame are simply ignored.
+
+See Also:
+   ctcp(1); ignore(1)
+
+Other Notes:
+   The client checks this variable on a per-nickname basis.  This makes it
+   ineffective when being flooded by multiple clients in concert.
+

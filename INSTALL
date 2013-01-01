@@ -1,0 +1,132 @@
+                 Installation Instructions for BitchX 1.2-Final
+
+BitchX is known to compile on the following systems (maybe others as well):
+    * BSDI 2.0, 2.1, 3.1, 4.0
+    * FreeBSD 2.x, 3.x, 4.0 and above
+    * NetBSD 3.x, 4.x
+    * SunOS 4.1.4, 5.x and above
+    * Linux (All)
+    * Mac OSX (All)
+    * IRIX 5, 6
+    * HP-UX 9.x, 10.x
+    * OSF/1 (DEC Alpha)
+    * Ultrix
+    * AIX
+    * OS/2 (with EMX)
+    * Windows 9x/2000/NT/XP/Vista/7 (with Cygwin)
+    * QNX
+
+As of April 2012 BitchX is now officially included in Fedora Linux 15,16,17,18
+BitchX is also in the Red Hat EPEL repos (Extra Packages for Enterprise Linux).
+To install on Fedora simply type "yum install BitchX" as root.
+It is also included in the FreeBSD ports tree.
+
+Introduction:
+
+	Problems may occur during the compilation process of BitchX. If
+you do have a problem, please check http://github.com/BitchX/BitchX1.2/wiki
+which has instructions on compilations. If you still need help please gather 
+as much information about the error (*FULL* output of "configure and "make") 
+and join #BitchX on freenode or EFNet. 
+
+BUGS:
+Please submit bugs here: http://github.com/BitchX
+
+	Several script writers tend to hang in the #BitchX on EFNet to
+distribute their work to others. http://www.bitchx.ca/scripts  is a great place 
+where scripts can be found.  You can also check out the scripting forum at the
+previously mentioned forums site.
+
+	Some features will only work with certain servers -- IRCUMODE and
+/4OP for example. Therefore, servers such as UnderNet, DalNet, and NewNet,
+to name a few, will not respond to the user modes given. Scripts can cause
+problems as well, usually due to bugs within the script. If there is a
+known bug in the client, please contact the appropriate people, panasync
+or any of the non-idling ops in #BitchX. If the bug can be reproduced
+faithfully, then we have enough to determine how it can be resolved.
+
+
+	Please check out the wiki at http://www.github.com/BitchX/BitchX1.2/wiki 
+if you should have any troubles compiling.  A number of common mistakes and problems
+users run into are posted in the FAQ and sometimes on the Forums as well.
+
+Compiling BitchX:
+
+In order to compile BitchX you need to do the following: (Optional steps
+are marked with an asterisk, "*")
+
+  1) Enter the BitchX directory tree; this is the most important step.
+     Executing configure outside the tree is now possible, for example:
+
+     # mkdir obj-i586-mandrake-linux
+     # cd obj-i586-mandrake-linux
+     # ../configure --prefix=/usr --with-plugins
+
+  2) Run the GNU configuration script, "configure". It should find
+     whatever it needs for the compilation of BitchX, such as system
+     includes, ncurses, Tcl, and locations of important files. There are
+     options that can be given to "configure". "configure --help" will detail
+     all of them. Using at least "configure --with-plugins" is recommended
+     if you plan on using one or more of the many plugins that are
+     distributed with BitchX. Add "--with-gtk" if you have gtk and gnome-libs
+     and would like a graphical client. Add "--with-tcl" if you want Tcl script
+     support on i386 systems (Note: most users do not need this). tcl.o for
+     other architecures may be available on BitchX FTP sites. The source code
+     for tcl.o is not publically available.
+      
+* 3) "include/config.h" may need tweaking if you intend to change the
+     default server list. To change, locate "DEFAULT_SERVER" and remove the
+     original default servers and add as many as you please (These will
+     be appended to the "/usr/local/lib/bx/ircII.servers" and "~/.ircservers"
+     list). Alternatively, you can run "make bxconf" and use the graphical
+     configuration utility to change many of BitchX's options.
+
+  4) Execute "make" inside the BitchX directory. If any error messages are
+     shown (Error, *not* Warning messages!!!) that you are unable to resolve
+     on your own, seek help. "README" has more information on where you can go
+     for help.
+
+* 5) Edit "include/defs.h". On some systems, configure may not properly
+     determine one or two definitions ("#define foo"). Search for
+     offending defines which cause make not to proceed compiling.
+     Usually, there should be a "#define" or "#undef" located on the line
+     make has shown. A reversal of the definition (change "#define" to
+     "#undef", or vice versa). Go on to step 6 once you have completed
+     this step. If problems still persist, see "README" for information on
+     where you can go for help. Note: DOING THIS STEP IS NOT RECOMMENDED.
+     If "configure" fails to properly define something for whatever reason,
+     PLEASE REPORT THIS AS A BUG to the current configure script maintainer
+     (see "README" for details), rather than trying to edit "include/defs.h"
+     by hand. 
+
+* 6) Debugging information may be left into the compiled binary, so a
+     "strip source/BitchX" solves the rather large size seen previously.
+     However, "make install" (Step 7) should strip the binaries for you.
+
+  7) Execute "make install". This should install the BitchX binary to
+     "/usr/local/bin". Commonly, users may not have superuser access, thus a
+     refusal ("permission denied" message) will occur. If you still insist on
+     using "make install" to install BitchX, it is required that you change
+     the installation path defined in step 4 by using
+     "configure --prefix=/home/johndoe", for example, or use
+     "make install_local" to install the binary to your home directory.
+     However, it is recommened that you use the "--prefix=" method if you wish
+     to have a full BitchX installation with all of the help files installed.
+
+* 8) It is not a requirement to use function-filled scripts with BitchX,
+     because the aim of BitchX is to create a scriptless client, or more
+     appropriately, a client less dependant upon scripts. With the development
+     of BitchX, scripts will become quickly outdated due to the
+     incompatibility caused by new commands, hooks, or hardcoded replacements
+     for a function in the script. This is merely a warning.
+
+--
+Last Updated:
+Dan Mashal
+dan408@bitchx.ca
+
+Previous authors:
+Rob Andrews aka sin 03/26/2004
+David Walluck
+BarK0de
+BlackJac

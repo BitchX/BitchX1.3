@@ -1,0 +1,13 @@
+Synopsis:
+   set beep_on_msg all|none
+   set beep_on_msg [-]<level> [[-]<level> ...]
+
+Description:
+   This setting causes the client to beep whenever a specific event is
+   triggered, in addition to any messages containing embedded beeps.
+   The valid event types are MSG, NOTE, NOTICE, PUBLIC, WALL, and
+   WALLOP; refer to LASTLOG_LEVEL for information on these levels.
+
+See Also:
+   beep(4); set(4) beep, beep_max, beep_when_away, lastlog_level
+

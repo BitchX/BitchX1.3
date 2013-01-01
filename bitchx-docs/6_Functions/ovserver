@@ -1,0 +1,16 @@
+Synopsis:
+   $ovserver(<index>)
+
+Technical:
+   This function associates a server' short name with the given index number.
+
+Practical:
+   This function is used to convert from a server's index number to its
+   short name.  This short name is traditionally used by OperView.
+
+Returns:
+   short name of server, if any
+
+See Also:
+   server(1); servnum(6); servname(6); winserv(6)
+

@@ -1,0 +1,26 @@
+Synopsis:
+   load autoop
+
+Description:
+   This script allows the client to automatically grant a user channel mode
+   +o upon joining the channel, assuming the client has +o itself.  To help
+   keep mode changes to a minimum, the script will wait 10-20 seconds
+   before setting the mode.  Aliases are provided for adding and removing
+   users and channels to watch for.
+
+     Alias           Description                                          
+     /addchan <x>    add channel to autoop list
+     /addop <x>      add user to autoop list
+     /delchan <x>    remove channel from autoop list
+     /delop <x>      remove user from autoop list
+     /showchan <x>   show channels that autoop watches
+     /showop <x>     show users that will receive the autoop
+
+See Also:
+   load(5); mode(1)
+
+Other Notes:
+   This script was originally written by Ian Frechette (Daemon), with
+   modifications by Jeremy Nelson (hop), jnelson@acronet.net, to optimize it
+   for ircII-EPIC.
+

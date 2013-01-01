@@ -1,0 +1,96 @@
+--- BitchX.orig/include/color.h	Mon Nov 22 00:47:16 1999
++++ BitchX/include/color.h	Mon Dec 27 19:21:51 1999
+@@ -419,13 +419,13 @@
+ #define DEFAULT_FORMAT_476_FSET "$G [$1] You are not opped"
+ 
+ #ifdef ONLY_STD_CHARS
+-#define DEFAULT_FORMAT_ACTION_FSET "%@%K* %W$1 %n$4-"
+-#define DEFAULT_FORMAT_ACTION_AR_FSET "%@%K* %Y$1 %n$4-"
+-#define DEFAULT_FORMAT_ACTION_CHANNEL_FSET "%@%K* %Y$1/$3 %n$4-"
+-#define DEFAULT_FORMAT_ACTION_OTHER_FSET "%@%K* %n>%c$1 %n$3-"
+-#define DEFAULT_FORMAT_ACTION_OTHER_AR_FSET "%@%K* %y>%c$1 %n$3-"
+-#define DEFAULT_FORMAT_ACTION_USER_FSET "%@%K* %n>%c$1 %n$3-"
+-#define DEFAULT_FORMAT_ACTION_USER_AR_FSET "%@%K* %y>%c$1 %n$3-"
++#define DEFAULT_FORMAT_ACTION_FSET ansi?"%@%K* %W$1 %n$4-":"* $1 $4-"
++#define DEFAULT_FORMAT_ACTION_AR_FSET ansi?"%@%K* %Y$1 %n$4-":"* $1 $4-"
++#define DEFAULT_FORMAT_ACTION_CHANNEL_FSET ansi?"%@%K* %Y$1/$3 %n$4-":"* $1/$3 $4-"
++#define DEFAULT_FORMAT_ACTION_OTHER_FSET ansi?"%@%K* %n>%c$1 %n$3-":"* >$1 $3-"
++#define DEFAULT_FORMAT_ACTION_OTHER_AR_FSET ansi?"%@%K* %y>%c$1 %n$3-":"* >$1 $3-"
++#define DEFAULT_FORMAT_ACTION_USER_FSET ansi?"%@%K* %n>%c$1 %n$3-":"* >$1 $3-"
++#define DEFAULT_FORMAT_ACTION_USER_AR_FSET ansi?"%@%K* %y>%c$1 %n$3-":"* >$1 $3-"
+ #else
+ #define DEFAULT_FORMAT_ACTION_FSET ansi?"%@%Kð %W$1 %n$4-":"%@ð $1 $4-"
+ #define DEFAULT_FORMAT_ACTION_AR_FSET ansi?"%@%Kð %Y$1 %n$4-":"%@ð $1 $4-"
+@@ -668,26 +668,26 @@
+ #define DEFAULT_FORMAT_WHO_FSET "%Y$[10]0 %W$[10]1%w %c$[3]2 %w$3%R@%w$4 ($6-)"
+ 
+ #ifdef ONLY_STD_CHARS
+-#define DEFAULT_FORMAT_WHOIS_AWAY_FSET "%G| %Wa%nway     : $0 - $1-"
+-#define DEFAULT_FORMAT_WHOIS_BOT_FSET "%G| %Wb%not      : A:$0 P:$1 [$2] $3-"
+-#define DEFAULT_FORMAT_WHOIS_CHANNELS_FSET "%G| %Wc%nhannels : $0-"
+-#define DEFAULT_FORMAT_WHOIS_FRIEND_FSET "%G| %Wf%nriend   : L:$0 A:$1 P:$2 $3-"
+-#define DEFAULT_FORMAT_WHOIS_HEADER_FSET "%G------------------------------------------------"
+-#define DEFAULT_FORMAT_WHOIS_IDLE_FSET "%G| %Wi%ndle     : $0 hours $1 mins $2 secs (signon: $stime($3))"
+-#define DEFAULT_FORMAT_WHOIS_SHIT_FSET "%G| %Ws%nhit     : L:$0 [$1] $2 $3-"
+-#define DEFAULT_FORMAT_WHOIS_SIGNON_FSET "%K %Ws%nignon   : $0-"
+-#define DEFAULT_FORMAT_WHOIS_NAME_FSET "%G| %Wi%nrcname  : $0-"
+-#define DEFAULT_FORMAT_WHOIS_NICK_FSET "%G| %W$0 %K(%n$1@$2%K) %K(%W$3-%K)"
+-#define DEFAULT_FORMAT_WHOIS_OPER_FSET "%G| %Wo%nperator : $0 $1-"
+-#define DEFAULT_FORMAT_WHOIS_SERVER_FSET "%G| %Ws%nerver   : $0 ($1-)"
+-#define DEFAULT_FORMAT_WHOLEFT_HEADER_FSET "%G------ %WWho %G---------------------- %WChannel%G--- %wServer %G------------- %wSeconds"
+-#define DEFAULT_FORMAT_WHOLEFT_USER_FSET "%G³%n $[-10]0!$[20]1 $[10]2 $[20]4 $3"
+-#define DEFAULT_FORMAT_WHOWAS_HEADER_FSET "%G-----------------------------------------------"
+-#define DEFAULT_FORMAT_WHOWAS_NICK_FSET "%G| %W$0%n was %K(%n$1@$2%K)"
+-#define DEFAULT_FORMAT_WHOIS_ADMIN_FSET "%K| %Wa%ndmin    : $0 - $1-"
+-#define DEFAULT_FORMAT_WHOIS_SERVICE_FSET "%K| %Ws%nervice  : $0 - $1-"
+-#define DEFAULT_FORMAT_WHOIS_HELP_FSET "%K| %Wh%nelp     : $0 - $1-"
+-#define DEFAULT_FORMAT_WHOIS_REGISTER_FSET "%K| %Wr%negister : $0 - $1-"
++#define DEFAULT_FORMAT_WHOIS_AWAY_FSET ansi?"%K| %Wa%nway     : $0 - $1-":"| away     : $0 - $1-"
++#define DEFAULT_FORMAT_WHOIS_BOT_FSET ansi?"%g| %Wb%not      : A:$0 P:$1 [$2] $3-":"| bot      : A:$0 P:$1 [$2] $3-"
++#define DEFAULT_FORMAT_WHOIS_CHANNELS_FSET ansi?"%g| %Wc%nhannels : $0-":"| channels : $0-"
++#define DEFAULT_FORMAT_WHOIS_FRIEND_FSET ansi?"%g| %Wf%nriend   : F:$0 $1-":"| friend   : F:$0 $1-"
++#define DEFAULT_FORMAT_WHOIS_HEADER_FSET ansi?"%G.--------%g-%G--%g--%G-%g---------%K-%g--%K--%g-%K------------ --  -":".----------------------------------------- --  -"
++#define DEFAULT_FORMAT_WHOIS_IDLE_FSET ansi?"%K: %Wi%ndle     : $0 hours $1 mins $2 secs (signon: $stime($3))":": idle     : $0 hours $1 mins $2 secs (signon: $stime($3))"
++#define DEFAULT_FORMAT_WHOIS_SHIT_FSET ansi?"%g| %Ws%nhit     : L:$0 [$1] $2 $3-":"| shit     : L:$0 [$1] $2 $3-"
++#define DEFAULT_FORMAT_WHOIS_SIGNON_FSET ansi?"%K| %Ws%nignon   : $0-":"| signon   : $0-"
++#define DEFAULT_FORMAT_WHOIS_NAME_FSET ansi?"%G: %Wi%nrcname  : $0-":": ircname  : $0-"
++#define DEFAULT_FORMAT_WHOIS_NICK_FSET ansi?"%G| %W$0 %K(%n$1@$2%K) %K(%W$3-%K)":"| $0 ($1@$2) ($3-)"
++#define DEFAULT_FORMAT_WHOIS_OPER_FSET ansi?"%K| %Wo%nperator : $0 $1-":"| operator : $0 $1-"
++#define DEFAULT_FORMAT_WHOIS_SERVER_FSET ansi?"%K| %Ws%nerver   : $0 ($1-)":"| server   : $0 ($1-)"
++#define DEFAULT_FORMAT_WHOLEFT_HEADER_FSET ansi?"%G.----- %WWho %G-----%g---%G---%g--%G-----%g--%G-- %WChannel%g--- %wServer %G-%g----%G--%g--%G----%g %wSeconds":".----- Who ---------------------- Channel--- Server ------------- Seconds"
++#define DEFAULT_FORMAT_WHOLEFT_USER_FSET ansi?"%G|%n $[-10]0!$[20]1 $[10]2 $[20]4 $3":"| $[-10]0!$[20]1 $[10]2 $[20]4 $3"
++#define DEFAULT_FORMAT_WHOWAS_HEADER_FSET ansi?"%G.--------%g-%G--%g--%G-%g---------%K-%g--%K--%g-%K------------ --  -":".----------------------------------------- --  -"
++#define DEFAULT_FORMAT_WHOWAS_NICK_FSET ansi?"%G| %W$0%n was %K(%n$1@$2%K)":"| $0 was ($1@$2)"
++#define DEFAULT_FORMAT_WHOIS_ADMIN_FSET ansi?"%K| %Wa%ndmin    : $0 - $1-":"| admin    : $0 - $1-"
++#define DEFAULT_FORMAT_WHOIS_SERVICE_FSET ansi?"%K| %Ws%nervice  : $0 - $1-":"| service  : $0 - $1-"
++#define DEFAULT_FORMAT_WHOIS_HELP_FSET ansi?"%K| %Wh%nelp     : $0 - $1-":"| help     : $0 - $1-"
++#define DEFAULT_FORMAT_WHOIS_REGISTER_FSET ansi?"%K| %Wr%negister : $0 - $1-":"| register : $0 - $1-"
+ #else
+ #define DEFAULT_FORMAT_WHOIS_AWAY_FSET ansi?"%K| %Wa%nway     : $0 - $1-":"| away     : $0 - $1-"
+ #define DEFAULT_FORMAT_WHOIS_BOT_FSET ansi?"%g| %Wb%not      : A:$0 P:$1 [$2] $3-":"| bot      : A:$0 P:$1 [$2] $3-"
+--- BitchX.orig/source/vars.c	Tue Nov 16 05:58:01 1999
++++ BitchX/source/vars.c	Mon Dec 27 19:16:46 1999
+@@ -1392,6 +1392,9 @@
+ #ifndef ONLY_STD_CHARS
+ 	set_string_var(SHOW_NUMERICS_STR_VAR, value ? "[1;31mù[0m[1;37mí[1;31mù[0m" : "-:-");
+ 	set_numeric_string(current_window, value ? "[1;31mù[0m[1;37mí[1;31mù[0m":"-:-", 0);
++#else
++	set_string_var(SHOW_NUMERICS_STR_VAR, value ? "[1;31m-[0m[1;37m:[1;31m-[0m" : "-:-");
++	set_numeric_string(current_window, value ? "[1;31m-[0m[1;37m:[1;31m-[0m":"-:-", 0);
+ #endif
+ 	reinit_status(win, unused, value);
+ }
+--- BitchX.orig/source/irc.c	Thu Dec 16 12:05:39 1999
++++ BitchX/source/irc.c	Mon Dec 27 19:23:04 1999
+@@ -97,7 +97,11 @@
+ 						 * switchs are set */
+ 	dead	   = 0, 
+ 	inhibit_logging = 0,
++#ifndef ONLY_STD_CHARS
+ 	startup_ansi = 1,			/* display startup ansi */
++#else
++	startup_ansi = 0,			/* DO NOT display startup ansi */
++#endif
+ 	auto_connect = 1,			/* auto-connect to first server*/
+ 
+ 	background = 0,

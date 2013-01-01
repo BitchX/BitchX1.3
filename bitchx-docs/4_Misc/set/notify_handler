@@ -1,0 +1,22 @@
+Synopsis:
+   set notify_handler [<old|quiet|noisy>]
+
+Description:
+   This setting controls when the client will report a signon or signoff
+   for a user in the notify list.  The normal behavior is to check for
+   every nickname in the list at set intervals.  This setting allows the
+   client to internally register a signon (or signoff) based on other
+   information that would clearly indicate it, such as a JOIN or QUIT.
+
+Options:
+   noisy   trigger NOTIFY on JOINs, SIGNOFFs, and 401 numerics
+   old     normal behavior from stock 2.2.x ircII clients
+   quiet   only trigger NOTIFY on WHOIS+ and ISON output
+
+See Also:
+   ison(2); join(1); notify(1); on(5) 401; signoff(1); whois(2)
+
+Other Notes:
+   The OLD and QUIET settings function the same.  It is uncertain whether
+   this is the intended behavior.
+

@@ -1,0 +1,19 @@
+Synopsis:
+   time [<server|nickname>]
+
+Description:
+   This displays the time of day, local to the server queried (thus, the
+   time returned may not be the same as the client's local time).  If the
+   server name is omitted, the client's current server is used.  If a
+   nickname is given, that client's server is queried.
+
+Examples:
+   To get the local time of JoeBob's server:
+      /time joebob
+
+   To get the local time of server irc.foobar.com:
+      /time irc.foobar.com
+
+Aliases:
+   DATE is identical in operation to TIME.
+

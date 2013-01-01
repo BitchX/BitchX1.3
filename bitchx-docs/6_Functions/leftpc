@@ -1,0 +1,15 @@
+Synopsis:
+   $leftpc(<count> <text>)
+
+Technical:
+   This function returns the leftmost <count> printable characters of <text>,
+   taking into account ANSI color codes.
+
+Returns:
+   <count> number of printable characters in <text>
+
+Examples:
+   $leftpc(10 onetwothre$chr(27)[34mefour)
+     returns
+   onetwothree<blue attribute>
+

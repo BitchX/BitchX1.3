@@ -1,0 +1,17 @@
+Synopsis:
+   addnoflood [<nick>]
+
+Description:
+   This command will add a nick to your NO FLOOD list. This list will bypass
+   the client flood protection, making it good for chanserv's, nickserv's
+   and operserv's as well as friends, who you don't mind allowing flooding.
+
+Examples:
+   To add a nick:
+      /addnoflood nick
+
+   To show no flood list:
+      /addnoflood
+
+See Also:
+

@@ -1,0 +1,31 @@
+Synopsis:
+   $pop(<variable name>)
+   $push(<variable name> <data>)
+
+Technical:
+   These functions are used to add or remove a word from the end of a
+   variable.  They are analogous to the commands of the same names; $pop()
+   removes the last word from the variable and returns it, while $push()
+   adds the given word to the end of the variable and returns the resulting
+   contents of the variable.
+
+Practical:
+   These functions are probably the most efficient for adding data to or
+   removing data from the end of a variable.  It works in the variable name
+   directly, so no expansion is involved (meaning you do not give the
+   variable in the $var notation, just the name alone).
+
+   If the variable to push to does not exist, it is created.  The variable
+   is deleted if the only word in it is popped off.
+
+Returns:
+   pop:  word removed
+   push: variable contents after push
+
+Examples:
+   $push(blah hello there)            adds "hello there" to end of $blah
+   $pop(blah)                         removes "there" from $blah
+
+See Also:
+   pop(5); push(5); shift(6); unshift(6)
+

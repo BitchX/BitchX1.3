@@ -1,0 +1,24 @@
+Synopsis:
+   bind <key> enter_digraph
+
+Description:
+   This function allows special characters not present on the keyboard to
+   be composed, such as European characters containing accents, umlauts,
+   or tildes.  The exact characters available are dependent on the
+   character set in use by the client.
+
+   To enter a digraph, the key bound to this function is typed, followed
+   by the desired character pair.
+
+   In order for the client to properly display these characters, the
+   appropriate character map must be used; the default ASCII translation
+   table will not work.  Additionally, the client must be set to pass 8
+   bit characters (also disabled by default).
+
+   By default, EPIC uses the same digraphs as available on the DEC vt320
+   and vt420 terminal emulators, and those used in the Elvis text editor.
+   The DIGRAPH command with no arguments will list the current table.
+
+See Also:
+   digraph(4); set(4) eight_bit_characters, translation
+

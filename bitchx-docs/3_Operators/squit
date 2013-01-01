@@ -1,0 +1,31 @@
+Synopsis:
+   squit <server|mask> <comment>
+
+Description:
+   This command is used to send a server quit command to another server.
+   Due to the way some servers present themselves on the network, a
+   wildcard mask may be specified for the server to SQUIT.  This is
+   generally used in conjunction with CONNECT, for rerouting the network.
+
+   This command should never ever be used for personal vendettas!
+
+Examples:
+   To squit irc.foo.com:
+      /squit irc.foo.com rerouting
+
+   To squit all of Australia, which is hidden behind a server mask:
+      /squit *.au why is iceland routing aus?
+
+See Also:
+   connect(3)
+
+Restrictions:
+   This command is limited to irc operators, for reasons that should be
+   obvious.
+
+Other Notes:
+   Care must be taken when SQUITing a server mask.  The local server will
+   send the SQUIT to the first server it finds that matches the mask, and
+   it may not be the intended server if the mask is too general.  It is
+   best to avoid masks when possible.
+

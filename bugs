@@ -1,0 +1,78 @@
+
+[Drago(d@NULL.0x00.org)] we wanna hook /msg .name
+[Drago(d@NULL.0x00.org)] from a dll
+[Drago(d@NULL.0x00.org)] we did it
+[Drago(d@NULL.0x00.org)] but the built in /msg handler is still executing
+[Drago(d@NULL.0x00.org)] even though we are returing 1
+
+ajoin and channel keys
+
+<DavidW2> And there's a long standing bug.. a message from nick shouldn't go
+          to the current window if that window is on a dufferent server than
+          nick.. otherwise you msg nick and they're not there because they
+	  are on another server
+
+*note* this is caused by scripts and /xecho -C I believe.
+
+<DavidW2> Notify signoff also go to the wrong window.. there seems to be a
+          bunch of problems about where the output goes if you're on
+	  multiple servers... the same nick@host was on 2 servers.. signed off
+	  server1, but showed in server2's window :/
+
+ 6 [bestis(bestis@ls.sicom.fi)] some info to you msg log or something too:
+the
+          result of whois.arin.net has NS2.NIC.FRIII192.93.0.4 when doing
+just
+          echo $res.. and when putting that to the fe() it cores.. that I is
+          tab? so i need to rip those out to prevent coredumps, but that
+would
+          be fixed in bx too.
+
+
+<fudd> create a hidden window
+<fudd> connect it to another server with /window server
+<fudd> the switch back to window 1
+<fudd> type /fprot off
+<fudd> switch to window 2
+<fudd> type it again
+<fudd> switch back to window 1
+<fudd> type it again
+<fudd> the last time, its still echoed to window 2
+<fudd> and so are all other client messages
+
+[Catatonic(bjr@adsl-63-197-228-74.dsl.snfc21.pacbell.net)] i found a bug i
+          think.  /ov +hide, switch to the ov window, type /ov -hide and
+then
+          switch back to a regular window and type /ov -hide
+
+fudd autojoin and keys
+
+[OMCK(~count_0@nat-wohnheime.rz.uni-karlsruhe.de)] ok look, an user (OMSK
+          ~volt@rz03.RZ-FDDI.FH-Karlsruhe.DE) deoped an protected user (host
+          doesn't matter), and look how bx 1.0c16 react --> ùíù
+          mode/[#TABEPHA] [+ob OMSK *!*volt@*.FH-Karlsruhe.DE] by GE|Grom
+[OMCK(~count_0@nat-wohnheime.rz.uni-karlsruhe.de)] they op and ban them
+          (without a kick) at once
+[OMCK(~count_0@nat-wohnheime.rz.uni-karlsruhe.de)] a friend of my took a
+look
+          in the sources, he means there may be wrong in userlist.c line
+1255
+          and 1257, but he's not sure
+dragoon found /randomnick dragoon cores
+
+<Lam> ok. i'm wondering how to check what window a channel is in, in case it
+          isnt's the primary/on top channel in that window? chanwin()
+doesn't
+          do that
+<Lam> as for $winlevel(), it would be nice if i have let's say
+$levelwin(msg)
+          returning the window to which msgs are redirected
+
+<flyghost:#BitchX> mode/#kittens [+ob DaBiatch *!*jaguar1@*.stuffed.org] by
+                   flyidle <-- that happens on ircnet when my BitchX has to
+                   helpout a protected user
+<flyghost:#BitchX> instead of -o+b it does +ob <-- offender gets opped again
+<flyghost> MASTER,DEOP,KICK,PBAN,PINVITE,REOP
+
+<Zomba> try now, putting: /j #<tab>
+[#a%p%s%s%sänÿ¿] [#bitchx        ] [#trivia        ] [               ]

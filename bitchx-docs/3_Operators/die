@@ -1,0 +1,13 @@
+Synopsis:
+   die
+
+Description:
+   DIE causes the operator's server to do just that; die.  The process
+   terminates normally.
+
+Restrictions:
+   This command is limited to irc operators.  Additionally, it may not be
+   available even to them, depending on how the server was compiled.  The
+   server must #define either OPER_DIE or LOCAL_DIE (or both) for someone
+   to be able to use it at all.
+

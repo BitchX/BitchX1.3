@@ -1,0 +1,23 @@
+Synopsis:
+   load kickmenu
+
+Description:
+   This script keeps track of the last 10 people to join the current
+   channel, and facilitates a very quick means for removing them from the
+   channel (or the irc network!).
+
+     Key        Description                                               
+     META1-j    shows last 10 nicks to join the channel
+     META1-k    prompts for a nickname to KILL
+     META2-k    prompts for a nickname to KICK from the current channel
+
+See Also:
+   kick(1); kill(3); load(5)
+
+Restrictions:
+   Naturally, only irc operators can KILL other users.
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.  It
+   was adapted from a similar script by Eleazor.
+

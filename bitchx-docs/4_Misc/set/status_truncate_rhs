@@ -1,0 +1,11 @@
+Synopsis:
+   set status_truncate_rhs [on|off|toggle]
+
+Description:
+   This variable determines which side of the statusbar the %> expando will
+   truncate to.  If set to ON, the right side is used.  If OFF, the left
+   side will be truncated.
+
+See Also:
+   set(4) status_format
+

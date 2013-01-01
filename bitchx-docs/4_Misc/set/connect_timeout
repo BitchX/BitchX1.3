@@ -1,0 +1,10 @@
+Synopsis:
+   set connect_timeout [<number>]
+
+Description:
+   This variable controls how many seconds a connect(5) waits before it
+   times out. This only controls new connect()s, and not ones in progress.
+
+See Also:
+   connect(5); listen(5).
+

@@ -1,0 +1,10 @@
+Synopsis:
+   set banner <text>
+
+Description:
+   Changes the default "***" in front of informational messages from the
+   client.
+
+See Also:
+   set(4) banner_expand.
+

@@ -1,0 +1,12 @@
+Synopsis:
+   window channel <channel>
+
+Description:
+   This directs all messages associated with the specified channel to the
+   current window.  If the client is not currently on the channel, it will
+   be joined.  If it is, channel messages going to other windows will now
+   go to the current one (and removed from the others).
+
+See Also:
+   bind(4) switch_channels; window(4) bind, unbind
+

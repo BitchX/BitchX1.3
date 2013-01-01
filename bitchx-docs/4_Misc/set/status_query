@@ -1,0 +1,17 @@
+Synopsis:
+   set status_query [<text>]
+
+Description:
+   This variable sets the string displayed in the status bar when the client
+   is querying another user.  If there is no query active, nothing is shown.
+
+   This string is represented as %Q in the STATUS_FORMAT string.  It will
+   expand to the nickname being queried when used in STATUS_QUERY.
+
+Examples:
+   Customizing the string indicating an active query:
+      /set status_query Querying %Q
+
+See Also:
+   query(1); set(4) status_format
+

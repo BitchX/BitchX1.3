@@ -1,0 +1,13 @@
+Synopsis:
+   $lastclickx()
+
+Technical:
+   This function shows the X coordinate (character based) where the last 
+   mouse click event occurred.
+
+Returns:
+   X coordinate
+
+See Also:
+   lastclicky(6) lastclickline(6)
+

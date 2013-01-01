@@ -1,0 +1,16 @@
+Synopsis:
+   window delete
+
+Description:
+   This does the opposite of WINDOW CREATE, it destroys the current screen
+   or xterm, depending on the environment.  The main window (the one ircII-
+   EPIC was started in) cannot be deleted.
+
+   Of course, if the client is not running under screen or X, this command
+   has no effect.  Also, any channels in the window being deleted are not
+   left, though if the window is on a separate server, the connection is
+   severed.
+
+See Also:
+   window(4) create, kill
+

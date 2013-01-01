@@ -1,0 +1,32 @@
+Synopsis:
+   load fe
+
+Description:
+   This is an example script that displays the power of FE, primarily how
+   it can be used to avoid recursion.  It includes the following aliases:
+
+     Alias       Description                                              
+     /banalot    (un)bans any number of patterns from channel $0
+     /botsweep   kicks everyone matching $0 pattern from channel $1 or $C
+     /kickalot   kicks any number of users from channel $0
+     /massdeop   deops all channel operators on $0 or $C (except $N)
+     /masskick   kicks everyone from $0 or $C (except $N)
+     /opall      ops all non-chanops on $0 or $C
+     /opalot     (de)ops any number of users on channel $0
+
+   A function is also included, $uh().  It takes an arbitrary number of
+   nicknames are returns their corresponding addresses.
+
+Examples:
+   To ban several sites at once:
+      /banalot #blah + *!*@*.aol.com *!*@*.gnn.com *!*@*.foo.com *!*@*.aq
+
+   To deop a bunch of jerks on channel #foo:
+      /opalot #foo - jerk1 jerk2 jerk3 jerk4 jerk5
+
+See Also:
+   Special_Vars(7); fe(5); kick(1); load(5); mode(1)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+

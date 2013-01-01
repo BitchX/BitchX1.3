@@ -1,0 +1,17 @@
+Synopsis:
+   map
+
+Description:
+   This displays a semi-graphical map of the current network topology,
+   from the client's current server's perspective.  The map is displayed
+   in a tree-like format.
+
+See Also:
+   load(5) imap
+
+Restrictions:
+   This command is only available on the Undernet and networks that use
+   Undernet server code, version 2.9 or later.  A script that produces
+   similar output, called imap, is included with the client for users
+   not on the Undernet.
+

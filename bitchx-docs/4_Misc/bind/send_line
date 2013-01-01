@@ -1,0 +1,11 @@
+Synopsis:
+   bind <key> send_line
+
+Description:
+   This function causes the current input buffer to be sent to the current
+   server, in a manner like that of SENDLINE.  To quell any confusion,
+   this is typically the default behavior of the return/enter key.
+
+See Also:
+   sendline(5)
+

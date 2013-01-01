@@ -1,0 +1,13 @@
+Synopsis:
+   bind <key> backward_history
+
+Description:
+   This replaces the contents of the input line with the previous command
+   in the client's command history buffer.  The command history buffer is
+   circular, such that using BACKWARD_HISTORY when at the first command
+   will produce the last command in the buffer.  The original contents of
+   the input line, if any, are not preserved.
+
+See Also:
+   bind(4) forward_history, shove_to_history; history(4)
+

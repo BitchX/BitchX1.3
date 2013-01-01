@@ -1,0 +1,14 @@
+Synopsis:
+   set blink_video [on|off|toggle]
+
+Description:
+   This setting controls how blinking text is displayed in the input line
+   and the display window.  If it is turned on, the BLINK key function
+   (usually ^F; Control-F) will toggle blinking text on and off.  If off, it
+   will strip out all BLINKs In the displayed text, effectively disabling
+   blinking text.
+
+See Also:
+   bind(4) blink, bold, highlight_off, reverse, underline;
+   set(4) blink_video, bold_video, reverse_video, underline_video
+

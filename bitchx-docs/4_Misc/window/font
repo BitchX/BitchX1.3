@@ -1,0 +1,11 @@
+Synopsis:
+   window font <font name>
+
+Description:
+   When this command is issued BitchX attempts to load the font
+   specified and apply it to the current window or the window
+   specified.
+
+See Also:
+   window_menu(4) window_setwindowpos(4)
+

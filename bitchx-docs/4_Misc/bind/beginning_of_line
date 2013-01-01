@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> beginning_of_line
+
+Description:
+   This function moves the cursor to the beginning of the input line.
+   This may be a position not currently visible on screen, due to the
+   way the client wraps long input.  It has no visible effect when the
+   cursor is already at the beginning of the input line.
+
+See Also:
+   bind(4) end_of_line
+

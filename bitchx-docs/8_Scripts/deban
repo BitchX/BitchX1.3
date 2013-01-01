@@ -1,0 +1,22 @@
+Synopsis:
+   load deban
+
+Description:
+   This script contains a set of aliases for removing channel bans.  Bans
+   can be removed based on a pattern match, based on a nickname they apply
+   to, or en masse.
+
+     Alias                     Description                                
+     /deban [<chan>]           removes all bans
+     /nban <string>            removes all bans containing given string
+     /unban <nick>             removes all bans applying to the nickname
+     /uniban <patt> [<chan>]   removes all bans matching the pattern, or
+                               | those that the pattern matches
+
+See Also:
+   load(5); mode(1)
+
+Other Notes:
+   This script was written by Jeremy Nelson (hop), jnelson@acronet.net.
+   Credit for the idea for /nban goes to Doug McLaren (DemoN).
+

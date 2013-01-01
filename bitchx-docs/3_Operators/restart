@@ -1,0 +1,14 @@
+Synopsis:
+   restart
+
+Description:
+   This command is used to completely restart the server.  A side effect of
+   this is that the configuration file will be read again.  However, it is
+   generally more useful for clearing out internal buffers and other wasted
+   memory.
+
+See Also:
+   rehash(3)
+
+Restrictions:
+   This command is limited to irc operators on the server to be RESTARTed.

@@ -1,0 +1,13 @@
+Section 5: Programming EPIC                                                 
+
+This section is mostly of interest to programmers.  EPIC provides a rich,
+feature-filled scripting language that allows you to customize the client
+to no end.
+
+Detailed in this section are the language's various control structures
+(conditional and looping statements), methods for dealing with variables,
+procedures (called aliases) and other data structures, methods for
+script inclusion in other files, and much, much more.
+
+A collection of built-in functions is in the next section.
+

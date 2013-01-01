@@ -1,0 +1,21 @@
+Synopsis:
+   addforward [<nick|#chan>]
+
+Description:
+   This command will forward all msgs sent to the client onto either another
+   nick or another channel. Sometimes this is useful whilst netsexing or 
+   while the client is on two differant networks and in a screened state.
+
+Examples:
+   To forward to a nick:
+      /addforward nick
+
+   To forward to a channel:
+      /addforward #channel
+
+See Also:
+   unforward(1) noforward(1)
+
+Restrictions:
+   This could possibly get you in trouble in some cases. Use with caution.
+

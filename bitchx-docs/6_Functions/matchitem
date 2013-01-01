@@ -1,0 +1,23 @@
+Synopsis:
+   $matchitem(<array> <word>)
+   $rmatchitem(<array> <pattern>)
+
+Technical:
+   These functions are used to search through the given array for the item
+   that best matches the given word or pattern.
+
+Practical:
+   These functions are analogous to $match() and $rmatch().  Given a word
+   or pattern, they search through the given array's contents and look
+   for the best match, if any.  Basically, the array's contents behave as
+   if they were the list of words or patterns passed to $match() or
+   $rmatch().
+
+Returns:
+   > -1   item number in array that matched
+     -1   could not find specified array
+     -2   could not find a matching item
+
+See Also:
+   Arrays(7); getitem(6); getmatches(6); getrmatches(6); setitem(6)
+

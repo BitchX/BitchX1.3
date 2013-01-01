@@ -1,0 +1,16 @@
+Synopsis:
+   $topic(<#channel>)
+
+Technical:
+   This function returns what the client currently thinks the topic is.
+   However during netsplits this information might get desync'd to what
+   the client thinks. This is not a fault of the client.
+
+Returns:
+   topic of the channel specified or the current window current channel
+
+Examples:
+   $topic(#channel)       returns what the client thinks the topic is
+   $topic()               returns topic for current window channel
+
+

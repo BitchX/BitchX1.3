@@ -1,0 +1,14 @@
+Synopsis:
+   window refnum <refnum>
+
+Description:
+   This changes the current window to the specified window.  If that window
+   is hidden, it will be swapped with the current window.
+
+See Also:
+   window(4) back, goto, last, next, previous, swap
+
+Other Notes:
+   This command does not work for hidden windows. Use window(4) swap
+   instead.
+

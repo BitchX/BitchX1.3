@@ -1,0 +1,13 @@
+Synopsis:
+   set notify_userhost_automatic [on|off|toggle]
+
+Description:
+   If this is ON, several things occur. When on(5) notify_signon is
+   hooked, a userhost(2) is issued on the person who signed on. The $2
+   parameter of on(5) notify_signon is set to the person's user@host.
+   When someone appears on the notify list whose hostname is already in
+   the internal list, it won't query the server.
+
+See Also:
+   notify(1)
+

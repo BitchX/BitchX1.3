@@ -1,0 +1,37 @@
+Synopsis:
+   $index(<characters> <text>)
+   $rindex(<characters> <text>)
+
+Technical:
+   These functions are the equivalent of the BSD library functions index()
+   and rindex() (and their ANSI equivalents, strchr() and strrchr()).  They
+   return the index to the first character in the given text that appears
+   in the list of characters.
+
+   The $index() function searches the text left to right, and $rindex()
+   searches right to left.  The index, however, always counts from left to
+   right, starting at 0 (zero).  The first word passed to the function is
+   assumed to be the list of characters to look for; to insert a space, it
+   must be escaped with a \, unless it is the first character.  To insert a
+   backslash, it must also be escaped.
+
+Practical:
+   These functions are generally most useful in argument processing.  For
+   instance, they can be used to parse a list of command-line switches
+   passed to an alias.
+
+Returns:
+     -1   no matches found
+   > -1   index to character
+
+Examples:
+   $index(abc hello there bob)            returns 12
+   $index(xyz hello there bob)            returns -1
+   $rindex(abc hello there bob)           returns 14
+   $rindex(xyz hello there bob)           returns -1
+
+Other Notes:
+   Keep in mind that a failed search returns -1, not 0.  This has already
+   been stated, but it is misused often enough that this reminder is
+   warranted.
+

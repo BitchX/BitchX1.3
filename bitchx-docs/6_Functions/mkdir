@@ -1,0 +1,26 @@
+Synopsis:
+   $mkdir(<directory> [<directory> ...])
+
+Technical:
+   This function adds the following directories to the filesystem, using
+   the mkdir(3) library call.  The default permissions are 0777, minus
+   the current umask value.  Any number of directories may be created at
+   once.  Tilde-expansion is permitted.
+
+Practical:
+   This function creates one or more new directories.  It is probably most
+   useful for script installers.  Make sure you set your umask correctly,
+   otherwise you may inadvertently create the directory with permissions
+   that allow anyone to write to it.
+
+Returns:
+   > 0   number of directories that could not be created
+     0   success
+
+Examples:
+   $mkdir(~/myscript)                probably returns "0"
+   $mkdir(~/myscript /etc/hackerz)   probably returns "1"
+
+See Also:
+   chmod(6); rmdir(6); umask(6)
+

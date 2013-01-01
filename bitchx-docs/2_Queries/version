@@ -1,0 +1,12 @@
+Synopsis:
+   version [<server|nickname>]
+
+Description:
+   This displays the version of the specified server.  If a nickname is
+   given, that user's server version is returned.  If neither a server
+   nor a nickname are given, VERSION prints the client's version string,
+   followed by the version of the current server.
+
+See Also:
+   ctcp(1) version
+

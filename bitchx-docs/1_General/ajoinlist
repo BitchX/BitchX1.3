@@ -1,0 +1,14 @@
+Synopsis:
+   ajoinlist 
+
+Description:
+
+   AJOINLIST will display your current ajoin channels.
+
+Examples:
+   /ajoinlist
+
+See Also:
+   unajoin(1); ajoin(1);  JOIN_NEW_WINDOW(5);
+
+

@@ -1,0 +1,25 @@
+howto?
+  ./configure --enable-ipv6
+
+virtual hosts
+  from now on you can use `-norev' parameter with `/irchost' to turn off
+  name resolving, because it sometimes is veeery looong :)
+
+command line and `/server'
+  their parameters are delimited with a colon, just like 16-bit words in
+  IPv6 addrs. so now you can also use a comma instead of `:'. for example,
+  both `/server dead::beef' and `/server dead::beef:6667' won't do, because
+  BitchX will try to connect to server `dead' with password `beef'. instead
+  use `/server dead::beef,' (note the comma) and `/server dead::beef,6667'.
+  the same rule applies to command line parameters.
+
+dcc stuff
+  only v4 dcc is supported. ctcp/2 is much too complicated for me :) if you
+  want to use IPv6 virtual hosts and still be able to initiate dcc, you need
+  to set NAT_ADDRESS to any of your IPv4 addrs.
+
+questions?
+  mailto:wojtekka@irc.pl
+
+greets, thanks
+  thorgi, Cron, gnd0rup, #ipv6.pl

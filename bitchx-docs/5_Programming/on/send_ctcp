@@ -1,0 +1,22 @@
+Synopsis:
+   on [<modes>]send_ctcp [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client sends a CTCP request or
+   reply to another client.
+
+Parameters:
+   $0    "PRIVMSG" for requests, "NOTICE" for replies
+   $1    nick the CTCP is being sent to
+   $2    type of CTCP being sent
+   $3-   optional arguments to the CTCP being sent
+
+Examples:
+   To show the user when a CTCP request is sent:
+      on -send_ctcp "PRIVMSG *" {
+         echo *** Requesting a CTCP $2 from $1: $3-
+      }
+
+See Also:
+   ctcp(1); on(5) send_msg
+

@@ -1,0 +1,12 @@
+Synopsis:
+   bind <key> forward_history
+
+Description:
+   This function replaces the contents of the current input buffer with
+   the next entry in the command history.  The history buffer is circular,
+   so this will often be the first command in the buffer (unless the
+   BACKWARD_HISTORY function has been used recently).
+
+See Also:
+   bind(4) backward_history, shove_to_history; history(4)
+

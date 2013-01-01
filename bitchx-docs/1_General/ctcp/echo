@@ -1,0 +1,7 @@
+Synopsis:
+   ctcp [=]<nick>|<message> echo [<any text>]
+
+Description:
+   This just makes the remote client send back whatever text you send
+   to it.  That's it.
+

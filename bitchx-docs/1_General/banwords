@@ -1,0 +1,13 @@
+Synopsis:
+   banwords <channel|*> word(s)
+
+Description:
+   BANWORDS add a banned word or words to your banned word list for a
+   channel.
+
+Examples:
+   /banwords #bitchx sexxy
+
+See Also:
+   addword(1) unwordkick(1) wordlist(1) showwordkick(1) 
+

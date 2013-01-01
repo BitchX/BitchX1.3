@@ -1,0 +1,3421 @@
+
+[Changes 75p2]
+* svobodam@eva.vsp.cz sent in some patches for bx.. Specifically adding
+  ircnet support. His patch for lame_ident's was already implemented. Added
+  some ircnet servers.
+* some changes to the functions $opensocket(). Added a NOTIFY param as the
+  third arg, default is line mode SOCKET reading. This changes the behaviour 
+  of the socket. instead of the SOCKET, hook returning the info, another hook 
+  SOCKET_NOTIFY is sent instead. IT's upto the script in this case too read 
+  the socket. So either a $readsocket() or a $readchar() can be used to read
+  the info from the socket. params on the hooks were changed to be a little
+  more sane. "socketnum servername port flags" for SOCKET_NOTIFY and 
+  "socketnum servername port string" for SOCKET.
+* another major in-compatibility in scr-bx  added.. Make sure you update
+  scr-bx. This one adds connection cookies. Without the cookie, you can't
+  connect to a detached bx.
+* /window 2 triple on was coring the client when window 2 was a hidden
+  window. this might have effected other commands as well.
+* bug in wset pointed out by void fixed.
+* make configure check for in_systm.h in netinet and sys directories.
+* added multi-play to internal amp module. quoted filenames are played one
+  after another.
+* small patch for HPUX modules. author of the patch said that he required
+  a additional -DHPUX on the CFLAGS
+* small bug in tab completions fixed. Added #chan completion into tab
+  handling
+* cosmetic changes to /cdcc involving the help.
+* Robohak found and supplied a patch for the new /set mangle routines. Same
+  patch applies to epic.
+* away msg log removal broken when using /back.
+* added a new /cset LAME_IDENT for turning off the ban/kick on lame chars in
+  the ident. seems some servers all this shit.
+* Robohak found and fixed two problems in $winitem().
+* had a crack at fixing the term init problem when you change term sizes.
+  this is not gonna be easy. currently it works. but it's a real kludge and
+  not totally 100%. ie term types have to be the same. xterm != vt100.
+  Changes required too scr-bx so the console size can be passed. This makes
+  scr-bx in-compatible with older scr-bx's
+* a few small changes made too detachcmd(). we now remove the
+  ~/.BitchX/screens file on a TERM signal. This helps when reattaching to a
+  cron'd BitchX process. We can use the same cron script as an egg.
+* re-wrote whokill. /whokill pattern pattern pattern :reason will match
+  the patterns and buffer the kills. on end, it then kills in groups to 
+  help prevent flooding of the oper. Added NUM_KILLS variable. Requested
+  by thetaz a dalnet oper. EfNet only allows one kill per KILL.
+* -r filename will now accept a path/filename as well as just a filename.
+* potential problem with a mode change corrected. This would cause the
+  client to become desynced from the actual server modes.. 
+  /c -lk-oo test nick nick1 too demonstrate. Thanks too SideWnder for this.
+* ignoring ctcp no longer ignore's quits. First mentioned by Hyriluk
+* removed FORMAT_USERS_BOT. it was redundant.
+* added FORMAT_USERS_TITLE. default for FORMAT_USERS FORMAT_USERS_SHIT
+  changed
+* changed the split list so it's server dependant. This way, the list will
+  still work on multiple servers.
+* some problems in the shitlist now fixed. Also added new functionality.
+  if a nick is on the channel and the shitlist is added, they are
+  immediately banned and kicked. if they are unshit'd, and the ban is on 
+  the channel the ban is removed as well. The following types of bans are 
+  allowed -   nick, nick!user nick!user@host, user@host.
+* error in nicklist hash causing core found. $checkuser(blah *) doesn't 
+  core now.
+* 471-476 numerics moved. these CAN hurt internal structures.
+* substr, rsubstr, getopt, isaway and nohighlight functions added. 
+* possible timer bug found/fixed.
+* function for collecting number of users, written by Mhacker.
+* minor changes made to nick completion.
+* added a new hook MODULE, which can be called from dll modules and
+  interface with scripts. for example, amp, returns a "AMP PLAY name" on
+  start, a "AMP CLOSE name" on end, "AMP ERRROR name" and "AMP ID3 params".
+* auto_response should be a bool on/off instead of a int. default it too on
+* fixed a problem in the autobot module. should have been u->host
+* kopz notice that dcc min speed was not working.. fixed. Also modified
+  /cdcc minspeed so that it accepts 2 arguements. a minspeed and a timeout.
+* Cset queuing is now fully implemented. You can even specify a cset in
+  your .bitchxrc file. It will be queued up until you join that channel.
+* more modifications to $aliasctl(). a PMATCH param can be specified which
+  will search for wildcarded matches. MATCH does exact char matching.
+* HARD_UH_NOTIFY is gone. along with it went NOTIFY_SIGNON_UH and
+  NOTIFY_SIGNOFF_UH hooks. FORMAT_NOTIFY_SIGNON_UH FORMAT_NOTIFY_SIGNOFF_UH
+  is gone as well. Userhost notification is now the default. /notify can now 
+  accept a nick!user@host. All this means is that unless the userhost
+  matches, this notify will not display. Some notify problems found and
+  fixed.
+* $getcset(var #chan value) will set a new value and return the old.
+* Power found a problem with $winitem().
+* Nuke found a solution for the problem with win95 and color. turns out that
+  ansi.sys scroll region, doesn't scroll the color. stupid... Anyways, we
+  changed to a direct windows function for scrolling a region and problem
+  is now solved.
+* replaced the dcc_*_func with something more generic. a 
+  add_dcc_bind("type", "modname" init_func, open_func, input, output, 
+		close_func);
+	type is a char str defining the new dcc type.
+	modname is the name of the module. for use when unloading.
+	init_func is a function that is called when this ctcp type is
+	recieved.
+	open_func is a function that is called when the dcc is open'd.
+	input is a function that should be called when there is data ready.
+	output is a function to call when you send data.
+	close_func is a function to call when the dcc is to be closed.
+  we could actually replace internal routines with ones that are wanted.
+  each of the above functions should return a int value. in some cases this
+  value is ignored. but the input/output routines do NOT ignore this.
+* change /dc to not chat yourself. Also changed /dcc chat to ignore your own
+  nick.
+* small change to $glob() to fix a memleak.
+* more changes to tab_completion.
+* added the ability for /scan to accept a wildcard nick!user@host to search
+  for. so /scan *!*@*.com
+* Implemented a queued server send system for use in cdcc. 
+  /set QUEUE_SENDS #, where number is the number of seconds to wait.
+* fixed up core problem with notify.
+* merged in epic4 pre2.001nr-3 and partial pre2.001nr2 patches.
+* remerged in the OS/2 pm port changes.
+* added a CTCP userlist flag. which allows ctcps on certain ones when
+  cloaked
+* forgot about DCC_PROC for modules. added remove procedure.
+* found bug with numeric 464.
+* humble contributed a color change to bx. in config.h add a #define HUMBLE
+  just before the #include "color.h" and it will be enabled as the default.
+* added a $longcomma() which takes a long number, and formats it with
+  comma's
+* possible fix for core on netsplits with a * in them.
+
+* added a couple of output replacement hooks for dcc and server connections.
+	serv_output_func, serv_input_func, dcc_input_func and
+	dcc_output_func can be defined within a module to replace the normal
+	dgets() and write() functions. This paves the way for secure
+	dcc/server connections.  serv_output_func = some_new_output; in your
+	module.
+
+* new TAB_COMPLETION binding created. A FORMAT_COMPLETE also added for
+  display purposes. This new bind does alot more than the old TAB_MSG bind.
+  commands currently specifically handled with the new tab complete are, 
+  MSG/EXEC/DCC/LOAD/SERVER/LS
+		- With nothing on the line, we cycle through the
+		msg buffer nicks. if there are none, then the list of channel
+		nicks is displayed.
+		- if we start typing a nick, then matching channel nicks are
+		displayed. if there's one and only one, then it will be
+		placed on the input line
+		- "/msg " will use the tab buffer, or if that's empty then
+		we  use channel nicks. placing a partial nick, will match
+		that nick from either.
+		- "/exec [pattern]" will attempt to match a filename. if no
+		path is specified, then your $HOME directory is assumed.
+		if you use / then we can match directories. A * is implied
+		when matching, so you don't have to supply one.
+		- "/dcc send nick filename". depending on where you press
+		the tab will determine what is done on the matching. if it's
+		at the nick then tab/chan nick matching is done. if it at
+		the filename, then DCC_DLDIR is used for matching.
+		specifying a / means look in a dir other than DCC_DLDIR.
+	this new tab_completion will also fill in the the input buffer with
+	the most number of chars that are common from the resulting match.
+
+* Added a -ALL flag to xquotecmd to send to all connected servers.
+* found and fixed a problem with timed_server() which was causing a odd
+  coredump with is.bx. 
+* modified $aliasctl() for command globbing and assign globbing.
+	$aliasctl(assign/local/alias/command get/set/match what);
+	command globbing is a match only operation.
+	local assigns don't make sense in a match operation.
+	This will however return all matching assign's/alias's/commands.
+	The "what" has a appended * so you if you don't specify 
+	a wildcard. Contributed patch to epic.
+* added /clear -scroll for cleaning out the scrollback buffer.
+* the away msg is resent when we reconnect or timeout from a server. client
+  no longer resends the away msg to your channels.
+* format_server_notice changed. and more server notices now use the
+  server_prompt variable
+* Small change made to bx to support NAT. Added -Z flag to enable a userhost
+  on connect to the server. This sets the address to use for dcc transfers.
+  supposedly this is enough to get by the NAT server.
+* # comments supported in .ircservers, ircII.servers etc. when found, we
+  truncate the line at the #.
+* added back in, dcc renumbering code. Possible though I didn't catch all
+  the exits.
+* configure --with-tcl patch added. This makes the configure script #define 
+  WANT_TCL in defs.h instead of editing the Makefile. Allows modules to be
+  compiled with tcl/non-tcl support as well.
+* window logfile will now strip certain chars from the name and replace with
+  '-'. This is so that nicks with "|\/:" don't cause problems in any of the
+  clients but specifically with the win95/nt OS2 ports
+* Added 2 new hooks. LEAVE_ME  is hooked when we part a channel under our
+  own power. CHANOP is hooked when we gain ops in a channel.
+* $dccitem() which will return information based on the passed in dcc number
+  or socket number. args are a number (dccitem) or a #number (socketnum).
+	$0 type
+	$1 nick
+	$2 status
+	$3 start time 
+	$4 start position for resume/reget/resend
+	$5 bytes recieved
+	$6 bytes sent
+	$7 filesize
+	$8 filename
+	$9 socket number of this connect
+	$10 server
+* $winitem() added which is compatible in most respects with openirc's
+  version. if %num then num is a window refnum. just a number then it's the 
+  num'th window in the list. 
+	$0 refnum
+	$1 name or <none>
+	$2 server number
+	$3 current channel or <none>
+	$4 query nick or none
+	$5 waiting channel or <none>
+	$6 <none> (oirc has menu name)
+	$7 1 visible 0 non-visible.
+	$8 # of columns
+	$9 # of rows
+	$10 reserved
+	$11 reserved
+	$12 reserved
+	$13 reserved
+	$14 reserved
+	$15 logfile name or none
+	$16 L if logging enabled, "" always apart of string
+	$17 n if nicklist.
+	$18-$19 reserved
+	$20+ window level
+* new flag to /clear -scrollback which will clear the scrollback buffer as 
+  well as the window. /clear -scrollback -all works for all windows.
+* $chanmode() extended. $chanmode(#chan #) where # can be 0 normal, 1 bans,
+  2 ban whoset time, 3 exemptions for TS4.
+     $chanmode(#bitchx 1)  ->  "*!*@*.aol.com"
+     $chanmode(#bitchx 2)  ->  "*!*@*.aol.com elmer 9123000"
+* $channicks() and $chanusers() can accept one more param. This is the sort
+  type to use for call. types of sorting are 0 normal, 1 none, 2 nick,
+  3 host, 4 time, 5 ip if available.
+* NICK_COMPLETION_LEN added from a patch by by-tor
+* some buffer modifications to reduce memory usage.
+* some old function unused removed.
+* old prototypes found and removed as well as unneeded ones.
+* /kb fixed to not send -o the nick, as they are already kicked.
+* modified module loading to make it possible to load on alot more systems
+  that don't have -rdynamic flag for exporting symbols. Makes the client 
+  250k smaller in size as well. Shouldn't impact memusage at all. Module
+  interface changed though to make this possible. a pointer to a list of 
+  functions is passed into the _Init function as well as the pointer to the
+  command table. These functions can now be accessed using a file with
+  "alot" of defines in it. modval.h created for this purpose. Internal
+  functions could possibly be replaced using this method as well.
+* Robohak contributed a patch to function_msar() which should concievably
+  fix the memleak in it.
+* Robohak reported a coredump in p_topic(). should be fixed. looks like a 
+  really desynced condition could possibly exist that might cause a core
+  dump. ie join a channel, and a topic change appears immediately after.
+* added /set cdcc on/off for turning your cdcc off.
+* getsets() leaking memory. drendite found this. hops version also leaks.
+* fixed small problem whitedrgn found with hooking 364.
+* seems that /oper <enter> <enter> would core the client.
+* small patch to p_quit() logmsg() needs the channels even when ignored.
+* small problem someone noticed with /quit random msgs and /set log on. 
+* changes to convert_output_format() in an attempt at a speedup.
+* dcc closeall seg fixed.
+* Added function to return what the client currently thinks the channel
+  topic is $topic() or $topic(#channel)
+
+
+Changes in BitchX 75p1
+* my fix to msar() was wrong.
+* found and fixed a dcc problem with a rejected dcc.
+* epic pre1.400 changes merged.
+* scr-bx modified. internal /detach modified to go with it. Added a HUP
+  signal which will hangup the session.
+* bug with orignick in .bitchxrc found.
+* documentation for client plugins started.
+* removed Ctrl-Z when detached.
+* added -HUP signal. to detach an attached client. Changed signal handling
+  when we have a detach client.
+* Found and fixed several small memory leaks when /unloading a script.
+  We now remove all arrays and fsets when unloading.
+* Added a plugin hook for window commands. 
+* Added a plugin hook for a output procedure. It replaces ALL output's.
+* Set message_from() in chanwall to show too LOG_WALL.
+* BitchX.url buffer was 2048 and a CTOOLZ_DIR path greater than this would
+  overfill the buffer.
+* Added URLGRAB hook which is activated on url's and ftp's. Added USERS_IP
+  hook for display of users ip in /user -ip display
+* Fixed term handling of ctrl chars on the input prompt.
+* Fixed configure option for with-maildir handling.
+* Added $t to return the name of the currently running alias.
+* Changed /load to support loading of .so files instead of using /loaddll.
+* Added a timeout to dcc sends that are inactive. remains to be seen if this
+  will be effective.
+* Added a default case for switch(). there can only be one default case in a
+  switch statement. now switch() works just like the c version.
+* extremely lame buffer overflow bug on startup. who would attempt to
+  exploit themselves? uzfopen() was the culprit in this  case though. and
+  it's used it alot of various file opening functions.
+* small modification to real_file_send() so that FileBuf is searched for the
+  wildcard instead of filename. This allows ~ftp/*.zip to be used.
+* after a little hair-pulling, mirc dcc resumes are now supported. Damn
+  khaled, why not send back the filename instead of that lame "file.ext"
+* Silly bug with dcc resend/resume filesize. 
+  if (numbytes == (filesize - offest)) then close the file. Because
+  otherwise we hang around waiting for the end and cause a little cpu usage.
+* FORMAT_WHOIS_SIGNON != FORMAT_NOTIFY_SIGNON in notify.c.
+
+
+
+Changes in BitchX 75  July 1 1998
+
+added $b variable.
+changed strip_ansi() to strip out chr(155) chr(11) and chr(8)
+Xecho -s added.
+window new_hide added.
+fixed +c channel mode core.
+fixed history command.
+
+Added a /paste command. it will take a range of number and optionally a
+nick or channel to send to... /paste 1-5 [-win #] [<nick|#chan>]. The paste 
+buffer is from the bottom up.
+
+bhelp is spruced up somewhat. The internals were completely re-written using
+normal c instead of the array functions. /bhelp -dump added, which will
+reload a help file(main reason for the rewrite). Added a -RELATED field in
+the help file (first word on the line). Found and fixed a small memory leak
+with this as well (return from the array function was not free'd).
+
+Showidle command modified. we can now sort the nicks based on time, host,
+nick or none. default is by nick. ex. /showidle -sort time
+
+Added a auto nslookup of all nicks when we join a channel. Added a IP ban
+option for /bantype. Also modified ban_it() to accept an ip if passed, or it
+uses the "Better" bantype if not. /set auto_nslookup determines whether this
+is active or not. /user -ip will show the ips of the users. /user -ip -op
+etc....
+
+A matching lame nick would kick yourself.
+
+set for MIRCS and set for DISPLAY_ANSI have been fixed and updated greatly. 
+formats of various types are replaced with a appropriate default formats.
+
+Script writers are going to hate this as I overwrite any changed formats
+with defaults. I'll have to see about some method of allowing both to exist.
+
+Paste command fixed. some lameness on my part was causing the paste to be
+backwards.
+
+New epic who code is a little buggy yet in bx... details need to be worked
+out. Assume it's parameters to the do_hook(). in the hook array.
+
+Added two new command line options. -A for no startup ansi and -N for no
+auto-connect on startup.
+
+Fixed client core when no default servers defined.
+
+Fixed ison and waitcmd() coredumps when no default servers defined. (more of
+these are lurking).
+
+Finally fixed /finger so it works.
+
+Changed the way we set the cloaked client process.. Still need some
+auto-detection routines in configure though.
+
+Forgot about dcc_resend() when adding "filename with space" capabilities to
+dcc sends. cdcc probably needs to be done as well.
+
+Renamed CLONE_READ to SOCKET. Revamped the socket code considerably.
+
+Fixed minor annoyance of /bk not working in new alpha's
+
+More socket improvements. sockets will now timeout after CONNECT_TIMEOUT
+seconds or 120. when we scan sockets, if there is no open sockets dropout of
+the scan. 
+
+Possible fix to dcc_Fast.
+
+Fixed core with /bhelp -dump when there's no help file in memory.
+
+Possible fix for kick_if_banned and numerical ips. as well as a core problem
+related to this.
+
+Possible fix for a core when someone joins a channel and you get kicked.
+
+It's now possible to have $glob() return filenames with spaces in them.
+
+Things like this are now possible... (alias from |fingers|)
+alias testarray {
+	fe ($glob(\*)) ii {
+	@ setitem(files_array $numitems(files_array) $ii)
+	}
+}
+
+#$getitem(files_array num)
+FORMAT_ACTION_CHANNELS added. hopefully we got the right methods for
+display'g actions.
+if (is_channel)
+	if (current_channel)
+		if (auto_reply && is_on_user_list)
+			FORMAT_ACTION_USER_AR
+		else if (auto_reply)
+			FORMAT_ACTION_AR
+		else if (is_on_user_list)
+			FORMAT_ACTION_USER
+		else
+			FORMAT_ACTION_CHANNEL
+	else
+		if (auto_reply && is_on_user_list) 
+			FORMAT_ACTION_USER_AR
+		else if (auto_reply)
+			FORMAT_ACTION_OTHER_AR
+		else if (is_on_user_list)
+			FORMAT_ACTION_USER
+		else
+			FORMAT_ACTION_OTHER
+else
+	FORMAT_ACTION
+
+Fixed small bug in the notify. We sent out the notifies when we recieve
+jumeric 250. but, the notify list was improperly built. 
+433/438 numerics changed to add the server to the hook. $0 is the server.
+
+dcc.c completely rewritten to use the new socket code. non-blocking sends
+are used if possible. FBIONREAD is used to find how much information to read
+from a socket. bot_link.c is not finished. DCC_RAW is not finished. Code is
+alot less verbose than before. arguements to all the send/get/resend/reget
+commands are all the same in the possibilities. Each dcc can have it's own
+blocksize. DCC_TIMEOUT is used to specify the timeout for each dcc. DCC_PROC
+in module.c is actually implemented (might even work). dcc's are much faster
+now... 
+
+Small bug in $writesocket() found and fixed for shade.
+
+Changed /wii and friends to support multiple nicks on the command line.
+added -topic to /paste command.
+
+Added +format_xxx variable support. if you /fset +format_xxx "some text"
+that variable is now a format variable and $format_xxx $fparse(format_xxx)
+etc will work on with it. You can re-define ALL the format variables using
+this method, although there could be a speed decrease using it... This might
+actually be a good place for a hash table instead of a linked list.
+
+Found a problem with check_serverlag() where it was possible to flood
+ourselfs off the server with ping requests.
+
+Merged in the changes from epic4pre100.
+
+An auto-away time bug and a msglog bug fixed in update_clock().
+
+Merged in changes from epic4pre200.
+
+Fixed a bug in skip_incoming_mirc() which could cause a lockup. Also fixed
+this so that /set MIRCS works properly...
+
+Channel cset queue setup. what does this mean? well we can now /cset
+#channel  we currently aren't on and add that channel to a queue. So when we
+do finally join that channel, the queue'd csets are used. This allows us to
+use csets from .bitchxrc or .ircrc files. 
+
+FromUserHost is set to empty_string at the end of the processing. This
+should allow logmsg() to use $userhost() correctly.
+
+Fixed small problem with spaces in filenames in a dcc. should work now.
+
+A major incompatibility added. /on dcc_request used to return "SEND" as the
+type of request for a file send. Personally I feel this should be "GET". 
+
+Added in epics style of ctcp booster for dcc's... what happens is this. If
+you /dcc send or /dcc chat someone and that person happens to "miss" the
+request because of a netsplit, we can /dcc send again and the request is
+booster'd again instead of giving you an error about already existing and
+ignoring. The warning is still given however.
+
+Phucilage found an actual bug. /set scrollback was not doing what it was
+meant todo.
+
+Added USER_FLAG_OP and USER_FLAG_PROT which are run when the a userlist
+person is op'd or a userlist person is kicked or banned. 
+
+Found bug in check_prot where a REOP is not possible. Found bug in delay_opz
+for voiced users. 
+
+DavidW2 noticed a bug in the way that EXEC_EXIT was done.. m_strdup(logical)
+was not good for the process structure.
+
+Lame BlackJac decided that format_send_away was too plain so forced me to
+add a new variable $u which is the time you set away in seconds since the
+epoch , and change the format to incorporate it.
+
+tsd!tsd@cal001307.student.utwente.nl pointed out that set_xterm_title()
+wasn't following properly. Also added format_xterm_title format.
+
+Added /dump fset  which dumps all fsets and resets them to my defaults.
+
+Added /dump wset  which dumps the wsets for ALL windows and resets to my
+defaults.
+
+Added /dump cset  which recreates the channel csets from the defaults in
+/set
+
+Problems with dcc resends fixed. involved quite a few changes in dcc.c.
+
+Fixed problems with dcc % on status bar as well as fixed up numbers
+displayed while in a dcc resenD on the /dcc list
+
+Decided to use the screen buffer instead of the lastlog buffer in the /paste
+command. This shouldn't mean too much for the casual user but internally it
+means that what you want displayed is displayed. lastlog doesn't always have
+everything logged in it.
+
+[penix_(penix@pm6-24.kconline.com)] found a small problem with dcc causing a
+coredump. several people had mentioned it.. 
+
+After talking with Sheik, we decided to add a feature to the status bar
+variables. you can now specify a "width" to print a variable. if %<.10>N for
+example, the nick will take "at most" 10, and is space padded to 10. %<-10>N
+will make it left justified. Currently there is no way to say %<-.10>N. This
+will work for all status variables including the status line itself.
+  
+Added a $getflags(uh chan) function from sd-.
+
+Added some new hooks. WHOLEFT_FOOTER, USERS_FOOTER, USERLIST_FOOTER,
+STAT_FOOTER, SHOWIDLE_FOOTER, SHITLIST_FOOTER
+
+One more change to dcc sends. removal of dcc_fast for now.
+
+Added a configure option for specifying the mail directory.. --with-maildir
+
+Added NUM_KICKS for the max kicks allowed in one kick... 
+
+Changed kickban() to modify the way that /bk and /kb are done. also allow
+for /kb nick,nick1,nick2  
+
+Figured out what I'd done wrong in pastecmd().
+
+dcc is working much nicer now. tdcc is not. Fixed a possible core if the
+directory we are attempting to save too is non-existant or non-writable.
+
+Possible core problem with scratch windows cured.
+
+Possible fix for userlist when a channel is specified with a "*" in it. This
+broke the auto-invite on notify feature.
+
+Somes changes to tcl.c and a new tcl.o version is born. the alias var's were
+not exported to tcl. Now _T (current_target) are available. Also get_var,
+set_var, fget_var and fset_var are available.
+
+The party line is now working with the new dcc code.
+
+_]Nuke[_ is working on a OS/2 pm port of bx which will be an option while
+compiling under OS/2.
+
+Found fixed a off by one screen error which was causing problems on a
+/window kill.
+
+STATUS_UPDATE will be hooked anytime a status bar update is occuring.
+DCC_UPDATE will be called when a dcc transfer is occurring at the same time
+that the dcc status percentage is updated.
+
+$randomnick() will take upto 2 args for initial len and max length of the
+string.
+
+With the help of Raistlin and neonapple a bug in the fix_status_buffer()
+code was found and fixed. un-init'd variable was causing the problem
+
+Xavvy requested a install_local which will install BitchX and some other
+files for a local user. it checks and creates ~/bin and ~/.BitchX and then
+copies and links the binary BitchX in ~/bin. Also we copy the various
+BitchX.* files into ~/.BitchX for the user.
+
+OS2 PM changes merged in. todo are multiple windows. added a configure
+option  --enable-pm for os2 PM support. Otherwise vio window support is
+used.
+
+Added support for identwd by whitedrgn. It's a more configurable identd.
+
+Fixed problem with bk and it's mesg about kicking yourself.
+
+Small bug with /quote used in a ctcp hook found and fixed.
+
+New file added. tcl_public.c which set's up the tcl commands within bx.
+source will be distributed for it.
+
+Whoopsy misplaced /clones. also broke auto_away. fixed.
+
+Changed longip() to actually convert a long to a ip and added iplong() which
+takes an ip and converts it to a long.
+
+Added a small change to add_to_channel() in names.c. IF the channel is not
+on your list, but is in the whowas list, the nicks are added to the whowas
+nick buffer. This will allow us to keep a list of nicks from a join to a
+channel when we are kicked immediately before the sync.
+
+a /user -kick would core dump.
+
+Some of the relevant parts of epic4 pre300 have been incorporated. His
+server re-connect needs alot more work than bx's
+
+Added socks4/5 firewall traversal code directly into bx itself. 
+ /set SOCKS_HOST and /set SOCKS_PORT as well as command line
+argument -S added. If SOCKS_HOST is not set, then no traversal will be
+attempted. As soon as it is set however, then we will attempt to use the
+SOCKS4/5 firewall on the next reconnect to the irc server. No idea what 
+effect this will have on dcc's or other tcp related things.
+
+Changed $channel() to return info about if the user is on your userlist or
+your shitlist. & and ! respectively.
+
+found and fixed several more memory leaks. Added a delete_all_arrays() to the
+/dump all command. Added /dump array command as well.
+
+Loosing my HD didn't help my source tree any. still a few "weird" characters
+scattered around the source tree.
+
+for now we can use the new /detach [password] command to detach a bx client
+from the terminal. you can then later log back into the client using 
+BitchX -R [tty] [pass]. This is still rudimentry and still buggy
+at the moment. kasper has agreed to write a frontend program to replace the
+BitchX -R so we aren't running 2 copies of bx. This will reduce memory
+requirements (ie two copies). Password is also encrypted as well using a
+random seed.
+
+Rain noticed a problem with xecho -level. missing break was causing trouble.
+Created a new pgm while waiting for kasper to create it. it's a mini-screen
+attach program for bx's internal /detach. it's called scr-bx. -h gives help
+on this useful little program.
+
+BitchX -B mode changed. it no longer does what it used too. It now detaches
+from the terminal and runs in the background (like before) but, we can now
+re-attach to that session unlike before Thanks too a chat with kasper we now
+have a small program for re-attaching to the backgrounded program.. 
+
+
+Changes in BitchX 74p3
+Oper'g is now more safe. the oper password is not kept in core. it is
+removed as soon as possible from any place where it might be kept. ie
+do_hook(), vsend_to_server(), parse_line(), parse_command(), oper(),
+oper_password_recieved() all memset the buffer's used if this is a oper up
+command. As well the history() function does not save the /oPer command.
+A bunch of various fixes included. 
+$exec() will no longer work from a format.
+change to /window server so that LOG_NONE is set instead of LOG_ALL
+$getinfo() $setinfo() broken and fixed
+/ig + host  no longer cores the client because of a typing error.
+multiple nick changes within nickflood time would trigger for us. we would
+kick ourselves after so many nick changes.
+Habit helped find a problem with the userlist looping on a /save. It seems
+that attempting adding a channel which occured at the end of the hashlist
+would cause the client to lockup while saving a userlist... This is a long
+standing bug that was difficult to find at best.
+Server lag is now sent and calculated for all connected servers.
+Fixed kick of self when /ctcp version yourself.
+mk and lk are fixed now. in fact, they roq.
+
+rale sent me a patch to make bx compile under OpenNT gcc environment. Patch
+is included and here are some notes from him
+# Known Problems:
+#  The configure script screws up when it makes source/sig.inc,
+#  -You need to remove the second line of this file when configure finishes
+#  /exec doesnt work
+#  /window create doesnT work
+
+Added a small change to $fparse() which will add/del a variable if it's not
+found in the list. it's actually assigned. so it will not appear in the
+/fset but will appear in the /assign
+With your userlist off, ctcp op and unban commands were still able to work.
+this is a defiency and is now fixed.
+Patch from  Pharos(hitui@tty005.ims-1.com for making the 
+rename_file() return a filename with a number instead of a letter. 
+this affects dcc auto transfers.
+Patch from FreeLSD <dimka@solo.telekom.ru> for translation.
+/toggle changed so that the /on set is used for screen output.
+possible fixed for shitty compress_modes() function. This thing was a huge
+memory leak.
+Possible solution for filenames with spaces in them. you need to quote the
+filename ie /dcc send nick "filename with spaces" or 
+"dir/filename with spaces". The filename is converted to a name with _'s.
+Christian Deimel (defender@gmx.net) sent me a patch that implements random 
+irc names. /ircname with no args will set the ircname to a randomly chosen
+one for the next server connect. BitchX.ircname has the random irc names.
+Changes made to /window level +/- is now allowed.
+Modified server reconnect strategy. /set MAX_SERVER_RECONNECTS defines how
+many times we will attempt to reconnect to a server.
+more fixes to compress_modes.
+%- is now safe as a status format variable.
+Major internal changes for the status bar code. %{0}S specifies status
+expando map 0 (gives server), %{1}S would be map 1 and is undefined at the
+moment. I do have %{1}0-9 defined. which gives us the old %!10  method of
+specifying  status_user10. STATUS_USER was renamed to STATUS_USER0 to help.
+$n will return the current server network if known.
+$getcset(var [#channel]) returns the CSET variable for either the current
+channel or the channel specified.
+$getfsets() or $getfsets(match) will return all or just matching formats.
+Added a field to the cdcc packs for the time added. it's displayed when
+someone requests /msg nick cdcc info #
+$listarray(name) will list all elements in an array with "name"
+New cset/set CTCP_FLOOD_BAN  will ban a nick using the current bantype 
+that is currently set. This works for channel and private ctcp floods. 
+epic 0.49 changes merged in. along will some fixes for brokenness.
+
+
+Changes in BitchX 74p2
+notify_mark() coredump on undernet fixed.
+p_invite() coredump fixed if your not on a channel when invited to a new
+one.
+Small cosmetic fixes to convert_flags() and /rel
+/j #chan will now reset the prompt to the new channel. This only occured
+when we were already on that channel.
+the /ftp command would seg if a bad host was given
+$s returns the port of the server.
+Changes from epic 0.36 and 0.37 added. These ARE major changes.
+Added new fset FORMAT_OV which is the status format for the oper view.
+Command /addword fixed.
+Couple of minor fixes for /window split on /window triple etc added.
+Fixed expr.c 409 local alias problem.
+Fixed not on channel bug with /ban nick
+KinSlayer 
+Fixed up possible problem with cores and windows. rejoining a channel in a
+non-active window had the possibility of causing a coredump.
+$msar() which is a modified sar(). it will do multiple sar's on a  string.
+the command char cannot be used in the string.
+SERVER_PROMPT fixed up to use cparse() style formatting.
+Added /cdcc secure which allows you to add passwords to packages offered.
+New /on FTP for the ftp client output.
+By-Tor made a patch that uses strstr() to help with nick completion. so for
+example |By-tor| is the nick, you can now do By-t: and it will complete.
+Added most changes upto epic 0.41.
+Added a patch from Khinsanth which fixes -H as well as added
+CHANGE_NICK_ON_KILL.
+New keybind BLINK.
+New Variable BLINK_VIDEO
+New /window query which can accept -cmd 
+New functions $leftpc(), $mask(), $querywin() replaces $winquery(),
+$uname()
+New argument to /xecho -nolog
+New /cdcc secure added which adds/removes a password for your entire cdcc
+package list.
+Bk found a invite bug.
+Number-6 fixed a problem that BSDi seemed to have with dcc's of 0 size.
+SellFone found a bug that was created when [nutbar] insisted that /Set
+server_prompt be able to parse % color codes.
+I broke sort() when patching in epic changes.
+Green found a problem with /adduser -whatever looping forever.
+Raistlin found a problem with -L removed the - that was being appended to
+the script name. .bitchxrc overrides .ircrc files as a side note.
+fset can now be hooked just like /set is.
+Sping now works again. We now use a slightly modified version of old bx
+technique and new.
+cdcc secure password is stored in the .cdcc.save file.
+Small bug in /hostname on linux systems prevented display of the virtuals.
+
+
+Changes in BitchX 74p1
+
+Coredump problem with timers and windows fixed. Possible problem with
+set_current_screen() repaired.
+
+Abnormal usage with dcc chat's cleared up.
+
+Found/fixed problem with /url grab on
+
+Added IOPS for immediate ops. nick needs to have OPS and IOPS for this to
+work.
+
+Timecop noticed that +Window new 10 times would core a client.
+
+We handle a few more Dalnet specific numerics. Some extra /set's added to
+support them. Check out /fset format_whoi
+
+exec now closes ALL descripters on exit so we no longer run out of file
+handles after 150-limit files.
+
+|by-tor| requested that if there is no current channel but there is a query
+then /ver and /p should be sent to that nick. Added a check for
+get_target_by_refnum() in ping_cmd and ver_cmd.
+
+Phucilage updated the BitchX.help file for us.
+
+Changes in BitchX 74
+
+New userlist is hashed into 3 tiers ala CToolz. 
+	tier1 is based on hostname with no wildcards.
+	tier2 is based on channel with no wildcards.
+	tier3 is standard linked list.
+with many user's on the userlist we have increased lookup speed of a user on
+the list significantly. This in turn speeds up the client. Sheik and I
+worked on this.
+
+New flag based userlist system.
+	VOICE, OPS, BAN, UNBAN, INVITE, DCC, KILL, DIE, FLOOD, BOT
+	REOP, DEOP, KICK, PBAN, PINVITE
+
+	Predefined combinations
+		FRIEND = VOICE,OPS,UNBAN,INVITE
+		MASTER = VOICE,OPS,BAN,UNBAN,INVITE,DCC,FLOOD
+		OWNER = MASTER,KILL,DIE,BOT
+
+	Combinations of these flags can be combined ie  VOICE,INVITE,UNBAN 
+	so we now have the following 
+		/adduser nick #channel voice,invite,unban  
+Hostnames are added with the exact hostname unless a nick!user@host is used
+instead of just the nick. This is so that we can take advantage of the new
+userlist system
+
+
+New Compile time defines to remove un-used portions of BX. Look in
+include/config.h
+
+Added the ability to unload a dll after it's loaded. /unloaddll dllname
+
+Added a RAW_PROC for dll's. This is hooked in even before a numeric proc and
+can be used in place of a numeric proc. The Raw proc is a hash'd list 
+for a speed increase in large loaded DLL's. Numeric procs will change to
+this format as well.
+
+Fixed up tier3 remove proc to also check on a strcmp() of the host.
+the command /unuser -ALL required this small change.
+
+New screen/window code from epic merged in. /clear works now. 
+
+Added new %a aop %s shitlist %h hacking %u userlist %b bitchmode variables
+for the status bar. These are single char flags. Changed status_away to have
+the away msgcount in it. 
+
+Fixed /reinit /reinitstatus so it doesn't blank the statusbar on a Ctrl-L.
+
+Reduced memory requirements by a small amount by reducing some static
+buffers.
+
+Status bar repeating chars should now work as advertised.
+$winnames(refnum) will return a list of all names of nicks specific to that
+window. nicks are added with the /window add command
+
+Corrected output of status line. damn extra strmcpy()'s creeped in. This
+might also account for some strange coredumps as well as some strange screen
+behaviour
+
+For some damn reason we forgot about /unuser :)
+Added -ppp to /adduser to add hostnames in the original fashion with
+*.host.edu
+
+Improved /swatch commanD somewhat. This allows /set swatch to save what the
+user would like to server watch.
+
+Changed split_up_line() to recognize a , or a space as a word separator.
+
+Merged in changes from epic4 026. Some changes backed out because they do
+not work. ie -%> which hop had reworked from my original patch.
+
+New load code broke send_text. load_depth of -2 was not a good thing.
+
+Another %c%s type bug found and fixed.
+
+Changed format_away to include  is away: for those that wanted it.
+
+Found small bug in /readlog which was causing the odd occurances in away log
+reading.
+
+Fixed small bug in /load which was causing loTza trouble.
+
+dcc status bar bug I introduced fixed. 
+
+timer command changed to allow multiple args. This is not very robust, just
+a quick hack to allow /timer -rep -1 -ref blah   to work.
+
+Added /dcc help command. Also /window help
+
+Fixed /sping to do the right thing if a server doesn't exist.
+
+Changed %s to %f on the status bar added %s as a modified %S 
+
+Fixed load parser load_depth != -1 for non-interactive commands so make sure
+and check that in parse_line(). Prevail suddenly almost works now. 
+
+Passwords are now checked if passed into find_bestmatch(). 
+ 
+Reason scripts were a little broken if a /* appears somewhere on a real
+line, is that /set comment_breakage defaults to off. We should set this on.
+
+Possible fix for window/channel chatter going to wrong windows. Added
+win_channel_swap_ptr() on swap_window() as we need to keep the
+channel->window ptr's current and swap_window() does a nasty thing.
+switch_channels() rewritten and everything seems to work. add_to_screen()
+modified slightly to send text to the correct window/channel.
+
+Added slight modification to cannot_join_channel() so output goes to the
+current window.
+
+Krome found a little bug with /windows and channels. lookup_channel() needed
+to check the return from get_channel_by_refnum() before passing it on to
+stricmp(). This also pointed out that /window kill doesn't update the input
+prompt at all.
+
+Added /dcc help and /window help. Filled out help for these commands as
+well. 
+
+The command table from the server has been put into a hashed list. /debugmsg
+will show some simple stats on this.
+
+Modified the server msg to use a hashtable. /debugmsg will display some
+statistics
+Modified /on # to use a hash table for the numeric and then a linked list
+for the actual hooks. This should speed up numeric lookups considerably. 
+
+
+
+Note: some of the following commands are a part of openchat irc client by
+mikh. 
+
+Added $isconnected(<refnum>) to tell a scripter if we are connected to a
+server or not.
+
+Added /evalserver <refnum> <command>  which will send a command to a
+specifIc server.
+
+Modified $myservers(0/1) to return either the names of the servers or the
+refnum of the server. default is too use the name of the servers but a 1
+will cause it to reply with the refnum of the connected servers
+
+Added /purge name which will completely remove all traces of a
+variable or variable structure. Keep on eye on this as it might also be a
+memory leak.
+
+Found that $[3]#function(params) was not working as it should. Fixed. Epic
+has this same problem.
+
+Added /timer -update refnum  which will update a timer specified by refnum
+to a new timeout or new command. 
+
+The /window command now accepts as a first param the window refnum wanted.
+So /window 2 double on will turn on double status on the 2nd window.
+
+Added new function called $fparse() which will take a format name and params
+and evaluate it just like the client does. so $fparse(format_ctcp panasync
+ctcp ctcp) returns the parsed format for format_ctcp.
+
+Added hash'd function list routine. First time a function is used the
+functions list is hashed. From that point on, instead of searching the
+entire list everytime a function is called, a hash of the name is done and
+the lookup becomes very fast.
+
+Seems that /ctcp nick ident and returning the access denied wasn't such a
+good idea, so I removed the access denied notice.
+
+The /on FLOOD has been modified to include the type of flood detected. Also
+the channel or a 0 is sent in order to detect if the flooding took place on
+a channel.
+
+Attempted fix foR that odd error that joining a channel with a { or } in it
+caused.
+
+REfixed my attempt at wierd channel names with {} in them. quoting # was
+maybe not a good idea.
+
+Added limited support for server groupings. ie /server [efnet] will attempt
+to connect you to the first [efnet] server. .ircservers and config.h as well
+as /server modified to support a server group name. .ircservers can use the
+following syntax.  server:port:password:nick:group or [group] on a single
+line by itself to represent all the servers that follow upto the next
+[group]. If any of the params from server:port:pass:nick:group are left out
+then we do the following  server::pass:nick:group or server:::nick:group
+etc.
+
+Fixed find_bestmatch() to not put the userlist entry into the nicklist if
+the channel doesn't match. p_channel() will also reflect this small change
+in that we no longer check for a channel_match().
+
+A /xdebug would cause a coredump in add_to_display_list().
+
+Added back in /lastlog -clear. This was removed because of the new display
+code.
+
+Added $getcdcc(#) which will return info on a specific pack number.
+
+Found and removed a couple of small memory leaks.
+
+argh. /stack on was very broken. might also be why scripts were loosing
+memory all over the place lately. Working now.
+
+Xterm and screen title now set on startup, join to channel and channel
+switch.
+
+Major memory leak foUnd and fixed. This should cause memory usage in certain
+scripts to stabilize alot.
+
+Ctrl-W-b needs fixing.
+
+Small change to format_notify_signon_uh and format_notify_signoff_uh. We now
+store the complete user@host internally instead of separately, meaning we
+needed to change the format's as well. Yell at [nutbar] for this internal
+change.
+
+Fixed another memory leak in the alias parser in calling expand_alias();
+Fixed one other memory leak with /stack push set in vars.c
+Found one in send_text() and add_to_channel() from the whowas chan buffer.
+Another in dcc othername was being m_sprintf() and m_strdup() if BROKEN_MIRC
+was defined.
+Another memory leak in dcc_really_erase(). Where the hell are all these
+coming from.
+
+URL grabber changed. We now keep a list in memory. We can use the new
+command /url to manipulate this list. 
+	/url http|ftp on|off
+	/url save|clear|list
+
+With help from Rosmo BitchX has been ported to OS/2 vio window. It actually
+runs better under OS/2 than under win95/nt.
+
+Merged in changes from epic 032. Including one other patch for return
+statements.
+
+Merged in changes from epic 033 as well as fixing several bugs in epic 033.
+
+Added TIMER_HOUR hook which should go off on a hourly basis only.
+Added /cdcc stats
+Modified getcdcc() to return number of packs available when getcdcc(0) is
+used.
+Various other fixes made.
+
+Attempted fix for SunOS/AIX possibly others problems with /cset and friends.
+
+AIX2 doesn't like WANT_DLL so we specifically undefine it in config.h
+
+Couple of commands CONTINUE and CONNECT out of order. As well I forget
+UNCLEAR_TEXT as a key binding.
+
+Added sendcdcc() which accepts a nick and a pack number to send.
+
+Added hook cdcc_send_nick which is called whenever someone requests a cdcc
+pack. this can be used to keep stats on who's the top downloaders and stuff.
+from, userhost, command, pack#, # of files, # of gets, filelist and desc 
+are all passed in. If the file is queued command is pre-pended with Q. For a
+local send userhost is "unknown".
+
+Cdcc now saves the type of send requested to the queue so that queued file
+sends will follow the requested type.
+
+Stack on was causing a problem in scripts using it.. Possibly fixed as
+this alias no longer causes a core.
+alias buggy if (![$0]) {echo use /buggy <nick>}{
+  fe (311 318) num {^stack push on $num}
+  ^on ^311 * {@_n=[$1]}
+  ^on ^318 * {fe (311 318) num {^stack pop on $num}}
+  ^wi $0
+}
+ 
+The /toggle auto_reconnect was broken due to auto_rejoin.
+due to complaints the xterm status bar change code is now a toggle.
+And /wset status_f will now return all the status formats for that match.
+
+
+
+73p2
+Fixed ${format_version} for scripts.
+Fixed status bar overwrite on long lines.
+Fixed annoying problem with scrollback, using new epic display code.
+Added new flood checking using hash'd lists instead of an array.
+Other changes made for /set -format for compatibility.
+a /cset in the .bitchxrc file would core.
+window.c/status.c changed ala epic. My own modifications added for split
+menu bar. 
+window split and window triple fixed up to work properly in epic's new code.
+
+
+
+73 released on 09/08/97
+Still a speeling error in commands.c /ight was in wrong place.
+Added a /ctcp ident. User must have a password.
+Slight fix in dcc.c involving read(). We should read the MAX_DCC_BLOCK_SIZE,
+not just dccBlockSize().
+
+Some possible overruns fixed in bot_link.c
+
+Added Resume to /dcc help
+
+Added two new status variables. %& and %| will display dcc stats and cdcc
+stats.
+
+dcc exempt +nick  will add a nick to the autoget list. This list has nicks
+that do not trigger dcc/cdcc flood protection and as well even if the dcc
+autoget is off, the files will still be autogotten. Nicks are saved in the
+BitchX.sav file.
+
+addnoflood nick added. This nick will not trigger flood protection at all.
+
+Changed /hostname for linux systems.
+
+Added new /tcl bind type for hooks.
+
+Fixed a problem with p_part() and send_2comm() which was causing segfaults
+when leaving channels.
+
+Some fixes from firebug incorporated into bx and passed onto epic.
+
+A long standing bug in convert_output_format() %l fixed. Damn p++
+
+Added $isignored(nick) which will check the ignorance list to see if that
+nick is ignored.
+
+Fixed a bug in the cdcc queue system which could core you.
+in BOT_MODE a nick has to be on the userlist in order to have auto-chat
+
+The cdcc queue should now be more respectful of the DCC_SEND_LIMIT
+
+Also people requesting a remote queue list, will not recieve garbage back.
+As well as fixing a potential core dump of the client.
+
+Fixed some possible flood problems in cdcc. Only one mesg is send for a
+queued file request or a full queue. Changed some msgs in cdcc.
+
+More /toggle's added by request.
+
+$checkshit returns more info now
+
+output_line() make_status(), status_make_printable() modifed heavily.
+
+do_unkey() didn't like NULL being passed into vsprintf() on SUN's
+
+Added all ircII variables to tcl output. All except the FORMAT's
+
+Fixed /toggle oper to actually do the toggle and window create. As well
+toggle will take multiple args and toggle each of those.
+
+New ctcp uptime will return the current uptime of the client.
+
+chanst would core if you were not on a channel and didn't specify one on
+the command line.
+
+Some kinda souls noticed an extra d in the msg we send back when away.
+
+$channel() or $channel(#chan) will return the channel nicks in a list with
+a . - normal, @ - op, + - voice. if the user is an ircop then * is first.
+
+Status bar ansi bugs fixed.
+
+Kill parser for Operview rewritten in an attempt to make it process faster.
+
+Fixed up a couple of minor glitches with /toggle /chanst /nwhois
+
+Added bots and clients commands to tcl. tcl 1.3
+
+Major changes to the output routines from epic. status bars/screen output
+code has all been rewritten.
+
+Fixed a small /back bug with the number of mesg's recieved while away
+
+A new command /signore for ircops added. /set SHOW_ variables have now been
+removed as redundant and unnessary. Some changes to the handle_oper_vision()
+function were made.
+
+Several fixes done on new epic scroll routines. add_to_window(),
+split_up_line() and put_echo().
+
+A new command which set's MSGLOG_LEVEL implemented. /awaylog will set what
+we want to log in the away log. Started adding moRe logmsg()'s in the code.
+Need to add some help for this command. /set format_msglog is used to define
+what is put into the mesg log.
+
+Ok, repeating timer added. /timer -rep 10 command will repeat the command
+every 10 seconds until deleted.
+FORMAT_TIMER modified to include Repeat as a Yes/No variable.
+
+Renamed /signore to /swatch.
+
+Changed /timer -rep to /timer -rep times   where -1 will repeat forever, and
+>1 number's will repeat times times. a 0 rep will do nothing. /timer -r
+changed to /timer -ref to remove any ambiguity.
+
+Bonehead mistake in ircaux strmcat/strmopencat fixed.
+
+Fixed up $statsparse(%>%M)  so it actually pads.
+
+Getting ready to revamp the help system including /help. A possibility of
+using the BitchX.help file internally.
+
+Major revamp of /cset using Sheik's cset code. Added /wset to compliment
+this.
+
+Some memory leaks on the status bar fixed up. This may have been where we
+were losing memory.
+
+Modified /cset according to sheik to handle * and channel names. This same
+thing can be applied to windows and window names. So /wset * status_Format1
+will modify/display the status_format1 variable for displayed windows or
+just for windows with certain names. 
+
+Fixed a bunch of complaints mainly todo with /cset /wset. msg counts when
+/away were slightly borked as well. increased the alias cache to 30. 
+To see what this is do /alias /s . 
+
+Added /wilm /wiln  for last message and last notice recieved whois
+
+Fixed screen/status bar problem with long lines.
+
+Changed check_channel_match() to use next_in_comma_list() which should make
+it faster. Possible fix for ajoin of channel with keys. 
+
+Added /dump timer. Also changed /unload to dump the running timers.
+
+Modifed /ov so that if the operview window is open we can /ov
+hide/+hide/-hide this window at will
+
+Recent changes in the way we handle /set ignore_time cause us to ignore
+someone for 0 seconds. which in turn causes us to unigore immediately. So
+check /set ignore_time it should be in seconds. as well check
+pubflood_ignore_time
+
+Fixed awaylog timestamping for good.
+
+Added support for ircu's ># <# filter. /list -ircu -min # -max # *irc*
+Support for this could be automated in scripts quite easily.
+
+Fixed NICK statement usage in .bitchxrc or .ircrc files so a segfault
+doesn't occur. If found all we do is copy this nick into the default
+nickname statement. 
+
+Added /fset for the format variables. /set format still works (bonus) but a
+/set will not display the format variables. /fset WILL replace /set format
+in the future.
+
+Added /set CLOCK_FORMAT  which uses strftime() to set the clock format. 
+
+Re-arranged some source code. modules.c fset.c var.c.
+Re-wrote /Fport to use non-blocking connects.
+
+Found annoying bug with disappearing messages in rite() update_all_status().
+recursive split_up_line() output_line() is a real no win.
+
+A problem with excessively long lines found and fixed. Dcc chat messages
+were not being displayed properly on send.
+A couple of bugfixes for NT/95 Bitchx specific versions introduced.
+
+
+72p1 released on 072097
+Fixed a couple of SunOS bugs. /cdcc list and switching servers no longer
+cores.
+Fixed that annoying little problem with the status bar appearing during a
+/exec or a /redirect. This bug appears in all clients that update the status
+bar frequently (ie during dcc transfers and a status update).
+bx-wall now uses format_bwall for output to you as well as incoming.
+identd server built-in for win95/nt. Simple to code.
+identd server removed from windows... Simple, but cygwin too buggy for now.
+Added $winlen(opt_win_refnum)  returns the length of a window.
+Added -R -X and -Y flags to XECHO. basically does a direct screen write,
+without logging. no update of the internal structures takes place. Ideas
+from ShadowImg. -R is a Raw write, no cursor positioning is used.
+STATUS_FORMAT2 changed slightly. Removed Aw from the format. Added
+STATUS_MSGCOUNT to format the away msgcount variable.
+Lotz of other bug fixes which I forgot to keep track of.
+/dme and /qme commands added. /me is to a channel. /dme goes to the first
+dcc chat found /qme is for a /query.
+FORMAT_BWALL used in /wall for output.
+/loadtcl and /tcl -file will now search the LOAD_PATH for tcl scripts to
+load.
+72 changelog
+Little bug fixes in mail and in speeling mistakes I made. /set aop and /cset
+aop were broke. 
+epic pre 0.38 patches incorporated into the client.
+/lastlog -file filename  support added.
+/lastlog -clear to clear the lastlog buffer.
+maybe fixed up /addidle and /unidle.
+Added some epic pre 0.39 patches.
+Rewrote /rel and friends. I think maybe they might actually even be usable
+now. -kick, -wall, -notice, -msg, -wallop, -topic, -kill, -kboot and -list 
+are the flags for /rel*. Need to test each one as the formats will need to 
+be modified.
+Fixed lagtime indicator. Seems we forget to check if the server was
+connected or not.
+Ctrl-F was not working at all. switch to split server.
+Not that suicides count_ansi wasn't any good, but we have a internal
+count_ansi() function already. $countansi() returns the number of ansi chars
+that are in a string.
+More /ignore types added. /ignore * quits fixed up to actually work. As well
+parts, nicks, pongs and squits are implemented.
+Started to change cdcc.c to allow packs for servers. 
+Small buglet with channel names with % in them. sprintf() was attempting to
+translate that into valid variables and failing miserably. Only a few places
+in the client needed to be changed to support the proper thing todo.
+Small changes to convert_output_format() which allows limited recursion
+levels. Hairy.
+Small tcl changes. New bind check_help_tcl() which you can use to display
+help for tcl / commands. The function name + _help is used to check for a
+bind of that name. and it is then called with no parameters. tcl_versionstr
+added to help alleviate some aggravation on what is the newest tcl.o file
+for a system.
+format_version has changed to include tcl and 1.0 if possible as params.
+Hashed the channel's nicklist. 
+Hashed the whowas list of nicks.
+Fixed /stub which wasn't working at all.
+/tog disp_ansi  now should do the correct thing with the status bars and
+input prompt.
+Several other problems fixed. most notable was the problem with scripts that
+used $cparse() and the built-in exec protection in it. Source should now
+compile either on unix or cygwin systems
+/cdcc describe now works as advertised.
+
+patch from Nimrod Zimerman to add a /set AUTO_COMP_CHAR variable. Setting
+this variable defines the char to look for when using nick completion. If
+set FORMAT_NICK_COMP is undefined then it is also used for display in the
+channel. What follows is his description of how it works.
+
+This input:
+   "Lon, What's going on with the Shadows?"
+Will not be changed under usual condition.
+
+However, after executing:
+   /SET AUTO_COMP_CHAR ,
+(the comma above is part of the command!)
+and:
+   /SET -FORMAT_NICK_COMP
+The same input will be completed to form:
+   "Londo, What's going on with the Shadows?"
+
+Had we neglected deleting FORMAT_NICK_COMP, however, the completion would
+have been:
+   "Londo: What's going on with the Shadows?"
+(assuming default value in FORMAT_NICK_COMP).
+
+Worked around problem with channel actions appearing in wrong window.
+Changed hash'd whowas/wholeft and nicklist hashing function to one that
+hash's everything.
+Fixed numeric 317 format_whois_idle to return the last on info returned from
+the command /wii
+/on will no longer bug out when displaying ansi. A simple call to stripansi
+added to show_hooks()
+Fixed up /chanst so statistics are correct...
+fixed up /chanst -ALL again. I had disabled it quite some time ago.
+Cleaned up update_stats() decifer_mode() and p_kick(). They might even be
+faster now on mass deops due to less lookups occurring.
+Fixed idle_timer 
+Added timed unban for most of the flud's.
+/set AUTO_UNBAN is the timeout in seconds for timer'd unbans. setting this
+to zero will make the timer not go off.
+join flooding was broked. did we really need two checks for Join floods? 
+removed one in p_channel()
+Broke non-userlist'd joins when re-arranging p_channel().
+Fixed up last of /rel commands so they should all display properly. /rel?
+-help displays a help message.
+We will now rejoin channels in correct windows on kills. Removed
+clear_channel_list() from /reconnect, which allows us to reconnect to all
+channels. Fixed rejoin to proper hidden windows.
+Added some changes from epic4 pre040. Skipped new scandir(). Added new
+method of auto-joining, reconnecting to channels.
+Added /map by popular request. output looks similar to scrollz. FLiER's code
+was handy as an example.
+Added a little check on no such nickname to remove any pending dcc's.
+Added a userhost on numeric 433 nick in use.
+Added a /unload command to unload 95% of the things a script changes
+Added a call to add_to_join_list() in /window channel to preserve the 
+window refnum.
+Typing /w on a channel now updates the internal nicklist. This fixes up the
+/away's and the ircop counter.
+Changes from epic4 pre041 worked in. Highlights are - 
+	3 new sets. CPU_SAVER_AFTER, CPU_SAVER_EVERY and STATUS_CPU_SAVER 
+	%J for a new status format. displays value of cpu saver.
+	CPU_SAVER key bind to turn this feature on immediately.
+	small bug fix in reg.c
+Client now compiles unmodified on win95/nt with Cygnus tools.
+Added small hack to set_dcc_bits() to prevent lossage of dcc counts.
+Fixed up who_left() and show_whowas().
+Added new /igt and /ight for timed ignore's. We use /set ignore_time for the
+time to ignore this nick or host.
+Added /reld and /reldt for /rel dcc and rel dcc topic. last 10 saved.
+Small fix to expand_alias() which should fix problems observed with /eval
+echo $ 
+Changed FORMAT_VERSION for the last time. $4 $5 are the tcl version strings
+if they are enabled.  
+AUTO_COMP_CHAR renamed to NICK_COMPLETION_CHAR by request of the author of
+the patch.
+Fixed /eval echo \ core'g the client.
+Some patches from Tomas Ogren <stric@ing.umu.se> applied to the client. I
+didn't agree with the way some of them were done, so they were not applied.
+I did however introduce special handling of the chr(255) within
+convert_output_format(). It is now converted directly to a space character.
+It's used as a kind of place holder for the parser. So we know exactly what
+argument is where on certain format's this is required. ie format_users and
+the dcc output parser. This will fix up those non-iso fonts I think, so that
+a space is correctly shown, instead of some funny character.
+Fixed a epic /me bug with /query =nick.
+Fixed a status bar problem with +v in decifer_modes(); BlackJac found this.
+Some changes to the DLL module loading procedure to make it easier foR
+module writers to write a module and insert it. 
+xavvy requested a $longip() function. to convert a numeric ip into a network
+long.
+Fixed up unbanning of people who are banned by someone.
+Experimental ignore exception text. 
+/ignore #channel %ALL text "some other text"
+This adds "text" and "some other text" to the ignore exception. Any lines
+with "text" or "some other text" appearing in them will be output. No others
+lines from that channel will appear. Currently this is restricted to
+privmsgs and notices appearing on a channel.
+
+[oweff] ive setup http://crackrock.melnibone.org tho i doubt anyone 
+	will remember that addy. =]
+[raistlin] raistlin.toledolink.com is mirror'g bitchx.stuph.org. Thanks
+Blu3Viper foR bitchx.stuph.oRg.
+
+
+71p3  Released May 28/97
+Small amount of changes. All mis-ordered vars are now in order.
+Fixed ignore of nickname on msg floods.
+Added epic4 pre034 changes.
+Fixed /wait -name 
+Fixed message_from() so it works again. This solves a coredumping problem on
+SunOS.
+/set window_quiet on turns off window messages
+/window update updates all windows with the current set of global values
+/window bind  fixed.
+If you kicked from a channel on another window, the kick stays on that
+window.
+Thomas Niederreiter sent me a patch for #define ONLY_STD_CHARS and
+REVERSE_WHITE_BLACK for those who are using normal xterms or want a reverse
+color xterm.
+Fixed alias_server to return correct servername for the current window.
+Fixed /cdcc resend so it actually resends a file not just sends
+Added /ignore exceptions. so /ignore *!*@* ALL except *!*@*.com will ignore
+everything except .com .
+/reinit which will reinitialize all string /set's to the defaults
+New /ignore types added. KICKS JOINS QUITS MODES SMODES
+WINNT defines removed completely from the source. Added new WINNT defines
+and created BitchX97 for 95/NT using cygnus tools. term.c completely rewrote
+for it.
+/set REASONFILE removed. 
+/set APPEND_LOG added. default is on. This effects all logfiles /set log on
+and the away log.
+/chguh to change a nick's userhost added.
+/addshit nick * 5   adds nick to the auto-ignore shitlist option.
+/query -cmd cmdname (target)  will set the cmd to use for the query. Valid
+types are msg, privmsg, notice, csay, cmsg, and any matching commands from a
+dll that's loaded (ie be cautious).
+/on partial_hook_name  returns all matching hook names and displays what's
+on them.
+rewrote get_builtins() so it returns builtin aliases. So now command
+completion will return builtin aliases.
+A /cdcc send nick #1 woUld fail. 
+$statsparse() will return the information from the status variables.
+so $statsparse(%N %C %L) returns  "root #bitchx [Lag 0]" as a string.
+requested by suicide.
+Some small changes with duplicated code in ctcp functions. New ctcp uptime
+added. It is ignored for everyone but those on your userlist.
+/window triple on   will create a triple status bar. Some caution is urged
+with this.
+$winquery(nick <server num>) returns the window that nick has a query on.
+removed a stripansicodes() from outgoing dcc raw/chat. We will see if this
+causes any trouble.
+dcc raw listens were broken with dcc_fast on. dcc_raw_listen uses a port
+number for the write, which caused us to attempt a FD_ISSET() on some
+numbers. This in turn caused a seg fault.
+/USERINFO nick comment added. if comment isn't specified then comment is
+deleted.
+$getinfo(nick) will return userinfo for nick
+$setinfo(nick comment) will set userinfo to comment or remove it. 
+getcomment, setcomment,_getinfo, _setinfo, _statsparse _winquery 
+added to tcl functions.
+FORMAT_FRIEND_JOIN can be modified to return the comment as well. Default is
+to not display comment.
+Modified tcl matchattr  slightly. 
+Some small fixes to some of the internal check_tcl functions, so that the
+handle is passed properly.
+$absstrlen() returns the absolute strlen() of a string after taking out ansi
+sequences. requested by suicide.
+/Usershow to show user comments added.
+
+
+71p1
+Minor bugs fixed. Forget a #ifdef around TRANSLATION_VAR in vars.h. This was
+causing minor problems with /set. FORMAT_MSGCOUNT FORMAT_MSG were in the
+wrong order as well.
+
+71 Changelog. Released 042397
+
+netsplit handling corrected.
+tabkey handler rewritten 3 times over.
+input editing was coredumping.
+readlog will now correctly read the logfile backwards
+fixed? /dc nick adding the nick and the =nick to the tabkey
+Changed output of /nwhois and /chanst
+fixed /away for scripter's.
+Added -ping to /whereis to use ping instead of version
+refnum display for show_timer was screwed up.
+Novalogic noticed that /deop protection worked, but /kick prot didn't.
+Oweff and TimeCop requested /on CDCC_NOTE 
+/ftp changed to internal ftp client. /dcc ftp  added.
+/msg -some.ftp.site used to support ftp.
+ls cd get put  all supported  /dcc ftp some.site username passwd fixed.
+dTM noticed that /window new hide channel #channel bind #channel was
+failing.
+with two windows and several channels bitchx would cause you to rejoin on
+the wrong server if you were kicked. p_kick()
+cleared up the Your not on a channel error message in p_Mode()
+Changes made to hide_window() to correct and error in window size recalc.
+umode is sent on numeric 001 which should correct some problems with the
+server ignoring the umode.
+/say -c -a -e  for cool annoy and eleet type say's
+/ctcp now shows what it was sending by request of BlackJac.
+Added -* flag to XECHO. displays mesg in ALL windows. Requested by TheAsp 
+and Sheik
+$stripmirc() now correctly strips mirc color codes completely
+$getreason(nick filename) will use filename as a random reason file
+replacing $0 with nick.
+/cdcc queue 			displays number in queue
+/cdcc queue remove #|nick  	removes # (3- 1-7 etc) or nick from queue.
+/cdcc queue list		lists contents of queue
+/cdcc queue list nick		lists contents of queue for nick
+/cdcc list modified		output is differant
+/cdcc send			modified. if filename starts with a number
+				check pack numbers otherwise send filename.
+refixed logmsg() after some changes were attempted for separate channel
+logging. This doesn't seem possible. use /log instead.
+/window set stat wasn't printing the fullname of the variables (suicide)
+renamed VERBOSE_CTCP to CTCP_VERBOSE
+/stats flag servername  will output in a nicer format now. c h i k l m o u y  
+/trace flags added. -s -u -o   will trace for servers,users,ircops.
+Added a HACK_OPS mode. BITCH mode should be on as well as HACK_OPS.
+check_shit() now checks PROTECT_CHANNELS 
+Added password checking into check_auto(). If user is passwd protected, then
+auto-ops are not given. they have to /ctcp yournick op #channel passwd
+Fixed /chat and /nochat.
+Added time to dcc_glist output for dcc chats/ftp/bot modes.
+Multiple dcc cdcc sends are possible. Comma separated list of nicks instead
+of one nick, will send the file to all the nicks in the list.
+Changed addlist_cmp to use strcasecmp instead of strcmp. wonder how many
+scripts this'll break.
+Bans are not enforced if the shitlist for that channel is off (ie /cset).
+Also the protect_channels var can be used to change the channel that's we
+protect.
+Added Ctrl-O bind. it ig's the the tab msg nicks.
+Changed /set so we can list the dll variables with a partial match.
+Changed tcl slightly for the raw and input binds. returning 1 from a tcl
+function will cancel the ircII handling of the information.
+Modified internal tabkey to hold the type of command we want to use. (csay)
+Modified /cdcc type and /cdcc echo with no args, displays current. Any other
+args will toggle.
+Added /dump channel   for dumping channel stats
+Some changes to tcl.c required. msg, say, notice, desc added as tcl
+commands. They use the internal ircII parsers.
+Internal functions are now available to the tcl parser. To avoid any name
+space polution we renamed the internal BitchX functions with a "_" so
+_addshit from tcl accesses the internal function.
+Coredump in  /back noticed by shadz.
+Fixed /l #channel so it leaves a channel
+Fixed problem in /set when using dll variables...
+Changed the way /rel* sent text to the server.
+Major Changes to alias/assign code. EPIC 4's alias caching changes merged.
+Mail handler modified. /set Mail 0 1 2
+Fixed some variables that have been missing for some time now. Misplaced
+ones. See ircii-EPIC0.028 UPDATES for complete list of changes for this
+version of BitchX
+immortal pointed out that /window new segfaults the client (happens in all
+irc clients). fix was in add_window_to_list() and new_window().
+prepare_command now sets active_server = -1. helps prevent segfault.
+Tweaked cdcc again. modified add_to_queue() to check for duplicate entries
+in the queue. Modified dcc_sendfrom_queue() to not check DCC_SEND_LIMIT.
+check_channel_match() modified so if the first char is ! we won't auto-op on
+that channel, but will on any others that have been specified.
+FORMAT_HELP added. to be used with /help output.
+Fixed /chg commands to work properly. Added /chgpass.
+Fixed check_array_size() and move_array_items()
+Noticed that the default chan vars are not being updated properly.
+Added new dcc type. /dcc tsend /dcc tresend /dcc tget /dcc treget. This is a
+ackless dcc type which responds to filesize for finding the eof. Simple
+testing shows that this is aprox 150kb/s faster than normal dcc's
+segfault in netsplit handling fixed.
+/listdll command added.
+/mb was segv'g on some systems. fixed.
+/<esc><esc> handling fixed. This seems to have solved crackrock's tabkey
+handling as well.
+EPIC pre0.29 changes added... Still to come are the userhost caching and
+new whois queue.
+71alpha11 released for people to try.
+Prob one of the longest standing bugs in the history of Bitchx was squished.
+cdcc queue sends were crashing once in awhile. bad lamage here.
+/foreach fixed.
+/who *netcom.com* would add users to the users on the current channel, not
+quite what was supposed to happen.
+flood warning only happens if the internal flood handler doesn't do
+anything. /on FLOOD will override the internal flood handler. Flood handling
+was terribly broken for some reason (what was I smoking when I put > instead
+of < )
+71alpha12 had a short life. rest in peace.
+71alpha13 fixed segfault cause by WHO on join. partially server fault I
+think. Still a segfault in add_to_channel() I believe. Need more testing.
+Server handling of /who and /whois has been changed in CsR29 servers. 
+oweff pointed out some problems with cdcc hooks. Fixed. Broke 100% of
+scripts that handle cdcc output when I added the "type" of msg we are
+supposed to send according to the internal cdcc. ie NOTICE or PRIVMSG added
+to CDCC_PREPACK CDCC_PACK CDCC_POSTPACK and CDCC_NOTES.
+Afte mucho bitching /set mircs actually does something. It converts mirc to
+ansi when on. But only for non-scripts. So those of you using a script,
+you'll have to bug your script author about using $mircansi()
+bans on usernames of greater than 10 chars could fail. bk pointed this out
+as well as Cyan who explained it better.
+/toggles operview was broken for the last 8 months.
+/addidle should work as advertised.
+/masskick might have been broken.
+/bhelp dcc raw  was doing some strange things because of a $listen() in the
+text. fixed.
+set_dcc_bits() was missing a fast_dcc off setting. This was causing cpu
+usage to skyrocket.
+Kinda lame bug fix but it'll do  for now. For some odd reason we are getting
+a NULL user in the whowas list's. We now check for this.
+ctcp finger now works again. Thanks Jordy
+/sk and /whereis removed due to the changes by removing WHO_ON_JOIN
+should prevent flooding of the client on large channels and a netsplit
+occuring
+long standing bug in mircansi fixed.
+fixed a problem with /set beep_on_msg. forgot to pass all the parameters to
+the function
+wait cmd structure could become corrupted if too many wait's were used.
+Alpha18
+/set kick_if_banned on/off will turn off kicking of users who have been
+banned from the channel. Also nick floods check to see if it's you that's
+doing the nickflooding before kicking.
+FORMAT_DCC and FORMAT_MSGCOUNT added.
+$winchan(number) returns the channel that a window is associated with
+Added a #define to config.h for including translation tables back into the
+client of those that require it.
+
+ ------------ Change log from epic pre 0.29 client -----------------
+
+*** News 03/31/97 -- New argument to /WAIT command, ``for''
+	Yes, ``for'' without a hyphen.  This command guarantees that
+	the code given as the argument is executed synchronously.
+	That is to say, if the arguments, when executed, sent something
+	to the server, the command will not return until that request
+	has been completed (as if a wait had been done.)  But if the
+	code does not send a query to the server, no wait is executed,
+	and the command returns immediately after the code completes.
+
+	Example:
+		/wait for {
+			if (arg) { who -line {echo $*} }
+				 { echo Booya! }
+			echo Foobar!
+		}
+
+	It is important to note that the implicit wait is done AFTER all
+	of the arguments to /wait for have been executed.  However, any
+	code that is after the server query (in this case, ``echo Foobar!''
+	will be executed AFTER the WHO is launched, but BEFORE the 
+	synchronouzation step.  If you needed it to be executed after
+	the WHO completed, you would noT put it inside the /wait for.
+
+	Note that you can nest /wait for's and /wait's and they will
+	sort themselves out sanely:
+
+		/wait for {
+			if (arg) { who -line {echo $*};wait }
+		}
+
+	(This is a silly example, but bear with me.)  In this case, there
+	is an explicit WAIT done after the WHO request.  Since a WAIT has
+	already been completed, the /WAIT FOR will not wait again a second
+	time.  That is to say, it will recognize that the WHO has already
+	been waited on and will not delay further.
+
+	As a side note, using /redirect within a /wait for loop, or 
+	doing a /wait while you are using /redirect is *bad*, and you
+	are strongly discouraged from doing so.  It is undefined behavior.
+
+
+*** News 03/19/97 -- About the new who/ison (and soon userhost) queues.
+	The client now keeps a FIFO (queue) of who/ison/userhost queries
+	you make.  It is *critically* important that you do not confuse
+	these queues (due to the nature of these server queries, there is
+	no way to have any reasonable error recovery). 
+
+	The following behaviors are forbidden (but the client wont stop
+	you from doing them)
+
+	* Using /ON ^RAW_IRC to wedge the 303, 351, or 315 numerics.
+	  If you do this, the queues wont be properly flushed, anyone
+	  waiting on a proper reply wont be handled, and any further
+	  reqeusts will be thought to be previous queries, and all hell
+	  will break loose.
+	* Using /QUOTE to launch USERHOST, ISON, or WHO requests..
+	  If you do this, the client will whine at you when it gets
+	  unexpected replies and will eat the information.  If you launch
+	  another query before the invalid one finishes, all hell will
+	  break loose.
+
+	*** THERE IS NO WAY TO RECOVER IF YOU DO THESE THINGS ***
+	If youre stupid enough to do it, you get what you deserve.
+
+*** News 03/18/97 -- Expanded syntax for $userhost()
+	For your convenience, the $userhost() function now takes arguments:
+	You may specify one or more nicknames as arguments to the $userhost()
+	function, and the corresponding userhost(s) for the nick(s) specified
+	will be returned.  The string <UNKNOWN>@<UNKNOWN> will be inserted
+	for any nicknames whose userhost is not known.  The nickname(s)
+	speified *must* be people who are on channels you are also on for
+	the current server!  (See the second caveat)
+
+	* Caveat -- Because it can take time for the WHO query to complete
+	after you join a channel, there is no definite way to know if
+	$userhost() for a person on your channel will succeed or not.
+	You should probably be prepared to launch a /USERHOST query in
+	case of failure.  This deficiency may be altered or modified in
+	the future to block if an otherwise valid request is made while
+	a WHO query is still pending.
+
+	* Caveat -- This function will never be modified to launch a server 
+	query.  That means that this function will only ever recognize those 
+	nicknames that are common to channels you are on.  If you want to find 
+	the userhost for other users, you should use the /userhost command.
+	It is expected that the /userhost command will soon be able to
+	take advantage of the userhost caching (but it does not yet.)
+
+*** News 03/18/97 -- Expanded syntax for /who
+	For your convenience, the /who command now takes two new arguments:
+
+	-line {...}	The code inside the braces will be executed for each
+			line returned by the who query.  The arguments are
+			exactly the same as for the /on who hook, except that
+			this flag is *gUaranteed* to override the default
+			/on who, and will also *go away* when the current who 
+			query is finished.
+
+	-end {...}	The code inside the braces will be executed at the
+			end of the who query, when the 315 numeric is parsed.
+			The arguments are:
+				$0 - server queried
+				$1 - body of the query
+			This is guaranteed to toverride the default /on 315,
+			and will also go away once the current who query is
+			completed.
+
+	These command bodies will be executed asynchronously, which means
+	that you must assume that the enclosing code scope will complete
+	before the code is ever executed (e.g., the same rules as for the
+	/userhost -cmd flag.) unless you use /wait.  You are encouraged
+	to not use /wait if you can figure a way around it.  Code that is
+	not concerned with being stricly backwards compatable with the
+	stock client is ***strongly encouraged*** to use these new flags.
+
+	Underlying this change is a new re-entrant WHO queue, which allows
+	you to launch more than one WHO query simultaneously.  No longer do
+	concurrent WHO requests have to wait for previous queries to complete,
+	and no longer (with the above flags) does the caller need to put the
+	WHO command in a /stack-/on-/wait wrapper.
+
+*** News 03/17/97 -- /on 312, /on 319 changes
+	All of the whois numerics: 311, 312, 313, 314, 317, 318, 319
+	now pass $0 as the server name and $1 as the target of the 
+	whois query.  All the rest of the arguments are passed as $2-.
+	Previously, some of these numerics passed the target as $1,
+	but not all of them.  I changed it this way for consistancy.
+
+*** News 03/17/97 -- New: /ON STATUS_UPDATE and $status()
+	/ON STATUS_UPDATE is hooked whenever any of the status lines
+	for any of the visible windows changes **and you are in dumb mode**:
+	   $0  is the refnum for the window whose status line has changed
+	   $1  is the status line in that window that has changed
+	   $2- is the actual status line for that window.
+
+	$status() can be used to fetch the current status line for any
+	visible window.  Invisible windows do not have their status lines
+	updated, so they may be inaccurate.  This problem may change in
+	the future.  Pass two arguments:
+	   $0  is the refnum for a window
+	   $1  is the status line
+
+*** News 03/02/97 -- Local variables can now span entire array tree
+	The syntax:
+		``local x.y.''
+	will define all variables in the subarray $x[y][...] to be
+	implicitly considered local variables.  That is to say, the
+	entire variable tree rooted at $x[y] is local to that scope.
+	This was requested by a user for compatability with another
+	client.  All local variables that are instantiated in this
+	manner have the same scope as the explicit declaration above.
+
+*** News 02/18/97 -- New built in variable, /SET CONNECT_TIMEOUT <seconds>
+	Set this to the number of seconds you want your connect()ions to	
+	block before they time out.  Note that this doesnt affect
+	connect()ions that are already in progress, only those that are
+	started after you set it.  The default is 30.
+
+*** News 01/30/97 -- Expanded syntax for /LOCAL, /STUB
+	You may now specify more than one name per command:  Each name
+	will be treated independantly of all others.  The names must be
+	seperated by a comma, and ***must not*** have any spaces between
+	the commas and the names (that is, all of the names must form one
+	logical word).  To declare both "foo" and "bar" as local vars,
+			/local foo,bar
+
+	You can do this to stub more than one alias/assign to the same
+	file, as well:
+			/stub foo,bar filename
+
+*** News 01/29/97 -- New command /BLESS
+	Currently this commanD ignores its arguments.  This will not be
+	the case in the future (eg, arguments will be added)
+
+	When given no arguments, the /bless command causes the current
+	stack frame to not be atomic.  You are therefore free to reference
+	local variables of the enclosing atomic stack frame.  Extreme
+	care must be taken that there is indeed an enclosing stack frame 
+	from which to reference local variables:  Otherwise havoc may ensue.
+	Usually you can ensure this by doing a /wait after a local server 
+	query.  When an enclosing stack frame "returns" (ie, an alias ends),
+	any /on that is processed later due to a server request made by that
+	stack frame must not use this command.
+
+	Dont forget to clean up your messes when youre done with them. =)
+	See the 'guh' script for a demonstration of how i used it.
+
+*** News 01/27/97 -- New flag for /EXEC, -direct
+	Syntax:
+		/EXEC -direct <commands>
+
+	This simulates the effect that unsetting the SHELL variable
+	causes, that is, the command is executed directly, without
+	invoking a subshell.  This is appropriate for those who wish
+	to execute a command passing untrusted data as an argument:
+	With this flag, there would be no shell to interpret metacharacters,
+	thus cutting down on that ability to have an accidental back door.
+
+*** News 01/27/97 -- New command, /SETENV
+	Syntax:
+		/SETENV <var-name> <new-val>
+
+	Sets the process environment variable <var-name> to the value of
+	<new-val>.  This command is noT neccesarily useful, nor is it 
+	always appropriate, but it is provided for completeness.  There
+	are several places in the code that can benefit from the ability
+	to change environment variables after startup (eg, TZ).  It also
+	allows you to set environment variables for /exec'd processes,
+	and it is also possible to really foul things up if you mangle
+	important environment variables such as DISPLAY and so on.
+
+*** News 01/24/97 -- New, /ON ODD_SERVER_STUFF
+	This is hooked whenever the server sends you something
+	that the client cannot recognize.  This is usually when
+	you try to connect to a non ircd server, or you use some
+	extension that isnT yet supported.
+	
+	$0  is the server that sent it to you, '*' if unknown
+	$1- is the unrecognized command and its arguments.
+
+*** News 01/22/97 -- /FE, /FOREACH use local variables now
+	The "control variables" for the /FE and /FOREACH command
+	now are local variables.  They will not disturb global variables,
+	but they will destroy any local variables you have by the same
+	name.  You dont have to explicitly declare the variables as local,
+	it is done automatically for you.  Note that the normal warnings 
+	for local variables still apply -- dont use any variable name that
+	is the same as a global variable you might want to use later in
+	the same alias/on. 
+
+*** News 01/18/97 -- Support for local variables
+	You may define a local variable with the following command:
+
+		LOCAL <varname> [<value>]
+
+	It mirrors the ASSIGN command.  Note that local variables act
+	in exactly the same way as normal variables, except you cannot
+	get rid of them.  You also do not (yet) have any way to get at
+	a global variable that has the same name as a local variable, so
+	choose wisely.  An example:
+
+		alias foobar
+		{
+			local b			(declare LOCAL var $b as []) 
+			assign a 4		(assigns 4 to GLOBAL $a)
+			local a 5		(assigns 5 to LOCAL $a)
+			eval echo $a		(outputs '5' -- local)
+			@ a = []		(clears LOCAL variable)
+			eval echo $a		(outputs '' -- local)
+		}
+
+	Restrictions:
+	* You cannot have local aliases -- only local variables
+	* You cannot save local variables.
+	* You cannot (yet) access a global variable with the same name
+	  as a local variable.
+
+	This support is EXPERIMENTAL and still has a lot of development
+	to go before it is mature.  Do not depend on any specific detail
+	of the implementation to remain constant.  The interface should 
+	remain unchanged, but it may also be expanded.  If you have a
+	specific request about this implementation, feel free to ask.
+
+
+
+
+02-10-96 BitchX 70 released. We've come along way baby.
+
+Seems some bugs cropped up right away... /window set and status.c window
+pointer was being changed on status_notify which caused me some trouble with
+seemingly random segfaults. $mircansi() had a bug with ^C1,243324324 and
+^C234723875 large numbers. Weird problem with /ftp /telnet possibly fixed...
+for some reason calloc() isn't returning a 0'd memory location. Fix for
+-parsekey type_text blah instituted. This affected both epic and BitchX,
+Ctoolz, Scrollz and ALL other ircii clients including 2.9roof. /cdcc offer
+was displaying the wrong pack number for a note. fixed. small bug that can't
+happen very often found in built-in alias's. curr_scr_win->server has a
+possible -1 value. screw() was screwed on certain length host names.
+Various other small fixes here and there. ChanWallop does 8 nicks at a time
+now. This gets around the lame server protection that some servers have
+implemented. Notice small buglet in /addbanword where * was not recognized
+as a valid channel. /kb and /ban will now check the whowas list for a 
+matching nick and ban it if all else fails. Hacked around in decifer_mode().
+Added some new botnet commands. /ctoggle and .xlink. with /ctoggle on,
+someone can send a .xlink command where command is any valid ircii command.
+so please to be careful with this. If you set a BOT_PASSWD then anyone
+knowing this password can auto-chat as well as bot-link with you. xlink
+commands default to off. and I will modify this highly to only recognize
+certain commands. DLL loading for linux implemented. What this does is allow
+someone to write a function/command in c and give it to people. They can
+then dynamic load the function/command which then becomes a regular client
+command. No source for the module need be distributed. This same method is
+used in libtcl and I assume perl as well. All internal client functions are
+available to the module IF we add -rdynamic to the client link stage.
+Otherwise they are not available. Although untested, tcl functions should
+also be available in TCL compiled clients. I modified the client to look for
+dll commands and then commands, alias's etc. I also re-implemented the
+Tcl_Eval portion of the command loop. It's one of the last things checked.
+/loaddll function implemented for dynamic loading of functions, ctcp's and
+commands. These lists are checked before all others so that authors can
+replace internal's of the same name. /bk and /ban will now check the whowas
+list for matching nicks and ban it when the nick is not on the channel or
+has signed off. erase_display() had a off by one error. /reset was lame. and
+screwed up the display. all fixed. $banonchannel(chan ban) added by request.
+Checks to see if ban is on the internal banlist for the channel. Well
+someone nicked goat found the alt char set ansi set would switch the console
+into this mode. It looked like a flash, but wasn't. Required some rethinking
+in FixColorAnsi(). NovaX found a bug with not checking the channel match for
+bans on perm bans. Also found a bug with multiple windows and channels where
+the away mesg was being displayed twice. FORMAT_SEND_AWAY added by request
+from shade. /tignore added. it works like /tban. After some prodding I
+modified the cdcc sends/resends to work with multiple numbers. "*" is also
+recognized for send all. After removing the /me from /away found that the
+away message doesn't display to the screen. /back doesn't prompt to delete
+the away file if /set msglog is off. $winrefs() returns all window refnums.
+shade and all his color changes on the status bar found a nasty little
+problem with static buffers. so we increased the buffer sizes by a factor of
+2. Fixed /do say $repeat(5000 blah) to only return upto 2048 chars. Fixed a
+few windowing bugs shade pointed out. Apatrix pointed out a couple of
+deficiencies in /set bitch on. Maybe we cleaned it up. BarK0de pointed out a
+little inconsistancy with /addword and /banword(s). $gethost(nick) returns
+the hostname for the nick as stored internally. nick has to be on one of our
+current servers channels and the first match is returned. local variable
+support added from epic. BEEP_WHEN_AWAY fixed so it doesnt beep you when
+your away for Flick^. some changes required in p_privmsg().
+menus, history file support, translation and digraphs have all been removed
+from the client for various reasons. Some buffer sizes have been reduced to
+decrease memory footprint. This should make some admins happier. Cleaned up
+vars.c by removing some old variables no longer used. removed nkill and
+nhost commands as they require a hacked server to support them. Removed
+WANT_ANSI from all source files. This cleaned up the source considerably.
+/mode channel b wasn't displaying the modes for a channel. /set ov on/off
+wasn't working properly. /window split on/off changed. /set double_status is
+no longer required. fixed whoreply() to show up in the correct window.
+Added new function variable %` for the uptime of the client.
+destroy_call_stack was failing for whatever reason. Some more places where I
+wasn't clearing the FD_SET() for writes found. /set nick_completion_type 0 1
+2  are valid. 0 nick is first word. 1 nick is somewhere in the string. 2 we
+do match'g on the string. /set auto_response modified to allow more than one
+word to trigger nick completion. wildcards are allowed. /finger now doesn't
+block on connect. This one accomplished by adding a socket callback list.
+Other functions could accomplish the same thing. maybe a rewrite of the link
+looker is in order. /scani for scanning a channel for ircops added. Needed
+some error checking for window->server in $MYCHANNELS(). added -max patch
+for lastlog command from sheik. added support for colorization of /help (any
+takers?	. Found bug this introduced in malloc_strcpy(). Added dll_variable
+support now as well. Jeremy has done some major changes to EPIC3 and made
+EPIC4. We've tried to follow along. term.c needed to be left the same but
+support for some decrepatated systems has been removed ie ESIX. Changes to
+configure have been made and make configuring tcl alot easier. Changes to
+do_flood(). /ig /igh modified to accept a type as well as multiple nicks.
+Nick completion changed, partial matching of a nickname is possible.
+/ig /igh /unig /unigh will use whowas buffer if the nick can't be found.
+/tignore was not woRking quite right. Someone pointed out that /dcc bot
+worked without a passwd.  /sc bug fixed. Nick completion modified in
+behaviour. Pattern matching of the nick will take place. ^R bound to
+nick_completion() which takes the word behind the cursor and attempts to
+match it with a nick on the current channel. So typing the following
+will/should do the following.
+	/msg pana<tab>     if nick is in tabarray then fill it in
+	/msg pana<tab>	   if nick is not in tabarray, check current channel
+	pana^]		   if nick in autoreply buffer fill it in.
+	pana^]		   if nick not in autoreply buffer but on current
+			   channel, fill it in.
+	this is to pana^R  if nick is on current channel fill in the nick.
+	^R		   cycle through current channel nicks
+	<tab>		   cycle through tabarray.
+	^]		   cycle through current channel nicks
+
+For some reason noT found yet (ie bug or feature) once one of these
+functions is accessed in some cases we need to press the key again to bring
+up the next nick. Depending on how annoying I find this, will determine how
+long this takes to get fixed. /cdcc offer updated to take multiple file
+specs on the line. ie  /cdcc offer *.c *.h Makefile  will create a package
+with all those files in it. /SetAR -|d|pat's commanD added. Added $getvar()
+function which will get an alias and return it. Protection was broked. Some
+people are having trouble with the new term.c. Might possibly be termcap
+related. topic bug found by shadz on newnet. buffer overflow problem.
+
+
+BitchX 69 released. 12/28/96
+Fixed dcc.c update_transfer_buffer() for the second time. noT sure what
+happened in the first time I patched this file. Fixed cdcc load to get the
+right number of files. A problem with /m . fixed. /relw and /relsw fixed.
+Changed format of FORMAT_BWALL slightly. Added CtoolZ CWallop to notice.c.
+Fixed bug in free_display() and erase_display(). Added triple status bar, as
+well as /window split on/off. window split is far from perfect though.
+Changes to switch_channels() which make the channels that a window owns
+bound to that window. Pressing Ctrl-X to switch will not switch to a channel
+that was not joined from the window. Active dcc check on exit changed. Now
+we only check active dcc gets and regets. send_to_server() modified so that
+network errors will make the client cycle on a server. Fixed /reli. Fixed
+pgup and pgdn to display proper number of lines in window. Added %- as a
+status bar symbol for displaying current topic. hook channel_switch added
+for script writers to tell when a channel switch has been made. Added /rels
+for server messages. We keep the last 10 msgs. Changes from epic 3.002 and
+3.003 merged. extended status_user functions added thanks to sheik. %!11
+through %!19 are available now. %= displays voice on the status bar. /set
+beep_always on/off. /input_char and /pause x added. WARNING major
+incompatibility but new functionality. most of the /set status's are now
+moved into /window set. Fixed /input and /input_char so more than one char
+can be set in /input. Added /oRignick which will try and take back a nick
+every 20/30 seconds. format_ctcp $3 and $4 are reversed just to make more
+sense. /addlamenick and /unlamenick implemented. $stripmirc() will strip the
+lame mIRC ^C from the input string. ex. 
+/set format_public %b<%n$1%b>%n $stripmirc($3-)
+Found and fixed a bug in /remlog. which was causing some grief. All
+format_ctcp's are now changed to use $4- and $3 instead of $3 and $4-. much
+easier on the client. Added /lamenicklist to show nick list.
+New tcl bind type. Now we have a type for input. This is called just before
+the command is sent to the irc interpreter. Input is then passed onto the
+ircii interpreter. Removed NAMES_ON_JOIN in favor of SHOW_CHANNEL_NAMES.
+Corrected the workings of this command. tcl command userhost added. Accepts
+any number of nicknames. When the servEr responds, it sets userhost and
+un-userhost wIth the appropriate responses. Added tcl getchanmode #channel.
+Added new tcl bind input (Thanks robocod). It is checked just before the
+line of input is sent to the interpreter. MAjor dessync problem found and
+fixed. /quote JOIN #channel where you are already on #channel and channel
+mode is +i would cause the client to remove the channel. The server actually
+thought you were on the channel. Small buglet in new parse server notices
+code, tended to core the client for some reason. Forgot to sync the userlist
+with the channel nicklist when we did a chglevel/chgaop/chgprot/chgchan
+operation. /set show_numerics on/off now works, but not in the same way that
+it used to. The last current numeric is displayed. /set -show_numerics_str
+now doesn't crash the client. /bki for boot kick ignore added. /fk added as
+a command alias'd to /masskick ie filter kick. DCC sends have been speeded
+up by a order of magnitude of 3-6 times. status updating on dcc sends and
+recieves has been slowed down to occur on every 10th packet or so. Testing
+was done using ircii ircii-hyper Scrollz eggdrop and a modified ComBot with
+dcc file capabilies. A 19meg file was transferred repeatly over the course
+of several days. It was done using localhost connect for highest possible
+transfer speeds. ncftp was 3.8Mb/s. Scrollz was between 450kb/s-1017kb/s. 
+ircii-hyper was around 650kb/s-1073kb/s (also had trouble with the eof 
+even between two clients irc-hyper). BitchX to eggdrop 460kb/s. 
+BitchX to combot was 806kb/s-1073Kb/s. BitchX 68e was a dismal
+275kb/s-490KB/s. BitchX to ircii-epic 3.003 was 450-700Kb/s. Ctoolz with 
+DCC_BLOCK_SIZE of 2048 was 1100Kb/s and with 4096 was 1475Kb/s.
+ircii 2.8.2 with DCC_BLOCK_SIZE of 4096 hit 1050Kb/s and with 2048 got
+1200Kb/s. And finally BitchX 68f to BitchX 68f was variable (*grin*) 
+between 890kb/s and 2150kb/s. Reasons for variance was /set DCC_BLOCKSIZE 
+was changed from 2048 to 4096 between runs and dcc status indicator was
+turned off as well. (100mhz pent 64m ram. 6 shells open. basic Redhat running 
+with irc server and 2-4 irc clients ide drives). Cpu Usage is down as well. 
+The file used is an actual tar.gz file with data in it. All of dcc.c was 
+colorized. 
+
+       ÕÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ[dcc transfer stats]ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¸
+       ³                                                                 ³
+       ³ÖÄ[xferd in]ÄÖ-[xferd out]Ä·Ä[total files]ÄÖÄ[active]Ä·Ä[limit]Ä·³
+       ³º      241Mb º       627Mb º            52 º        0 º       6 º³
+       ³ÓÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄ½³
+       ³                                                                 ³
+       ÖÄÄÄÄ[in stats]ÄÄÄÖÄÄÄ[out stats]ÄÄÄ·ÄÄÄÄÄÄÄÄÄÄ[toggles]ÄÄÄÄÄÄÄÄÄÄ·
+       º max: 1755.8kb/s º max: 1755.8kb/s º   autoget:  On   paths: Off º
+       º min: 236.44kb/s º min:  36.00kb/s º overwrite: Off   quiet: Off º
+       ÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+/set lastlog_ansi on/off for display of ansi in your lastlog file.
+/set dcc_fast on/off to change fast dcc sends on the fly.
+more binds for /window swap.. added 8 9 and 10. Added access to a internal
+function called stripansicodes() which will strip all color from a string.
+Chatted with some newnet oper-admins about there server software. Merged in
+SOCKS support. Made configure understand some options about tcl,
+non-blocking, socks, and default-server. Use configure --help to find them.
+Url grabber. /set http_grab on/off. this will grab any http: string and
+place in the file $CTOOLZ_DIR/BitchX.http. string can be a public or a msg.
+As well /lastlog will also match grab any previously said url's. Small bug
+with input prompt and NULL being inserted into the string (fyi all clients
+suffer the same problem). ie "null char some text"  and press enter. /dc now
+accepts a list of nicks to chat with. We also use the userhost queue to find
+the nicks on irc before starting a chat with them. Added more register usage
+to possibly speed up the client. modified p_mode to update the structures
+first and then print out stats. This will increase the speed as well.
+convert_output_format() takes some cpu to perform it's color parse. Small
+bug fixed in addlamenick. check_mode_list_join() was getting a null and
+crashing on a recycle in some cases. /window swap now set's the channel to
+the bound channel or the current window channel. perm bans were broked.
+/fkline was modified to use a differant method of scanning k-lines. Need new
+match() routine that will handle wildcards on either side. Thanks ananda for
+the mirc->ansi converter which I modified tobe a function. $mircansi() takes
+a string of text and converts the mirc color codes to ansi. Added /ostat for
+mperators and cleaned up operator messages considerably. Alot of format's
+for operator messages added and defaults for efnet are given.
+
+Changes for 68e
+Added command matching. ie /m<tabkey> returns all commands starting with m
+etc. Linking of clients now made easier with /clink command. Several other
+commands like /cwho /cwhom /csay have been added. Things said over dcc chat
+are progated across the link. Some changes in window handling which look
+like they solve the windowing problems BitchX was having. Added 2 new user
+auto-op levels for giving voice to someone. 3 is delay voice and 4 is
+instant voice. other minor fixes. Removed my command matching in favor of
+the internal command_completion routine. more changes to tabkey routine. 
+/m roo  will return the nick that matches roo, /m root will cycle between
+nicks. small change to tcl ircii command, so information is returned
+cleaner. ie we can now do  /tcl set ircii-set [ircii set] so all
+available ircii set's will be in the tcl variable ircii-set. Ansi stripping
+is not done. This does have limitations however. Fixed passing 0 to tcl's
+random(). Changed the party line. We now need to enter .chat to enter the
+party line. Various other commands are available from the partyline.
+including .help . /Wall from other BitchX users will now not display as a
+wall. /set format_bwall can be used to modify the output. /dcx and /dcg
+added. dcx kills chat request from nick. dcg kills all gets/regets of files
+from nick. /lwk remove the current window. Note you cannot remove the very
+last window. added .echo on/off or toggle to /msg =nick on the chat line.
+Added /cdcc echo toggle cdcc output to yourself on/off. /cdcc type toggles
+between notify and privmsg. Fixed dcc chat .boot to it informs the
+partyline of the boot as well as the user that got booted. Wangel
+contributed /rel to list msgs you have recieved. few other minor nitpicks
+fixed here and there :) Mathe noticed that /remlog doesn't reset the away
+msg count. Thanks to CyberD0g kicking me in the head, the status update
+doesn't occur nearly as often as it was. This increases the speed of dcc
+considerably on localhost transfers... ie I went from 89KB/s to 213KB/s over
+127.0.0.1. ctcp nick op #channel changed so that userlevel's > 49 can op
+themselves, userlevels > 29 < 50 will voice themselves. Idea from mathe.
+When away and send_away_msg is on, we will send back our away msg to the
+person msg'g us. The format of this will more than likely change
+considerably. The dcc status bar % is differant now. it will display upto 10
+file dcc percentages. Might solve alot of problems people have been having
+with dcc's and status bar updates.
+
+
+Changes for 68
+Changed some fundemental functions around a little after a chat with Sheik.
+Added a new function for setting up channel params. This reduces code size,
+because for just about any function() that oPerates on a channel we need
+to do this. Added a new FORMAT_TOPIC_UNSET and a /untopic command. Changed
+the /topic command around. We now no longer need to have a channel
+specified. We use the default channel if none is specified. Changes to the
+userlist started. Fixed major lossage from a /ctcp message. Emergency
+release. Incompatible change with scripts on FORMAT_TOPIC_SETBY. use stime
+instead of tdiff(). /relm and /reln now save the last 10 msg/notice's which
+can be changed with a compile time #define MAX_LAST_MSG. FORMAT_RELM
+FORMAT_RELN are used to format the output of these. So /rel[m-n] >[channel]
+[number]> <-l>. /cset aop for channel specific auto-op. the meaning of the
+/set aop has now changed because of this. Added ^W? key bind. fixed /4op and
+/topic. Creation of a simple minded Bitch mode. /cset bitch  mode will
+reverse certain modes placed by someone not on your botlist or your
+userlist. Fixed core dump with /links command. Added portnum capability to
+/dcc chat and /dcc bot(tcl) /dcc send and resend. Added a ascii from
+acidjazz. Thanks. fixed /away sending ansi out to the server. was causing
+havoc with non-ansi clients :). Replaced some occurance of nickinuser() with
+a routine from Sheik. Modified slightly to fit in with BitchX's userlist
+scheme. Mikh suggested a change for doing fast modes.
+Implemented and tested. Fixed check_prot() so it actually proTects users on
+the userlist. /userlist will now take several optional arguements. A channel
+and/or a userhost mask will display only user's matching a certain type.
+/botlist is also setup the same way. /notify will display the userhost of
+those on your notify list if present. idle kick won't kick voice'd users or
+mps if KICK_OPS is off. on channel join we check both the userlist and the
+botlist and display using FORMAT_FRIEND_JOIN. (68c-T4).  Fixed mode #channel
+so it displays the mode of a channel without having opz on the channel.
+Modified /back so if /set -format_back is done it won't prompt for reading
+the away file. Also won't give you your away time. Possible fix for not
+displaying ansi with DISPLAY_ANSI off. Possible input prompt fix for ansi
+input. Some fixes/suggestions from FLiER concerning status update, and
+.bitchrc (w)SAVEA. nick and join floods now work as advertised. nick floods
+should be quicker to catch as well. /randomnick now takes upto two optional
+parameters, count and prefix to use. /window new channel #linux and window
+swapping were not updating the input prompt at all. Channel joins were not
+always announced. Still a bug with the nick->userlist in p_channel() not
+being updated on the first announce of a join. $cparse() added for script
+color parsing. mathe suggested $getreason(nick). It uses the color parser
+so $0 and $1 are defined as nick and mynick. output is ansi-stripped. 
+Replace BitchX.reasons quickly. level 5 userlist protection should work as
+well. /jnw #channel  added. Ansi is allowed in dcc chat's if and only if
+/set dcc_ansi is set on. Input prompt is now properly cleared. Sergs_ fixed
+a little problem with check_auto(). Also fixed up a few other things in the
+check_auto() check_prot() areas ie sent code. Added code to read BitchX.quit
+which is a file of quit messages. It's passed through color parser so it has
+$0 defined as well as any other $functions and variables. Lotsa other small
+fixes added as well. Merged new epic changes in. This added $chmod()
+$twiddle() and $uniq(). Also added /call to display the script call stack.
+Added /set cdcc_prompt. Fixed /relm and /reln formats, as well as fixed the
+send of /relm to a nick. Changed the output of whois to display the channels
+if the nick is on any of the internal lists. /j added in as an alias for
+/join again. Fixed /readlog. Modified  userlist once again. What happens is
+this. If a nick is in the Botlist we ignore the userlist. A botlist entry is
+an exact nick!user@host entry. If not in the botlist then we check the
+userlist using *!user@host. We also check the shitlist entries even if they
+are found in either of the two lists. Ctcp op/invite/Unban work the same way
+now as well. Fixed a problem in /ctcp op and /ctcp invite noticed by
+immortal. Added a new FixColorAnsi() from Flier which saves some work and
+makes the screen output snappier. stripansicodes() was actually rather slow
+because we stripped ansi everywhere. stripansicodes() is still used but in a
+much more limited fashion. Setup home page www.sasknet.com/~pionh. Added
+some debugging functions. /call will display a call stack for an alias. hmmm
+maybe we should implement the saving of /relsw /relw /relt /relst *grin*. 
+Added a new shitlist level 5 which perm ignores the *!*user@host of someone.
+$uhost(nick) will return the userhost of someone on your channels. Multiple
+returns can be expected. /set REVERSE_STATUS_LINE renamed to STATUS_REVERSE.
+This allows us to be more compatible with scrollz as well as making much
+more sense. I've also defaulted this to off. As on reverses the meaning of
+the ansi from /set format_status*'s. Fixed $isuser() to not segfault on
+shit'd users. 
+
+
+Changes for 67 Released 090896
+
+/away now converts the output format so we can do nicer things with it.
+idle time on /wi was screwed up somewhat. ctcp.c has been revamped. Thanks
+to FLiER of Scrollz fame for sending me a patch for a color input prompt.
+Changes were minimal to incorparate this into BitchX/epic. %! displays
+channel counts for ops/nonops/voice/ircops for the current channel. Fixed a
+problem with the input prompt not updating properly on channel change when a
+$T is in the input_prompt. Changes in status.c. Added color status bar
+capabilities. Also added color backgrounds. %0 - %7 are background colors.
+%8 is reverse and %9 is bold. Fixed some problems with new send_text() and
+dcc support. Found a couple of memory leaks in dcc. But I don't think I
+found the main one. Fixed /ftp and friends seg fault problems. Passwords can
+now be used on the userlist and the botlist. This affects /ctcp's but not
+auto-op stuff. Fixed a major memory leak that's been around from version
+64. A few new format's added for some numeric responses. Fixed ^L seen on
+the status line. Changed parse_args() to read the file IDENT_HACK for the
+username.
+
+Changes for 65-66 released sunday Aug 25
+Fixed to compile on SunOS and other systems. Solaris has a broken va_args()
+function. This sucks. %c is taken as a int instead and de-promoted to a
+char. forgot a set_non_blocking call in dcc.c. Some window commands were a
+little screwy. ie /window new hide channel #warez the ^Wl command didn't
+display properly. /whois while switched to this window would goto the
+previous window and the current window. so we made whois display to the
+current window. netsplit detection while we are on a channel works. netjoin
+detection seems to work. Netsplit hacking remains to be checked. We should
+no longer de-op people who had ops on the channel when the server re-joins,
+within a certain length of time. After that time is up, then we will (or
+should de-op that person). We are using a modified whowas routine to store
+split nicks and check that against the person joining the channel.
+Dakota pointed out that ctcp_reply wasn't being done properly. As well
+Ctrl-K for invite's was a little problem. Ctr-T and Ctrl-E have the same
+problem but until a solution hits me in the head :) will remain the way they
+are. Color can now be used within the BitchX.help file. Topics can't be
+colored yet, and we still need a couple of indentation spaces before we can
+start the material for a topic. We now don't kick ourselves on floods and
+stuff. FORMAT_ACTION* and FORMAT_NOTICE* and FORMAT_MSG and FORMAT_PUBLIC*
+had a parameter removed. IT was a lame one, that I'd added to remain
+compatible, but caused more problems that it solved. FORMAT_MODE now should
+properly handle the case of a server mode. /list will now prompt you yes/no
+before doing a /list * . FORMAT_VERSION is setup along with a /sv command.
+Requested by IceBreak. /whokill /tracekill and /traceserv are re-added by
+request of myc. get_reason() is used for getting random kick reasons from
+BitchX.reasons. We now can use $ variables in here. $0 is the nick and $1 is
+our nick. /encrypt will not segfault when we send/recieve a encrypted msg.
+Enabled the FORMAT_ENCRYPTED_NOTICE/MSG vars as well. Due to popular request
+FORMAT_NICK_AUTO, FORMAT_NICK_COMP and FORMAT_NICK_MSG were added. Because
+of this we also added NICK_COMPLETION_TYPE. 0 nick has tobe the first word
+on the line. 1 the nick can be anywhere on the line. Added /nochat and /chat
+commands ala Icebreak. /p and /ping now do the right thing and ping a
+channel if no arguement's given. /ver will version a channel or a person. 
+/back is now separated from /away. /away will still do the same things as
+previous. ie /away will still set you back /away message will set you away,
+but /back will only put you back. We also give the option of reading and
+deleting the log that might be created. /more will display a file of your
+choice. New send_text() routine makes life easier. But is has one
+consequence. I had to modify FORMAT_SEND_MSG and FORMAT_SEND_NOTICE to take
+one other variable. The sender's nick is $2. It was either modify these two
+or another two.... Damn it. fixed small bug in dcc_message_transmit().
+Changed FORMAT_SEND_PUBLIC and FORMAT_SEND_PUBLIC_OTHER damn it.
+$channicks(channel) returns a comma separated list of nicks on a channel.
+Useful for those mass messaging types. /on nslookup just for BlackJac.
+format_topic_change_header for BarK0de. Pent suggested format_names_banner, 
+format_name_voicecolor and format_whowas_header. /msay will say something on
+all your channels at once. Cdcc channels will now accept a * for All
+channels and it takes all current channels and adds them to the list. Fixed
+exec -o to actually tell us what it's doing again. Fixed a ignore returning
+too soon on notice's. Fixed a problem with dcc stats giving wrong numbers.
+Drastic suggested a /fproT on/off command. This is a simple toggle which
+either turns on or off full flood protection. /offers command and a /c
+command added. /c is for channel/user mode changes. /offers is for xdcc
+list'g a channel, useful in something like #sexpics.
+
+081396 -------Changes for BitchX 64--------------- (Major Upgrade)
+Lotza changes in tooo many places to even begin to list. Most have todo with
+the ansification of the client. Most msg's output from the client can now be
+completely user defined using /set FORMAT type variables. Thanks hellshock
+for the wonderful idea. renamed /dirlm /dirln to /reln and /relm added /relsm
+and /relsn commands. Fixed term reset todo the proper thing. clear the
+screen and then reset. Some changes to dcc were made. dcc sends should now
+be alot faster. Added new keybindings. Added Toggles for Cloak and
+OperView. Added %K for status bar display of operkills/nick collisions.
+Added MdVoice and Devoice commands. Same parameters as  deop and mdop. I was
+asked to remove the cluster() from /addbot for security reasons. Bot's are
+now matched on exact userhost's + any special server chars "+~-".
+/scano /scanv /scann /scan will scan a channel for various types of users on
+a channel. /toggle will display a a screen of toggles which a user can then
+/toggle <command> to turn on/off. %K will display operkills on status var.
+uses STATUS_OPER_KILL for the format. Ctrl-E Ctrl-K Ctrl-F Ctrl-X Insert and
+Delete, F1-F5 and Esc-1 to Esc7 all have internal bindings. They can of
+course be changed to whatever you like. /rel* functions made alot more
+stable (ie they don't dump core.) Modified alias_special_char,
+TruncateAndQuote and strformat() functions. We can now do $[30.]0 and
+$[-30.]0 to pad a string with a certain character. fixed a small bug with
+/window double on. When sending a msg/notice we now add that nick to the
+internal tabkey list. Added ^W bindings for grow window, shrink window,
+window kill, window hide, window balance, window list, window move, window
+next and window prev. Added more FORMAT_* vars'. FORMAT_AWAY and FORMAT_BACK
+FORMAT_NICKNAME_OTHER and quite a few others. Added some changes from new
+EPIC beta. Fixed Away and back and others. Changed meaning of /set
+SEND_AWAY_MSG to if on we send a msg to our channels. If off we don't.
+Forgot to reset /Set AUTO_RESPONSE to our new nick on nick changes.
+FORMAT_TOPIC_SETBY should now be working. put_it() will not output a blank
+line. This allows me to get rid of the ERROR MESSAGE and allows the user to
+set any FORMAT variable to NULL. /eval echo %Pthis is purple%w white%K and
+bright black  now works. Ban times should now be stored correctly within the
+client. /on clone_read now works. /set NICK_COMPLETION on/off turns nick
+completion on or off. Undefined FAST_DCC_SENDS within the config.h file. If
+you are on a ppp/slip site and require fast dcc sends and are prepared to
+use some CPU (ie aprox 30%) then define this option. Otherwise leave this
+alone, as your ISP will more than likely ban you :). Also you can now define
+a DEFAULT_USERMODE. Because of the way things work within BitchX you need to
+either define this to change your initial connect or /reconnect in order to
+set your initial usermode. you can also export IRCUMODE=+iw to change your
+usermode for the initial connect. /rel* and friends now will take a nick or
+channel arguement. /set AUTO_AWAY on/off and /set AUTO_AWAY_TIME added. We
+now will auto-setaway after auto-away_time. only 0 or 10+ minutes allowed.
+Anything less than 10 is made to be 10. you can also specify this in
+seconds. /env autoaway will set the default autoaway message. Numbers of
+minutes the timer is set to is automatically added. hmmm until moRe can be
+figured out with /echo we won't be using convert_color_format() in echo's.
+It allows someone to $eval(rm -rf /*) your system. NOT good.
+
+
+
+
+
+
+--------------- BitchX client -----------------
+01/09/96
+
+Fixed small buglet in the size of a alias allowed.. was crashing irc when
+the alias hit a certain size. just increased size of buffers by double for
+now.. look further for the rest of the solution later
+
+01/10/96
+Added couple of new commands. readlog() and remlog() to deal with msglog's.
+started adding /adduser  for storing info like a combot would.
+fixed couple of bugs in /dcc dealing with ~ in filenames.
+started looking for a way to deal with dcc_num field. also for dealing with
+dcc_limits. have some ideas, but not implemented yet. Fixed a couple of 
+memory leaks in names.c dealing with new fields added to NickList structure
+and list_shit structures in pluto.c
+
+01/14/96
+Started adding /cdcc and CDCC commands and on ctcp. Added AutoCtcpkick var
+for kicking on /ctcp * send N :) Removed some duplicate code.
+
+01/16/96
+Added /msg nick xdcc command sets. works with xdcc bdcc and cdcc.
+fixed a strcmp in ctcp.c do_ctcp  so it actually does a my_stricmp.
+When sending large numbers of files all at once on local system, a bus
+error will occur.. Need to find this. Also new 2.9b6 server fucks up and
+don't send a proper response to a nick collision. numeric codes 433 and 437
+I combined into one number to make it work. Added 251-255 responses from
+server /lusers works again :)
+
+01/21/96
+fixed a couple of small bugs in cdcc handling of private and public msg's.
+Due to a baby being born, no changes to the queue handling code has been
+done. So do NOT /set dcc_send_limit. you have been warned.
+
+01/22/96
+added auto join channel on invite toggle   /set auto_join on/off default on
+
+01/24/96
+nothing new.. couple of bug fixes. crashed irc client on ig/nig combo.
+also /friends /shit etc were fuxed up
+fixed auto_join to only join channels when the user doing the invite is
+on the bot list and authorized for that channel.
+
+01/25/96
+well we fuxed with the user_list shit_list stuff.. maybe now they'll be
+working properly. /userlist will display user's on the user list. need to 
+expand that info at some point in time. /add_user should check the current
+channel for the nick being added and reinit the info if found. not done yet
+though. Some other functions may well be broken now though :) anything using
+cluster will need some reworking as we now store the userhost together
+instead of separately like before. Fixed some fuckup that either plutonium
+or comstud created.. you never ever ever ever malloc some memory and then
+started ++ the pointer to it. This really fux's up the memory manager :)
+This fix by itself fixed most SIGSEV trouble we were having. user/host fixes
+maybe put back in if it proves that this would be more advantegous. Release
+this version to Lifendel and BuddhaX possibly Jondalar to get a couple
+possible operating versions. Couple of small fixes to the bot list. Save bot
+list done on /savelist. Auto join channel on invite is setup to only join
+on invite from recognized bots on the bot_list and the authorized channel 
+for that bot. Should solve most problems with joining 50 channels like
+#spank_the_monkey_all_night_long type of deals :)
+
+01/26/96
+well modified a shitload of source to get more compatible with EPIC. Comstud
+is a idiot. May as well of started from scratch than use any of his source
+in this client. Plutonium ain't much better though for using it. Anyways,
+because of the wholesale changes in the client, some bugs may be present..
+/notify nick  is working sorta... it don't notify you unless you ask whether
+someone is online. gotta fix that. status functions changed to use static
+variables instead of malloc'g em everytime you update. This increases the 
+speed of the update considerably. added a %D for dcc stats on current
+transfer. added a function ltoa and a dcc_active function. Replaced whole
+file output.c with EPIC version as I accidently deleted mine :)
+
+01/28/96
+ripped out the /aop /shit /friend /beepmsg .. code wasn't working on solaris
+so fuck it. I'll rewrite so it's better, faster cleaner. we have da
+technology :). /adduser does the /aop stuff anyways. and other than the
+/shit the others were of limited value.
+
+01/29/96
+ripped out da old irc_io and key binding routines. replaced em with the
+ones from EPIC beta6. it looks alot cleaner and seems faster. Fixed a small
+buglet with the double_status line and creating windows.. when the window
+was marked hidden we had a problem with deleting the window. Fixed the
+vars.h and keys.h to use enums like epic.. this gets rid of a problem I had
+when I added a variable and forgot to type make in the include dir. Added
+bonus is the client is now smaller. Almost 20k smaller now. Fixed little
+buglet with static declared variables.. I though they were always set to
+zero on declaration. obviously not. Status line was hit with this little
+buglet. 
+
+01/30/96
+oh why oh why did I not start with EPIC.. :) ahh well. I've replaced the
+brain dead routine for opening a file now.. This version searches the path
+for the file you want to load. It checks for .gz and .Z extensions and
+uncompresses the file if needed. It slices it dices it... it... much better
+than before with 10 copies of the same routine in the code.
+ 
+02/05/96
+So many changes and I haven't documented them :)  EPIC7 and BitchX are
+sharing there alias's file and a bunch of other stuff. Fixed quite a few
+bugs I introduced as a result of this. which means there are bugs lurking.
+ie. /alias save and then PageUp through the screen will core..  Probably
+something to do with the size of that particular cz.irc alias. Changed
+UserList a little and what it does. Delayed Auto-op is now working.
+Userlevel for autoop has to be >= 50 in order for it to work. /adduser -nick
+will now delete the user from the list. /bot -nick will delete the nick from
+the internal bot list.  Rewrote a couple Comstud crap routines for masskicks
+and stuff. they woUld be too slow on a large channel. Now they should be
+alot quicker. I need to re-rewrite them to share alot of the code that is
+common between masskicks/mass-deops/massbans etc... they almost do the exact
+same thing, only differance is the semantics of the operation. Now have an
+idea of how to do /dcc queue sends, so I guess that'll be next on the list
+of things to-do. Also removed dead-code all over the client. Fixed a couple
+of small EPIC7 bugs in the process as well. Hope they appreciate the effort.
+
+02/05/96
+fixed bug with alias save from cz.irc.. Seems the line was being split a few
+too many times for the liking of ircii.. Increased the number of times a
+line can be split and problem is solved until the next time.. 80 * 80 should
+be enough for now. Scrollback and ansi don't mix well at this point in time
+although ansi can be turned off.. it does however not make for a pretty
+sight.
+
+020796
+due to popular request I've started re-implementing shitlist's.
+Modified the way auto-op delay is done... using a callback timer function
+now.. Maybe this will be easier?
+
+020896
+Modified get_reason to accept a nick which is then used to help form
+automated reasons like in kicks and stuff. This file is called reasons and
+should be installed in the ~/.BitchX directory.  A %s placed in the string
+will be replaced with the nickname. fixed reasons on the shitlist, was fuxed
+up.  started looking for a good place to place the check_auto routine which
+does Aop and shitlist's. Made the client to a automatic who on join to aid
+in setting the userlist access. This needs to be done cleaner. Fixed /dirln
+to display the last notice instead of the last msg.. stupid me.. EPIC don't
+expand_twiddle filenames at all... so therefore we do. especially when we do
+a rename on a file using ~/
+
+020996
+automatic WHO <channel> is not a brite idea on large channels.. So we needed
+to add some special logix to whoreply and numeric 315 to fix it. We still to
+a WHO on join but we turn off the display an pick up the nicks anyway. This
+allows the userlist to get synced with the channel on join. Otherwise we'd
+need to type /w in order to sync it when we join. Six of one, half dozen of
+the other.  Fixed up link looking we think. Should be compatible with 
+Ctoolz now and is done alot cleaner than what I had previously. LLOOK will 
+display all servers in the list. /set llook on/off turns this feature 
+on/off. LINKS (standard command) might have differant effects depending 
+on the setting of the variable llook. little problem with the channel mode 
+indicator fixed. we were not blanking it properly on channel switch.. 
+This caused the mode indicator to seem to lock on the previous channel. 
+Small change made to names.c:remove_channel concerning removing the current 
+channel from the list. Limited nethack protection built in.. Defaults to
+off. /set HACKING 0/1/2/3 will turn this on. users noT on the userlist or the
+internal botlist will be de-op'd. Users on the shitlist are whatever you 
+set it too :). So this should all work fine. Yeah right... One result of
+this change is that we needed to change the args to check-auto in names.c to
+pass the current channel according to get_channel_by_refnum
+
+021096
+Fixed problem with being klined from a server and core dumping. Numeric 465
+was the problem and the lousy code contained therein.  Also changed the way
+we handle adding users to the userlist. If the nick to adduser is given as 
+with ! and @ in it we do not annouce to the user what has happened. This
+fixes a little problem when reloading the userlist on startup, we don't
+really want to announce it every time we reload.
+
+021196
+another buglet fixed when connecting to a server you don't have
+authoRization for. We now successfully try a couple of times and then prompt
+user to give us another servEr name, just like it's supposed to. Remember to
+check your BitchX.sav file if something is not working properly. I've been
+bitten by this several times now. Small bug concerning on exec -name
+processes coredumping. Thanks Driz for sending me that TiME.irc script.
+
+021496
+finally fixed server changes and modes once and for all. Channels rejoins 
+will be attempted on server change. Channel modes on server change are
+found. So no more lost modes and channels crashes.
+
+021596
+Lifendel noticed a strange problem with the msglog. This might be fixed..
+Looks like a old EPIC/ircii bug as well though.. limit checking should have
+been implemented in both... passing the address of a char to a function
+that's expecting a char * is not good... Mailed to ircii mailing list.
+Lameness in /cdcc send is now fixed up.. This should now work instead of
+core dumping.. Just needed to do some error checking. /cdcc notice now shows
+you what it sent to the channel instead of just sending without showing the
+user.. Added /ls and /ps commands. Could add others if needed. Fixed /j to
+not require a leading # on channel. This doesn't fix the problem with
+scripts but helps when not using a script. 
+
+021696
+Added a call to delay-check_auto in numbers.c numeric 315 which allows us to
+do auto-ops and autokicks on channel join. The actual work is done on a
+timer of 3 seconds which fixes the problem where you join a channel but
+don't have ops yet but try to do a bunch of kicks and bans. I just scan the
+list of users and shit's to find and if they are on either then add a timer
+call to check_auto. Seems to woRk well in limited testing.
+
+022496
+Added a function called $flash() which returns a nasty flash sequence. /eval
++send $flash() will flash a channel :) .. Due to popular request /set cloak
+on now cloaks /ctcp userinfo, finger, time and some others from users.
+
+022596 
+protected users are now working so be careful in the use of this feature.
+Re-ops/Deops/Kicks/KickBans are all implemented. Had another look at /Ub and
+bans these might be working properly again.
+
+022696
+ctcp invite has been implemented. user has to have >24 level and you have to
+have op's and be on the that channel. delay opz now does moe checking than
+before. it won't do anything unless the user is on the channel and not-opped.
+Fixed Makefile.in and possibly configure. We'll see what solaris thinks
+about the changes to term.c. A new function called $repeat() has been added
+from EPIC8 soUrce. repeat(2 test file)  produces "test file test file" as
+it's output. Might be handy for greeting someone :)
+
+022796
+Fixed Flooding.. It was never finding a user in the userlist. Added /ctcp
+whoami command. Fixed /unuser command to actually delete the proper user.
+Fixed terminal support. I had upgraded the configure script and some defines
+in the defs.h.in was forgotten. Caused some strangeness of sorts 
+
+022796
+I removed the fake files list. This allowed phoenix with fluff to work.
+Modified parse_command to allow //^ type commands. Added AJOIN command. 
+Added a bunch of Ctoolz scripts I found to the package. cz-pent, lithium
+chaos and druid scripts are now included. Added a new status line function.
+It returns the number of times you have been msg'd while away. %^ on the
+status line returns the count. Fixed a coRe dump on msg flood problem.
+Made a new /set called MSGCOUNT to store the count of recieved msg's while
+away. This was done for any scripts that might want to use it. kludge'd
+around ^M's on display screen by checking if the eol is ^M nul it, in
+add_to_screen. Added bitchsay to start replacing the use of say. Added a new
+function called $isnum() returns 1 if the input is a number else 0. accepts
+numbers, - and # as a number. Fluff modz compat function.
+
+022896
+Flashes and ansi shit should be much more stable now. Only valid ansi
+sequence we accept starts with esc. All other sequences are done like normal
+irc ie bold em and make em printable. Had to make a special case in screen.c
+just to handle this case. Epic suffers from this as well. ^N ^X and some
+other chars are deadly to a vt100 screen. We still suffer if someone sets
+for example a topic with a ansi bomb in it. Fixed Channel sync for those
+scripts that like to hook who reply's just moved a check I use in parse.c
+whoreply so the hook never happens..
+
+030196
+Working on whois queue's and ison notification. Added hard Userhost
+Signon's. /set HARD_UH_NOTIFY on/off  to enable or disable this. A new hook
+for it as added as well. Command line parser from Epic was added. Have to
+remove the server_list notification routines that are from epic.. too
+fucking slow on startup. 23 servers and 20 NOTIFY's and look at the lag
+indicator :) Although i did improve the speed somewhat by using just the
+connected to servers it's still not enough. 
+
+030296
+You can now specifY a string for BOLD/UNDERLINE/REVERSE of /ignore and
+kther commands. Why?? you ask, well we can now use ansi escape's for those
+strings. This saves us from having to use a script /on numeric which speeds
+up the client. /dcc now shows the chat connections and then a graphical list
+of /dcc file connections if there are any.
+
+030496
+Added some statistics for a channel. New command is CHSTATS [channel].
+This displays things that have been seen on a channel from join. Fixed up
+sync_user_list. And created a new function check_sync. We now do a mode
+#channel b, a mode #channel and a who  #channel on join. I think NOTIFY
+needs to be put on a timer though, so when we first logon notify is put on a
+10 second timer. each time after though the results are immediate. New
+commands AddIdle/UnIdle/ShowIdle have been added. AddIdle <#channel>
+[seconds] to start idle checking on a channel. Every two minutes we check
+the channel for new idlers. Unidle <#channel> removes idlechecking and 
+showidle [#channel] show idle users on a channel. Structures for nicks and
+channels have changes thanks to some advice I received from Sheik. Fixed a
+small bug in .25 when I changed a structure. Changed new command chstats to
+accept -all as a parameter. Idle kicks need to be modified a little to slow
+em down :)
+
+030696
+Added new functionality :)  changed parameters to $open to also accept a
+mode so we now have $open(filename R B) for reading binary and
+$open(filename W B) for writing binary. without the B writing is done in
+append mode with the B files can be overwritten. This change was made for
+compatibility with Ctoolz. Also added was a function called $bcopy() it takes
+two parameters both file descriptors which must be opened using $oPen. What
+does this all mean?? Well we can now play a .snd on events such as receiving
+a message and quitting the program. The following alias shows how.. This was
+ripped from Cubic Zirconium.
+Alias playf {
+if ([$Voice]==[ON]) {
+@ rf = open(~/.CZSounds/$0 R B)
+@ wf = open(/dev/audio W B)
+@ bcopy($rf $wf)
+@ close($rf)
+@ close($wf)
+}}
+One word of warning though. The copying blocks, ie until the copy is
+finished we can do nothing. So make your event sounds short oR else you'll
+be waiting for awhile until the copy is done. Added two new
+functions  $epic() returns 1, $bitchx() returns 1 and a $winsize()  which
+returns the size of the specified window or the current window if nothing
+passed in. 
+
+030796
+Added more on hooks server_notice_local_kill server_notice_foreign_kill
+server_notice_fakes server_notice_fakes_mychannel
+server_notice_server_kill.. if you want to know what these are about take
+a look at notice.c parse_notice() function. 
+
+030996
+Fixed a bug in notify add_to_userhost_queue . This may have caused seg's on
+SunOS 5 and definitely caused a small slowdown in joining a channel when we
+first started the client actually about 40 secs of slowdown. I might have
+broken hard_uh_notify though. Added command /Addbot to replace /bot .. It
+makes more sense with /adduser and /unuser and /Addbot and /UnBot. Channel
+will default to * if left out. This may also fix AIX compiles.
+
+031096
+Added Bhelp command. Ctoolz.help must be renamed to BitchX.help and placed
+in your .BitchX directory in order to work. Complaining does help and it was
+actually a fairly simple command to add, we are using builtin array building
+commands. In my small tests of this function it seems to work almost exactly
+as Ctoolz chelp does. Started adding /dcc resend and reget functions. I may
+have broken dcc in this case though. Sure hope not, dcc.c is a mess. Added
+new script from Zircon. It includes a new help file with functions from sCZ.
+
+031196
+Added new Ctoolz functions $addtabkey() and $gettabkey() support. These 
+functions take single parameters. addtabkey takes a nickname and adds it to
+the head of a list. gettabkey takes a number either 1 or -1 which is then
+used to search either forwards or backwards through the list. The most
+recent nickname on the list is returned first, and then added to the end of
+the list. Really fixed HARD_UH_NOTIFY. I was only using it on the first
+server. If you went to another server normal ison functions were used and
+the userhost was not. //^ functions should now work and SWITCH command from 
+EPIC was added to the client. 
+
+031296
+Sheik made a good suggestion to add a dcc stats command so I did :)
+/dcc stats gives statistics on dcc's this client has done such as Min and
+Max rates for both incoming and outgoing files. Bytes in and Bytes out as
+well as a total file count received and sent.  Added /usage command which
+gives CPU statistics. Fixed /uptime and /chanst to look a little better as
+well as give some memory statistics. EPIC script directory is included. This
+is version .29 already. Enabled NON_BLOCKING CONNECTS. Had to make a couple
+of fixes here and there, but it looks like it's working. Re-visited idle
+kicks and we now mode +b then kick the user. one minute later we remove the
+ban. Added more to /chanst command. Fixed linux kernel for getrusage() :)
+and sent the patch to Linus. Maybe it'll make it into kernel 1.3.73. Fixed
+/dcc stats command to correctly display bytes sent/recieved. Fixed $1- bug
+that has plagued EPIC/Ctoolz/SCROLLZ/BitchX clients. Sometimes though a line
+of output seems to be lost with fluff mods xdcc commands. Don't ever take a
+negative index on a "" string. You can get odd results. NON-BLOCKING is
+working for /dcc but logins seem to have a problem. Hard to fix though as
+gdb gets sig-pipes all the time. Added /RELOAD command which reloads your
+BitchX.sav file. Had another look at check_auto and friends. It worked, so
+wonders never cease. We now use a wildcard in the nick so we match on the
+*!*user@*.sasknet.ca if this causes trouble we may have to take alook at it
+again. A variable was added called IDLE_CHECK, it's the time in seconds
+between idle checks. MAX_IDLEKICKS sets the maximum number of idle kicksperformed at one time. MSGCOUNT is something I added awhile back. A user
+should never have to set this. As it the number of recieved msgs while 
+away. 
+
+031396
+Changed some things around. Created a structure to hold channel stats in.
+When we join a channel and its not in the list it's added to the list. When
+we leave the channel it is not deleted. if we then rejoin a channel on this
+list the stats from before are copied over. Complicated, yes. But it solves
+a problem with the BitchX.sav list and the information stored there.
+Eventually a lot more info may get stored in it. Such as the banlist. The
+current channel's bans are already stored in the server_list channel list
+structure for each channel. I want to rewrite the /unban /ban routines to
+use this information.
+
+031496
+busy working on non-blocking /dcc resend and reget's.. they should be
+working now that I fixed the error of my ways. /dcc glist is now looking
+alot better. 
+
+031696
+Changed /ctcp user invite channel  to be a little more aggresive in it's
+check for validation. So if the user is found on the userlist, and the
+userlevel is greater than 24 and that user is allowed on that channel, then
+we allow the invite, announcing to you that we are inviting someone.
+Otherwise access is denied. Finally got a chance to try /dcc resend and 
+reget in operation. It works so far. It's compatible with Ctoolz and prob 
+Scrollz as well.
+
+031796 BitchX .32
+Added new command /cset. To start with some sets are put into
+a default channel list set. This default is copied to the new channel as you
+join it. These channel sets then become specific for the channel. The
+default channel options can be changed by modifying include/config.h. They
+can be changed while running using /set. Userlist and shitlist are fixed up.
+Seems that we were being a little redundant. Also make sure that we use
+wild_match on both sides of a string. a New command /reload to reload you
+BitchX.sav file into the client. The default kick reasons file has been
+renamed to BitchX.reasons instead of reasons. I seen the new Ctoolz /dcc
+glist but after some careful though decided that I don't wanna tie the
+client into the script. Nick Kills and collides should be identified
+properly in oper mode. Operator kills local and foreign are differianted.
+I've removed the /msg user -invite channel  stuff. Use /ctcp instead. This
+only allowed people on the userlist to invite themselves, but I didn't see a
+reason to have two differant methods.
+
+031896
+Link looking is fixed once again. Forgot about hooks and what happens when
+someone hooks a numeric on me. Started working on various other flood types,
+such as nick, deop, pub and kick floods. What a weird bunch of stuff.
+
+031996
+kick on deop flood, kick on kick flood, kick on pub flood and kick on nick
+change floods are now implemented within the client. They can be setup
+channel specifically or globally for all channels. /ctcp ops channel and
+/ctcp unban channel are implemented. Also the user list can be turned off
+for specific channels as can the shitlist. Doesn't sound like i've changed
+much, but some major changes internally to support all this. Renamed a
+command called /nig to /unig put back in /unigh as well. (These are unignore
+commands). Added /dcc path on/off to remove the path from /dcc'd files on
+display. 
+
+032096
+/dcc was a little bit broken, nothing too serious. Fixed I think. /dcc has
+alot of commands the "standard" clients do not. Such as stats, paths, quiet,
+auto, status line update, glist, resend, reget and active. /dcc stats
+returns a status indicator of various things seen while on irc. paths turns
+off display of the download path of the files in list. quiet toggles quiet
+mode for dcc transfers. Auto is a toggle for /set dcc_autoget. status line
+updates are meant for script writers. glist is a graphical display of active
+dcc's. resend and reget are for aborted transfers, and active displays the
+limits and bounds of various set's involving the number of active dcc's and
+the limit on the number of active dcc's allowed. Also /dcc ? returns a help
+screen. Added /Qk foR quote kicks. BitchX.reason is used from the .BitchX
+directory. 
+
+
+032196
+Hmmm discovered that I was hooking numeric 365 end of links number and not
+doing my end of links routine, therefore link looking for only partially
+working depending on what script you were using. Fixed /dcc chat #channel.
+Problem was that we can cancel /dcc transfers by number now and of course we
+use a # to denote this. Well this causes a problem with anyone dumb enough
+to try and chat a channel. So we are now a little more paraniod about what
+we'll accept as a dcc number. We also couldn't close that particular kind of
+chat as we thought it was a number and treated it as such. We now reset the
+timers and counts when we toggle a /cset on a channel. Otherwise some
+strange things can happen. Right Jondalar :) Fixed a problem with mode
+changes. I was incrementing the deop count for both +o and -o cases. Added a
+new /user parameter. /user -stats returns the internal counts for deops,
+kicks, publics and nicks changes. /user -ops -stats shows stats for only the
+ops and /user -nonops -stats show stats for the nonops. Non-Blocking /dcc
+connects work great. Non-blocking servers connects are working well. Only
+problem seems to be that the Non-Blocking /dcc never time out. Have to have
+a look at that. Anyone have any ideas on what a reasonable time-out would
+be?  Corrected channel statistics to better reflect what is actually
+happening on a channel. Had a couple of mistakes here and there. Channel
+splits might disturb these statistics though.
+
+032396  BitchX .35
+Lotza bug fixes. hooking the 251-255 numerics now. /dcc send *.zip was broke
+due to some stupidity on my part. gettabkey and addtabkey now take an
+optional second parameter AUTOREPLY. This second parameter defines what list
+the is nick taken from. The default is the tabkey array. Two new functions
+added to retrieve the last message and the last notice were created.
+$lastnotice() and $lastmessage(). Added a sort function. So $sort( one two
+three)  returns one three two in sorted order :) poor example. Merged EPIC 3
+changes for alias.c,dcc.c, ctcp.c and others which fixes several functions.
+dcc.c fixed for files of size 0. These files are automatically announced but
+not autoget'd. If you do get the file, then it is rejected. All /dcc rejects
+are also sent to the offending user as a notice. Last msg was fixed to
+include the userhost of the user and the time the message was sent. Created
+diff files for irc.c, dcc.c and server.c for EPIC development to have a look
+at. Fixed WallMsg to check for arguments. If none then print usage message
+and return. /dirlm and /dirln can take a optional second argument to specify
+the channel to send to. May have fixed the problem with being set away on
+server join. We now auto-join all previous channels on server change. 
+This soLution is more elegant than what was previously implemented. 
+Added /UnAjoin to remove a channel from your autojoin list. Channel has to
+have been added to this list with /AJoin otherwise nothing happens. Added
+some changes from EPIC 3-patch3. Still won't add the broken part though.
+Horrible kludge done to /dcc glist. I actually set errno to zero. This fixes
+a divide by zero error I haven't been able to find anywhere. The actual
+divide by zero isn't happening within dcc_glist, but somewhere else in the
+code. I added memmove() from inn distro for those systems that don't have
+memmove(). I needed a feature of memmove so it now included. It only gets
+compiled if HAVE_MEMMOVE is defined 0 in def.h. the source is in ircaux.c.
+Please let me know if anyone has trouble compiling this.
+
+
+032596
+fuked up on /savelist if you have /AJOIN's defined it'll lock. Arrggh
+everyone was wondering what the new flag +r meant on the usermode.. Misread
+a patch was the problem.. you couldn't unset it period because it did mean
+you were logg'ed into a server., but it should never have been displayed.
+Changed behavior of /dump. Be very cautious with this. It removes all
+aliases or ons or vars or binds or everything loaded. But first everything 
+is saved to BitchX.alias. Changed p_privmsg. First we check if the user is 
+ignored then we check we do ctcp and stuff. Changed keys.c and config.h.
+EMACS_BINDS is defined now and ALLOW_STOP_IRC define was removed so we can
+always stop irc. Added /DF for disk free command. Added /banstat to show
+channel bans optional parameters are channel and/or nick. I'm now using the
+internal banlist which makes channel unbans reasonably fast :) It sounds
+like i've done alot here, but most of this was already implemented.. Just
+needed some "glue" functions.
+
+032696
+Chasing some bug in /dcc with AIX systems. Fixed a bug with /msg nick cdcc
+and nothing else on command line. Fixed /dcc glist. now we can send files of
+0-length but cannot receive em. /dcc glist doesn't crash if we are sending
+one. Trying to find a fix for a memory problem involving too many m_strdup's
+and not enough new_free's. Fixed a problem Frisbee found with not being able
+to display bans on a channel when you're not in it. Nice thing is EPIC has
+the same bug :). Lifendel says that with more than 12 dcc's he crashes. Not
+sure yet what this is about. Fizzle_B says that his client tends to "lockup"
+for about 10 secs. I think this has to do with hard_uh_notify and the amount
+of notify's we're getting back. I started using USERHOST which is better
+than ISON. ISON does tend to do this as we have to send individual requests
+for each nick. USERHOST we can send 5 at a time. BlackJac mentioned that
+phoenix runs fine with BitchX.. This has actually been working for awhile
+now. Looked at Hellshocks dcc.c and whois.c but I don't think I'll add em
+into the client. His modifications involve sending ansi codes directly from
+the client. Personally I feel this should be the responsibility of the
+script itself. Sheik agrees with me on this. /ignore works a little
+differantly than expected. You need to specify the full nick!name@host where
+nick, name or host can have a wildcard.  we can now ignore _Elfoo_'s lame
+attempts of getting BitchX. Everyone should add /ignore
+*Elfoo*!*@*.central.com ALL into their .ircrc file. Changed cdcc doffer. We
+now don't need to use #1 we can use 1. Changed xdcc send to accept either #1
+or 1 as the pack number. A queued message is sent to the user if our
+active dcc count is greater than DCC_SEND_LIMIT. dcc queues are implemented
+but not very well tested.
+
+032896 .37 released
+Changed /dump. has a new parameter FILE which dumps to a file. It dumps
+everything to a file called BitchX.dump in your $HOME directory. Also had
+forgotten to dump keys for ALL parameter. Added changes from e3000s5 as
+well. /fe has been changed and a couple of bugs in alias.c as well. Fixed a
+overzealous m_strdup problem in BitchX/EPIC alias's. Fixed nslookup to work
+on nicknames as well as hosts. Zircon sure finds them bugs :).
+As much as I don't like it $unlink() and $rmdir() now are doing
+expand_twiddle so stuff like $unlink(~/file.zip) expands to your $HOME
+directory. Please be cautious with this. One nice thing is that low-level
+functions like unlink don't accept wildcards at all. It has to be an exact
+filename. loaded scripts and shit on numeric 001 and 004. Not quite sure how
+well this will work, but what the hey. This has the benefit of us loosing
+the Welcome to the irc network nickname crap, because we can hook it.
+
+032996
+Fixed IRCUMODE so it works foR all servers. You may get a mode msg twice
+though. Replaced dcc.c with one from EPIC, with my mods. We'll see if this
+fixes the problem of AIX crashing the sender. I'm thinking that maybe a
+misplaced FD_SET is the problem or a FD_CLR. One benefit of loading scripts
+before anything else is that the client is snappier on startup.. Not much
+left for almost complete Ctoolz compatibility. Guess we'd better open the
+file before seeking to the end on resend's. Fixed dcc_dldir problems when i
+replaced dcc.c with one from epic with bitchx mods. /Channel was broke. If
+there were no channel modes a NULL was passed to the output. fixed dcc paths
+problem in dcc.c, I might however have been overzealous in my use of it. dcc
+numbers are reset back to one on /dcc close function. Have to wait and see
+what happens when an error occurs. Fixed another couple of epic bugs. One
+with revw. It should never return a NULL and another in the MatchingBracket
+routine for $revw( without the closing bracket. Also ran epic regression to
+a successful completion after fixing a couple of bitchx errors in
+function_rpattern and function_rfilter.
+
+040396
+Added changes from Epic3-6. Added nethack prot of a sort. 3 levels are
+provided. 1 gives no warning but deops the splitter. 2 gives a warning and
+deops the splitter. 3 gives a warning only. /cset hacking sets a channel and
++set hacking sets global changes. The user has to be on the userlist or your
+botlist in order for them not to be de-op'd on a split. Added four new 
+commands /chglevel, /chgprot, /chgchan and /chgautoop to change user stats 
+on the fly. /chglevel nick number will change that users stats. This change 
+is not permaneantly saved until you /savelist. The others are the same 
+format. They should work, but if there are any problems let me know.
+CAUTION. with this nethack prot turned on you could possibly really fuck a
+channel badly.
+Fixed a problem with PUBFLOOD. I wasn't checking to see if WE had ops on the
+channel we were protecting. I never knew there were so many script writers
+out there :) 
+Fixed a small long-standing problem, noT a bug with the userlist. If we
+added a user to the userlist we had to do a WHO command to setup the user
+display properly. Not anymore. It's updated for every server and all
+channels on add or on modify.
+
+040496
+Fixed a problem with auto_rejoin. Fixed the /clear being missing.
+NHprot is now a little more conservative about what it considers to be a
+nethack. /Adduser will now take a list of channels instead of just a single
+channel. Wildcards are allowed still. Someone pointed out that wildcards
+/cdcc's are not great at the moment. If we happen to create a file while
+offering of a type the matches the wildcard, it is sent out as well. I'll
+have to make a list instead. Added 5 new hooks USERS, BANS and DCC.
+USERS displays information from the userlist and the shitlist. BANS is for
+the channel bans. DCC_STAT, DCC_STATF and DCC_STATF1 is for the /dcc glist
+information. DCC_STAT returns info on chats, raw etc. DCC_STATF returns info
+on files and DCC_STATF1 returns info on percentage, sizes etc for the
+current file. Maybe hellshock will realize that this is better than just
+adding ansi to the client.
+
+040896 .41 released
+Added some more hooks for script writers. DCC_HEADER, CDCC_QUEUE,
+CDCC_QUEUEH, CDCC_HEADER, CDCC_PACK and BOTLIST.  We now strip ansi on ALL
+says, puts etc. What does this mean? Well thanks to Sheik, we can no longer
+be ansi bombed. Fixed some problems with /server connects to K-lined servers
+that caused core to be dumped.
+
+040996
+Fixed chelp to allow blank lines instead of locking the client. Otiluke is
+working on a bitchx help file. Was asking about ansi codes :). Took hooks
+out of /dcc list  they were breaking things I don't want to break. Reconnect
+is kinda fixed. Too many reconnect's quickly will confuse the client. This
+is an effect of non-blocking connects. May have fixed the core on instant op
+on join problem. Added voice to internal structures. /lk won't kick someone
+with voice now. Replaced all occurances of gettimeofday except in ircaux.c
+with call to get_time(). Fixed a bunch of warnings with this. Fixed several
+kther warnings. Fixed the negative time on channel synch by using time_diff
+instead of trying to calculate the time diff by subtracting. Made changes to
+notice.c parse_server_notice so it actually uses the /set SHOW_*'s in
+vars.c.  Made numbers.c USERS send all info that is required to the server,
+this might fix the problem some are having with some servers. Someone was
+asking about showing connections to a server.. I think this is actually a
+server function. We should see them now if we're allowed to. Changed
+check_channel_match so it's more generic. We can then use it for
+PROTECT_CHANNELS var. so PROTECT_CHANNELS can now be a comma separated list
+of channels to protect. If the CTOOLZ_DIR doesn't exist, it is created.
+
+041196 .42 was released.
+Problem someone had with USER not enough params was caused by bad
+permissions on /etc/passwd. So i may restore the old behaviour of cheating
+:). Found a little problem with the new hooks in /dcc glist. forgot to
+continue before the hook. fixed a little bug in process_incoming_listen.
+Seems to not like a -1 passed to FD_CLR. previous problem was actaully in
+function_listen.. it should have required a port number. Fixed finger nick
+to actually finger someone. fixed CDCC_PACK hook so description is at the
+end of the hook'd data instead of in the middle. Added new command /statsk
+what it hopefully does is a grep for server bans matching a certain 
+nick!user@host. Worked on /dcc glist some more. Changed some hooks in cdcc.c
+CDCC_PREPACK from CDCC_HEADER. CDCC_POSTPACK added. Has the same info as the
+PREPACK. Patch from epic e3000s7 added. SAVEFILE_LIST and SAVEFILEPOST_LIST
+and SAVEFILEPRE_LIST hooks added. Modified Makefile's to create BitchX
+client instead of irc client. modified /fuck to do a /addshit nick channel 3
+as well.. Just like a hackbot. For a synopis of what was changed in the EPIC
+patch read the doc/UPDATES file.. Several new commands were added, some
+restrictions removed from some others, some useless code was removed.
+
+041396 .43 released
+Thanks to piraeus for adding color to the main BitchX ascii. I made a couple
+of changes for those that have terminals that cannot display ansi. /set
+display_ansi determines whether or not the screen is displayed in color or
+not. Some major internal modifications have been made. These are related to
+the way that userlist entries are looked up on the internal userlist. The
+lookup's don't happen all the time. instead we store pointers to the
+userlist on the channel nicklist. this should speed things up quite abit.
+Have to thank sheik for pointing this method to me. Modified some
+structures, and hooks quite alot as well. Things like the botlist now have a
+aop and prot value so the bot doesn't have to be on the userlist and the
+botlist at the same time. Several hooks have changed the number of params
+being passed. Added parts of whowas.c sheik donated to me :).. Has the
+effect of speeding up re-joins because the info is actually stored
+differently. Course this will be buggy until i figure out exactly how to use
+it. What it does is on parts' it save the user info into a list, on join it
+check's the list and if found uses that info. Otherwise it just creates the
+info again. Saves somes lookups on join an other stuff.. names.c uses most of
+the calls for this function in case your interested.
+
+041496 .44alpha :P
+So many changes made in things internal, and not documented :) Most of the
+changes were nitpicking things. But we found some lameness in the code as
+well. ex. On join a entry is made on the channel nicklist. On /who these
+entries are recreated again after being removed from the list. Duh. User
+stats are now kept and a new command added. /Nwhois nick shows stats for a
+user and this was the cause of most of the fixes. /chanst should be working
+much nicer now. I put the whowas nicks on an expire timer as well. Some
+changes from ircii-2.8.15 were made to the code. One noticable one is that
++window double now sets the double status bar. /set DOUBLE was removed as a
+result of this change. New commands are UNTIL and UNLESS to complement IF
+and WHILE commands. Some changes made to the non-blocking code from
+ircii-2.8.15 as well.  
+
+041796 .44magnum released :)
+Little bug in the new windowing discovered and fixed. Had to do with tog
+opervision (hidden window) and then switching back and forth. you'd loose a
+line of display when you did this. /cdcc timer would core. /cdcc save
+[filename] command added to save your offer list. /cdcc load [filename] to
+reload the offer list. You can reload this file offer list several times.
+/cdcc secure will only allow people on the userlist to get files from you.
+It is a toggle command. defaults to off
+
+042396 .45 release
+Added new cdcc.c from ananda. Modified for BitchX hooks. I like it because
+it's simple and elegant. 
+
+042496
+Fixed a problem with /redirect help. Made DISPLAY_ANSI on/off mean exactly
+that. If off all ansi strings are removed from output. We can define the
+default behaviour of this in the Makefile. May have fixed a problem with
+redirect, where garbage is displayed to the redirect. Changed /k to have a
+reason if none given. /tban for interactive delete of bans added. /bantype
+started. Should allow me to get rid of a bunch of useless almost duplicate
+functions. strtoul is missing on some systems. We now check during configure
+and supply a version if necessary. Same with memmove. Changes so that
+.bitchxrc is loaded instead of .ircrc if foUnd. else .ircrc is used.
+Fixed /bk of a non-existant user. /nwhowas to show the whowas queue. Fixed
+/fuck of a user not on the channel to work properly. Lamerz beware. Removed
+sitekickban and siteban commands in preparation of using /banstat.
+
+050196
+Haven't updated this with all the fixes. /fuck should really work now.
+/banstat is implemented.  /dcc glist now displays reget's and resends.
+Offered and waiting are also possible. /dcc glist what a pain in the ass.
+/bantype is implemented. A Screw ban is the same as a screw ban in phoenix
+and many other scripts. It was also a pain to implement. /bantype takes 4
+differant types of bans. dcc of small files or fairly large files over a
+fast link could cause a floating point exception in some cases. Fixed a
+small bug in /cdcc load ... the /n was confusing the client. Added
+flood_checking. We will flood_check if FLOOD_PROTECTION is on. If the
+userlevel is < 90 we will kick user from the channel if FLOOD_KICK is set.
+And finally we will do a timed auto-ignore of the user for 10 minutes.
+Several new hooks added at the request of Zircon. USERS, USERS_HEADER, STAT
+and STAT_HEADER. Fixed a screw-up I had with glob. Forgot to include the
+source for glob.c and glob.h :) If you need this you'll still have to edit
+config.h to define NEED_GLOB if you want to include this functionality.
+
+050696
+Due to some stupidity some types of floods were not being set properly. In
+some cases we were double incrementing variables. Fixed /unig to actually
+un-ignore a nick!. Fixed LameKick's to do a actual kick. Seems some changes
+made previously to speed up access to the userlist has broken a couple of
+functions here and there. We were forgetting to resync the channel userlist
+after removing a user from the userlist. This could cause a crash. Shitlist
+was not working. Fixed. shitlist & userlist were not updating the channel
+nicklist properly. sync'd the botlist and the channel userlist better. Added
+a new function $userver(nick) which returns the nicks server which we happen
+to be storing in the the channel nicklist. Added a new command /sk to
+perform a server kick :). Server can be wildcarded and a optional channel
+can be specified otherwise the current channel is used. Turned FLOOD_PROT
+off by default. Increased default FLOOD_RATE and FLOOD_USERS and
+FLOOD_AFTER's. Memory is cheap :) Changed Screw bans to use a * for the
+nickname. NetSplit hacking is being worked on. 
+
+051096  .49 released on net
+Merged changes from EPIC 3001 beta. $mkdir(), $umask() and /hostname for
+dynamic IP hosts were added. Not sure exactly what /hostname is needed for
+though. Need to look at local_ip and re-add that to the client if possible.
+server info for user was not quite right. /ping hopefully fixed up. Files
+and chat's can now be encrypt'd when starting the transfer. /dcc send
+panasync file.zip -encrypt mypasswd will enable this "feature". Removed some
+lamege from EPIC beta involving malloc. Fixed up flood prot even more. A
+separate /set CDCC_FLOOD_RATE and /set CDCC_FLOOD_AFTER is implemented. Do
+we need a separate CDCC_FLOOD_KICK as well? FLOOD_KICK var is a global var.
+Fixed a long standing bug with channel creation. Seems that we were not
+getting the value of the proper variable. Added a new set NAMES_ON_JOIN
+SHOWIDLE and SHOWIDLE_HEADER hooks provided by request. SHOWIDLE returns
+nick, host, userlevel in the userlist and number of seconds idle.
+
+052096 .50 released (aprox date)
+Been busy at a new job, so not much done recently. I found a silly stupid
+bug in check_flooding. Fixed /unig to work once again. I think I need a new
+wild_match routine, that checks both params for a wildcard. Added /cdcc
+ptimer command. Added a set for the default dcc timeout value. A notice is
+sent to the other end saying we closed the dcc. _CDCC_CLOSE_IDLE_TIME is the
+set for this. Added /findports command.
+
+052996 Released .52
+course flooding seems to be a little more difficult than I thought. Some
+things have been put on hold due to this problem. I have fixed /kb and
+friends to do a proper screw ban. Fixed /dcc timeouts. We now default to 35
+seconds for a chat/raw etc and 3 * 35 for file sends/resends/regets etc.
+Fixed a small flooding problem in the timer as well. wildcard sends are now
+implemented a little better but I'm still not happy with it. Fixed the Hyper
+DCC lamage with dcc multi sends. Fixed /dcc list to not core dump..
+dcc_time() was a problem here. /set autokick_on_Version on/off for those
+versioning fools. /set mircs on/off for something EFudd wanted. Think it has
+todo with /ctcp sound. More work on cdcc stuff. /set cdcc_security is a
+numeric variable which can be set to the userlevel required to get any cdcc
+response from you. This effectively cut's out the cdcc flood problem if set
+to anything greater than 0. Course then nobody can get a cdcc list other
+than a user on the userlist. Also cdcc requests are ignored if there is
+nothing offered. Flooders beware.
+
+053196
+Changed CDCC_PREPACK to include some dcc_stats by request. dcc_max_rate_out,
+dcc_bytes_out, dcc_max_rate_in, dcc_bytes_in are added to this hook. Changed
+behaviour of CDCC_QUEUE_LIMIT a little. If it's set to 0 then in effect
+there is no queue limit. fixed dcc stats command. Fixed a problem with cdcc
+and noThing on the offer list. Just pass through the mesg. /ctcp is a little
+harder todo though. Modified /JOIN to check for a # if it's not there then
+we add it. Otherwise we just pass the command. Don't forget about the /set
+SEND_IGNORE_MSG. Also new is a cdcc.irc that can be modified to change the 
+output sent to a channel. It's basically an example of what to do. it'll
+only work currently with scz-te.irc but this could be changed at your
+convience. Changed behavior /cdcc offer to now accept a single filename on
+the command prompt. So instead of prompting fOr a filename/description we
+can then skip ahead to getting the description. Before you ask if we can
+have multiple filenames on the prompt, I don't think this is possible from
+the quick look I had at the code. Quickly implemented /cdcc minspeed
+checking. It is in KB/s. So 5 would be 5KB/s. You can enter fractional Kb/s
+as in 1.5KB/s as well. /cdcc timer was changed so it takes a number which is
+then converted to minutes. We were just using seconds before.
+
+060396 .53 Released
+Fixed some lameness in cdcc again. involving DCC_SENDS_LIMIT and
+DCC_QUEUE_LIMIT. Forget to check for a equal to 0 value which should
+effectively disable both of these items. Changed config.h to have a default
+value for DCC_SEND_LIMIT of 5. Changed CDCC_PREPACK once again added one
+more parameter for a total of 13 output. We now output the minspeed as sent
+by you. Changed CDCC_POSTPACK to retrieve same info as the CDCC_PREPACK.
+Fixed dcc_check_idle to check for a 0 value on _CDCC_MINSPEED_TIME which
+nullifies the speed checking. Do we want to have differant speeds for
+differant packs? If the AUTO_REJOIN for a channel is set to any thing other
+than 0 some wonderful things can happen. If you have a hacked identd client
+installed, you can change your username as well. There are several examples
+of type of identd client. cidentd-1.0.tgz is available from sunsite.unc.edu
+somewhere but the source in pluto.c will need to be changed to support the
+$(HOME)/.authlie instead of the $HOME/.noidentd file currently used. The
+routine to make this all happen is called do_newuser() in pluto.c. Fixed
+/boot so it don't segfault with no args. Fixed compilation on SunOS 4.1.4. 
+/cdcc doffer will now accept any number of arguements on either the command
+line or the interactive prompt. /cdcc list will accept a pack number to
+display. It then displays the files in a pack. /cdcc load and save functions
+will take a optional filename argument. Default is to cdcc.save. File is
+always relative to your home directory. Minor cosmetic changes to input's
+in cdcc. /cdcc send and resend will now accept a filename. course we may
+have a problem if the name of the file is a a number. A pack will be sent
+matching the number first if possible before we check for a filename. Files
+are taken from the current directory. /cdcc plist will take an optional
+channel arguement. If given then that's the channel the plist is sent to.
+Minimal checking is done on whether this is a valid channel or noT. A comma
+separated list of channels is allowed. A sample script is provided for
+script writers in order to provide some directions as to the use of the
+hooks in cdcc. Added save of banwords command to savefile. Documented many
+on hooks for script writers perusal. A couple of new hooks implemented.
+CHANNEL_STAT for the /chanst command output. (32 parameters to this one).
+USAGE hook for the usage of internal commands. Over the next couple of
+versions of BitchX I expand the list of commands which can make use of this
+particular hook. New Documentation and a modified BitchX.help file provided.
+
+061096 .54 released
+Ping fixed we think. ping is still in the CTCP_REPLY list though. if you
+hook CTCP_REPLY be prepared to handle ping responses. Took another look at
+kther floods. Fixed /repeat with a off by one error. Took time to make
+usage mesg's use the new hook and function. Ping is fixed. added rest of
+command for BanWords. UnBanWords/UnWordKick and ShowWord commands.
+DCC_TRANSFER_STAT was broke. Forgot to remove a couple of parameters from
+hook.c. Added a new function $help() which takes a filename and a subject.
+It uses the filename the same way that /chelp does. It searches the list for
+the subject in the same way as well. Information from the help file is only
+loaded once.
+
+061296 .55 Released
+Added a new command /whereis foR looking up people that join and then leave
+a channel and change nicks. Works well as long as they don't change servers
+or there isn't more than one of them online at the same time or there
+username doesn't change. Fixed up /Statsk which is a command for grepping
+those pesky server bans. Changed chelp and $help(). Sorry script writers but
+I decided to place the filename last as the parameter to $help(). This way
+we can initialize it once and then forget it about passing the filename
+altogether. chelp was changed to actually load the file on BitchX startup.
+Reasons are that the help from the $help() function will overwrite the ones
+that are loaded by chelp. So we preload the help, if they are overwritten
+well not much we can do then except restart irc. $help() returns a long
+string containing all information about a topic including the usage message.
+I guess a hook for this might be nice as well. /cdcc minspeed's were a
+little borked. Added a server sync routine. Fixed Channel keys being saved
+after a part and a rejoin.
+
+061496
+Fixed /whereis if the user is still on the channel. Stupidity here. $help()
+changed once again. $help returns info differant from /chelp. It is upto the
+script writer to format the information returned. A hook is also provided
+which applies to both /chelp and $help(). Write the proper on hook and never
+have to woRry about it again. Added SCRIPT_HELP_FILE. This is a full
+pathname/filename. Default is CTOOLZ_DIR/BitchX.help. $help() needs to be
+called the first time with a filename. It is expanded to a full pathname
+automatically. DESYNC_MESSAGE hook provided. See README.hooks for info.
+IDENT_HACK can be set to the name of the file to use for your hacked ident
+to hide the username. Default is ".noident". This files needs to reside in
+your $HOME directory, so ~/ is prepended and expanded automatically. 
+If JOIN is hooked AUTO_NSLOOKUP wasn't happening. So we now do the lookup if
+AUTO_NSLOOKUP is ON and pass that to the hook. You can no longer just "quit"
+irc with active dcc's. A second prompt appears asking for verification.
+Renamed command STATSK to /FKLINE. Integrated changes from ircii2.9base. 
+Fixed a dumb problem in remove_channel(). Forgot to add the nicks to the
+whowas buffer when we left a channel. This would cause some ghost problems
+if we then left a channel, and some time later rejoined it. Created a save
+BitchX variables routine. Only saves the specific BitchX variables to
+BitchX.sav file. Linux glob functions don't seem to work properly. So I've
+now enabled the included glob function by default. Added a WHOLEFT hook. We
+are saving the info from a netsplit currently. type //Wholeft sometime.
+We'll have to see whether this information is correct before implementing
+more of it. Server oPs/deops bans/unbans are now incremented when they
+occur. Affected changes to decifer_mode and update_stats. Added /cleartab
+which will clear the tabkey array and /clearauto for clearing the
+autoreply table. Started adding has_ops to whowas info. This is for netsplit
+stuff. Eventually if a user splits away with opz, on rejoin we won't de-op
+them. Sounds simple, but it's not. We'll have todo a little more work before
+this can be a reality.
+
+0617  .56 released for comsumption.
+Changed /set Log on to strip ansi escapes out of the output. Changed
+behavior of /ban. we check the list of nicks to match the supplied ban. If
+their is no match then we will either do one of two things. if a ! and a @
+is in the ban spec then we just do a mode +b otherwise we search out the
+match using whois and doing the ban that way. All nicks on the channel are
+matched against the ban. Otherwise some could slip through the cracks.
+Oops. .bitchxrc file was not being loaded properly due to a missing / .
+Changed behaviour of /tban and /unban to follow the variable NUM_BANMODES
+for the number of unbans todo in one shot. We now unban multiple bans in one
+shot. Thanks to  BlackJac for the start of a great INSTALLATION file. It was
+the first time he had compiled the client and made some notes for other
+beginNers and some not so beginners to follow. Found the little bug with
+.BitchX no being created with u+x permissions. Added BITCHX_HELP var. This
+is the complete path/filename of the default BitchX.help file. Default is
+~/.BitchX/BitchX.help. Changed $help() to look at the SCRIPT_HELP var if no
+filename is passed to it. This Allows us to set SCRIPT_HELP to a dir/helpfile
+and then just call $help(some_topic). Notice the lack of filename. Default
+is ~/.BitchX/BitchX.help still. Fixed small annoyance in /notify that could
+possibly save a blank notify to the notify list. This caused the notify list
+to display on startup. nasty bug in status.c fixed. Added a isuser()
+function that returns info on a nick that is in your userlist,botlist or
+shitlist. $isuser(nick userhost channel) is the syntax of this
+useful little function. Channel can be left off in which case a * is
+returned. The type of the list is returned as either USER|BOT|SHIT along with 
+the relavent information to that particular type of list, thanks Jordy.
+Jordy also sent code!! for a new function called $pad(). It accepts a number
+that is either +/- and the string to pad. If negative it pads to the right,
+else it pads to the left. Fixed /set LOGFILE to expand the path of the
+filename passed to it. /Window double no args would core the client. Fixed.
+Without DCC_* hooks /dcc quiet really means quiet. /lastlog now strips out
+all ansi codes period. Some hooks were being used that echo'd the lastlog
+info to the screen. Ansi - chr 27 looks really ugly displayed this way.
+Increased default timeout on dcc chats to 55 seconds, files is 3 *  this
+number.
+
+0624 .57 released
+immediately BigHead noticed a bug with the /user command. Fixed a bug
+icebreak reported with $cluster(). Fixed dban so if we do a *.me the count
+is more correct. 3 new functions. $isban(channel nick) returns 1 or 0 if the
+person is on the internal ban list. $isop(channel nick) returns 1 or 0 if
+the person has ops on the channel on the internal userlist. 
+ischanop(nick channel) is already implemented isvoice(channel nick) return 1 
+or 0 if the person has voice on the channel.
+
+0626 .58 released
+Fixed ctcp flooding I think. Had the wrong order of events necessary in
+order to auto-ignore floods. Created a CTCP_DELAY variable. This is the
+amount of time that is supposed to pass before we will accept another ctcp.
+/ctcp niak xdcc list has a separate flood characteristic than normal ctcp.
+These can be set using /set CDCC_FLOOD_AFTER and CDCC_FLOOD_RATE. Please do
+understand what these represent before changing the default values. Also we
+have CTCP_FLOOD_PROTECTION which can turn this on/off. Fixed a problem I
+created with some color experimentation. Seems Bold was getting translated
+into the color red. Changed output from dcc_transfer_struct. packet counts
+were not exactly correct, due to differant buffering sizes between clients.
+Changed status_msgcount to display a 0 for no away messages. Changed
+flood_ignore to make the code a little more sensible. Anyone over 90 in the
+userlist or the botlist can ctcp flood you without being kicked or ignored.
+Due to some complaints on $help() formatting, we have now modified $help to
+directly output the information to the user. A typical alias looks something
+like the following   
+alias shelp {@htopic = [$0]?[$0]:[index] ;$help($htopic) }
+
+062796 .59 Released
+ctcp flood protection. If the current incoming ctcp is within CTCP_DELAY
+seconds we drop the request. 3 works well for most situations. Someone
+offering files may want to make this value 2 which is the default for
+ircII2.9. Value is saved in the BitchX.sav file. Fixed a couple of other
+nits with the wholeft commanD. Seems op kills were being interpreted as a
+server split. Someone suggested using "))" as the fix. Seems to work. When
+"we" left a channel it was being intrepreted as a server split as well. This
+was in remove_channel(). /window double 1 on will create a double status on
+window 1, /window double 2 on will create a double status on window 2 if it
+exists else it does nothing. /mload now expand and searches paths for the
+menu you'd like to load. /cdcc notice will now also accept a channel to
+display the offerlist to. Added new ansi from reefa. Changed output of ctcp
+version a little. Found a small bug in server.c where it was possible to
+crash the client if we couldn't connect to a server. Found this while adding
+/set NEXT_SERVER_ON_LOCAL_KILL to the client. Modified server_read_file to
+check for a file called .ircservers in the $HOME directory. If found it is
+parsed as a extra list of servers to be included after
+/usr/local/lib/irc/ircII.servers. This behaviour might be modified later to
+use one or the other and not both. Modified bans, kb etc to use one function
+to create the ban string. Call it a code clean up. Fixed /ban to work
+properly. Added User /bantype by request. Flooding once again. This time it
+just might work. (if anyone ever asks you to add flood checking, tell em to
+go f**k themselves). Added a new cset for PUBFLOOD_IGNORE_TIME. This is the
+amount of time in minutes we will default ignore someone. if FLOOD_KICK is
+off we don't kick someone that is pubflooding. We ignore them :). Whole
+bunch of other minor details.
+
+070196 .60 released.
+Fixed .ircservers usage to not require it to be in the users home directory.
+Probably solved most segfaults due to server's not being found etc. Might
+have also fixed some misc segs' on linux systems with this as well. 
+Replaced two key bindings. TAB and ^] are setup as auto msg and auto
+response by default within the client. Basically we can get rid of the
+tabkey stuff from scripts. Changed $gettabkey and $addtabkey functions
+around a little. Made /ClearAuto work as advertised. Moved clear_auto and
+friend to a differant file (misc.c). Started adding /tlock and /modelock
+functions. Cleaned up some code and some output fixes as suggested by
+BarK0de who's creating a new helpfile for us. Added a new function called
+$randomnick() which returns a string that could be useful as a nickname.
+Also a command /randomnick will actually change your nick to some random
+nickname. Patched in changes from new EPIC beta. /redirect might even work
+now. minor speedups were involved here as well.
+
+070796  .61 Released
+well BJ finds a bug due to some lameness on my part. fixed irc.c. Also fixed
+configure for Ultrix systems. Need to fix for AIX -lld. Removed more ComStud
+lameness. Fixed some of my own lameness on the init of the auto reply
+string, which should be automatically set to your nickname. It wasn't
+occurring properly. Found and fixed a problem with $read(). Lines with no
+carriage return were screwed up (Thanks Flier). BlackJac noticed a problem
+with the status bar channel modes not being properly updated. ChaosLord sent
+in a small patch for modifying argv to hide BitchX from admins. edit
+config.h and #define CLOAKED "emacs" or whatever and recompile. BitchX now
+looks like it's emacs and noT irc client. Sheik suggested something that
+sounded pretty good. The ability to /ignore a whole channel or just certain
+things on a channel. Well we can now do this. /ignore #bitchx public  will
+ignore all publics from the channel bitchx. The channel ignore is checked
+after the regular ignore, so we can modify the behaviour of channel ignore
+using dont_ignore for a nickname etc. Some types of ignores don't translate
+well into channel ignore, so IGNORE_CRAP may not ignore everything you
+normally would be used to on a channel wide basis. (And Sheik this was easy
+to add :P). Added another var called SHOW_NUMERICS_STR. It's default at the
+moment is the string from scz-te numerics. Basically you can now change this
+on the fly, and add ansi in places you didn't think were possible. (Some
+server responses for example). The default will change back to "***" after
+awhile, but I want to leave it like this for a short time to make people
+aware of it. Calculation of dcc rates on /dcc stats was corrected. Added
+AR_REPLY hook which is called when user presses ^]. Nothing is added to the
+input it's up to the script writer at this point to do something with this.
+Added two new hooks AR_PUBLIC and AR_PUBLIC_OTHER. This makes some scripts
+work a little strangely until the script writers catch on. :) Provided
+better keybindings for pgup/pgdn/end. Modified do_screens to accomadate this
+change. Found bug with /bind meta1 which would segfault the second time you
+ran this command. Changed /w command just a little to default to something a
+little better ie it now does a /w $C instead of a whois nickname by default.
+Someone had pointed out that shitlist bans were not working. Added /tlock
+command for locking the channel topic. Renamed a couple of variables to be
+more consistant. So we now have MSGLOG_FILE and KILLLOG_FILE. Fixed some
+more inconsistancies in various commands. Fixed /eval echo $f[e][  bug we
+share with ePIC. stripansicodes used on /redirect output. /Tlock was not
+quite right in the implementation of it. Fixed. 
+
+071896 62 released.
+Added a new match() routine. we'll see how this works out. Routine is
+wildmat routine from Rick Saltz and is almost a standard. Added a new
+optional parameter to /unbot, /unuser and /unshit. -All will remove all
+entries from the respective list. We also sync the channel nick list at the 
+same time which effectively completely removes all traces of that list.
+Changed some internals around to make auto-op/deop more effective after a
+chat with Sheik. SEND_IGNORE_MSG is used more often in the source ie whois.c
+Also SEND_AWAY_MSG is now used as well. Added /back to compliment /away
+command. It's an alias. /sping <server> and internal lag indicator. %L will
+display lag on the status bar. -b switch added to load the script -before-
+we connect to the server. Changes to bans for 2.9 servers. Also have to make
+sure that user@host bans strip ~ as well. Documented -n switch. Added -r
+switch for reading a specified list of servers other than the default
+.ircservers. This file is relative to ~ or your home directory. Added four
+new functions which are basically untested. $opensocket(name port) returns a
+socket number. $closesocket(socket_number) closes a open socket.
+$readsocket(socket_number) returns 0, -1 or number of chars read and the
+string. $writesocket(socket_number string) writes to open socket and returns
+either -1 or the number of chars written to the socket. If your writing to a
+irc server make sure and append \n to the output. STATUS_LAG can be used to
+setup what the lag indicator looks like. /mvoice and /voice added.
+
+
+-panasync    edwac@sk.sympatico.ca
+

@@ -1,0 +1,11 @@
+Synopsis:
+   on [#][<mode>]wall [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook used to be triggered whenever the client received a WALL
+   message.  WALL is no longer in use on any known irc network, and this
+   hook is but a relic of days long gone.
+
+See Also:
+   on(5) wallop; wallops(3)
+

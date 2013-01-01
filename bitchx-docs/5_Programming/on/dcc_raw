@@ -1,0 +1,32 @@
+Synopsis:
+   on [<modes>]dcc_raw [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client receives a raw message about
+   a tcp connection established, or a connection attempt, with $connect().
+   Raw messages are sent across established tcp connections with DCC RAW.
+
+   Scripts that use sockets should always set a non-zero serial number for
+   it.  Otherwise, it is very easy to set confusing or conflicting hooks.
+   Each specific instance of a socket application should use a separate
+   serial number, to prevent conflicts.
+
+Parameters:
+   $0    file descriptor for connection (returned by $connect())
+   $1    host connected to (hostname or ip address)
+   $2    code for connection type:
+           c - socket was closed
+           d - incoming data
+           e - issued when $connect() returns successfully
+           n - connection accepted on a port the client is listening to
+   $3-   data for type 'd', port number for types 'e' and 'n', none for 'c'
+           
+Examples:
+   To display all successful socket connections:
+      on #-dcc_raw 10 "% % e %" {
+         echo *** Connection with $1 on port $3 \(fd: $0\)
+      }
+
+See Also:
+   connect(6); dcc(1) raw; listen(6)
+

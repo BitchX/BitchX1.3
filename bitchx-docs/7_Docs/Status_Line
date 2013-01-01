@@ -1,0 +1,6 @@
+The status line contains a number of important pieces of information that
+updates dynamically as conditions around the client change.  This includes
+your nickname, channel, current user and channel modes, etc.  Refer to
+"SET STATUS_USER" in Section 4 for more information about customizing the
+status line.
+

@@ -1,0 +1,10 @@
+Synopsis:
+   set mirc_broken_dcc_resume [on|off|toggle]
+
+Description:
+   This variable determines wether mIRC-compatible dcc(1) resume
+   capability is enabled.
+
+See Also:
+   dcc(1) resume
+

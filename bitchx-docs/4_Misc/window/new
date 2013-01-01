@@ -1,0 +1,14 @@
+Synopsis:
+   window new
+
+Description:
+   This creates a new ircII window.  This splits in half (vertically) either
+   current window, or the largest.  This differs from WINDOW CREATE in that
+   the client need not be running in any special environment to utilize it.
+   By default, the new window will be created with the NOTIFY_LEVEL and
+   HOLD_MODE settings.
+
+See Also:
+   set(4) always_split_biggest, hold_mode, notify_level; window(4) create,
+   delete, kill
+

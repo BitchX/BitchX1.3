@@ -1,0 +1,401 @@
+  ircII 2.8 + BitchX Documentation
+  Patrick J. Edwards, ppjjee112200@@ccss..uussaasskk..ccaa
+  Tue Feb 13 13:50:47 GMT 1996
+
+
+  11..  IInnttrroodduuccttiioonn
+
+  BitchX is a new and exciting IRC client being written by Colten
+  Edwards <hhttttpp::////mmaaiillttoo::eeddwwaacc@@ssaasskknneett..sskk..ccaa>. It includes many new
+  features that IRCists have been asking for. The sources are based on
+  ircii-Plutotium and ircii-EPiC to create a new and distictive IRC
+  client. Heres a small list of the cool features you get with BitchX:
+
+
+  +o  When run under Linux, BitchX has an added bonus of being in full
+     color.
+
+  +o  Friends, Shit, and Bot Lists built in.
+
+  +o  Built in Link Looking, incase you into split servers.
+
+  +o  Millisecond accuracy on a ping.
+
+  +o  Several new functions for scripters to use, and a few new
+     variables.
+
+  +o  Extended set of DCC commands and options, like auto-getting,
+     queues, public offers, and graphical displays.
+
+  +o  A more logical command set, like /W for /WHO and /WI for /WHOIS.
+
+  +o  Mass functions, like mass ban, mass op, etc.
+
+  +o  And tons of other commands, like /RESET and /MESG, incase your not
+     very popular on IRC.
+
+
+  You may be thinking great. But I get all that functionality from a
+  script, or you maybe thinking BitchX is a script. Well, read on for
+  more of an explanation of what BitchX is all about.
+
+
+  First of all, its not a script. Secondly, when you load up a script
+  say Phoenix or LiCe it takes a long time to load. Plus you probably
+  have other scripts that you load. For example I used to load up to
+  100k of scripts. That 100k would take up alot of memory, and was slow
+  loading, and slow executing. BitchX doesn't have this problem. It has
+  all these commands loaded hard-coded into the syetem, and the
+  executable approximately the same size.
+
+
+  The bottom line is IRC load fast, it does everything fast, in less
+  memory.
+
+
+  Well, if you have read up to this point, and are thinking BitchX is a
+  good thing, you can get it from The BitchX Homepage
+  <hhttttpp::////wwwwww..ccss..uussaasskk..ccaa//uunnddeerrggrraaddss//ppjjee112200//bbiittcchhxx//>.
+
+
+
+
+  22..  NNeeww ccoommmmaannddss
+
+
+
+  22..11..  FFiixxeedd//CChhaannggeedd CCoommmmaannddss
+
+  These commands existed before in ircII, but now are either fixed or
+  changed in some way. Likely, in a better, more natural way.
+
+     DD  Can be used for DESCRIBE.
+
+     II  see INVITE.
+
+     IINNVVIITTEE
+        Now works like this, /I nick1 nick2 to the current channel, and
+        /I nick1 #channel1 nick2 channel2.
+
+     IIGG <<nniicckk>>
+        Ignore lamer by user@host.
+
+     IIGGHH <<nniicckk>>
+        Ignore lamer's whole host.
+
+     NNIIGG <<nniicckk>>
+        Unignore lamer.
+
+     JJ <<cchhaannnneell>>
+        For JOIN.
+
+     LL cchhaannnneell
+        For PART. If no argument is given the current channel is left.
+
+     MM <<nniicckk oorr cchhaannnneell>>
+        For MSG.
+
+     NN cchhaannnneell
+        For NAMES. If no argument is given the current channel is used.
+
+     TT ssttrriinngg
+        For TOPIC. If no argument is given it shows the topic on the
+        current channel.
+
+     SSCC cchhaannnneell
+        For NAMES. If no argument is given the current channel is used.
+
+     WW cchhaannnneellmmaasskk
+        Does a WHO. If no arguments are given it does a WHO on the
+        current channel.
+
+     WWII nniicckk
+        Does a WHOIS. If no arguement is given, a WHOIS is done on your
+        nick.
+
+     WWIIII nniicckknniicckk
+        Simular to WI.
+
+     WWWW nniicckk
+        Does a WHOWAS.
+
+     DDIIRRLLMM
+        Directs last message to the current channel.
+
+     DDIIRRLLNN
+        Directs last notice to the current channel.
+
+
+  22..22..  MMaassss CCoommmmaannddss
+
+  These are for doing mass operations on a channel.
+
+     MMOOPP cchhaannnneell ppaatttteerrnn
+        Mass op. Does a /MODE channel +o on all people.
+
+     MMDD cchhaannnneell ppaatttteerrnn
+        Mass deop. Does a /MODE channel -o on all people.
+
+     MMKK cchhaannnneell <<ppaatttteerrnn>> rreeaassoonn
+        Mass kick on non-ops matching pattern.
+
+     MMBB cchhaannnnee ppaatttteerrnn
+        Mass ban all non-ops.
+
+     MMKKBB cchhaannnneell <<ppaatttteerrnn>> rreeaassoonn
+        Mass kickban of all non ops matching pattern.
+
+     MMUUBB cchhaannnneell ppaatttteerrnn
+        Mass unban.
+
+     BBOOOOTT
+        See MULTI.
+
+     MMUULLTTII cchhaannnneell nniicckk11 nniicckk22 ...... nniicckknn ::rreeaassoonn
+        Kick multiple nicks off the channel with optional reason.
+
+
+  22..33..  BBaann//UUnnbbaann//KKiicckk//UUnnkkiicckk CCoommmmaannddss
+
+  Should you havethe chance to become an op on a popular channel, you
+  might need a few of these.
+
+     KK cchhaannnneell <<nniicckk>> rreeaassoonn
+        Kick nick from channel.
+
+     KKBB
+
+     BBKK
+
+     FFUUCCKKcchhaannnneell <<nniicckk>> rreeaassoonn
+        Kick and Ban nick from channel.
+
+     BB
+
+     BBAANN cchhaannnneell <<nniicckk>>
+        Ban nick from channel.
+
+     SSBB
+
+     SSBBAANN cchhaannnneell <<nniicckk>>
+        Ban nick's entire site from channel.
+
+     SSKK cchhaannnneell <<nniicckk>> rreeaassoonn
+        Site Kick and Ban nick.
+
+     DDBBAANN
+
+     UUBB cchhaannnneell nniicckk--ppaatttteerrnn
+        If no arguements are given all bans on the channel will be
+        removed.
+
+
+  22..44..  LLiisstt CCoommmmaannddss
+
+  Frequently, you may find people that you trust alot on IRC, these are
+  you friends. But even more frequently you'll find people on IRC are
+  annoying, so annoying that they deserve to be shitlisted. That's what
+  this whole section is about.
+     BBOOTT <<nniicckk>> <<cchhaannnneell>>
+        Add user as a bot to a channel. Channel can be a *.
+
+     UUNNBBOOTT <<nniicckk>> <<cchhaannnneell>>
+        Remove nick from the bot list.
+
+     AADDDDUUSSEERR <<nniicckk>> <<cchhaannnneell>> lleevveell aauuttoooopp pprroott ppaasssswwdd
+        Add nick to your personal friends list on channel. Level,
+        autoop, prot, and passwd are all optional, and default to
+        nothing, except Level, which defaults to 40. The following are
+        for the level.
+
+        2255 Enable ctcp invite and whoami.
+
+        5500++
+           Ops channel ops and and unbans.
+
+        9900++
+           Disable flood protection, plus Kick and Deop.
+
+        Autoop values are:
+
+        00  No ops.
+
+        11  10 second delay before oping.
+
+        22  instant autoop.
+
+        ootthheerr
+           does nothing.
+
+        Note that the user is not saved until a SAVELIST is issued.
+
+     UUNNUUSSEERR <<nniicckk>>
+        Deletes a user from the user list.
+
+     AADDDDSSHHIITT <<nniicckk>> <<cchhaannnneell>> <<lleevveell>> rreeaassoonn
+        Adds a user to the shit list.
+
+     UUNNSSHHIITT <<nniicckk>>
+        Removes a user from the shit list.
+
+     UUSSEERRLLIISSTT
+        Displays all users in the friends list.
+
+     SSHHIITTLLIISSTT
+        Displays all users in the shit list.
+
+     BBOOTTLLIISSTT
+        Displays all users in the bot list.
+
+     SSAAVVEELLIISSTT
+        Save the shit, friends, and bot lists. This saves the
+        information to the $(CTOOLZ_DIR)/BitchX.sav file.
+
+     SSAAVVEEAA
+        Saves information to the ..iirrccrrcc over writing it.
+
+
+  22..55..  MMiisscceellllaanneeoouuss CCoommmmaannddss
+
+  22..66..  DDCCCC CCoommmmaannddss
+
+
+
+
+  33..  NNeeww SSEETT ccoommmmaannddss
+
+  Along with the new IRC there are new options you can set.
+
+     AANNNNOOYY__KKIICCKK oonn||ooffff
+        Kick people for using bold, inverse, or beep on protected
+        channels.
+
+     AAOOPP oonn||ooffff
+        Set on if you want to automatically op people.
+
+     AAUUTTOOCCKK oonn||ooffff
+        Kicks people who send /xdcc * send.
+
+     AAUUTTOO__NNSSLLOOOOKKUUPP oonn||ooffff
+        Sets whether IP numbers are looked up on a /JOIN or /WHOIS.
+
+     AAUUTTOO__RREEJJOOIINN 00||11||22||33||44||55
+        Sets how you should auto rejoin if kicked from a channel. The
+        channel key is remebered.
+
+        00  off.
+
+        11  rejoin normally.
+
+        22  rejoin with a newuser name (the person's who kicked you).
+
+        33  rejoin with a random nick name.
+
+        44  rejoin with a random user name.
+
+        55  rejoin with a random user name and nick name.
+
+     CCHHEECCKK__BBEEEEPP__UUSSEERRSS oonn||ooffff
+
+
+
+  44..  NNeeww ffuunnccttiioonnss
+
+  Firstly the new functions:
+
+     $$aannnnooyy((tteexxtt))
+        Inserts random ^B, ^V, ^_, and makes random letters capitals.
+
+     $$cclluusstteerr((hhoossttnnaammee))
+        Makes aa.bb.cc into *.bb.cc format.
+
+     $$ccooooll((tteexxtt))
+        Makes ThInGs lOoK LiKe tHiS.
+
+     $$eelleeeett((tteexxtt))
+        Increases your eleetness.
+
+     $$ggeettkkeeyy((cchhaannnneell))
+        Shows the channel key.
+
+     $$ssttrriippaannssii((tteexxtt))
+        Strips ansi sequences from text.
+
+     $$uuppttiimmee(())
+        Display up time in Days, Hours, Minutes, Seconds.
+
+     $$ooppeenn((ffiillee RRWW||RR||WW TT||BB))
+        Opens a file descriptor.
+
+
+     $$rreeaadd((nnuummbbeerr))
+        Reads from a file returning text.
+
+     $$wwrriittee((nnuummbbeerr aarrggss))
+        Write args to a file.
+
+     $$eeooff((nnuummbbeerr))
+        Returns if EOF of file or not.
+
+     $$cclloossee((nnuummbbeerr))
+        Closes a file.
+
+     $$rreennaammee((oollddffiillee nneewwffiillee))
+        Renames a file.
+
+     $$rroott1133((tteexxtt))
+        Rot 13's text.
+
+     $$rrmmddiirr((ddiirrnnaammee))
+
+     $$uunnlliinnkk(())
+
+     bbccooppyy(())
+
+     $$cchheecckk__uusseerr(())
+
+     $$cchheecckk__sshhiitt(())
+        compat ctoolz null function.
+
+     $$rreeaaddlloogg(())
+        Read msg log file.
+
+     rreemmlloogg(())
+        Removes msg log file.
+
+     $$wwhhiicchh((ffiilleennaammee))
+
+  And the new variables:
+
+     $$EE Shows idle time.
+
+     $$FF Time online.
+
+     $$JJ Shows which version of IRC is in use.
+
+     $$XX Userhost.
+
+     $$YY Real name.
+
+New status line variables:
+	%D Show dcc percentage done on status line.
+
+	%^ Show number of recieved messages while away on status line.
+	
+
+
+  55..  TThhee FFuuttuurree ooff BBiittcchhXX
+
+
+
+
+
+
+
+
+
+
+
+
+
+

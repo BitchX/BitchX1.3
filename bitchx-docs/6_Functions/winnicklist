@@ -1,0 +1,17 @@
+Synopsis:
+   $winnicklist([<window>])
+
+Technical:
+   This function is a way to access the nick list of a given window. The nick
+   list is a list of nicknames/channels whose messages should be sent to that
+   window.
+
+Returns:
+   list of channels/nicks whose messages are being sent to that window
+
+Examples:
+   $winnicklist(1)                 returns nick list for window #1
+
+See Also:
+   window(4) add
+

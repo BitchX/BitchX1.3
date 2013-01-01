@@ -1,0 +1,16 @@
+Synopsis:
+   quote <protocol command> [<arguments>]
+
+Description:
+   QUOTE is the client's mechanism for sending protocol commands directly
+   to the server.  EPIC does not parse the input string in any (though it
+   will expand variables as appropriate).  One recently popular use for
+   this is to take advantage of Undernet's extended LIST capabilities.
+
+Other Notes:
+   The standard set of irc protocol commands are outlined in the Internet
+   standards document RFC 1459.  Many protocol implementations, such as
+   Undernet's, contain additional protocol-level features; consult the
+   source code and/or documentation for such implementations for specific
+   information.
+

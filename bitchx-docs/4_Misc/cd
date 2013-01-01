@@ -1,0 +1,16 @@
+Synopsis:
+   cd [<path>]
+
+Description:
+   This is used to change the current working directory.  If a path is
+   specified, the client will try to change to that directory; else, it
+   displays the current directory.  This is useful for other commands
+   that deal with files but don't necessarily use absolute pathnames,
+   such as EXEC, log files, or DCC file transfers.
+
+See Also:
+   which(4); which(6)
+
+Other Notes:
+   CD is smart enough to expand tildes (~) to the user's home directory.
+

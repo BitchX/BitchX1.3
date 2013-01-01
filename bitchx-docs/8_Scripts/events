@@ -1,0 +1,18 @@
+Synopsis:
+   load events
+
+Description:
+   This is another, though less thorough, example of the flexibility of
+   EPIC's hook system.  It does the following:
+
+   * the nickname of the last MSG sender is stored in $STATUS_USER
+   * LIST, NAMES, and WHO output is more compact and less confusing
+   * the client will print a message every hour on the hour
+   * the NOTIFY command will show users' addresses for signons
+
+See Also:
+   environment(8); events.hop(8); load(5); on(5); set(4) status_user
+
+Other Notes:
+   This script was written by Jeremy Nelson, jnelson@acronet.net (hop).
+

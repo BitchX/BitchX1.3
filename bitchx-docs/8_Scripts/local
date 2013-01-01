@@ -1,0 +1,21 @@
+Synopsis:
+   load local
+
+Description:
+   This script is meant for use by local administrators of the client.  It
+   is (supposed to be) loaded automatically from GLOBAL when the client is
+   started.
+
+   At the time of this writing, the script first informs the user of which
+   client is being used, it's version, who to contact for trouble, etc.
+   It loads the DISC and GUH scripts, and sets the translation table to
+   LATIN_1.  It also supplies a function, $locdomain(), which returns true
+   if the input hostname has the same domain as the client's.
+
+See Also:
+   disc(8); global(8); guh(8); load(5); set(4) translation
+
+Other Notes:
+   This script is distributed as "local.examp" in an attempt to make local
+   administrators tailor it to their needs, instead of loading it blindly.
+

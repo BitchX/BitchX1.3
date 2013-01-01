@@ -1,0 +1,10 @@
+Synopsis:
+   window stack
+
+Description:
+   This just displays the current window stack.  Window descriptions are
+   added to the stack with WINDOW PUSH.
+
+See Also:
+   window(4) pop, push
+

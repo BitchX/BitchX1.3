@@ -1,0 +1,40 @@
+Synopsis:
+   help [<topic> [<subtopic> ...]]
+
+Description:
+   As its name implies, HELP is the command for getting help with some
+   feature of the client.  Currently, the EPIC help system divides the
+   various help documents up into logical groups, each group is given a
+   unique section number.
+
+   Help files are uniformly structured.  All files include, at the very
+   least, a synopsis and description (such as this file).  Some files
+   also include a description of switches accepted by the command, a
+   list of aliases to the command, bug warnings, or other miscellaneous
+   information.
+
+   Some also include a list of related help topics.  These references are
+   usually followed by a number in parentheses.  This number is the help
+   section that the command is listed under.  Help file names are not
+   sensitive to case (e.g. "HELP" is the same as "help"), and they may be
+   abbreviated unambiguously (e.g. "hel" is the same as "help", but "wh"
+   is ambiguous because it matches "who", "whois", "whowas", etc.).
+
+Options:
+   -wait        this will stop script processing until the user is finished
+                in the help system
+
+Examples:
+   To get help on the WHOIS command (in section 3):
+      /help 3 whois
+
+   To list all of the help files in section 3 (server queries):
+      /help 3 ?
+
+   To list all help sections:
+      /help
+
+See Also:
+   Introduction(7); New_User(7); on(5) help; set(4) help_pager, help_path,
+   help_prompt, help_window
+

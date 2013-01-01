@@ -1,0 +1,12 @@
+Synopsis:
+   on [<modes>]server_lost [<serial#>] [-|^]<match> { <action> }
+
+Description:
+   This hook is triggered whenever the client is disconnected from any server
+   for any reason.
+
+Parameters:
+   $0    server refnum
+   $1    server name
+   $2-   reason for disconnect. usually the same as your QUIT(1) message
+

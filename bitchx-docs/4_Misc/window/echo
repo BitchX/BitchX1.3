@@ -1,0 +1,10 @@
+Synopsis:
+   window [refnum] echo [text]
+
+Description:
+   This option basically only echos things to the window, like an /echo. The
+   only time you might ever want to use it is in large /window statements.
+
+See Also:
+   echo(5); xecho(5)
+

@@ -1,0 +1,16 @@
+Synopsis:
+   $igetmatches(<array> <pattern>)
+   $igetrmatches(<array> <string>)
+
+Technical:
+   This functions operate in a manner similar to $getmatches() and
+   $getrmatches(), except that they return an index number (in alphabetical
+   order) of the array members rather than the item numbers.
+
+Returns:
+   space-separated list of array index numbers corresponding to matches
+
+See Also:
+   Arrays(7); matchitem(6); rmatchitem(6); getmatches(6);
+   getrmatches(6); gettmatch(6)
+

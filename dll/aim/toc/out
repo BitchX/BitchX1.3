@@ -1,0 +1,244 @@
+toc.c: In function `toc_callback':
+toc.c:525: parse error before `;'
+toc.c:525: warning: statement with no effect
+toc.c:525: parse error before `)'
+toc.c:528: break statement not within loop or switch
+toc.c:515: warning: unused variable `buddy'
+toc.c:532: `b' undeclared (first use in this function)
+toc.c:532: (Each undeclared identifier is reported only once
+toc.c:532: for each function it appears in.)
+toc.c:536: `in' undeclared (first use in this function)
+toc.c:537: `buddy' undeclared (first use in this function)
+toc.c: At top level:
+toc.c:571: parse error before `else'
+toc.c:575: parse error before `2'
+toc.c:575: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:575: warning: data definition has no type or storage class
+toc.c:576: warning: type defaults to `int' in declaration of `idc'
+toc.c:576: warning: initialization makes integer from pointer without a cast
+toc.c:576: initializer element is not constant
+toc.c:576: warning: data definition has no type or storage class
+toc.c:577: parse error before string constant
+toc.c:577: warning: type defaults to `int' in declaration of `sscanf'
+toc.c:577: warning: data definition has no type or storage class
+toc.c:579: warning: type defaults to `int' in declaration of `serv_got_chat_left'
+toc.c:579: warning: parameter names (without types) in function declaration
+toc.c:579: conflicting types for `serv_got_chat_left'
+toc.h:191: previous declaration of `serv_got_chat_left'
+toc.c:579: warning: data definition has no type or storage class
+toc.c:581: warning: type defaults to `int' in declaration of `numargs'
+toc.c:581: warning: data definition has no type or storage class
+toc.c:582: warning: type defaults to `int' in declaration of `args'
+toc.c:582: warning: initialization makes integer from pointer without a cast
+toc.c:582: initializer element is not constant
+toc.c:582: warning: data definition has no type or storage class
+toc.c:583: warning: type defaults to `int' in declaration of `args'
+toc.c:583: conflicting types for `args'
+toc.c:582: previous declaration of `args'
+toc.c:583: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:583: invalid initializer
+toc.c:583: warning: data definition has no type or storage class
+toc.c:584: warning: type defaults to `int' in declaration of `args'
+toc.c:584: conflicting types for `args'
+toc.c:583: previous declaration of `args'
+toc.c:584: invalid initializer
+toc.c:584: warning: data definition has no type or storage class
+toc.c:585: parse error before `1'
+toc.c:585: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:585: warning: data definition has no type or storage class
+toc.c:589: conflicting types for `idc'
+toc.c:576: previous declaration of `idc'
+toc.c:591: `b' used prior to declaration
+toc.c:593: parse error before `2'
+toc.c:593: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:593: warning: data definition has no type or storage class
+toc.c:594: warning: type defaults to `int' in declaration of `idc'
+toc.c:594: conflicting types for `idc'
+toc.c:589: previous declaration of `idc'
+toc.c:594: warning: initialization makes integer from pointer without a cast
+toc.c:594: initializer element is not constant
+toc.c:594: warning: data definition has no type or storage class
+toc.c:595: parse error before string constant
+toc.c:595: warning: type defaults to `int' in declaration of `sscanf'
+toc.c:595: warning: data definition has no type or storage class
+toc.c:596: warning: type defaults to `int' in declaration of `who'
+toc.c:596: conflicting types for `who'
+toc.c:590: previous declaration of `who'
+toc.c:596: warning: initialization makes integer from pointer without a cast
+toc.c:596: initializer element is not constant
+toc.c:596: warning: data definition has no type or storage class
+toc.c:597: warning: type defaults to `int' in declaration of `whisper'
+toc.c:597: conflicting types for `whisper'
+toc.c:590: previous declaration of `whisper'
+toc.c:597: warning: initialization makes integer from pointer without a cast
+toc.c:597: initializer element is not constant
+toc.c:597: warning: data definition has no type or storage class
+toc.c:598: warning: type defaults to `int' in declaration of `m'
+toc.c:598: conflicting types for `m'
+toc.c:589: previous declaration of `m'
+toc.c:598: initializer element is not constant
+toc.c:598: warning: data definition has no type or storage class
+toc.c:599: parse error before `while'
+toc.c:608: warning: type defaults to `int' in declaration of `b'
+toc.c:608: conflicting types for `b'
+toc.c:591: previous declaration of `b'
+toc.c:608: warning: initialization makes integer from pointer without a cast
+toc.c:608: initializer element is not constant
+toc.c:608: warning: data definition has no type or storage class
+toc.c:609: parse error before `if'
+toc.c:611: parse error before string constant
+toc.c:611: warning: type defaults to `int' in declaration of `strcpy'
+toc.c:611: warning: data definition has no type or storage class
+toc.c:614: parse error before `->'
+toc.c:614: warning: type defaults to `int' in declaration of `strcpy'
+toc.c:614: warning: data definition has no type or storage class
+toc.c:616: warning: type defaults to `int' in declaration of `numargs'
+toc.c:616: redefinition of `numargs'
+toc.c:581: `numargs' previously defined here
+toc.c:616: warning: data definition has no type or storage class
+toc.c:617: warning: type defaults to `int' in declaration of `args'
+toc.c:617: conflicting types for `args'
+toc.c:584: previous declaration of `args'
+toc.c:617: warning: initialization makes integer from pointer without a cast
+toc.c:617: initializer element is not constant
+toc.c:617: warning: data definition has no type or storage class
+toc.c:618: warning: type defaults to `int' in declaration of `args'
+toc.c:618: conflicting types for `args'
+toc.c:617: previous declaration of `args'
+toc.c:618: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:618: invalid initializer
+toc.c:618: warning: data definition has no type or storage class
+toc.c:619: warning: type defaults to `int' in declaration of `args'
+toc.c:619: conflicting types for `args'
+toc.c:618: previous declaration of `args'
+toc.c:619: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:619: invalid initializer
+toc.c:619: warning: data definition has no type or storage class
+toc.c:620: warning: type defaults to `int' in declaration of `args'
+toc.c:620: conflicting types for `args'
+toc.c:619: previous declaration of `args'
+toc.c:620: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:620: invalid initializer
+toc.c:620: warning: data definition has no type or storage class
+toc.c:621: warning: type defaults to `int' in declaration of `args'
+toc.c:621: conflicting types for `args'
+toc.c:620: previous declaration of `args'
+toc.c:621: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:621: invalid initializer
+toc.c:621: warning: data definition has no type or storage class
+toc.c:623: warning: type defaults to `int' in declaration of `args'
+toc.c:623: conflicting types for `args'
+toc.c:621: previous declaration of `args'
+toc.c:623: invalid initializer
+toc.c:623: warning: data definition has no type or storage class
+toc.c:624: warning: type defaults to `int' in declaration of `args'
+toc.c:624: conflicting types for `args'
+toc.c:623: previous declaration of `args'
+toc.c:624: invalid initializer
+toc.c:624: warning: data definition has no type or storage class
+toc.c:625: parse error before `1'
+toc.c:625: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:625: warning: data definition has no type or storage class
+toc.c:628: conflicting types for `who'
+toc.c:596: previous declaration of `who'
+toc.c:629: conflicting types for `idc'
+toc.c:594: previous declaration of `idc'
+toc.c:632: parse error before `2'
+toc.c:632: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:632: warning: data definition has no type or storage class
+toc.c:633: warning: type defaults to `int' in declaration of `name'
+toc.c:633: warning: initialization makes integer from pointer without a cast
+toc.c:633: initializer element is not constant
+toc.c:633: warning: data definition has no type or storage class
+toc.c:634: warning: type defaults to `int' in declaration of `idc'
+toc.c:634: conflicting types for `idc'
+toc.c:629: previous declaration of `idc'
+toc.c:634: warning: initialization makes integer from pointer without a cast
+toc.c:634: initializer element is not constant
+toc.c:634: warning: data definition has no type or storage class
+toc.c:635: parse error before string constant
+toc.c:635: warning: type defaults to `int' in declaration of `sscanf'
+toc.c:635: warning: data definition has no type or storage class
+toc.c:636: warning: type defaults to `int' in declaration of `who'
+toc.c:636: conflicting types for `who'
+toc.c:628: previous declaration of `who'
+toc.c:636: warning: initialization makes integer from pointer without a cast
+toc.c:636: initializer element is not constant
+toc.c:636: warning: data definition has no type or storage class
+toc.c:637: warning: type defaults to `int' in declaration of `message'
+toc.c:637: conflicting types for `message'
+toc.c:629: previous declaration of `message'
+toc.c:637: warning: initialization makes integer from pointer without a cast
+toc.c:637: initializer element is not constant
+toc.c:637: warning: data definition has no type or storage class
+toc.c:639: warning: type defaults to `int' in declaration of `pid'
+toc.c:639: conflicting types for `pid'
+toc.c:630: previous declaration of `pid'
+toc.c:639: warning: initialization makes integer from pointer without a cast
+toc.c:639: initializer element is not constant
+toc.c:639: warning: data definition has no type or storage class
+toc.c:640: warning: type defaults to `int' in declaration of `pid'
+toc.c:640: conflicting types for `pid'
+toc.c:639: previous declaration of `pid'
+toc.c:640: warning: initialization makes pointer from integer without a cast
+toc.c:640: initializer element is not constant
+toc.c:640: warning: data definition has no type or storage class
+toc.c:641: warning: type defaults to `int' in declaration of `AddToLL'
+toc.c:641: warning: parameter names (without types) in function declaration
+toc.c:641: warning: data definition has no type or storage class
+toc.c:642: warning: type defaults to `int' in declaration of `numargs'
+toc.c:642: redefinition of `numargs'
+toc.c:616: `numargs' previously defined here
+toc.c:642: warning: data definition has no type or storage class
+toc.c:643: warning: type defaults to `int' in declaration of `args'
+toc.c:643: conflicting types for `args'
+toc.c:624: previous declaration of `args'
+toc.c:643: warning: initialization makes integer from pointer without a cast
+toc.c:643: initializer element is not constant
+toc.c:643: warning: data definition has no type or storage class
+toc.c:644: warning: type defaults to `int' in declaration of `args'
+toc.c:644: conflicting types for `args'
+toc.c:643: previous declaration of `args'
+toc.c:644: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:644: invalid initializer
+toc.c:644: warning: data definition has no type or storage class
+toc.c:645: warning: type defaults to `int' in declaration of `args'
+toc.c:645: conflicting types for `args'
+toc.c:644: previous declaration of `args'
+toc.c:645: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:645: invalid initializer
+toc.c:645: warning: data definition has no type or storage class
+toc.c:646: warning: type defaults to `int' in declaration of `args'
+toc.c:646: conflicting types for `args'
+toc.c:645: previous declaration of `args'
+toc.c:646: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:646: invalid initializer
+toc.c:646: warning: data definition has no type or storage class
+toc.c:647: warning: type defaults to `int' in declaration of `args'
+toc.c:647: conflicting types for `args'
+toc.c:646: previous declaration of `args'
+toc.c:647: warning: passing arg 1 of `strdup' makes pointer from integer without a cast
+toc.c:647: invalid initializer
+toc.c:647: warning: data definition has no type or storage class
+toc.c:648: warning: type defaults to `int' in declaration of `args'
+toc.c:648: conflicting types for `args'
+toc.c:647: previous declaration of `args'
+toc.c:648: invalid initializer
+toc.c:648: warning: data definition has no type or storage class
+toc.c:649: parse error before `1'
+toc.c:649: warning: type defaults to `int' in declaration of `use_handler'
+toc.c:649: warning: data definition has no type or storage class
+toc.c:653: warning: type defaults to `int' in declaration of `free'
+toc.c:653: warning: parameter names (without types) in function declaration
+toc.c:653: conflicting types for `free'
+/usr/include/stdlib.h:484: previous declaration of `free'
+toc.c:653: warning: data definition has no type or storage class
+toc.c:654: warning: type defaults to `int' in declaration of `free'
+toc.c:654: warning: parameter names (without types) in function declaration
+toc.c:654: warning: data definition has no type or storage class
+toc.c:655: parse error before `if'
+toc.c:664: warning: type defaults to `int' in declaration of `free'
+toc.c:664: warning: parameter names (without types) in function declaration
+toc.c:664: warning: data definition has no type or storage class
+toc.c:665: parse error before `}'
+make: *** [toc.o] Error 1

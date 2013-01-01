@@ -1,0 +1,11 @@
+Synopsis:
+   window number <number>
+
+Description:
+   This changes the current window's reference number to the specified
+   number.  If another window already has that refnum, the windows swap
+   refnums.
+
+See Also:
+   window(4) name
+

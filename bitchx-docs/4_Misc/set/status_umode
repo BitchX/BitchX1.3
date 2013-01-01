@@ -1,0 +1,19 @@
+Synopsis:
+   set status_umode [<text>]
+
+Description:
+   This variable contains the string used in the status bar when the client
+   has one or more user modes set.  If no user modes are set, nothing is
+   displayed.
+
+   This string is represented at %# in the STATUS_FORMAT string.  If the
+   expando is used inside STATUS_UMODE, it expands to the client's current
+   user mode.
+
+Examples:
+   Customizing the display of the current user mode in the status bar:
+      /set status_umode UserMode: %#
+
+See Also:
+   mode(1); set(4) status_format
+

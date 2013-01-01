@@ -1,0 +1,59 @@
+*** dcc.c	Wed Jul 22 17:25:39 1998
+--- dcc.c.bak	Wed Jul 22 17:25:39 1998
+***************
+*** 1,4 ****
+! 	/*
+   * dcc.c: Things dealing with client to client connections. 
+   *
+   * Copyright(c) 1998 Colten Edwards aka panasync.
+--- 1,4 ----
+! /*
+   * dcc.c: Things dealing with client to client connections. 
+   *
+   * Copyright(c) 1998 Colten Edwards aka panasync.
+***************
+*** 1283,1304 ****
+  	return user;
+  }
+  
+- /* check if supplied nick matches your current nick, if so return false */
+- int dcc_check_nick (char *nick) {
+- 	size_t len = 0;
+- 	if (current_window -> server != -1) {
+- 		len = strlen (nick) + 1;
+- 		if (my_strnicmp (nick, get_server_nickname (current_window -> server), len)) {
+- 			return 0;
+- 		} else {
+- 			return 1;
+- 		}
+- 	} else {
+- 		return 0;
+- 	}
+- 	return 0;
+- }
+- 
+  DCC_COMMAND(dcc_chat)
+  {
+  	char	*user;
+--- 1283,1288 ----
+***************
+*** 1329,1339 ****
+  	{
+  		if (!nick || !*nick)
+  			break;
+! 		/* check to see if nick matches yours if so continue */
+! 		if (dcc_check_nick (nick)) {
+! 			put_it ("%s", convert_output_format ("$G %RDCC%n Cannot DCC chat yourself!", NULL, NULL)); 
+! 			continue;
+! 		}
+  		if ((s = find_dcc(nick, "chat", bot?DCC_BOTMODE:DCC_CHAT, 1, -1, -1)))
+  		{
+  			if ((s->flags & DCC_ACTIVE) || (s->flags & DCC_WAIT))
+--- 1313,1319 ----
+  	{
+  		if (!nick || !*nick)
+  			break;
+! 	
+  		if ((s = find_dcc(nick, "chat", bot?DCC_BOTMODE:DCC_CHAT, 1, -1, -1)))
+  		{
+  			if ((s->flags & DCC_ACTIVE) || (s->flags & DCC_WAIT))

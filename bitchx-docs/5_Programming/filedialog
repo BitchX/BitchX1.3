@@ -1,0 +1,25 @@
+Synopsis:
+   filedialog  <options> <initial path> "Dialog title" <ok button text> <apply button text> { code }
+
+Description:
+   FILEDIALOG creates a file selection dialog based on the options
+   passed.  Possible options:
+        O = open dialog
+        S = save as dialog
+        M = allow multiple selections
+        A = include apply button (PM only)
+   The initial path if not specified is the current directory. In some
+   cases COMMENT_BREAKAGE should be set off.  Problems will occur when
+   something like ~/*.mp3 is specified because /* gets interpretted 
+   as a comment.
+   Dialog title is the text that is displayed in the dialog's titlebar.
+   Ok button and Apply button text is displayed on the corresponding 
+   buttons if possible.
+   Code is the code fragment which is run after a selection is made.
+   $0 is OK, CANCEL or APPLY based on the user's choice. $1 and on are 
+   the filenames selected, can be more than one in the case of multiple
+   selection.
+
+See Also:
+   fontdialog(5) properties(5) popupmsg(5)
+

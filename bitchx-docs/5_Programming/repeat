@@ -1,0 +1,18 @@
+Synopsis:
+   repeat <count> <command>
+
+Description:
+   This command allows any command to be executed any number of times.  One
+   possible use for REPEAT might be for warning messages from a script; the
+   warning is repeated to get your attention.  However, the potential uses
+   for this command are endless.
+
+Examples:
+   To very boldly display the time each hour:
+      on ^timer "??:00*" {
+         repeat 3 echo B*** The time is $0!!B
+      }
+
+See Also:
+   repeat(8)
+

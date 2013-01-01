@@ -1,0 +1,304 @@
+# For use with BitchX-75+
+# Last updated: 20120611
+
+${a} Official FAQ Site -- http://wiki.bitchx.org/faq:start
+${a} Official Wiki -- http://wiki.bitchx.org/
+${a} Official IRC Channel -- #BitchX on EFNet
+${a} Official WWW Site -- http://www.bitchx.org/
+${a} Official Sourceforge Project -- http://sf.net/projects/bitchx/
+${a} Official Mailing List -- bitchx-devel@lists.sourceforge.net
+
+${a} for president.
+
+${a}: a modern client for a old world
+${a}: a new fragrance for men, by Calvin Klein
+${a}: anything else would be uncivilized
+${a}: better than a penis enlargement!
+${a}: born to raise hell
+${a}: causing all sorts of havoc!
+${a}: cleaner, drier, protects even better
+${a}: coming soon to a theatre near you!
+${a}: do not expose to open flame or fire
+${a}: don't leave home without it!
+${a}: double your pleasure, double your fun!
+${a}: EPIC on steroids.
+${a}: faster than a speeding bullet, more powerful than a locomotive
+${a}: fit to feel groovy
+${a}: for distribution only with a new PC
+${a}: for me to POOP ON!
+${a}: good to the last drop!
+${a}: it adds that extra uNF to your sex life!
+${a}: it does a body good
+${a}: it isn't only my script, it's also my client
+${a}: it keeps going and going and going and going and...
+${a}: it makes bath-time lots of fun!
+${a}: it tastes like poo
+${a}: it won't get you laid
+${a}: it'll get you in, out and on with life.
+${a}: it's all day strong, all day long
+${a}: it's everywhere you want to be
+${a}: it's how steak is done
+${a}: it's magically delicious!
+${a}: it's not for the tab-key impaired!
+${a}: it's not your ordinary stick of gum
+${a}: it's shagadellic, baby!
+${a}: it's wax ecstatic
+${a}: it's what's for lunch
+${a}: Little. Yellow. Better.
+${a}: made with real honey.
+${a}: may cause birth defects
+${a}: melts in your mouth, not in your hands
+${a}: more nutritious than a six-pack.
+${a}: need we say more?
+${a}: nine out of ten doctors recommend it
+${a}: nine out of ten gynecologists recommend it
+${a}: no additives or preservatives
+${a}: no this is NOT a cybersex client
+${a}: not from concentrate
+${a}: not to be taken internally
+${a}: now a major feature film
+${a}: now in non-drowsy formula too!
+${a}: now with $rand(99) percent fewer calories!
+${a}: now with $rand(99) percent more random quit messages!
+${a}: now with flavor crystals!
+${a}: now with Olestra!
+${a}: now with wings!
+${a}: now Y2K compatible!
+${a}: often imitated, never duplicated!
+${a}: reserve your copy today!
+${a}: ribbed for her pleasure!
+${a}: roqz yer nutz!
+${a}: sanitized for your protection
+${a}: shaken, not stirred
+${a}: so real, you'll wet yourself!
+${a}: stays crunchy in milk!
+${a}: strong enough for a man, pH-balanced for a woman
+${a}: take the red pill
+${a}: TASTES GREAT! LESS FILLING! TASTES GREAT! LESS FILLING!
+${a}: the Cadillac of all clients
+${a}: the cootiless client
+${a}: the cure for the common client
+${a}: the fizzle goes straight to your brain!
+${a}: the fresh-maker!
+${a}: the headache medicine
+${a}: the IRC client with hair on its balls
+${a}: the NEW form of birth control!
+${a}: the new hardcore, psycho, nitro client -- in a can
+${a}: the official IRC client of the 2004 Olympic Games
+${a}: the ONLY bug-free client
+${a}: the ONLY IRC client on Viagra!
+${a}: the ONLY three day cure!
+${a}: the original point-and-click interface.
+${a}: the OTHER white meat
+${a}: the quilted quicker picker upper
+${a}: the right choice for a healthy pet
+${a}: the un-Cola
+${a}: to the rescue!
+${a}: treats external genital warts!
+${a}: try our low-fat flavor too!
+${a}: try our Windows Me and Windows XP flavors too!
+${a}: Tune In, Turn On, Drop Out.
+${a}: use it, it makes hair grow in funny places!
+${a}: use it, it makes you bulletproof
+${a}: use only under adult supervision
+${a}: you'll have to speak up, I'm wearing a towel
+${a}: your way, right away
+${a}: not a flotation device
+${a}: for external use only
+${a}: may contain traces of peanuts
+${a}: contains phenylalanine
+${a}: antisocial networking
+
+${J} by panasync
+${J} © 1996-2012 Colten Edwards et al
+
+${J}: just when you thought it couldn't get any better
+
+${a} by any other name is still ${a}
+${a} has bite! (Just ask Mike Tyson!)
+${a} Lite I said!
+
+${b} "got $tolower(${a})?"
+${b} "I did not have sexual relations with that client, ${a}."
+${b} ${a} is as ${a} does
+${b} $servernick() has left the building
+${b} $servernick() has no reason... just kidding :)
+${b} *PHEAR MY $toupper(${a})-NESS!* BOW TO ME!
+${b} *SUBLIMINAL*MESSAGE* USE $toupper($a) *SUBLIMINAL*MESSAGE*
+${b} $strftime(%Y): year of the ${a}
+${b} Abort Retry Fail
+${b} A friend with weed is a friend indeed
+${b} Amount of time you people were funny: -$rand(60) minutes $rand(60) seconds
+${b} Automatically bored away
+${b} Back wit anutha one of doz ${a}-rockin' beats!
+${b} bb bbba bbbba bb${tolower($a)} ${tolower($a)}!!!
+${b} Beavis & Butthead use ${a}. Huh-huh huh-huh huh-huh he said "Bitch".
+${b} Become a ${a} Certified Systems Engineer today! Apply within!
+${b} Beefcake! BEEFCAKE!
+${b} Been around the world and found that only stupid people are breeding.
+${b} Bender uses ${a}. Bite my shiny metal ass! 
+${b} Bob Barker uses ${a}. Have your ${a} spayed or neutered.
+${b} Captain Kangaroo uses ${a}. Shouldn't you?
+${b} Check out the sexy ${a} pr0n at http://127.0.0.1/bx-pron.html
+${b} Chester Cheeta uses ${a}. Ayeuhayueuhayueuh!
+${b} Choosey moms choose ${a}!
+${b} Connection reset by panasync?
+${b} Did somebody say ${a}?
+${b} Do you... ${a}?
+${b} Does your mommy know you use ${a}?
+${b} Dr. Kavorkian is DYING to use ${a}. Aren't you?
+${b} Dr. Kavorkian would KILL to use ${a}. Shouldn't you?
+${b} Eat, drink and be merry...for tomorrow we die
+${b} Elvis has left the building
+${b} Everybody was Kung Fu fighting!
+${b} For a good time, call 1-900-4${a}
+${b} Free sex with a ${a} upgrade! Call for details!
+${b} Gary Coleman uses ${a}. Whatchoo talkin bout foo?
+${b} Get your free warez from ftp://127.0.0.1!
+${b} Grandmaster Flash uses ${a}, 'coz it's all about money, ain't a damn thing funny
+${b} Hanson uses ${a}. Mommy, can we dress like boys again?
+${b} Harry Potter uses ${a}. Shouldn't you?
+${b} Have you hugged your ${a} today?
+${b} Have YOU raped a lawn gnome today?
+${b} He-Man uses ${a}. *HE HAS THE POOWWEEEEEEEEEERRRRRRRR!!!!!*
+${b} Hey, where's the cream filling?!
+${b} Hey baby, come sit on my lap. We'll talk about whatever pops up.
+${b} Homer Simpson uses ${a}. D'OH! D'OH! D'OH!
+${b} Hrm... I wonder if I paid this month's electr...EOF From client
+${b} I came, I saw, I ran away screaming
+${b} I got sucked into /dev/null!
+${b} I see your ${a} is as big as mine!
+${b} I theenk I need a beeger box!
+${b} I wonder what this button marked "EOF" does...
+${b} I'm off like a prom dress...
+${b} I'm out like a light...
+${b} If idiots could fly, IRC would be an airport
+${b} It's a huge shit sandwich and we're all gonna have to take a bite.
+${b} iT's bEttEr tO bUrN oUt tHaN tO fAdE aWaY
+${b} It's game over, man! game over!
+${b} It's not TV. It's ${a}.
+${b} Just do it like Nike... BEEATCH!
+${b} Khaled uses ${a}. CTCP TROUT THIS, BITCH!
+${b} Leggo my Eggo!
+${b} Life is like ${a}. Ya never know what yer gunna git.
+${b} Man and mouse alike, both end up in pussy
+${b} Man I'm *SLEEPY*!!!! My keyboard is slipping away!
+${b} Mike Tyson says ${a} BITES! Do you HEAR what I'm saying?!
+${b} mIRCrap: JUST DON'T DO IT!
+${b} Mr. Peanut uses ${a}. Shouldn't you?
+${b} Mr. Rogers uses ${a}. Won't you be my neighbor?
+${b} Mr. T uses ${a}. Shouldn't you, SUCKAH?
+${b} Nice shoes, wanna fuck?
+${b} Now she knows why her cat stays away from me! DAMNIT!
+${b} Occifer, I'm not as think as you stoned I am!
+${b} Occifer, take me drunk, I'm home
+${b} OH SHIT!\$@#\$ My mom caught me using ${a}!
+${b} One ${a} to rule them all
+${b} Oral sex makes your day
+${b} Outwit. Outplay. Outlast. Survivor ${a}.
+${b} PARTYTIME! 5 seconds to the millenium! 4...3...2...1...EOF From client
+${b} Ping-pong timeout
+${b} Pretzel Boy uses ${a}. Shouldn't you?
+${b} Reserve your copy of ${J} for the Amiga today!
+${b} Reserve your copy of ${J} for the Apple Newton today!
+${b} Reserve your copy of ${J} for the Atari 2600 today!
+${b} Reserve your copy of ${J} for the BeOS today!
+${b} Reserve your copy of ${J} for the ColecoVision today!
+${b} Reserve your copy of ${J} for the Commodore 64 today!
+${b} Reserve your copy of ${J} for the Microsoft Xbox today!
+${b} Reserve your copy of ${J} for the Nintendo 64 today!
+${b} Reserve your copy of ${J} for the Nintendo Gameboy today!
+${b} Reserve your copy of ${J} for the Nintendo GameCube today!
+${b} Reserve your copy of ${J} for the PalmPilot today!
+${b} Reserve your copy of ${J} for the Sony Playstation ${rand(2) + 1} today!
+${b} Reserve your copy of ${J} for Windows CE today!
+${b} Save water -- drink beer!
+${b} Showering in your clothes shows you're crazy. Showering nude shows your nuts.
+${b} Silly faggot! mIRC is for kids!
+${b} Silly wabbit, ${a} is for kids!
+${b} Size DOES matter
+${b} Tabardation - the inability to master use of the <Tab> key. See: retardation; Headcase.
+${b} Terminated.
+${b} That's Miss ${a} to you
+${b} That's Mister ${a} to you
+${b} The best part of waking up is ${a} in your cup
+${b} The birds kept calling his name, thought Caw
+${b} The Borg use ${a}. It will be assimilated. Shouldn't you?
+${b} The FDA says 5 servings of ${a} a day increases sexual potency
+${b} The Hobbits use ${a}. Shouldn't you?
+${b} The Invisible Man uses ${a}, you just can't see it!
+${b} The name's X. ${a}.
+${b} The Power Rangers use ${a}. Shouldn't you?
+${b} The Spice Girls use ${a} (instead of underwear and talent)
+${b} They killed Kenny! THOSE BASTARDS!
+${b} This ${a}'s for you
+${b} Tickle-Me Elmo uses ${a}. *giggle* *giggle* *giggle*
+${b} Tiger Woods uses ${a}. FORE!
+${b} Time to make the donuts
+${b} Time wasted: $rand(30) days $rand(23) hours $rand(59) minutes $rand(59) seconds $rand(99) milliseconds $rand(999) nanoseconds
+${b} Time wasted: $rand(9) millenia $rand(9) centuries $rand(9) decades $rand(9) years $rand(11) months
+${b} Time wasted: all of it
+${b} Time wasted: $tdiff2(${time() - F})
+${b} Tone Loc uses ${a}, and funky cold medina.
+${b} Tony the Tiger uses ${a}. It's Grrrrrrrrreat!
+${b} Twat?! I cunt hear you!
+${b} Uh oh... I'm getting a blip on the gaydar. Richard Simmons is coming!
+${b} We are ${a} of Borg. You will be assimilated. Using ircII is futile.
+${b} We are ${a} of Borg. You will be assimilated. Using mIRC is futile.
+${b} We drink more beers than Norm on Cheers!
+${b} Went through the desert on a ${a} with no name.
+${b} Were you born a fat, slimy, scumbag, puke, piece of shit or did you have to work on it?
+${b} Where do you want to go today?
+${b} Who ate my nuggets?!
+${b} Whyismyspacebarnotworking?!
+${b} Windows Me, coded entirely by blondes
+${b} With a ${a} here and a ${a} there, here a ${a} there a ${a} everywhere a ${a}
+${b} Wouldn't it be great if the dog could walk itself?
+${b} Yo quiero ${a}
+${b} You can breathe without ${a}, but I wouldn't recommend it
+${b} You can /quit any time you like, but you can never leave
+${b} THE BEATINGS WILL CONTINUE UNTIL MORALE IMPROVES
+${b} If you gaze into the abyss, the abyss gazes also into you
+${b} I hear banjos
+${b} A gentleman is one who knows how to play the bagpipes, but chooses not to.
+
+All the ${a} that's fit to print!
+Bad ${a}, bad ${a}, whatcha gonna do? Whatcha gonna do when they come for you?
+bong timeout
+Connection reset by beer
+Connection reset by pheer
+Don't squeeze the ${a}
+Dude! You're getting a ${a}!
+Erection reset by queer
+Grab life by the ${a}
+HEY! Must be the ${a}!
+Killed (alexs (Requested by panasync))
+Killed (Ancient (Requested by panasync))
+Killed (BillGates (Lindows 98 -- jizz your pants!))
+Killed (BlackJac (Requested by panasync))
+Killed (DrmWEaver (Requested by panasync))
+Killed (frash (Requested by panasync))
+Killed (einride (Requested by panasync))
+Killed (KrON (Requested by panasync))
+Killed (rox (Requested by panasync))
+Read error: $rand(10) + $rand(10) = -$rand(10) (Connection reset by third grade math)
+Read error: 1.414213562 (Excessive square root of 2)
+Read error: 1.732050808 (Excessive square root of 3)
+Read error: 2.71828182846 (Excessive e)
+Read error: 2.99792458 x 10^8 meters/second (Excessive speed of light)
+Read error: 3.1415926535 (Excessive pi)
+Read error: 666 (Connection reset by Satan)
+Read error: 69 (Excessive sex)
+Read error: 69 (Excessive tongue)
+User abortion with 5 coathooks
+Will the REAL Slim ${a} please stand up?
+Who's your BitchX?
+Bitchx:  Better than peer
+10 million strong and growing!
+Read error: 2004 (10 years of BitchX isn't nearly enough)
+Killed (powuh (requested by panasync))
+Killed (einride (requested by panasync))
+Read error: 420 (Excessive blunts to the dome)
+BitchX: Now available for the Gibson
+BitchX: No wardrobe malfunctions here!
+BitchX: The FAQ maker!

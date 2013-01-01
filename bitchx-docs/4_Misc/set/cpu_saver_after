@@ -1,0 +1,14 @@
+Synopsis:
+   set cpu_saver_after [<minutes>]
+
+Description:
+   This triggers CPU Saver mode after <minutes> without a keypress.
+
+See Also:
+   set(4) cpu_saver_every
+
+Other Notes:
+   When CPU Saver is enabled, the status bar isn't updated and the notify list
+   isn't checked. If either this value or set(4) cpu_saver_every is 0,
+   CPU Saver mode will not activate.
+

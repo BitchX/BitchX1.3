@@ -1,0 +1,22 @@
+Synopsis:
+   $stime(<integer>)
+
+Technical:
+   This function is used to convert from utc time to a format that is human-
+   readable.
+
+Practical:
+   This function is usually used to convert $time() output.  It isn't as
+   flexible as $strftime(), but it can work with any time, not just the
+   current.
+
+Returns:
+   current date/time string in human-readable form
+
+Examples:
+   $stime($time())             current time string
+   $stime(0)                   the dawn of time
+
+See Also:
+   strftime(6); time(6)
+

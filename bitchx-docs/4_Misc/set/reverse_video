@@ -1,0 +1,14 @@
+Synopsis:
+   set reverse_video [on|off|toggle]
+
+Description:
+   This setting controls how reversed text is displayed in the input line
+   and the display window.  If it is turned on, the REVERSE key function
+   (usually ^V; Control-V) will toggle reversed text on and off.  If off, it
+   will strip out all REVERSEs In the displayed text, effectively disabling
+   reversed text.
+
+See Also:
+   bind(4) blink, bold, highlight_off, reverse, underline;
+   set(4) blink_video, bold_video, reverse_video, underline_video
+

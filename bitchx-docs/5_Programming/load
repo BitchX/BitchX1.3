@@ -1,0 +1,42 @@
+Synopsis:
+   load [-args] <file> [<file> ...]
+
+Description:
+   LOAD allows for commands contained in external files to be executed.
+   This has the obvious use of setting up aliases and hooks without having
+   to type each one in individually.  The .ircrc file, for example, it
+   automatically loaded when the client is started (assuming the -q switch
+   isn't used).
+
+   When attempting to load a script, the client will first search the
+   directories in the LOAD_PATH for the desired file.  The client will
+   also accept an absolute pathname.
+
+   The syntax of an ircII-EPIC script file is rather relaxed.  It mostly
+   resembles C code, aesthetically.  As with C, whitespace is usually not
+   significant, except in literal text.  Curly braces used for complex
+   commands may be placed anywhere.
+   
+   As with the input line, commands issued directly in a loaded script
+   are, by default, not evaluated.  This means that aliases and functions
+   will not be expanded, and semicolons are not honored.  This can be
+   overridden script-wide with the -args switch, or by turning the
+   INPUT_ALIASES setting on inside the script.  EVAL should be used if
+   only select lines need to be evaluated.
+
+   If the filename ends in a .tcl extension, the file is automatically
+   passed to the tcl interpreter if possible.
+
+Options:
+   -args   This switch causes the script to be loaded with INPUT_ALIASES
+           turned on.  In addition, commands may use the special numeric
+           expandos ($*, $2, etc.), which will expand to the arguments
+           passed to LOAD.
+
+See Also:
+   cd(4); set(4) input_aliases, load_path; stub(5); which(4); which(8)
+
+Other Notes:
+   A large collection of sample scripts is included with the client.  Refer
+   to Section 8, the Script Library, for more information.
+

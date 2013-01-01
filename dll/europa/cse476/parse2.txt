@@ -1,0 +1,59 @@
+				 Jack was happy to see a dog.
+				1    2   3     4  5   6 7   8
+Agenda
+-------------------------------------------------------------------------------------------------
+- 1 2 Jack  NAME ((AGR 3s))
+- 1 2       NP   ((AGR 3s)) 
+- 2 3 was   V    ((ROOT BE1) (VFORM past) (AGR (1s 3s)) (SUBCAT (_adjp _np))) 
+- 3 4 happy ADJ  ((SUBCAT _vp:inf))
+- 3 4       ADJP
+- 4 5 to    TO
+- 5 6 see   V    ((ROOT SEE1) (VFORM base) (SUBCAT _np) (IRREG-PAST +) (EN-PASTRT +))
+- 6 7 a     ART  ((ROOT A1)(AGR 3s))
+- 7 8 dog   N    ((CAT N) (ROOT DOG1) (AGR 3s))
+- 6 8       NP   ((AGR 3s))
+- 5 8       VP   ((AGR 3s) (VFORM base))
+- 4 8       VP   ((SUBCAT inf) (AGR 3s) (VFORM inf))       
+- 3 8       ADJP 
+- 2 3       VP   ((AGR (1s 3s)) (VFORM past))
+* 1 8       S    ((INV -) (VFORM past) (AGR 3s)) 
+
+Chart
+-------------------------------------------------------------------------------------------------
+1 2 NAME ((AGR 3s))
+1 2 NP   ((AGR 3s))
+2 3 V    ((ROOT BE1) (VFORM past) (AGR (1s 3s)) (SUBCAT (_adjp _np))) 
+3 4 ADJ  ((SUBCAT _vp:inf))
+3 4 ADJP
+4 5 TO
+5 6 V    ((ROOT SEE1) (VFORM base) (SUBCAT _np) (IRREG-PAST +) (EN-PASTRT +))
+6 7 ART  ((ROOT A1)(AGR 3s))
+7 8 N    ((ROOT DOG1) (AGR 3s))
+6 8 NP   ((AGR 3s))
+5 8 VP   ((AGR 3s) (VFORM base))
+4 8 VP   ((SUBCAT inf) (AGR 3s) (VFORM inf))       
+3 8 ADJP 
+2 8 VP   ((AGR (1s 3s)) (VFORM past))
+1 8 S    ((INV -) (VFORM past) (AGR 3s)) 
+
+
+2 7 VP   ((AGR (1s 3s)) (VFORM past))
+1 7 S    ((INV -) (VFORM past) (AGR 3s))
+
+Active Arc List
+-------------------------------------------------------------------------------------------------
+1 2 S    ((INV -) (VFORM ?v (pres past)) (AGR 3s)) 
+         -> NP ((AGR 3s))				  o VP ((VFORM ?v (pres past)) (AGR 3s))
+2 3 VP   ((AGR (1s 3s)) (VFORM past))
+         -> V ((SUBCAT _np) (AGR (1s 3s)) (VFORM past))   o NP
+2 3 VP   ((AGR (1s 3s)) (VFORM past))
+         -> V ((SUBCAT _adjp) (AGR (1s 3s)) (VFORM past)) o ADJP
+3 4 ADJP -> ADJ ((SUBCAT _vp:inf))                        o VP ((VFORM inf))
+4 5 VP   ((SUBCAT inf) (AGR ?a) (VFORM inf))       
+         -> TO ((AGR ?a) (VFORM inf))                     o VP ((VFORM base))
+5 6 VP   ((AGR ?a) (VFORM base))
+         -> V ((SUBCAT _np) (AGR ?a) (VFORM base))        o NP
+6 7 NP   ((AGR 3s))                                       o N ((AGR 3s))
+6 7 S    ((INV -) (VFORM ?v (pres past)) (AGR 3s)
+         -> NP ((AGR 3s))                                 o VP ((VFORM ?v (pres past)) (AGR 3s))
+

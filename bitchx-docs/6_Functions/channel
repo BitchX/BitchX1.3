@@ -1,0 +1,22 @@
+Synopsis:
+   $channel(<channel name>)
+
+Technical:
+   This function returns some extended information about who's on a channel.
+   It returns a sorted list of nicknames prepended by two characters.
+
+Returns:
+   space-separated list in the form: OVnick, where O is channel operator
+   status (an '@' if the nick is a chanop, '.' if not, '?' if we don't know),
+   V is voice status (a '+' if the nick has voice status, '.' if not, '?' if
+   we don't know)
+
+Examples:
+   Instead of:
+      /on ^send_public * {if ([$0] == C) {...} {...}}
+   Try doing:
+      /on ^send_public * {if (iscurchan($0)) {....} {...}}
+
+See Also
+   chops(6); nochops(6); chanusers(6)
+
