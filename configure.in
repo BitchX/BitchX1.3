@@ -1013,7 +1013,7 @@ GZIP_ENV="--best"
 BZIP2="-9 --repetitive-best"
 
 dnl Should I keep this or not?
-if test -n "$CYGWIN" -o -n "$EMXOS2" -o -n "$MINGWIN32"; then
+if test -n "$EMXOS2" -o -n "$MINGWIN32"; then
   bindir="\$(IRCLIB)"
   INSTALL_IRC="\$(IRCLIB)/\$(_VERSION_)\$(EXEEXT)"
   IRCLIB="\${prefix}/BitchX"

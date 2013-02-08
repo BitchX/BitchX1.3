@@ -198,15 +198,15 @@ $(_VERSION_): .config.h
 
 dll/dummy:
 
-dll: .config.h $(srcdir)/Makefile dll/Makefile dll/dummy
+dll: .config.h Makefile dll/Makefile dll/dummy
 	cd dll \
 	  && $(MAKE) all
 
-installdll: $(srcdir)/Makefile dll/Makefile installdirs dll
+installdll: Makefile dll/Makefile installdirs dll
 	cd dll \
 	  && $(MAKE) 'DESTDIR=$(DESTDIR)' install
 
-installdll_local: $(srcdir)/Makefile dll/Makefile
+installdll_local: Makefile dll/Makefile
 	cd dll \
 	  && $(MAKE) 'PLUGINDIR=$(local_dir)/.BitchX/plugins'
 
@@ -237,11 +237,11 @@ install_local: all local_installdirs installdll_local
 	$(INSTALL_DATA) $(top_srcdir)/BitchX.quit $(DEFAULT_CTOOLZ_DIR)/$(DEFAULT_BITCHX_QUIT_FILE)
 	$(INSTALL_DATA) $(top_srcdir)/BitchX.reasons $(DEFAULT_CTOOLZ_DIR)/$(DEFAULT_BITCHX_KICK_FILE)
 
-wserv: .config.h $(srcdir)/source/wserv.c $(srcdir)/source/term.c $(srcdir)/Makefile
+wserv: .config.h $(srcdir)/source/wserv.c $(srcdir)/source/term.c Makefile
 	cd source \
 	  && $(MAKE) wserv
 
-scr-bx: .config.h $(srcdir)/source/scr-bx.c $(srcdir)/source/term.c $(srcdir)/Makefile
+scr-bx: .config.h $(srcdir)/source/scr-bx.c $(srcdir)/source/term.c Makefile
 	cd source \
 	  && $(MAKE) scr-bx
 
@@ -297,7 +297,7 @@ local_installdirs:
 
 config: bxconf
 
-bxconf: $(srcdir)/Makefile $(srcdir)/bx-conf/Makefile.in
+bxconf: Makefile $(srcdir)/bx-conf/Makefile.in
 	cd bx-conf \
 	  && $(MAKE) all
 	$(topdir)/bxconfigure || :

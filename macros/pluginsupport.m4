@@ -148,7 +148,7 @@ AC_DEFUN(AC_CHECK_PLUGIN_SUPPORT,
         ;;
       CYGWIN*)
         SHLIB_SUFFIX=".dll"
-        SHLIB_LD="dllwrap --export-all --output-def \$(PLUGIN_NAME).def --implib lib\$(PLUGIN_NAME).a --driver-name \$(CC)"
+        SHLIB_LD="$CC -shared"
         ;;
       OS/2*)
         SHLIB_SUFFIX=".dll"

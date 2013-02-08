@@ -1,0 +1,11 @@
+--- /BitchX1.3/configure.in	2012-12-31 22:55:05.000000000 -0600
++++ BitchX1.3/configure.in	2013-01-09 04:55:24.729164000 -0600
+@@ -1013,7 +1013,7 @@
+ BZIP2="-9 --repetitive-best"
+ 
+ dnl Should I keep this or not?
+-if test -n "$CYGWIN" -o -n "$EMXOS2" -o -n "$MINGWIN32"; then
++if test -n "$EMXOS2" -o -n "$MINGWIN32"; then
+   bindir="\$(IRCLIB)"
+   INSTALL_IRC="\$(IRCLIB)/\$(_VERSION_)\$(EXEEXT)"
+   IRCLIB="\${prefix}/BitchX"
