@@ -676,7 +676,11 @@ CTCP_HANDLER(do_utc)
 		return m_strdup(empty_string);
 	if (!cmd || !*cmd)
 		return m_strdup(empty_string);
-
+	if (strlen(cmd) > 60)
+	{
+		yell("WARNING ctcp echo request longer than 60 chars. truncating");
+		cmd[60] = 0;
+	}
 	return m_strdup(my_ctime(my_atol(cmd)));
 }
 
@@ -913,7 +917,7 @@ extern	char	tcl_versionstr[];
 	}
 	if (get_int_var(CLOAK_VAR))
 		return NULL;
-	malloc_strcpy(&version_reply, stripansicodes(convert_output_format(fget_string_var(FORMAT_VERSION_FSET), "%s %s %s %s %s", irc_version, internal_version, "*IX", "ÿ", tcl_versionstr)));
+	malloc_strcpy(&version_reply, stripansicodes(convert_output_format(fget_string_var(FORMAT_VERSION_FSET), "%s %s %s %s %s", irc_version, internal_version, "*IX", "Ã¿", tcl_versionstr)));
 	send_ctcp(CTCP_NOTICE, from, CTCP_VERSION, "%s :%s", version_reply, 
 #endif
 		(tmp = get_string_var(CLIENTINFO_VAR)) ?  tmp : IRCII_COMMENT);
