@@ -233,10 +233,10 @@ int BX_dgets (char *str, int des, int buffer, int buffersize, void *ssl_fd)
 #ifdef HAVE_SSL
 			if(ssl_fd)
 			{
-				c = SSL_read((SSL *)ssl_fd, ioe->buffer + ioe->write_pos,
+				c = BIO_read((BIO *)ssl_fd, ioe->buffer + ioe->write_pos,
 							 ioe->buffer_size - ioe->write_pos);
 
-				if(c == -1 && (rc = SSL_get_error((SSL *)ssl_fd, c)) == SSL_ERROR_WANT_READ)
+				if(c == -1 && (rc = ERR_get_error()) == SSL_ERROR_WANT_READ)
 				{
 					/* If SSL needs more data, then we need to call SSL_read again,
 					 * so we'll return with 0 bytes read, and hope we get called

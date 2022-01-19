@@ -164,6 +164,7 @@ typedef	struct
 	int enable_ssl;
 	int ssl_error;
 	SSL* ssl_fd;
+	BIO* bio_fd;
 #endif
 	char *sasl_nick;
 	char *sasl_pass;

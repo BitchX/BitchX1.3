@@ -62,6 +62,11 @@ CVS_REVISION(irc_c)
 #include <signame.h>
 #endif
 
+
+#ifdef HAVE_SSL
+#define OPENSSL_API_COMPAT 0x10100000L
+#endif
+
 #ifndef VERSION
 	const char irc_version[] = "BitchX-1.3-git";
 #else
@@ -1692,8 +1697,10 @@ int main(int argc, char *argv[], char *envp[])
 
 		/* Many systems don't have /dev/random so we seed */
 		RAND_seed(entropy, 100);
-		SSLeay_add_ssl_algorithms();
+		SSL_library_init();
 		SSL_load_error_strings();
+		ERR_load_BIO_strings();
+		OpenSSL_add_all_algorithms();
 		free(entropy);
 	}
 #endif

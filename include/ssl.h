@@ -3,6 +3,7 @@
 #ifndef __ssl_h__
 #define __ssl_h__
 
+#include <openssl/bio.h>
 #include <openssl/crypto.h>
 #include <openssl/x509.h>
 #include <openssl/pem.h>

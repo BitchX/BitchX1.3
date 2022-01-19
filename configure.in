@@ -559,8 +559,8 @@ case "$with_ssl" in
 esac
 case "$with_ssl" in
     yes|check)
-      AC_CHECK_LIB([crypto], [SSLeay], [], [], [])
-      if test x"$ac_cv_lib_crypto_SSLeay" = x"yes"; then
+      AC_CHECK_LIB([crypto], [OpenSSL_version_num], [], [], [])
+      if test x"$ac_cv_lib_crypto_OpenSSL_version_num" = x"yes"; then
         AC_CHECK_LIB([ssl], [SSL_accept], [], [], [])
       fi
       if test x"$ac_cv_lib_ssl_SSL_accept" = x"yes"; then

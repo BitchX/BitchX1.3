@@ -152,7 +152,7 @@ void	BX_close_server (int cs_index, char *message)
 #ifdef HAVE_SSL
 			if (get_server_ssl(cs_index))
 			{
-				SSL_write(server_list[cs_index].ssl_fd, buffer, strlen(buffer));
+				BIO_write(server_list[cs_index].bio_fd, buffer, strlen(buffer));
 				say("Closing SSL connection");
 				SSL_shutdown(server_list[cs_index].ssl_fd);
 			}
@@ -514,7 +514,7 @@ static	time_t	last_timeout = 0;
 					}
 					else
 #endif
-						junk = dgets(bufptr, des, 1, BIG_BUFFER_SIZE, server_list[i].ssl_fd);
+						junk = dgets(bufptr, des, 1, BIG_BUFFER_SIZE, server_list[i].bio_fd);
 				}
 				else
 #endif
@@ -1360,21 +1360,43 @@ int finalize_server_connect(int refnum, int c_server, int my_from_server)
 
 		if(!server_list[refnum].ctx)
 		{
-			server_list[refnum].ctx = SSL_CTX_new (SSLv23_client_method());
-			CHK_NULL(server_list[refnum].ctx);
-			server_list[refnum].ssl_fd = SSL_new (server_list[refnum].ctx);
-			CHK_NULL(server_list[refnum].ssl_fd);
-			SSL_set_fd (server_list[refnum].ssl_fd, server_list[refnum].read);
-		}
-		err = SSL_connect (server_list[refnum].ssl_fd);
-		if(err == -1)
-		{
-			server_list[refnum].ssl_error = SSL_get_error((SSL *)server_list[refnum].ssl_fd, err);
-			if(server_list[refnum].ssl_error == SSL_ERROR_WANT_READ || server_list[refnum].ssl_error == SSL_ERROR_WANT_WRITE)
+			server_list[refnum].ctx = SSL_CTX_new (TLS_client_method());
+
+			server_list[refnum].bio_fd = BIO_new_ssl_connect (server_list[refnum].ctx);
+
+			BIO_get_ssl(server_list[refnum].bio_fd, &server_list[refnum].ssl_fd);
+
+			SSL_set_mode(server_list[refnum].ssl_fd, SSL_MODE_AUTO_RETRY);
+
+			BIO_set_conn_hostname(server_list[refnum].bio_fd, server_list[refnum].name);
+
+			char tmp_BIO_port[6] = { 0, 0, 0, 0, 0, 0 };
+			snprintf(tmp_BIO_port, sizeof(char) * 6,"%d", server_list[refnum].port);
+			BIO_set_conn_port(server_list[refnum].bio_fd, tmp_BIO_port);
+
+			BIO_set_nbio(server_list[refnum].bio_fd, 0);
+			if (BIO_do_connect(server_list[refnum].bio_fd) <= 0)
+			{
+				say("SSL server connect failed!");
+				SSL_CTX_free(server_list[refnum].ctx);
+				BIO_free_all(server_list[refnum].bio_fd);
+				ERR_print_errors_fp(stderr);
+				err = -1;
 				return 0;
+			}
+
+			if ((server_list[refnum].read = BIO_get_fd (server_list[refnum].bio_fd, 0)) < 0)
+			{
+				say("SSL_get_fd failed!");
+				SSL_shutdown (server_list[refnum].ssl_fd);
+				SSL_CTX_free(server_list[refnum].ctx);
+				BIO_free_all(server_list[refnum].bio_fd);
+				ERR_print_errors_fp(stderr);
+				err = -1;
+				return 0;
+			}
+			new_open(server_list[refnum].read);
 		}
-		SSL_show_errors();
-		CHK_SSL(err);
 		say("SSL server connected");
 	}
 #endif
@@ -1828,8 +1850,17 @@ void BX_flush_server (void)
 			default:
 				if (FD_ISSET(des, &rd))
 				{
-					if (!dgets(buffer, des, 0, BIG_BUFFER_SIZE, NULL))
-						flushing = 0;
+					if (server_list[from_server].enable_ssl)
+					{
+						if (!dgets(buffer, des, 0, BIG_BUFFER_SIZE, server_list[from_server].bio_fd))
+							flushing = 0;
+					}
+					else
+					{
+						if (!dgets(buffer, des, 0, BIG_BUFFER_SIZE, NULL))
+							flushing = 0;
+					}
+
 				}
 				break;
 		}
@@ -1838,7 +1869,12 @@ void BX_flush_server (void)
 	FD_ZERO(&rd);
 	FD_SET(des, &rd);
 	if (new_select(&rd, NULL, &timeout) > 0)
-		dgets(buffer, des, 1, BIG_BUFFER_SIZE, NULL);
+	{
+		if (server_list[from_server].enable_ssl)
+			dgets(buffer, des, 1, BIG_BUFFER_SIZE, server_list[from_server].bio_fd);
+		else
+			dgets(buffer, des, 1, BIG_BUFFER_SIZE, NULL);
+	}
 }
 
 
@@ -2493,12 +2529,12 @@ int err = 0;
 #ifdef HAVE_SSL
 			if(get_server_ssl(server))
 			{
-				if(!server_list[server].ssl_fd)
+				if(!server_list[server].bio_fd)
 				{
 					say ("SSL write error");
 					return -1;
 				}
-				err = SSL_write(server_list[server].ssl_fd, buffer, strlen(buffer));
+				err = BIO_write(server_list[server].bio_fd, buffer, strlen(buffer));
 			}
 			else
 #endif
@@ -2509,7 +2545,12 @@ int err = 0;
 			say("Write to server failed.  Closing connection.");
 #ifdef HAVE_SSL
 			if(get_server_ssl(server))
+			{
+				say("Closing SSL connection");
 				SSL_shutdown (server_list[server].ssl_fd);
+				SSL_CTX_free(server_list[server].ctx);
+				BIO_free_all(server_list[server].bio_fd);
+			}
 #endif
 			close_server(server, strerror(errno));
 			get_connected(server, server);
