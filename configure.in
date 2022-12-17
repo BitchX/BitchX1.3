@@ -559,20 +559,13 @@ case "$with_ssl" in
 esac
 case "$with_ssl" in
     yes|check)
-      AC_CHECK_LIB([crypto], [SSLeay], [], [], [])
-      if test x"$ac_cv_lib_crypto_SSLeay" = x"yes"; then
-        AC_CHECK_LIB([ssl], [SSL_accept], [], [], [])
-      fi
-      if test x"$ac_cv_lib_ssl_SSL_accept" = x"yes"; then
-        dnl This would be unnecessary if we used HAVE_LIBSSL in the code
-        AC_DEFINE(HAVE_SSL, 1, Define this if the system has SSL support.)
-      else
-        if test x"$with_ssl" = x"yes"; then
-          AC_MSG_FAILURE([--with-ssl given, but could not find OpenSSL.])
-        else
-          AC_MSG_WARN([OpenSSL not found, will not have SSL support.])
-        fi
-      fi
+      AC_CHECK_LIB([crypto], [ERR_get_error], [], [], [])
+      AS_IF([test x"$ac_cv_lib_crypto_ERR_get_error" = x"yes"], [AC_CHECK_LIB([ssl], [SSL_accept], [], [], [])], [])
+      AS_IF([test x"$ac_cv_lib_ssl_SSL_accept" != x"yes"],
+          [AS_IF([test x"$with_ssl" = x"yes"],
+		    [AC_MSG_FAILURE([--with-ssl given, but could not find OpenSSL.])],
+            [AC_MSG_WARN([OpenSSL not found, will not have SSL support.])])
+          ], [AC_DEFINE(HAVE_SSL, 1, SSL Defined)])
       ;;
 esac
 
