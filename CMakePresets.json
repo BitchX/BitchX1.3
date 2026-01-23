@@ -2,10 +2,65 @@
   "version": 3,
   "cmakeMinimumRequired": {
     "major": 3,
-    "minor": 21,
+    "minor": 16,
     "patch": 0
   },
   "configurePresets": [
+    {
+      "name": "unix-base",
+      "hidden": true,
+      "generator": "Unix Makefiles",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "condition": {
+        "type": "notEquals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      }
+    },
+    {
+      "name": "linux-debug",
+      "displayName": "Linux Debug",
+      "description": "Linux Debug build with GCC",
+      "inherits": "unix-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_C_FLAGS_DEBUG": "-g -O0 -DDEBUG"
+      }
+    },
+    {
+      "name": "linux-release",
+      "displayName": "Linux Release",
+      "description": "Linux Release build with GCC",
+      "inherits": "unix-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "linux-release-hardened",
+      "displayName": "Linux Release (Hardened)",
+      "description": "Linux Release with security hardening flags",
+      "inherits": "unix-base",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_C_FLAGS": "-D_FORTIFY_SOURCE=2 -fstack-protector-strong -fPIE",
+        "CMAKE_EXE_LINKER_FLAGS": "-pie -Wl,-z,relro,-z,now"
+      }
+    },
+    {
+      "name": "macos-release",
+      "displayName": "macOS Release",
+      "description": "macOS Release build with Clang",
+      "inherits": "unix-base",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
     {
       "name": "windows-base",
       "hidden": true,
@@ -26,7 +81,7 @@
     },
     {
       "name": "x64-debug",
-      "displayName": "x64 Debug",
+      "displayName": "Windows x64 Debug",
       "description": "Windows x64 Debug build with Visual Studio 2022",
       "inherits": "windows-base",
       "architecture": {
@@ -39,7 +94,7 @@
     },
     {
       "name": "x64-release",
-      "displayName": "x64 Release",
+      "displayName": "Windows x64 Release",
       "description": "Windows x64 Release build with Visual Studio 2022",
       "inherits": "windows-base",
       "architecture": {
@@ -51,21 +106,8 @@
       }
     },
     {
-      "name": "x64-relwithdebinfo",
-      "displayName": "x64 RelWithDebInfo",
-      "description": "Windows x64 Release with debug info",
-      "inherits": "windows-base",
-      "architecture": {
-        "value": "x64",
-        "strategy": "external"
-      },
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "RelWithDebInfo"
-      }
-    },
-    {
       "name": "arm64-release",
-      "displayName": "ARM64 Release",
+      "displayName": "Windows ARM64 Release",
       "description": "Windows ARM64 Release build (for Windows 11 on ARM)",
       "inherits": "windows-base",
       "architecture": {
@@ -79,6 +121,22 @@
     }
   ],
   "buildPresets": [
+    {
+      "name": "linux-debug",
+      "configurePreset": "linux-debug"
+    },
+    {
+      "name": "linux-release",
+      "configurePreset": "linux-release"
+    },
+    {
+      "name": "linux-release-hardened",
+      "configurePreset": "linux-release-hardened"
+    },
+    {
+      "name": "macos-release",
+      "configurePreset": "macos-release"
+    },
     {
       "name": "x64-debug",
       "configurePreset": "x64-debug"

@@ -1,6 +1,6 @@
-# CMakeLists.txt for BitchX 1.3 - Windows 11 Modern Build
-# Requires CMake 3.21+ for VS2022 and Windows 11 SDK support
-cmake_minimum_required(VERSION 3.21)
+# CMakeLists.txt for BitchX 1.3 - Modern Cross-Platform Build
+# Supports Windows 11 (VS2022), Linux, macOS, and FreeBSD
+cmake_minimum_required(VERSION 3.16)
 
 project(BitchX
     VERSION 1.3.0
@@ -265,12 +265,180 @@ if(WIN32)
     endif()
 
 else()
-    # Unix/Linux build - use the existing autotools system
-    message(STATUS "Non-Windows platform detected. Use ./configure && make for Unix builds.")
-    message(STATUS "This CMakeLists.txt is primarily for Windows 11 / Visual Studio 2022 builds.")
+    # =========================================
+    # Unix / Linux / macOS / FreeBSD build
+    # =========================================
+
+    # Additional options for Unix
+    option(BITCHX_WITH_IPV6 "Enable IPv6 support" ON)
+    option(BITCHX_WITH_PLUGINS "Enable plugin/shared library support" ON)
+
+    # Find required packages using pkg-config
+    find_package(PkgConfig)
+
+    # Find ncurses (required for terminal UI)
+    if(PKG_CONFIG_FOUND)
+        pkg_check_modules(NCURSES ncursesw)
+        if(NOT NCURSES_FOUND)
+            pkg_check_modules(NCURSES ncurses)
+        endif()
+    endif()
+    if(NOT NCURSES_FOUND)
+        # Fallback: try find_package or manual detection
+        find_package(Curses)
+        if(CURSES_FOUND)
+            set(NCURSES_LIBRARIES ${CURSES_LIBRARIES})
+            set(NCURSES_INCLUDE_DIRS ${CURSES_INCLUDE_DIRS})
+        else()
+            message(FATAL_ERROR "ncurses/ncursesw not found. Install: apt install libncurses-dev (Debian/Ubuntu) or yum install ncurses-devel (RHEL/Fedora)")
+        endif()
+    endif()
+
+    # Find OpenSSL
+    if(BITCHX_WITH_SSL)
+        if(PKG_CONFIG_FOUND)
+            pkg_check_modules(OPENSSL openssl)
+        endif()
+        if(NOT OPENSSL_FOUND)
+            find_package(OpenSSL)
+            if(OpenSSL_FOUND)
+                set(OPENSSL_LIBRARIES OpenSSL::SSL OpenSSL::Crypto)
+                set(OPENSSL_INCLUDE_DIRS ${OPENSSL_INCLUDE_DIR})
+            endif()
+        endif()
+        if(NOT OPENSSL_FOUND AND NOT OpenSSL_FOUND)
+            message(WARNING "OpenSSL not found. Building without SSL/TLS support.")
+            set(BITCHX_WITH_SSL OFF)
+        endif()
+    endif()
+
+    # Find resolver library
+    include(CheckLibraryExists)
+    check_library_exists(resolv res_query "" HAVE_LIBRESOLV)
+
+    # Check for dlopen (for plugins)
+    check_library_exists(dl dlopen "" HAVE_LIBDL)
+
+    # Check for socket library (Solaris/illumos)
+    check_library_exists(socket connect "" HAVE_LIBSOCKET)
+    check_library_exists(nsl gethostbyname "" HAVE_LIBNSL)
+
+    # Check for crypt
+    check_library_exists(crypt crypt "" HAVE_LIBCRYPT)
+
+    # Check for getaddrinfo (IPv6 / modern networking)
+    check_function_exists(getaddrinfo HAVE_GETADDRINFO)
+
+    # Platform-specific definitions
+    add_definitions(-D_GNU_SOURCE)
+
+    if(BITCHX_WITH_IPV6)
+        add_definitions(-DIPV6)
+    endif()
+
+    # Compiler warnings
+    add_compile_options(
+        -Wall
+        -Wno-unused-variable
+        -Wno-unused-but-set-variable
+        -Wno-pointer-sign
+        -fno-strict-aliasing
+    )
+
+    # Build the main BitchX executable
+    add_executable(BitchX ${BITCHX_CORE_SOURCES})
+
+    target_include_directories(BitchX PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_BINARY_DIR}/include
+        ${NCURSES_INCLUDE_DIRS}
+    )
+
+    # Link libraries
+    target_link_libraries(BitchX PRIVATE ${NCURSES_LIBRARIES})
+
+    if(HAVE_LIBRESOLV)
+        target_link_libraries(BitchX PRIVATE resolv)
+    endif()
+    if(HAVE_LIBDL)
+        target_link_libraries(BitchX PRIVATE dl)
+    endif()
+    if(HAVE_LIBSOCKET)
+        target_link_libraries(BitchX PRIVATE socket)
+    endif()
+    if(HAVE_LIBNSL)
+        target_link_libraries(BitchX PRIVATE nsl)
+    endif()
+    if(HAVE_LIBCRYPT)
+        target_link_libraries(BitchX PRIVATE crypt)
+        target_compile_definitions(BitchX PRIVATE HAVE_CRYPT)
+    endif()
+
+    # Math library
+    target_link_libraries(BitchX PRIVATE m)
+
+    # SSL support
+    if(BITCHX_WITH_SSL)
+        target_compile_definitions(BitchX PRIVATE HAVE_SSL)
+        if(OPENSSL_INCLUDE_DIRS)
+            target_include_directories(BitchX PRIVATE ${OPENSSL_INCLUDE_DIRS})
+        endif()
+        target_link_libraries(BitchX PRIVATE ${OPENSSL_LIBRARIES})
+    endif()
+
+    # Plugin support (shared library loading)
+    if(BITCHX_WITH_PLUGINS AND HAVE_LIBDL)
+        target_compile_definitions(BitchX PRIVATE WANT_DLL)
+    endif()
+
+    # Build wserv helper
+    add_executable(wserv source/wserv.c)
+    target_include_directories(wserv PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_BINARY_DIR}/include
+        ${NCURSES_INCLUDE_DIRS}
+    )
+    target_compile_definitions(wserv PRIVATE WTERM_C)
+    target_link_libraries(wserv PRIVATE ${NCURSES_LIBRARIES})
+    if(HAVE_LIBRESOLV)
+        target_link_libraries(wserv PRIVATE resolv)
+    endif()
+    if(HAVE_LIBSOCKET)
+        target_link_libraries(wserv PRIVATE socket)
+    endif()
+    if(HAVE_LIBNSL)
+        target_link_libraries(wserv PRIVATE nsl)
+    endif()
+
+    # Build scr-bx helper
+    add_executable(scr-bx source/scr-bx.c)
+    target_include_directories(scr-bx PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/include
+        ${CMAKE_CURRENT_BINARY_DIR}/include
+        ${NCURSES_INCLUDE_DIRS}
+    )
+    target_compile_definitions(scr-bx PRIVATE STERM_C)
+    target_link_libraries(scr-bx PRIVATE ${NCURSES_LIBRARIES})
+
+    # macOS-specific settings
+    if(APPLE)
+        target_compile_definitions(BitchX PRIVATE BIND_8_COMPAT)
+    endif()
+
+    # Installation rules (Unix FHS)
+    include(GNUInstallDirs)
+    set(BITCHX_LIBDIR "${CMAKE_INSTALL_LIBDIR}/bx" CACHE STRING "BitchX library directory")
+
+    install(TARGETS BitchX DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(TARGETS wserv DESTINATION ${BITCHX_LIBDIR})
+    install(TARGETS scr-bx DESTINATION ${CMAKE_INSTALL_BINDIR})
+    install(DIRECTORY script/ DESTINATION ${BITCHX_LIBDIR}/script)
+    install(DIRECTORY translation/ DESTINATION ${BITCHX_LIBDIR}/translation)
+    install(DIRECTORY bitchx-docs/ DESTINATION ${BITCHX_LIBDIR}/help)
+
 endif()
 
-# Installation rules
+# Installation rules (Windows-specific)
 if(WIN32)
     install(TARGETS BitchX DESTINATION bin)
     if(TARGET WinBitchX)
@@ -280,3 +448,18 @@ if(WIN32)
     install(DIRECTORY translation/ DESTINATION share/BitchX/translation)
     install(DIRECTORY bitchx-docs/ DESTINATION share/BitchX/help)
 endif()
+
+# Summary
+message(STATUS "")
+message(STATUS "BitchX ${PROJECT_VERSION} build configuration:")
+message(STATUS "  Platform:     ${CMAKE_SYSTEM_NAME} ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "  C Compiler:   ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER_VERSION}")
+message(STATUS "  SSL/TLS:      ${BITCHX_WITH_SSL}")
+if(NOT WIN32)
+    message(STATUS "  IPv6:         ${BITCHX_WITH_IPV6}")
+    message(STATUS "  Plugins:      ${BITCHX_WITH_PLUGINS}")
+endif()
+if(WIN32)
+    message(STATUS "  GUI:          ${BITCHX_WITH_GUI}")
+endif()
+message(STATUS "")
