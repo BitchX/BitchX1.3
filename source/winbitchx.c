@@ -1,16 +1,22 @@
-#include <windows.h>
-/*#include <mingw32/process.h>*/
-
-/* Seems to have problems getting these function declarations
- * -- going to try createthread manually this time --
+/*
+ * winbitchx.c - Windows GUI implementation for BitchX IRC Client
+ *
+ * Modernized for Windows 11 (2024):
+ *   - Per-Monitor V2 DPI awareness
+ *   - Dark mode / Mica backdrop support
+ *   - Winsock 2.2 networking
+ *   - Visual Styles (Common Controls 6.0)
+ *   - UTF-8 process code page
+ *   - Rounded window corners
  */
-/*unsigned long
-	_beginthread	(void (*pfuncStart)(void *),
-			 unsigned unStackSize, void* pArgList);
-			 void	_endthread	();*/
 
+#include "win32_compat.h"
 
 #include "input.h"
+
+/* DPI scaling state for the main window */
+static UINT g_currentDPI = 96;
+static BOOL g_darkModeEnabled = FALSE;
 #define         WIDTH   10
 
 char *lastclicklinedata = NULL;
@@ -312,6 +318,42 @@ LRESULT CALLBACK AfxWndProc(HWND handle,UINT mess,WPARAM parm1,LPARAM parm2)
 		EndPaint(handle, &ps);
 		break;
 #endif
+
+	case WM_DPICHANGED:
+		/* Per-Monitor V2 DPI change handling (Windows 10 1703+ / Win11)
+		 * When the window is moved to a monitor with different DPI,
+		 * Windows sends this message with the suggested new size.
+		 */
+		{
+			RECT *pRect = (RECT *)parm2;
+			g_currentDPI = HIWORD(parm1);
+
+			SetWindowPos(handle, NULL,
+				pRect->left, pRect->top,
+				pRect->right - pRect->left,
+				pRect->bottom - pRect->top,
+				SWP_NOZORDER | SWP_NOACTIVATE);
+
+			/* Recreate font at new DPI */
+			ChangeFont();
+			InvalidateRect(handle, NULL, TRUE);
+		}
+		return 0;
+
+	case WM_SETTINGCHANGE:
+		/* Respond to system theme changes (dark/light mode toggle) */
+		if (parm2 && lstrcmpW((LPCWSTR)parm2, L"ImmersiveColorSet") == 0) {
+			BOOL wasDark = g_darkModeEnabled;
+			g_darkModeEnabled = bx_is_dark_mode_enabled();
+			if (wasDark != g_darkModeEnabled) {
+				bx_enable_dark_mode(handle, g_darkModeEnabled);
+				/* Reinitialize colors for new theme */
+				InitDisp();
+				InvalidateRect(handle, NULL, TRUE);
+			}
+		}
+		return 0;
+
 	default:
 		return DefWindowProc(handle,mess,parm1,parm2);
 	}
@@ -325,32 +367,64 @@ void InitDisp()
 
 	TmpDC = GetDC(NULL);
 
-	ANSIColor[IdBack ]   = RGB(  0,  0,  0);
-	ANSIColor[IdRed  ]     = RGB(255,  0,  0);
-	ANSIColor[IdGreen]     = RGB(  0,255,  0);
-	ANSIColor[IdYellow]    = RGB(255,255,  0);
-	ANSIColor[IdBlue]      = RGB(  0,  0,255);
-	ANSIColor[IdMagenta]   = RGB(255,  0,255);
-	ANSIColor[IdCyan]      = RGB(  0,255,255);
-	ANSIColor[IdFore ]   = RGB(192,192,192);
+	/* Detect system dark mode preference */
+	g_darkModeEnabled = bx_is_dark_mode_enabled();
 
-	ANSIColor[IdBack+8]    = RGB(127,127,127);
-	ANSIColor[IdRed+8]     = RGB(127,  0,  0);
-	ANSIColor[IdGreen+8]   = RGB(  0,127,  0);
-	ANSIColor[IdYellow+8]	 = RGB(127,127,  0);
-	ANSIColor[IdBlue+8]    = RGB(  0,  0,127);
-	ANSIColor[IdMagenta+8] = RGB(127,  0,127);
-	ANSIColor[IdCyan+8]    = RGB(  0,128,128);
-	ANSIColor[IdFore+8]    = RGB(192,192,192);
+	if (g_darkModeEnabled) {
+		/* Dark mode color scheme */
+		ANSIColor[IdBack ]     = RGB( 30, 30, 30);
+		ANSIColor[IdRed  ]     = RGB(255, 85, 85);
+		ANSIColor[IdGreen]     = RGB( 85,255, 85);
+		ANSIColor[IdYellow]    = RGB(255,255, 85);
+		ANSIColor[IdBlue]      = RGB( 85, 85,255);
+		ANSIColor[IdMagenta]   = RGB(255, 85,255);
+		ANSIColor[IdCyan]      = RGB( 85,255,255);
+		ANSIColor[IdFore ]     = RGB(204,204,204);
+
+		ANSIColor[IdBack+8]    = RGB(128,128,128);
+		ANSIColor[IdRed+8]     = RGB(170, 60, 60);
+		ANSIColor[IdGreen+8]   = RGB( 60,170, 60);
+		ANSIColor[IdYellow+8]  = RGB(170,170, 60);
+		ANSIColor[IdBlue+8]    = RGB( 60, 60,170);
+		ANSIColor[IdMagenta+8] = RGB(170, 60,170);
+		ANSIColor[IdCyan+8]    = RGB( 60,170,170);
+		ANSIColor[IdFore+8]    = RGB(204,204,204);
+	} else {
+		/* Classic light mode colors */
+		ANSIColor[IdBack ]     = RGB(  0,  0,  0);
+		ANSIColor[IdRed  ]     = RGB(255,  0,  0);
+		ANSIColor[IdGreen]     = RGB(  0,255,  0);
+		ANSIColor[IdYellow]    = RGB(255,255,  0);
+		ANSIColor[IdBlue]      = RGB(  0,  0,255);
+		ANSIColor[IdMagenta]   = RGB(255,  0,255);
+		ANSIColor[IdCyan]      = RGB(  0,255,255);
+		ANSIColor[IdFore ]     = RGB(192,192,192);
+
+		ANSIColor[IdBack+8]    = RGB(127,127,127);
+		ANSIColor[IdRed+8]     = RGB(127,  0,  0);
+		ANSIColor[IdGreen+8]   = RGB(  0,127,  0);
+		ANSIColor[IdYellow+8]  = RGB(127,127,  0);
+		ANSIColor[IdBlue+8]    = RGB(  0,  0,127);
+		ANSIColor[IdMagenta+8] = RGB(127,  0,127);
+		ANSIColor[IdCyan+8]    = RGB(  0,128,128);
+		ANSIColor[IdFore+8]    = RGB(192,192,192);
+	}
 
 	for (i = IdBack ; i <= IdFore+8 ; i++)
 		ANSIColor[i] = GetNearestColor(TmpDC, ANSIColor[i]);
 
-	/* background paintbrush */
-	Background = CreateSolidBrush(RGB(0,0,0));
-	/* CRT width & height */
-	CRTWidth = GetDeviceCaps(TmpDC,HORZRES);
-	CRTHeight = GetDeviceCaps(TmpDC,VERTRES);
+	/* background paintbrush - use dark background if dark mode */
+	if (g_darkModeEnabled)
+		Background = CreateSolidBrush(RGB(30, 30, 30));
+	else
+		Background = CreateSolidBrush(RGB(0, 0, 0));
+
+	/* CRT width & height - DPI-aware via GetSystemMetrics */
+	CRTWidth = GetSystemMetrics(SM_CXSCREEN);
+	CRTHeight = GetSystemMetrics(SM_CYSCREEN);
+
+	/* Get initial system DPI */
+	g_currentDPI = GetDpiForSystem();
 
 	ReleaseDC(NULL, TmpDC);
 }
@@ -3121,68 +3195,98 @@ void ShowStatusLine(int Show)
 
 void winbx_init(void)
 {
-	WNDCLASS wc;
-	DWORD Style;
+	WNDCLASSEX wc;
+	DWORD Style, ExStyle;
 	MSG msg;
+	int winX, winY, winW, winH;
+
+	/* Initialize Winsock 2.2 for modern networking */
+	if (bx_winsock_init() != 0) {
+		MessageBox(NULL, "Failed to initialize Winsock 2.2",
+			   "BitchX Error", MB_OK | MB_ICONERROR);
+		return;
+	}
+
+	/* Enable visual styles (Common Controls 6.0) */
+	{
+		INITCOMMONCONTROLSEX icc;
+		icc.dwSize = sizeof(icc);
+		icc.dwICC = ICC_WIN95_CLASSES | ICC_STANDARD_CLASSES;
+		InitCommonControlsEx(&icc);
+	}
 
 	MsgDlgHelp = RegisterWindowMessage(HELPMSGSTRING);
-
-#if 0
-	InitKeyboard();
-	SetKeyMap();
-#endif
 
 	/* Initialize scroll buffer */
 	InitBuffer();
 
 	InitDisp();
 
-	Style = WS_VSCROLL | WS_HSCROLL |
-		WS_BORDER | WS_THICKFRAME |
-		WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX;
+	/* DPI-scaled window dimensions */
+	winW = bx_scale_for_dpi(700, g_currentDPI);
+	winH = bx_scale_for_dpi(500, g_currentDPI);
+	winX = (CRTWidth - winW) / 2;
+	winY = (CRTHeight - winH) / 2;
 
+	Style = WS_OVERLAPPEDWINDOW | WS_VSCROLL | WS_HSCROLL;
+	ExStyle = WS_EX_APPWINDOW;
+
+	/* Register window class with WNDCLASSEX for modern Windows */
+	memset(&wc, 0, sizeof(wc));
+	wc.cbSize = sizeof(WNDCLASSEX);
 	wc.style = CS_DBLCLKS | CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = AfxWndProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
-	/*wc.hInstance = AfxGetInstanceHandle();*/
-	/*wc.hIcon = LoadIcon(wc.hInstance, MAKEINTRESOURCE(IDI_VT));*/
-	wc.hCursor = LoadCursor(NULL,IDC_IBEAM);
+	wc.hInstance = GetModuleHandle(NULL);
+	wc.hIcon = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hIconSm = LoadIcon(NULL, IDI_APPLICATION);
+	wc.hCursor = LoadCursor(NULL, IDC_IBEAM);
 	wc.hbrBackground = NULL;
 	wc.lpszMenuName = NULL;
-	wc.lpszClassName = "VTWin";
+	wc.lpszClassName = "BitchXVTWin";
 
-	RegisterClass(&wc);
+	RegisterClassEx(&wc);
 
-	HVTWin = CreateWindow("VTWin", _VERSION_, Style, 100, 100, 300, 400, NULL, NULL, &wc.hInstance, NULL);
+	HVTWin = CreateWindowEx(ExStyle,
+		"BitchXVTWin", _VERSION_, Style,
+		winX, winY, winW, winH,
+		NULL, NULL, wc.hInstance, NULL);
 
 	if (HVTWin == NULL) return;
 
-	// set the small icon
-	/* PostMessage(HVTWin,WM_SETICON,0,
-	 (LPARAM)LoadImage(AfxGetInstanceHandle(),
-	 MAKEINTRESOURCE(IDI_VT),
-	 IMAGE_ICON,16,16,0));*/
+	/* Apply Windows 11 visual enhancements */
+	/* Dark mode title bar */
+	bx_enable_dark_mode(HVTWin, g_darkModeEnabled);
+
+	/* Rounded corners (Windows 11) */
+	bx_set_window_corners(HVTWin, DWMWCP_ROUND);
+
+	/* Get actual DPI for this window's monitor */
+	g_currentDPI = bx_get_dpi_for_window(HVTWin);
 
 	/* Reset Terminal */
 	ResetTerminal();
 
 	ChangeFont();
 
-	BuffChangeWinSize(NumOfColumns,NumOfLines);
+	BuffChangeWinSize(NumOfColumns, NumOfLines);
 
 	ShowWindow(HVTWin, SW_SHOWDEFAULT);
+	UpdateWindow(HVTWin);
 	ChangeCaret();
 
 	current_term->TI_cols = co = 81;
 	current_term->TI_lines = li = 25;
+}
 
-#if 0
-	while (GetMessage(&msg,NULL,0,0)) {
-		TranslateMessage(&msg);
-		DispatchMessage(&msg);
-	}
-#endif
+/*
+ * Cleanup function for Windows resources
+ * Called on application exit
+ */
+void winbx_cleanup(void)
+{
+	bx_winsock_cleanup();
 }
 
 void gui_init(void)

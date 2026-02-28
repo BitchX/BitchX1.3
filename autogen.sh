@@ -1,160 +1,108 @@
 #!/bin/sh
 # Run this to generate all the initial makefiles, etc.
-# Modified for BitchX by David Walluck <david@bitchx.org>
-# fix aclocal/automake checks; fix conf_flags check
+# Modified for BitchX - modernized for current autotools (2024)
+#
+# Prerequisites:
+#   autoconf >= 2.69
+#   pkg-config (for OpenSSL and ncurses detection)
+#
+# Usage:
+#   ./autogen.sh              # configure with defaults
+#   ./autogen.sh --enable-ipv6 --with-ssl  # pass args to configure
+#   NOCONFIGURE=1 ./autogen.sh  # only regenerate, don't configure
 
-srcdir=`dirname $0`
+srcdir=$(dirname "$0")
+test -z "$srcdir" && srcdir=.
 PKG_NAME="BitchX"
-conf_flags=""
 
 DIE=0
 
-(autoconf --version) < /dev/null > /dev/null 2>&1 || {
-  echo
-  echo "**Error**: You must have \`autoconf' installed to compile $PKG_NAME."
-  echo "Download the appropriate package for your distribution,"
-  echo "or get the source tarball at ftp://ftp.gnu.org/pub/gnu/"
-  DIE=1
-}
-
-(grep "^AC_PROG_LIBTOOL" $srcdir/configure.in >/dev/null) && {
-  (libtool --version) < /dev/null > /dev/null 2>&1 || {
-    echo
-    echo "**Error**: You must have \`libtool' installed to compile $PKG_NAME."
-    echo "Get ftp://ftp.gnu.org/pub/gnu/libtool-1.2d.tar.gz"
-    echo "(or a newer version if it is available)"
-    DIE=1
-  }
-}
-
-grep "^AM_GNU_GETTEXT" $srcdir/configure.in >/dev/null && {
-  grep "sed.*POTFILES" $srcdir/configure.in >/dev/null || \
-  (gettext --version) < /dev/null > /dev/null 2>&1 || {
-    echo
-    echo "**Error**: You must have \`gettext' installed to compile $PKG_NAME."
-    echo "Get ftp://alpha.gnu.org/gnu/gettext-0.10.35.tar.gz"
-    echo "(or a newer version if it is available)"
-    DIE=1
-  }
-}
-
-grep "^AM_GNOME_GETTEXT" $srcdir/configure.in >/dev/null && {
-  grep "sed.*POTFILES" $srcdir/configure.in >/dev/null || \
-  (gettext --version) < /dev/null > /dev/null 2>&1 || {
-    echo
-    echo "**Error**: You must have \`gettext' installed to compile $PKG_NAME."
-    echo "Get ftp://alpha.gnu.org/gnu/gettext-0.10.35.tar.gz"
-    echo "(or a newer version if it is available)"
-    DIE=1
-  }
-}
-
-if test -z `grep "^AM_CONFIG_HEADER" $srcdir/configure.in >/dev/null`; then
-  NO_AUTOMAKE=yes
+# Prefer configure.ac over configure.in (modern convention)
+if test -f "$srcdir/configure.ac"; then
+  CONFIGURE_INPUT="configure.ac"
+elif test -f "$srcdir/configure.in"; then
+  CONFIGURE_INPUT="configure.in"
+else
+  echo "**Error**: No configure.ac or configure.in found in $srcdir"
+  exit 1
 fi
+echo "Using $CONFIGURE_INPUT"
 
-# we aren't necessarily using automake. check that we are - djw
-(test -n "$NO_AUTOMAKE") ||
-(grep "^AM_CONFIG_HEADER" $srcdir/configure.in >/dev/null) && {
-  (automake --version) < /dev/null > /dev/null 2>&1 || {
+# Check for autoconf
+(autoconf --version) </dev/null >/dev/null 2>&1 || {
   echo
-  echo "**Error**: You must have \`automake' installed."
-  echo "Get ftp://ftp.gnu.org/pub/gnu/automake-1.3.tar.gz"
-  echo "(or a newer version if it is available)"
-  DIE=1
-  NO_AUTOMAKE=yes
-  }
-}
-
-# if no automake, don't bother testing for aclocal - djw
-(test -n "$NO_AUTOMAKE") ||
-  (aclocal --version) < /dev/null > /dev/null 2>&1 || {
-  echo
-  echo "**Error**: Missing \`aclocal'.  The version of \`automake'"
-  echo "installed doesn't appear recent enough."
-  echo "Get ftp://ftp.gnu.org/pub/gnu/automake-1.3.tar.gz"
-  echo "(or a newer version if it is available)"
+  echo "**Error**: You must have 'autoconf' installed to compile $PKG_NAME."
+  echo "Install: apt install autoconf (Debian/Ubuntu)"
+  echo "         dnf install autoconf (Fedora/RHEL)"
+  echo "         brew install autoconf (macOS)"
   DIE=1
 }
 
+# Check for autoheader (part of autoconf)
+(autoheader --version) </dev/null >/dev/null 2>&1 || {
+  echo
+  echo "**Error**: 'autoheader' not found (should be part of autoconf)."
+  DIE=1
+}
+
+# Check for pkg-config (optional but recommended)
+(pkg-config --version) </dev/null >/dev/null 2>&1 || {
+  echo
+  echo "**Warning**: 'pkg-config' not found. SSL and ncurses detection"
+  echo "will fall back to manual library checks."
+  echo "Install: apt install pkg-config (Debian/Ubuntu)"
+  echo "         dnf install pkgconf (Fedora/RHEL)"
+  echo "         brew install pkg-config (macOS)"
+}
 
 if test "$DIE" -eq 1; then
   exit 1
 fi
 
-if test -z "conf_flags" && test -z "$@"; then
-  echo "**Warning**: I am going to run \`configure' with no arguments."
-  echo "If you wish to pass any to it, please specify them on the"
-  echo \`$0\'" command line."
+if test -z "$NOCONFIGURE" && test $# -eq 0; then
+  echo "**Note**: Running 'configure' with default arguments."
+  echo "Pass --help to see available options, or specify them on the"
+  echo "'$0' command line."
   echo
 fi
 
-case $CC in
-xlc )
-  am_opt=--include-deps;;
-esac
+echo "Processing $srcdir..."
 
-for coin in `find $srcdir -name configure.in -print`
-do
-  dr=`dirname $coin`
-  if test -f $dr/NO-AUTO-GEN; then
-    echo skipping $dr -- flagged as no auto-gen
-  else
-    echo processing $dr
-    macrodirs=`sed -n -e 's,AM_ACLOCAL_INCLUDE(\(.*\)),\1,gp' < $coin`
-    ( cd $dr
-      aclocalinclude="$ACLOCAL_FLAGS"
-      for k in $macrodirs; do
-  	if test -d $k; then
-          aclocalinclude="$aclocalinclude -I $k"
-  	##else
-	##  echo "**Warning**: No such directory \`$k'.  Ignored."
-        fi
-      done
-      if grep "^AM_GNU_GETTEXT" configure.in >/dev/null; then
-	if grep "sed.*POTFILES" configure.in >/dev/null; then
-	  : do nothing -- we still have an old unmodified configure.in
-	else
-	  echo "Creating $dr/aclocal.m4 ..."
-	  test -r $dr/aclocal.m4 || touch $dr/aclocal.m4
-	  echo "Running gettextize...  Ignore non-fatal messages."
-	  echo "no" | gettextize --force --copy
-	  echo "Making $dr/aclocal.m4 writable ..."
-	  test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
-        fi
-      fi
-      if grep "^AM_GNOME_GETTEXT" configure.in >/dev/null; then
-	echo "Creating $dr/aclocal.m4 ..."
-	test -r $dr/aclocal.m4 || touch $dr/aclocal.m4
-	echo "Running gettextize...  Ignore non-fatal messages."
-	echo "no" | gettextize --force --copy
-	echo "Making $dr/aclocal.m4 writable ..."
-	test -r $dr/aclocal.m4 && chmod u+w $dr/aclocal.m4
-      fi
-      if grep "^AC_PROG_LIBTOOL" configure.in >/dev/null; then
-	echo "Running libtoolize..."
-	libtoolize --force --copy
-      fi
-      if test -z "$NO_AUTOMAKE"; then
-        echo "Running aclocal $aclocalinclude ..."
-        aclocal $aclocalinclude
-      fi
-      echo "Running autoheader ..."
-      autoheader
-      if test -z "$NO_AUTOMAKE"; then
-        echo "Running automake --gnu $am_opt ..."
-        automake --add-missing --gnu $am_opt
-      fi
-      echo "Running autoconf ..."
-      autoconf
-    )
-  fi
-done
+cd "$srcdir" || exit 1
 
-if test x"$NOCONFIGURE" = x; then
-  rm -f $srcdir/config.cache
-  echo Running $srcdir/configure $conf_flags "$@" ...
-  $srcdir/configure $conf_flags "$@"
+# Include macros directory if it exists
+aclocalinclude="$ACLOCAL_FLAGS"
+if test -d macros; then
+  aclocalinclude="$aclocalinclude -I macros"
+fi
+
+# Run aclocal if available (needed for pkg-config macros)
+if (aclocal --version) </dev/null >/dev/null 2>&1; then
+  echo "Running aclocal $aclocalinclude ..."
+  aclocal $aclocalinclude 2>/dev/null || true
+fi
+
+# Run autoheader to generate include/defs.h.in
+echo "Running autoheader..."
+autoheader || {
+  echo "**Warning**: autoheader failed (non-fatal, continuing)"
+}
+
+# Run autoconf to generate configure script
+echo "Running autoconf..."
+autoconf || {
+  echo "**Error**: autoconf failed."
+  exit 1
+}
+
+cd "$OLDPWD" || exit 1
+
+# Run configure unless NOCONFIGURE is set
+if test -z "$NOCONFIGURE"; then
+  rm -f "$srcdir/config.cache"
+  echo "Running $srcdir/configure $* ..."
+  "$srcdir/configure" "$@"
 else
-  echo Skipping configure process.
+  echo "Skipping configure (NOCONFIGURE is set)."
+  echo "Run './configure' manually when ready."
 fi

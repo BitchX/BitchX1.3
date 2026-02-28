@@ -1,0 +1,15 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
+  "name": "bitchx",
+  "version": "1.3.0",
+  "description": "BitchX IRC Client",
+  "homepage": "https://github.com/BitchX/BitchX",
+  "license": "BSD-3-Clause",
+  "supports": "windows",
+  "dependencies": [
+    {
+      "name": "openssl",
+      "platform": "windows"
+    }
+  ]
+}

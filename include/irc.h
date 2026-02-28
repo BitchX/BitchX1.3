@@ -37,7 +37,9 @@ extern char	thing_star[4];
 #include <sys/types.h>
 
 #include <signal.h>
+#ifndef WINNT
 #include <sys/param.h>
+#endif
 
 #ifdef __EMX__
 # ifdef __EMXPM__
@@ -51,7 +53,7 @@ extern char	thing_star[4];
 #define INCL_VIO
 #include <os2.h>
 #elif defined(WINNT)
-#  include <windows.h>
+#  include "win32_compat.h"
 #  ifdef SOUND
 #    include <mmsystem.h>
 #  endif
@@ -60,12 +62,15 @@ extern char	thing_star[4];
 #  include <gtk/gtkmenu.h>
 #endif
 
+#ifndef WINNT
+/* Unix/POSIX socket headers - on Windows these come from win32_compat.h */
 #include <sys/socket.h>
 #include <netinet/in.h>
 
 #ifdef HAVE_ARPA_INET_H
 #include <arpa/inet.h>
 #endif
+#endif /* !WINNT */
 
 #ifdef TIME_WITH_SYS_TIME
 #include <sys/time.h>
@@ -87,7 +92,13 @@ extern char	thing_star[4];
 #endif
 
 #include <stdarg.h>
+#ifdef WINNT
+#include <io.h>
+#include <process.h>
+#include <direct.h>
+#else
 #include <unistd.h>
+#endif
 #ifdef __EMX__
 #include <sys/select.h>
 #endif

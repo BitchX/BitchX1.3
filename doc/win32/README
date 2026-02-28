@@ -1,10 +1,169 @@
-Last Updated: Tue Apr  8 16:12:40 EDT 2003
+BitchX for Windows 11
+=====================
+
+Last Updated: 2024
+
+This document describes how to build and run BitchX on Windows 10/11
+using modern toolchains (Visual Studio 2022, CMake, vcpkg).
 
 
-This directory contains info about the WIN32 version of
-BitchX.  Not too many people use the WIN32 version, so this
-section of the docs is rather bare.
+Prerequisites
+-------------
 
-If you have docs for the WIN32 version of BitchX you would like
-included here, send them to powuh in #BitchX on EFnet.
+1. Visual Studio 2022 (Community or higher)
+   - Install the "Desktop development with C++" workload
+   - Ensure the Windows 11 SDK (10.0.22621.0+) component is selected
+   - Ensure CMake tools for Windows are included
 
+2. vcpkg (for dependency management)
+   - git clone https://github.com/microsoft/vcpkg.git
+   - cd vcpkg && bootstrap-vcpkg.bat
+   - Set environment variable: VCPKG_ROOT=C:\path\to\vcpkg
+
+3. Git for Windows (for cloning the source)
+
+
+Building with CMake (Recommended)
+----------------------------------
+
+Method 1: Command Line (Developer Command Prompt)
+
+  Open "x64 Native Tools Command Prompt for VS 2022" and run:
+
+    cd BitchX1.3
+    cmake --preset x64-release
+    cmake --build --preset x64-release
+
+  The binaries will be in build/x64-release/
+
+  For ARM64 Windows 11 devices:
+
+    cmake --preset arm64-release
+    cmake --build --preset arm64-release
+
+Method 2: Visual Studio 2022 IDE
+
+  1. Open Visual Studio 2022
+  2. Choose "Open a local folder" and select the BitchX1.3 directory
+  3. VS will detect CMakePresets.json and configure automatically
+  4. Select the desired preset (x64-debug, x64-release, etc.)
+  5. Build -> Build All
+
+Method 3: VSCode with CMake Tools Extension
+
+  1. Install the "CMake Tools" extension in VSCode
+  2. Open the BitchX1.3 folder
+  3. Select a configure preset from the status bar
+  4. Click Build
+
+
+Build Options
+-------------
+
+The following CMake options can be toggled:
+
+  BITCHX_WITH_SSL       Enable SSL/TLS support (default: ON)
+  BITCHX_WITH_GUI       Build Windows GUI version (default: ON)
+  BITCHX_WITH_PLUGINS   Enable plugin/DLL support (default: ON)
+  BITCHX_WITH_IDENTD    Enable built-in IdentD server (default: ON)
+  BITCHX_WITH_SOUND     Enable sound support (default: OFF)
+
+Example:
+  cmake --preset x64-release -DBITCHX_WITH_SOUND=ON
+
+
+Build Outputs
+-------------
+
+Two executables are produced:
+
+  WinBitchX.exe  - Windows GUI version (recommended for Windows 11)
+  BitchX.exe     - Console version (for Windows Terminal / PowerShell)
+
+
+Windows 11 Features
+--------------------
+
+The modernized build takes advantage of these Windows 11 features:
+
+- Per-Monitor V2 DPI Awareness
+  Sharp rendering on mixed-DPI multi-monitor setups.
+  The window automatically rescales when moved between monitors.
+
+- Dark Mode Support
+  Automatically detects the system dark/light theme preference.
+  Title bar and colors adapt to the selected theme.
+  Responds to real-time theme changes.
+
+- Visual Styles (Common Controls 6.0)
+  Modern control appearance matching the Windows 11 design language.
+
+- Rounded Window Corners
+  Uses the Windows 11 rounded corner style.
+
+- UTF-8 Process Code Page
+  Native UTF-8 text handling without explicit codepage conversions.
+
+- Segment Heap
+  Uses the modern Windows heap allocator for better performance.
+
+- Long Path Support
+  Supports paths longer than MAX_PATH (260 characters).
+
+- Winsock 2.2
+  Modern networking stack with full IPv6 support.
+
+- Windows 11 on ARM
+  Native ARM64 build support for Surface Pro X and similar devices.
+
+
+SSL/TLS Support
+---------------
+
+SSL is managed through vcpkg. If VCPKG_ROOT is set correctly, OpenSSL
+will be automatically downloaded and built as part of the CMake configure
+step.
+
+To connect to IRC servers with SSL:
+  /server -ssl irc.libera.chat 6697
+
+
+Directory Structure
+-------------------
+
+  win32/bitchx.manifest  - Application manifest (DPI, themes, compat)
+  win32/bitchx.rc        - Windows resource file (version info)
+  include/win32_compat.h - Windows compatibility layer header
+  CMakeLists.txt         - CMake build system
+  CMakePresets.json      - Build presets for VS2022
+  vcpkg.json             - Dependency manifest
+
+
+Troubleshooting
+---------------
+
+Q: Build fails with "cannot find openssl"
+A: Ensure VCPKG_ROOT environment variable is set and vcpkg is bootstrapped.
+   Run: vcpkg install openssl:x64-windows
+
+Q: Window appears blurry on high-DPI displays
+A: Ensure you're using the CMake build (not an older MinGW build).
+   The manifest enables Per-Monitor V2 DPI awareness.
+
+Q: Dark mode title bar doesn't work
+A: This requires Windows 10 20H1 (build 19041) or later.
+   Fully supported on Windows 11.
+
+Q: ARM64 build fails
+A: Install the ARM64 build tools in Visual Studio Installer
+   (Individual Components -> MSVC ARM64 build tools).
+
+
+Legacy Build Methods
+--------------------
+
+The original Cygwin/MinGW build path is still supported via the
+autotools build system (./configure && make). See the top-level
+INSTALL file for details. However, the CMake build is recommended
+for Windows 11 as it provides proper DPI awareness, dark mode,
+and modern Windows SDK integration.
