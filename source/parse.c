@@ -952,7 +952,7 @@ static	void p_authenticate(char *from, char **ArgList)
 		if (my_base64_encode(buf, strlen(nick) * 2 + strlen(pass) + 2, &output) != -1)
 		{
 			my_send_to_server(from_server, "AUTHENTICATE %s", output);
-// XXX			new_free(&output);
+/* fixed: was leaking */
 			free(output);
 		}
 		else
