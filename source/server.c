@@ -1360,7 +1360,7 @@ int finalize_server_connect(int refnum, int c_server, int my_from_server)
 
 		if(!server_list[refnum].ctx)
 		{
-			server_list[refnum].ctx = SSL_CTX_new (SSLv23_client_method());
+			server_list[refnum].ctx = SSL_CTX_new (TLS_client_method());
 			CHK_NULL(server_list[refnum].ctx);
 			server_list[refnum].ssl_fd = SSL_new (server_list[refnum].ctx);
 			CHK_NULL(server_list[refnum].ssl_fd);
