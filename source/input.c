@@ -212,20 +212,21 @@ extern void	BX_update_input (int update)
 		if (prompt)
 		{
 			char *loc;
-			int i;
 			extern int in_chelp;
 
-			loc = alloca(strlen(prompt)*2 + 200);
-			{
-				int r, w;
-				for (r = 0, w = 0; prompt[r]; r++)
-				{
-					if (prompt[r] == '$')
-						loc[w++] = '$';
-					loc[w++] = prompt[r];
-				}
-				loc[w] = 0;
-			}
+			/*
+			 * This used to have a "$"-doubling loop here, but its
+			 * read/write index was shared, which for any embedded
+			 * "$" not at the very end of the string desynced the
+			 * copy back to a plain 1:1 passthrough (the doubling
+			 * never actually took effect) -- and for a prompt
+			 * ending in "$" it walked off the end of the buffer
+			 * entirely.  Callers (e.g. $(...)-style indirection in
+			 * input_prompt) rely on the passthrough behavior, so
+			 * keep that and just make it memory-safe.
+			 */
+			loc = alloca(strlen(prompt) + 1);
+			strcpy(loc, prompt);
 			in_chelp++;
 			prompt = convert_output_format(loc, NULL, NULL);
 			in_chelp--;
