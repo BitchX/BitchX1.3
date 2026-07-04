@@ -146,9 +146,9 @@ extern	void BX_my_encrypt (char *str, int len, char *key)
 	char	mix,
 		tmp;
 
-	if (!key)
+	if (!key || !*key)
 		return;
-		
+
 	key_len = strlen(key);
 	key_pos = 0;
 	mix = 0;
@@ -170,9 +170,9 @@ extern	void BX_my_decrypt(char *str, int len, char *key)
 	char	mix,
 		tmp;
 
-	if (!key)
+	if (!key || !*key)
 		return;
-		
+
 	key_len = strlen(key);
 	key_pos = 0;
 	/*    mix = key[key_len-1]; */

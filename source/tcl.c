@@ -626,7 +626,7 @@ char buffer[BIG_BUFFER_SIZE+1];
 char *uh, *h;
 	
 	BADARGS(2, 2, " nick!user@host");
-	strcpy(buffer, argv[1]);
+	strmcpy(buffer, argv[1], BIG_BUFFER_SIZE);
 	if (!(uh = strchr(buffer, '!')) || !(h = strchr(buffer, '@')))
 		return TCL_ERROR;
 	*uh++ = '\0';

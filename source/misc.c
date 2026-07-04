@@ -165,19 +165,19 @@ BUILT_IN_COMMAND(do_uptime)
 	put_it("%s",convert_output_format("%G| %cTotal Users on Shitlist: %K[%R$0%K]","%d",shit_count));
 
 #else
-	put_it("%s",convert_output_format("%GÚÄ[ %WBitchX%gÄ%wClient%gÄ%RStatistics %G]ÄÄÄÄ---%gÄ--ÄÄ%K-%gÄÄÄÄÄ--%GÄ--ÄÄ%K-%gÄÄÄÄÄÄÄ--- %K--%g  -",NULL));
+	put_it("%s",convert_output_format("%Gï¿½ï¿½[ %WBitchX%gï¿½%wClient%gï¿½%RStatistics %G]ï¿½ï¿½ï¿½ï¿½---%gï¿½--ï¿½ï¿½%K-%gï¿½ï¿½ï¿½ï¿½ï¿½--%Gï¿½--ï¿½ï¿½%K-%gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½--- %K--%g  -",NULL));
 	put_it("%s",convert_output_format("%G| %CClient Version: %W$0 $1","%s %s", irc_version, internal_version));
-	put_it("%s",convert_output_format("%G³ %CClient Running Since %W$0-","%s",my_ctime(start_time)));
+	put_it("%s",convert_output_format("%Gï¿½ %CClient Running Since %W$0-","%s",my_ctime(start_time)));
 	put_it("%s",convert_output_format("%G| %CClient Uptime: %W$0-","%s",convert_time(now-start_time)));
-	put_it("%s",convert_output_format("%G³ %CCurrent UserName: %W$0-","%s", username));
+	put_it("%s",convert_output_format("%Gï¿½ %CCurrent UserName: %W$0-","%s", username));
 	put_it("%s",convert_output_format("%G: %CCurrent RealName: %W$0-","%s", realname));
 	put_it("%s",convert_output_format("%G. %CLast Recv Message: %W$0-","%s",last_msg[0].last_msg?last_msg[0].last_msg:"None"));
 	put_it("%s",convert_output_format("%G: %CLast Recv Notice: %W$0-","%s",last_notice[0].last_msg?last_notice[0].last_msg:"None"));
 	put_it("%s",convert_output_format("%G. %CLast Sent Msg: %W$0-","%s",last_sent_msg[0].last_msg?last_sent_msg[0].last_msg:"None"));
 	put_it("%s",convert_output_format("%G: %CLast Sent Notice: %W$0-","%s",last_sent_notice[0].last_msg?last_sent_notice[0].last_msg:"None"));
-	put_it("%s",convert_output_format("%G³ %CLast Channel invited to: %R$0-","%s",invite_channel?invite_channel:"None"));
+	put_it("%s",convert_output_format("%Gï¿½ %CLast Channel invited to: %R$0-","%s",invite_channel?invite_channel:"None"));
 	put_it("%s",convert_output_format("%G| %cTotal Users on Userlist: %K[%R$0%K]","%d",user_count));
-	put_it("%s",convert_output_format("%G³ %cTotal Users on Shitlist: %K[%R$0%K]","%d",shit_count));
+	put_it("%s",convert_output_format("%Gï¿½ %cTotal Users on Shitlist: %K[%R$0%K]","%d",shit_count));
 
 #endif
 }
@@ -979,18 +979,24 @@ char *mircansi(const char *line)
 
 	const char *sptr = line;
 	char *dptr = newline1;
+	/* Reserve headroom for the longest single sequence we may append
+	 * (fg + bg escape, ~12 bytes) plus the terminating NUL, so a hostile
+	 * flood of ^Cnn,nn codes cannot overrun the fixed newline1 buffer. */
+	char *dend = newline1 + BIG_BUFFER_SIZE - 16;
 	unsigned code;
-	
+
 	if (!*line)
 		return empty_string;
 
 	while (*sptr)
 	{
+		if (dptr >= dend)
+			break;
 		if (*sptr == '\x03')
 		{
 			sptr++;
 
-			if (isdigit((unsigned char)*sptr)) 
+			if (isdigit((unsigned char)*sptr))
 			{
 				/* ^C followed by digit*/
 				code = *sptr - '0';
@@ -1007,7 +1013,7 @@ char *mircansi(const char *line)
 					dptr++;
 
 				/* Do not consume , if not followed by digit */
-				if (sptr[0] == ',' && isdigit((unsigned char)sptr[1])) 
+				if (sptr[0] == ',' && isdigit((unsigned char)sptr[1]))
 				{
 					code = sptr[1] - '0';
 					sptr += 2;
@@ -1022,7 +1028,7 @@ char *mircansi(const char *line)
 					while (*dptr)
 						dptr++;
 				}
-			} 
+			}
 			else
 			{
 				/* ^C not followed by digit - assume end of color */
@@ -1045,20 +1051,23 @@ char *stripansicodes(const char *line)
 {
 	const char *tstr = line;
 	char *nstr = newline1;
+	char *nend = newline1 + BIG_BUFFER_SIZE;
 	int gotansi = 0;
 
-	while (*tstr) 
+	while (*tstr)
 	{
-		/* Note that we use '\x9b' here, rather than 0x9b, because the 
+		/* Note that we use '\x9b' here, rather than 0x9b, because the
 		 * former will have the correct value whether or not char is
 		 * signed.
 		 */
-		if (*tstr == '\x1b' || *tstr == '\x9b') 
+		if (*tstr == '\x1b' || *tstr == '\x9b')
 			gotansi = 1;
-		if (gotansi && isalpha((unsigned char)*tstr)) 
+		if (gotansi && isalpha((unsigned char)*tstr))
 			gotansi = 0;
-		else if (!gotansi) 
+		else if (!gotansi)
 		{
+			if (nstr >= nend)
+				break;
 			*nstr = *tstr;
 			nstr++;
 		}
@@ -2703,11 +2712,19 @@ static	int	ar_procanswer(struct reslist *rptr, HEADER *hptr, char *buf, char *eo
 		 * the pointer to the right spot.  Some of thse are actually
 		 * useful so its not a good idea to skip past in one big jump.
 		 */
+		/* Bound the fixed RR header (type+class+ttl+rdlength = 10) so a
+		 * truncated/hostile packet cannot read past eob. */
+		if (cp + 10 > eob)
+			return ans;
 		GETSHORT(type, cp);
 		GETSHORT(class, cp);
 		GETLONG(ttl, cp);
 		GETSHORT(dlen, cp);
 		rptr->re_type = type;
+
+		/* rdata must fit inside the packet */
+		if (dlen < 0 || cp + dlen > eob)
+			return ans;
 
 		switch(type)
 		{
@@ -2719,8 +2736,14 @@ static	int	ar_procanswer(struct reslist *rptr, HEADER *hptr, char *buf, char *eo
 				rptr->re_he.h_addrtype=(class == C_IN) ?
 							AF_INET : AF_UNSPEC;
 			memcpy(&dr, cp, dlen);
-			*adr++ = dr;
-			*adr = 0;
+			/* Do not overrun the fixed h_addr_list[MAXADDRS] array on
+			 * a hostile nameserver flooding A records; keep the last
+			 * slot for the NULL terminator. */
+			if (adr < (unsigned int *)&rptr->re_he.h_addr_list[MAXADDRS-1])
+			{
+				*adr++ = dr;
+				*adr = 0;
+			}
 			cp += dlen;
 			len = strlen(ar_hostbuf);
 			if (!rptr->re_he.h_name)
@@ -2745,6 +2768,9 @@ static	int	ar_procanswer(struct reslist *rptr, HEADER *hptr, char *buf, char *eo
 				malloc_strcpy(&rptr->re_he.h_name, ar_hostbuf);
 			else
 			{
+				/* Bound the fixed h_aliases[MAXALIASES] array. */
+				if (alias >= &(rptr->re_he.h_aliases[MAXALIASES-1]))
+					continue;
 				*alias = (char *)new_malloc(len);
 				strcpy(*alias++, ar_hostbuf);
 				*alias = NULL;
@@ -3075,7 +3101,7 @@ struct in_addr temp1;
 		ar_init(ARES_INITLIST|ARES_INITSOCK|ARES_CALLINIT);
 
 	ar_lookup++;
-	if (isdigit((unsigned char)*(host + strlen(host) - 1)))
+	if (*host && isdigit((unsigned char)*(host + strlen(host) - 1)))
 	{
 		ar_seq++;
 		temp1.s_addr = inet_addr(host);
@@ -3441,9 +3467,9 @@ char *str = buffer;
 			break;
 		default:
 		{
-			if ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n'))
+			if (*buffer && ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n')))
 				buffer[strlen(buffer)-1] = 0;
-			if ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n'))
+			if (*buffer && ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n')))
 				buffer[strlen(buffer)-1] = 0;
 			if (*buffer)
 				do_hook(SOCKET_LIST, "%d %s %d %s", s, sock_manager.sockets[s].server, sock_manager.sockets[s].port, buffer);
@@ -3914,7 +3940,19 @@ void userhost_ignore (UserhostItem *stuff, char *nick1, char *args)
                 if ((whowas = check_whowas_nick_buffer(nick1, arg, 0)))
 		{
 			bitchsay("Using WhoWas info for %s of %s ", arg, nick1);
-			user = host; host = strchr(host, '@'); *host++ = 0;
+			if (!whowas->nicklist->host)
+			{
+				say("No match for user %s", nick1);
+				return;
+			}
+			host = LOCAL_COPY(whowas->nicklist->host);
+			user = host; host = strchr(host, '@');
+			if (!host)
+			{
+				say("No match for user %s", nick1);
+				return;
+			}
+			*host++ = 0;
 			nick = whowas->nicklist->nick;
 		}
 		else
@@ -4085,7 +4123,7 @@ BUILT_IN_COMMAND(do_ig)
 				strcpy(ignore_type, "-HOST");
 			else if (command && !my_strnicmp(command, "UNIG", 4))
 				strcpy(ignore_type, "-USER");
-			if (command && toupper(command[strlen(command)-1]) == 'T')
+			if (command && *command && toupper(command[strlen(command)-1]) == 'T')
 				need_time ++;
 		}
 		if (need_time)
@@ -4846,6 +4884,7 @@ int matchmcommand(char *origline,int count)
     char tmpbuf[IRCD_BUFFER_SIZE];
 
 	strncpy(tmpbuf,origline, IRCD_BUFFER_SIZE-1);
+	tmpbuf[IRCD_BUFFER_SIZE-1] = 0;
 	tmpstr=tmpbuf;
 	if (*tmpstr=='*') return(1);
 	while (tmpstr && *tmpstr) 

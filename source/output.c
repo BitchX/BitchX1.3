@@ -203,7 +203,7 @@ int len = 0;
 			len = strlen(thing_ansi);
 		else
 			len = 3;
-		vsnprintf(&(putbuf[len+1]), LARGE_BIG_BUFFER_SIZE, format, args);
+		vsnprintf(&(putbuf[len+1]), LARGE_BIG_BUFFER_SIZE - len, format, args);
 		va_end(args);
 		strcpy(putbuf, thing_ansi?thing_ansi:three_stars);
 		putbuf[len] = ' ';
@@ -228,7 +228,7 @@ int len;
 		va_start (args, format);
 		sprintf(putbuf, "%s \002%s\002: ", thing_ansi?thing_ansi:three_stars, version);
 		len = strlen(putbuf);
-		vsnprintf(&(putbuf[len]), LARGE_BIG_BUFFER_SIZE, format, args);
+		vsnprintf(&(putbuf[len]), LARGE_BIG_BUFFER_SIZE + 1 - len, format, args);
 		va_end(args);
 		if (strip_ansi_in_echo) 
 		{

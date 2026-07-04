@@ -576,6 +576,13 @@ unsigned long hvalue = -1;
 				/* end of current list */
 				*location = &UserListByChannel_Table[0];
 				*size = USERCHAN_HASHSIZE;
+				hvalue = 0;
+			}
+			else if (*size == USERCHAN_HASHSIZE && hvalue >= USERCHAN_HASHSIZE)
+			{
+				*location = NULL;
+				*size = -1;
+				return user_list;
 			}
 			while (((UserList *)((HashEntry *)*location)[hvalue].list) == NULL)
 			{

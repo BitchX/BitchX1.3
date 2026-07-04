@@ -669,9 +669,10 @@ const 	u_char	*ptr = NULL;
 
 			pos_copy = alloca(strlen(buffer) + strlen(cont) + 20);
 			strcpy(pos_copy, buffer+word_break);
-			
-			strcpy (buffer, cont);
-			strcat (buffer, pos_copy);
+
+			/* bound the continued-line refill to buffer capacity */
+			strlcpy((char *)buffer, (char *)cont, sizeof(buffer));
+			strlcat((char *)buffer, (char *)pos_copy, sizeof(buffer));
 			col = pos = strlen(buffer);
 
 			word_break = 0;
@@ -1647,7 +1648,7 @@ extern	Window	*BX_create_additional_screen (void)
 			{
 				opts = LOCAL_COPY(get_string_var(SCREEN_OPTIONS_VAR));
 				*args_ptr++ = "screen";
-				while (opts && *opts)
+				while (opts && *opts && args_ptr < &args[60])
 					*args_ptr++ = new_next_arg(opts, &opts);
 			}
 			else if (screen_type == ST_XTERM)
@@ -1661,12 +1662,12 @@ extern	Window	*BX_create_additional_screen (void)
 				*args_ptr++ = xterm;
 				*args_ptr++ = "-geometry";
 				*args_ptr++ = geom;
-				while (opts && *opts)
+				while (opts && *opts && args_ptr < &args[60])
 					*args_ptr++ = new_next_arg(opts, &opts);
 				if (get_string_var(DEFAULT_FONT_VAR))
 				{
 					opts = LOCAL_COPY(get_string_var(DEFAULT_FONT_VAR));
-					while (opts && *opts)
+					while (opts && *opts && args_ptr < &args[60])
 						*args_ptr++ = new_next_arg(opts, &opts);
 				}
 				*args_ptr++ = "-e";
@@ -1993,6 +1994,17 @@ void BX_xterm_settitle(void)
 		} else
 			snprintf(titlestring, BIG_BUFFER_SIZE, "\033]2;%s:  %s on %s:%s", irc_version, is_server_connected(current_window->server) ?get_server_nickname(current_window->server):nickname,
 					 is_server_connected(current_window->server) ?get_server_itsname(current_window->server):"<not connected>", c);
+		{
+			/* Strip control bytes from the interpolated (server-controlled)
+			 * channel/nick/topic text so a hostile value can't inject
+			 * terminal escape sequences.  Skip the leading "\033]2;" OSC
+			 * introducer, which is our own intended prefix. */
+			unsigned char *p, *q;
+			for (p = q = (unsigned char *)titlestring + 4; *p; p++)
+				if (*p >= 32)
+					*q++ = *p;
+			*q = 0;
+		}
         	tputs_x(titlestring);
 		term_flush();
 	}

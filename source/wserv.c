@@ -73,7 +73,7 @@ int main (int argc, char **argv)
 	 * can grab the size of the tty, and have it changed.
 	 */
 	tmp = ttyname(0);
-	sprintf(stuff, "%s\n", tmp);
+	snprintf(stuff, sizeof(stuff), "%s\n", tmp ? tmp : "");
 	t = write(s, stuff, strlen(stuff));
 	term_init(NULL);
 	printf("t is %d", t);

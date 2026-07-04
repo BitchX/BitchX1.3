@@ -946,7 +946,7 @@ int 	BX_do_hook (int which, char *format, ...)
 			{
 				oldser = currser;
 				currmatch = oldmatch = 0;
-				if (bestmatch)
+				if (bestmatch && hook_num < 2048)
 					hook_array[hook_num++] = bestmatch;
 				bestmatch = NULL;
 			}
@@ -987,7 +987,7 @@ int 	BX_do_hook (int which, char *format, ...)
 		 * Ok. we've walked the list.  If the last hook had a best
 		 * match, use that one too. =)
 		 */
-		if (bestmatch)
+		if (bestmatch && hook_num < 2048)
 			hook_array[hook_num++] = bestmatch;
 	}
 

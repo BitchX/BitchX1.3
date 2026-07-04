@@ -373,7 +373,7 @@ static void do_dns_lookup(DNS_QUEUE *dns)
 	int ip = 0;
  
 	/* If nothing, give back nothing */
-	if (!dns->in)
+	if (!dns->in || !*dns->in)
 		return;
 	if (isdigit(*(dns->in + strlen(dns->in) - 1))) {
 		ip = 1;

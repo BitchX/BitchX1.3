@@ -276,8 +276,20 @@ int count = 0;
 			char *pid, *n_tty, *h_name;
 			pid = alloca(strlen(p)+1);
 			strcpy(pid, p);
-			n_tty = strchr(pid, '.'); *n_tty++ = 0;
-			h_name = strchr(n_tty, '.'); *h_name++ = 0;
+			n_tty = strchr(pid, '.');
+			if (!n_tty)
+			{
+				*ret = 0;
+				continue;
+			}
+			*n_tty++ = 0;
+			h_name = strchr(n_tty, '.');
+			if (!h_name)
+			{
+				*ret = 0;
+				continue;
+			}
+			*h_name++ = 0;
 			if (strcmp(name, pid))
 			{
 				if (strcmp(n_tty, name))
@@ -416,7 +428,7 @@ struct winsize window;
 		_exit(1);
 	}
 
-	strcpy(parm.cookie, get_cookie(name));
+	strncpy(parm.cookie, get_cookie(name), sizeof(parm.cookie) - 1);
 	if (!*parm.cookie)
 		_exit(1);
 	if ((p = strrchr(name, '/')))
@@ -447,8 +459,10 @@ struct winsize window;
 	parm.pid = getpid();
 	parm.pgrp = getpgrp();
 	parm.uid = getuid();
-	strcpy(parm.tty, ttyname(0));
-	strncpy(parm.termid, getenv("TERM"), 80);
+	if (ttyname(0))
+		strncpy(parm.tty, ttyname(0), sizeof(parm.tty) - 1);
+	if (getenv("TERM"))
+		strncpy(parm.termid, getenv("TERM"), 80);
 	if (password) 
 		strncpy(parm.password, password, 60);
 	fprintf(stderr, "attempting to wakeup %s\r\n", find_tty_name(name));
@@ -523,12 +537,14 @@ struct winsize window;
 				if (FD_ISSET(0, &rd_fd))
 				{
 					len = read(0, buffer, sizeof(buffer)-1);
-					write(s, buffer, len);
+					if (len > 0)
+						write(s, buffer, len);
 				}
 				if (FD_ISSET(s, &rd_fd))
 				{
 					len = read(s, buffer, sizeof(buffer)-1);
-					write(1, buffer, len);
+					if (len > 0)
+						write(1, buffer, len);
 				}
 			}
 		}
@@ -640,7 +656,9 @@ int main(int argc, char **argv)
 	dmalloc_debug(0x1df47dfb);
 #endif
 	*socket_path = 0;
-	strcpy(attach_ttyname, ttyname(0));
+	if (!ttyname(0))
+		exit(1);
+	strncpy(attach_ttyname, ttyname(0), sizeof(attach_ttyname) - 1);
 	init_socketpath();
 	parse_args(argc, argv);
         chdir(getenv("HOME"));

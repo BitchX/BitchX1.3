@@ -2895,11 +2895,15 @@ BUILT_IN_FUNCTION(function_jot, input)
         else
                 interval = 1;
 
-        if (interval < 0) 
+        if (interval < 0)
                 interval = -interval;
+        if (interval == 0)
+                interval = 1;
 
 	range = abs(stop - start) + 1;
-	size = range * 10;
+	if (range <= 0 || range > 1000000)
+		range = 1000000;
+	size = (size_t)range * 10;
 	booya = new_malloc(size);
 	size--;
 
@@ -2909,7 +2913,8 @@ BUILT_IN_FUNCTION(function_jot, input)
 		for (counter = start + interval; counter <= stop; counter += interval)
 		{
 			strlcat(booya, space, size);
-			strlcat(booya, ltoa(counter), size);
+			if (strlcat(booya, ltoa(counter), size) >= size)
+				break;
 		}
 	}
         else
@@ -2918,7 +2923,8 @@ BUILT_IN_FUNCTION(function_jot, input)
 		for (counter = start - interval; counter >= stop; counter -= interval)
 		{
 			strlcat(booya, space, size);
-			strlcat(booya, ltoa(counter), size);
+			if (strlcat(booya, ltoa(counter), size) >= size)
+				break;
 		}
 	}
 
@@ -3789,6 +3795,11 @@ BUILT_IN_FUNCTION(function_truncate, words)
 	GET_INT_ARG(num, words);
 	GET_FLOAT_ARG(value, words);
 
+	if (num > 100)
+		num = 100;
+	else if (num < -100)
+		num = -100;
+
 	if (num < 0)
 	{
 		float foo;
@@ -4503,7 +4514,7 @@ BUILT_IN_FUNCTION(function_lastnotice, words)
 	int count = 0;
 	char *str = NULL;
 	GET_INT_ARG(count, words);
-	if (count >= MAX_LAST_MSG)
+	if (count < 0 || count >= MAX_LAST_MSG)
 		count = 0;
 	RETURN_IF_EMPTY(last_notice[count].last_msg);
 	malloc_sprintf(&str, "%s %s %s %s %s", last_notice[count].time, last_notice[count].from, last_notice[count].uh, last_notice[count].to, last_notice[count].last_msg);
@@ -4515,7 +4526,7 @@ BUILT_IN_FUNCTION(function_lastmessage, words)
 	int count = 0;
 	char *str = NULL;
 	GET_INT_ARG(count, words);
-	if (count >= MAX_LAST_MSG)
+	if (count < 0 || count >= MAX_LAST_MSG)
 		count = 0;
 	RETURN_IF_EMPTY(last_msg[count].last_msg);
 	malloc_sprintf(&str, "%s %s %s %s %s", last_msg[count].time, last_msg[count].from, last_msg[count].uh, last_msg[count].to, last_msg[count].last_msg);
@@ -4727,10 +4738,11 @@ BUILT_IN_FUNCTION(function_glob, word)
 			if (strchr(globbers.gl_pathv[i], ' '))
 			{
 				int len = strlen(globbers.gl_pathv[i])+4;
-				char *b = alloca(len+1);
+				char *b = new_malloc(len+1);
 				*b = 0;
 				strmopencat(b, len, "\"", globbers.gl_pathv[i], "\"", NULL);
 				m_s3cat(&retval, space, b);
+				new_free(&b);
 			}
 			else
 				m_s3cat(&retval, space, globbers.gl_pathv[i]);
@@ -5016,9 +5028,9 @@ int socket_num = -1;
 				socket_num = -1;
 				break;
 			default:
-				if ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n'))
+				if (*buffer && ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n')))
 					buffer[strlen(buffer)-1] = 0;
-				if ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n'))
+				if (*buffer && ((buffer[strlen(buffer)-1] == '\r') || (buffer[strlen(buffer)-1] == '\n')))
 					buffer[strlen(buffer)-1] = 0;
 				s = m_sprintf("%d %s", strlen(buffer), buffer);
 				return s;
@@ -5158,7 +5170,7 @@ BUILT_IN_FUNCTION(function_uniq, word)
 	booya = m_strdup(list[0]);
         for (listi = 1; listi < listc; listi++)
         {
-		input = alloca(strlen(list[listi]) + strlen(booya) + 2);
+		input = new_malloc(strlen(list[listi]) + strlen(booya) + 2);
 		strcpy(input, list[listi]);
 		strcat(input, space);
 		strcat(input, booya);
@@ -5167,6 +5179,7 @@ BUILT_IN_FUNCTION(function_uniq, word)
 		if (my_atol(tval) == -1)
 			m_s3cat(&booya, space, list[listi]);
 		new_free(&tval);
+		new_free(&input);
 	}
         new_free((char **)&list);
 	RETURN_MSTR(booya);

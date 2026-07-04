@@ -416,7 +416,9 @@ int tand_who (int idx, char *args)
 {
 char *from, *to, *p;
 char buffer[IRCD_BUFFER_SIZE+1];
-	from = LOCAL_COPY(next_arg(args, &args));
+	if (!(from = next_arg(args, &args)))
+		return 0;
+	from = LOCAL_COPY(from);
 	if (!(p = strchr(from, '@')))
 	{
 		strmopencat(buffer, IRCD_BUFFER_SIZE, from, "@", get_server_nickname(from_server), NULL);
@@ -442,7 +444,9 @@ int tand_command (int idx, char *args)
 {
 char *from, *to, *p;
 char buffer[IRCD_BUFFER_SIZE+1];
-	from = LOCAL_COPY(next_arg(args, &args));
+	if (!(from = next_arg(args, &args)))
+		return 0;
+	from = LOCAL_COPY(from);
 	if (!(p = strchr(from, '@')))
 	{
 		strmopencat(buffer, IRCD_BUFFER_SIZE, from, "@", get_server_nickname(from_server), NULL);
@@ -463,7 +467,9 @@ int tand_whom (int idx, char *args)
 {
 char *bot, *nick, *from, *p;
 char buffer[IRCD_BUFFER_SIZE+1];
-	from = LOCAL_COPY(next_arg(args, &args));
+	if (!(from = next_arg(args, &args)))
+		return 0;
+	from = LOCAL_COPY(from);
 	if (!(p = strchr(from, '@')))
 	{
 		strmopencat(buffer, IRCD_BUFFER_SIZE, from, "@", get_server_nickname(from_server), NULL);
@@ -601,6 +607,8 @@ int tand_priv (int idx, char *args)
 char *to, *from, *p, *i_dx;
 	from = next_arg(args, &args);
 	to = next_arg(args, &args);
+	if (!to)
+		return 0;
 	p = strchr(to, '@');
 	if (p && !my_stricmp(p+1, get_server_nickname(from_server)))
 	{
@@ -687,6 +695,8 @@ int cmd_boot(int idx, char *par)
 	char *reason;
 	SocketList *s, *s1 = NULL;
 
+	if (!nick)
+		return TCL_ERROR;
 	s = find_dcc(nick, "chat", NULL, DCC_CHAT, 0, 1, -1);
 	if ((check_dcc_socket(idx)))
 		s1 = get_socketinfo(idx);
@@ -989,14 +999,16 @@ int tand_ircii(int idx, char *par)
 char *from, *to, *p = NULL;
 char buffer[IRCD_BUFFER_SIZE+1];
 
-	from = LOCAL_COPY(next_arg(par, &par));
+	if (!(from = next_arg(par, &par)))
+		return 0;
+	from = LOCAL_COPY(from);
 	if (!(p = strchr(from, '@')))
 	{
 		strmopencat(buffer, IRCD_BUFFER_SIZE, from, "@", get_server_nickname(from_server), NULL);
 		from = buffer;
 	}
 	to = next_arg(par, &par);
-	if (!my_stricmp(to, get_server_nickname(from_server)))
+	if (to && !my_stricmp(to, get_server_nickname(from_server)))
 		send_who_to(idx, from, atoi(par));
 	else
 		tandout_but(idx, "ircii %s %s %s\n", from, to, par);

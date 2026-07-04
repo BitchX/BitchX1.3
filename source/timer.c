@@ -468,8 +468,8 @@ TimerList *tmp;
 		if (time_left < 0)
 			time_left = 0.0;
 		sprintf(buf, "%0.3f", time_left);
-		malloc_sprintf(&out, "%s %d %d %d %d %s %s %s", tmp->ref, tmp->server, tmp->window, tmp->interval, tmp->events, buf, tmp->callback? "(internal callback)" : (tmp->command? tmp->command : ""), tmp->whom ? tmp->whom : empty_string );
-		return ref;
+		malloc_sprintf(&out, "%s %d %d %ld %d %s %s %s", tmp->ref, tmp->server, tmp->window, (long)tmp->interval, tmp->events, buf, tmp->callback? "(internal callback)" : (tmp->command? tmp->command : ""), tmp->whom ? tmp->whom : empty_string );
+		return out;
 	}
 	return m_strdup(empty_string);
 }
@@ -567,7 +567,8 @@ extern	double		fmod(double, double);
 	if (create_timer_ref(refnum_want, refnum_got) == -1)
 	{
 		say("TIMER: Refnum %s already exists", refnum_want);
-		new_free(&ntimer->command);
+		if (!ntimer->callback)
+			new_free(&ntimer->command);
 		new_free(&ntimer->subargs);
 		new_free(&ntimer->whom);
 		new_free(&ntimer);

@@ -133,9 +133,9 @@ void show_notify_list(int all)
 {
 	int count = 0;
 	int i;
-	char lastseen[20];
-	char period[20];
-	char timeson[20];
+	char lastseen[32];
+	char period[32];
+	char timeson[32];
 	NotifyItem *tmp;
 	
 	if (from_server == -1)

@@ -77,10 +77,10 @@ char	*thing_ansi = NULL;
  */
 char	*numeric_banner(void)
 {
-	static	char	thing[4];
+	static	char	thing[16];
 	if (!get_int_var(SHOW_NUMERICS_VAR))
 		return (thing_ansi?thing_ansi:empty_string);
-	sprintf(thing, "%3.3u", -current_numeric);
+	snprintf(thing, sizeof thing, "%3.3u", -current_numeric);
 	return (thing);
 }
 
@@ -1541,10 +1541,16 @@ void numbered_command(char *from, int comm, char **ArgList)
 			
 			if (!ArgList[1] || !*ArgList[1])
 				break;
+			{
+			char *ct;
 			sscanf(ArgList[1], "%lu", &ts);
 			tme = ts;
-			strcpy(this_sucks, ctime(&tme));
-			this_sucks[strlen(this_sucks)-1] = '\0';		
+			if (!(ct = ctime(&tme)))
+				break;
+			strlcpy(this_sucks, ct, sizeof this_sucks);
+			}
+			if (*this_sucks)
+				this_sucks[strlen(this_sucks)-1] = '\0';
 
 			set_display_target(ArgList[0], LOG_CRAP);
 			if (!ArgList[2])
@@ -1553,22 +1559,29 @@ void numbered_command(char *from, int comm, char **ArgList)
 			else
 			{
 				char cts[80], pts[80], ots[80];
+				char *ct;
+				cts[0] = pts[0] = ots[0] = 0;
 				sscanf(ArgList[2], "%lu", &ts);
 				tme = ts;
-				strcpy(cts, ctime(&tme));
-				cts[strlen(cts)-1] = '\0';		
+				if ((ct = ctime(&tme)))
+					strlcpy(cts, ct, sizeof cts);
+				if (*cts)
+					cts[strlen(cts)-1] = '\0';
 				sscanf(ArgList[2], "%lu", &ts);
 				tme = ts;
-				strcpy(pts, ctime(&tme));
-				pts[strlen(pts)-1] = '\0';		
-				ots[0] = 0;
+				if ((ct = ctime(&tme)))
+					strlcpy(pts, ct, sizeof pts);
+				if (*pts)
+					pts[strlen(pts)-1] = '\0';
 				if (ArgList[3])
 				{
 					sscanf(ArgList[3], "%lu", &ts);
 					tme = ts;
-					strcpy(ots, ctime(&tme));
+					if ((ct = ctime(&tme)))
+						strlcpy(ots, ct, sizeof ots);
 				}
-				ots[strlen(ots)-1] = '\0';		
+				if (*ots)
+					ots[strlen(ots)-1] = '\0';
 				put_it("%s Channel %s was created at %s",numeric_banner(),
 					ArgList[0], this_sucks);
 				put_it("%s Channel %s TS %s Password TS %s opless TS %s",numeric_banner(),

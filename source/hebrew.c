@@ -98,9 +98,16 @@ unsigned char *hebrew_process(unsigned char *str)
    	return empty_string;
    len = strlen(str);
    
-   result = (unsigned char *)new_malloc(len+2);
-   tmpstr = (unsigned char *)new_malloc(len*2);
-   tmpbuf = (unsigned char *)new_malloc(len*2);
+   /*
+    * The interleave/fill loops below build result and tmpbuf by
+    * concatenating result + tmpstr + result again, so the transient
+    * contents can reach roughly 2*len bytes.  Allocate generously
+    * (4*len) to keep those writes in bounds -- the original len/len*2
+    * sizes overflowed the heap on hostile input.
+    */
+   result = (unsigned char *)new_malloc((len+1)*4);
+   tmpstr = (unsigned char *)new_malloc((len+1)*4);
+   tmpbuf = (unsigned char *)new_malloc((len+1)*4);
    
    pos = 0;
    p   = 0;

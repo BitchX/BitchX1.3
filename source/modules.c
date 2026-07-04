@@ -819,8 +819,8 @@ int code = 0;
 			if (!(p = path_search(filename, get_string_var(LOAD_PATH_VAR))))
 			{
 				char file_buf[BIG_BUFFER_SIZE];
-				strcpy(file_buf, filename);
-				strcat(file_buf, SHLIB_SUFFIX);
+				strlcpy(file_buf, filename, sizeof file_buf);
+				strlcat(file_buf, SHLIB_SUFFIX, sizeof file_buf);
 				if (!(p = path_search(file_buf, get_string_var(LOAD_PATH_VAR))))
 					if (!(p = path_search(file_buf, PLUGINDIR)))
 						p = filename;
