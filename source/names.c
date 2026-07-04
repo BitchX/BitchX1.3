@@ -579,7 +579,7 @@ NickList	*tnl = NULL;
 					break;
 				if (!(tucm = (UserChanModes *)find_in_list((List **)&ucm, tmp, 0)))
 				{
-					tucm = (UserChanModes *) alloca(sizeof(UserChanModes));
+					tucm = (UserChanModes *) new_malloc(sizeof(UserChanModes));
 					memset(tucm, 0, sizeof(UserChanModes));
 					tucm->nick = LOCAL_COPY(tmp);
 					add_to_list((List **)&ucm, (List *)tucm);
@@ -607,7 +607,7 @@ NickList	*tnl = NULL;
 					break;
 				if (!(tucm = (UserChanModes *)find_in_list((List **)&ucm, tmp, 0)))
 				{
-					tucm = (UserChanModes *) alloca(sizeof(UserChanModes));
+					tucm = (UserChanModes *) new_malloc(sizeof(UserChanModes));
 					memset(tucm, 0, sizeof(UserChanModes));
 					tucm->nick = LOCAL_COPY(tmp);
 					add_to_list((List **)&ucm, (List *)tucm);
@@ -635,7 +635,7 @@ NickList	*tnl = NULL;
 					break;
 				if (!(tucm = (UserChanModes *)find_in_list((List **)&ucm, tmp, 0)))
 				{
-					tucm = (UserChanModes *) alloca(sizeof(UserChanModes));
+					tucm = (UserChanModes *) new_malloc(sizeof(UserChanModes));
 					memset(tucm, 0, sizeof(UserChanModes));
 					tucm->nick = LOCAL_COPY(tmp);
 					add_to_list((List **)&ucm, (List *)tucm);
@@ -804,6 +804,15 @@ NickList	*tnl = NULL;
 		}
 	}
 
+	{
+		UserChanModes *tmp;
+		while (ucm)
+		{
+			tmp = ucm->next;
+			new_free(&ucm);
+			ucm = tmp;
+		}
+	}
 	if (strlen(nmodes) || strlen(nargs))
 		return m_sprintf("%s%s", nmodes, nargs);
 	return NULL;

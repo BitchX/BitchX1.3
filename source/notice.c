@@ -458,15 +458,19 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		    temp = LOCAL_COPY(p);
 		    temp2 = LOCAL_COPY(p);
 
-		    if (conn) sscanf(p, "%s is %s from %s", for_, fr, temp);
-		    else sscanf(p, "%s was %s from %s", for_, fr, temp);
+		    if (sscanf(p, conn ? "%s is %s from %s" : "%s was %s from %s",
+		               for_, fr, temp) < 3)
+		        goto done;
 
-		    q = p;
+		    q = alloca(strlen(fr) + strlen(temp) + 2);
 		    sprintf(q, "%s@%s", fr, temp);
 		    if (!conn) 
 		    {
 			port = strstr(temp2, "reason:");
-			port += 8;
+			if (port)
+			    port += 8;
+			else
+			    port = empty_string;
 		    }
 		} 
 		else if (dalnet && !conn)
