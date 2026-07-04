@@ -504,6 +504,9 @@ void BX_add_whowas_userhost_channel(WhowasList *wptr, WhowasWrapList *list)
 {
 	unsigned long hvalue = hash_userhost_channel(wptr->nicklist->host, wptr->channel, WHOWASLIST_HASHSIZE);
 
+	if (hvalue >= WHOWASLIST_HASHSIZE)
+		return;
+
 	/* take this nicklist, and attach it as the HEAD pointer
 	 * in our chain at the hashed location in our array...
 	 * Note, by doing this, this ensures that the "most active"
@@ -529,6 +532,8 @@ WhowasList *BX_find_userhost_channel(char *host, char *channel, int remove, Whow
 	unsigned long hvalue;
 
 	hvalue = hash_userhost_channel(host, channel, WHOWASLIST_HASHSIZE);
+	if (hvalue >= WHOWASLIST_HASHSIZE)
+		return NULL;
 	location = &(wptr->NickListTable[hvalue]);
 
 	/* at this point, we found the array spot, now search
@@ -696,6 +701,8 @@ register unsigned long x;
 		while((ptr = next_userhost(list, NULL)) && count)
 		{
 			x = hash_userhost_channel(ptr->nicklist->host, ptr->channel, WHOWASLIST_HASHSIZE);
+			if (x >= WHOWASLIST_HASHSIZE)
+				continue;
 			if (!(ptr = find_userhost_channel(ptr->nicklist->host, ptr->channel, 1, list)))
 				break;
 			if (ptr->nicklist)

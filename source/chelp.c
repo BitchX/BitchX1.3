@@ -162,7 +162,7 @@ int read_file(FILE *help_file, int helpfunc)
 	while (fgets(line, sizeof line, help_file))
 	{
 		size_t len = strlen(line);
-		if (line[len - 1] == '\n')
+		if (len > 0 && line[len - 1] == '\n')
 			line[len - 1] = '\0';
 
 		if (!*line || *line == '#')

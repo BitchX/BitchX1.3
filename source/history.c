@@ -68,7 +68,8 @@ static	char *history_match (char *match)
 	char	*ptr;
 	char	*match_str = NULL;
 
-	if (*(match + strlen(match) - 1) == '*')
+	size_t len = strlen(match);
+	if (len > 0 && match[len - 1] == '*')
 		match_str = LOCAL_COPY(match);
 	else
 	{

@@ -87,6 +87,8 @@ static	int  handle_oper_vision(const char *from, char *cline, int *up_status)
 	if (!strncmp(line, "*** Notice -- ", 13)) line += 14, dcount = 14;
 	else if (!strncmp(line, "*** \002Notice\002 --", 15)) line += 16, dcount = 16;
 
+	if (!*line)
+		return 0;
 	done_one++;
 /*
 [ss]!irc.cs.cmu.edu D-line active for think[think@skateboarders.edu]
@@ -98,6 +100,8 @@ static	int  handle_oper_vision(const char *from, char *cline, int *up_status)
 		char *q = line + 26;
 		int loc_check = 0;
 
+		if (strlen(q) < 11)
+			goto done;
 		for_ = next_arg(q, &q);
 		if (!end_strcmp(for_, ".", 1))
 			chop(for_, 1);

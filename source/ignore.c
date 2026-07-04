@@ -206,6 +206,7 @@ void ignore_nickname(char *nick, long type, int flag)
 				{
 				case IGNORE_REMOVE:
 					remove_ignore(new->nick);
+					new_ignore = NULL;
 					break;
 				case IGNORE_HIGH:
 					say("Highlighting ALL messages from %s", new->nick);

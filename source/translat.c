@@ -209,7 +209,11 @@ void set_translation(Window *win, char *tablename, int unused)
 		    inputs+0, inputs+1, inputs+2, inputs+3,
 		    inputs+4, inputs+5, inputs+6, inputs+7);
 		for (j = 0; j<8; j++)
+		{
+			if (c >= 512)
+				break;
 			temp_table[c++] = (unsigned char) inputs[j];
+		}
 	}
 	fclose(table);
 	new_free(&filename);

@@ -206,6 +206,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 			if ((len = strlen(arg)) == 0)
 			{
 				say("Unknown or missing flag");
+				delete_who_item(new_w);
 				return;
 			}
 
@@ -247,6 +248,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 				if ((arg = next_arg(args, &args)) == NULL)
 				{
 					say("WHO -HOST: missing argument");
+					delete_who_item(new_w);
 					return;
 				}
 
@@ -263,6 +265,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 				if ((arg = next_arg(args, &args)) == NULL)
 				{
 					say("WHO -SERVER: missing arguement");
+					delete_who_item(new_w);
 					return;
 				}
 
@@ -275,6 +278,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 				if ((arg = next_arg(args, &args)) == NULL)
 				{
 					say("WHO -NAME: missing arguement");
+					delete_who_item(new_w);
 					return;
 				}
 
@@ -287,6 +291,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 				if ((arg = next_arg(args, &args)) == NULL)
 				{
 					say("WHO -REALNAME: missing arguement");
+					delete_who_item(new_w);
 					return;
 				}
 
@@ -299,6 +304,7 @@ void BX_whobase(char *args, void (*line) (WhoEntry *, char *, char **), void (*e
 				if ((arg = next_arg(args, &args)) == NULL)
 				{
 					say("WHO -NICK: missing arguement");
+					delete_who_item(new_w);
 					return;
 				}
 
@@ -492,16 +498,16 @@ do
 		if (new_w->who_mask & WHO_AWAY)
 			ok = ok && (*stat == 'G');
 		if (new_w->who_mask & WHO_OPS)
-			ok = ok && (*(stat + 1) == '*');
+			ok = ok && (strlen(stat) >= 1 && *(stat + 1) == '*');
 		if (new_w->who_mask & WHO_LUSERS)
-			ok = ok && (*(stat + 1) != '*');
+			ok = ok && (strlen(stat) < 1 || *(stat + 1) != '*');
 		if (new_w->who_mask & WHO_CHOPS)
-			ok = ok && ((*(stat + 1) == '@') ||
-				    (*(stat + 2) == '@'));
+			ok = ok && ((strlen(stat) >= 1 && *(stat + 1) == '@') ||
+				    (strlen(stat) >= 2 && *(stat + 2) == '@'));
 		if (new_w->who_mask & WHO_NOCHOPS)
-			ok = ok && ((*(stat + 1) != '@') &&
-				    (*(stat + 2) != '@') &&
-				    (*(stat + 3) != '@'));
+			ok = ok && ((strlen(stat) < 1 || *(stat + 1) != '@') &&
+				    (strlen(stat) < 2 || *(stat + 2) != '@') &&
+				    (strlen(stat) < 3 || *(stat + 3) != '@'));
 		if (new_w->who_mask & WHO_NAME)
 			ok = ok && wild_match(new_w->who_name, user);
 		if (new_w->who_mask & WHO_NICK)
@@ -945,7 +951,7 @@ void	userhost_returned (char *from, char **ArgList)
 		 * part of ArgList, and the following char will
 		 * either be a * or an = (eg, nick*= or nick=)
 		 */
-		if (ArgList)
+		if (ArgList && *ArgList)
 		{
 			while (*(*ArgList) == ' ')
 				(*ArgList)++;
@@ -959,6 +965,8 @@ void	userhost_returned (char *from, char **ArgList)
 			item.connected = 1;
 			item.nick = next_arg(*ArgList, ArgList);
 			item.user = strchr(item.nick, '=');
+			if (!item.user)
+				continue;
 
 			if (item.user[-1] == '*')
 			{
@@ -977,6 +985,8 @@ void	userhost_returned (char *from, char **ArgList)
 			item.user++;
 
 			item.host = strchr(item.user, '@');
+			if (!item.host)
+				continue;
 			*item.host++ = 0;
 
 
@@ -1041,12 +1051,12 @@ void	userhost_cmd_returned (UserhostItem *stuff, char *nick, char *text)
 {
 	char	args[BIG_BUFFER_SIZE + 1];
 
-	strcpy(args, stuff->nick ? stuff->nick : empty_string);
-	strcat(args, stuff->oper ? " + " : " - ");
-	strcat(args, stuff->away ? "+ " : "- ");
-	strcat(args, stuff->user ? stuff->user : empty_string);
-	strcat(args, space);
-	strcat(args, stuff->host ? stuff->host : empty_string);
+	strlcpy(args, stuff->nick ? stuff->nick : empty_string, sizeof args);
+	strlcat(args, stuff->oper ? " + " : " - ", sizeof args);
+	strlcat(args, stuff->away ? "+ " : "- ", sizeof args);
+	strlcat(args, stuff->user ? stuff->user : empty_string, sizeof args);
+	strlcat(args, space, sizeof args);
+	strlcat(args, stuff->host ? stuff->host : empty_string, sizeof args);
 	parse_line(NULL, text, args, 0, 0, 1);
 }
 

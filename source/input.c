@@ -215,14 +215,17 @@ extern void	BX_update_input (int update)
 			int i;
 			extern int in_chelp;
 
-			loc = alloca(strlen(prompt)+200);
-			for (i = 0; prompt[i]; i++)
+			loc = alloca(strlen(prompt)*2 + 200);
 			{
-				if (prompt[i] == '$')
-					loc[i++] = '$';
-				loc[i] = prompt[i];
-			}	
-			loc[i] = 0;
+				int r, w;
+				for (r = 0, w = 0; prompt[r]; r++)
+				{
+					if (prompt[r] == '$')
+						loc[w++] = '$';
+					loc[w++] = prompt[r];
+				}
+				loc[w] = 0;
+			}
 			in_chelp++;
 			prompt = convert_output_format(loc, NULL, NULL);
 			in_chelp--;
