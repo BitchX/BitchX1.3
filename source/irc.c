@@ -468,11 +468,11 @@ void BX_irc_exit (int really_quit, char *reason, char *format, ...)
 	{
 		va_list arglist;
 		va_start(arglist, format);
-		vsprintf(buffer, format, arglist);
+		vsnprintf(buffer, sizeof buffer, format, arglist);
 		va_end(arglist);
 	}
 	else
-		sprintf(buffer, "%s -- just do it.",irc_version);
+		snprintf(buffer, sizeof buffer, "%s -- just do it.",irc_version);
 
 	if (really_quit)
 	{

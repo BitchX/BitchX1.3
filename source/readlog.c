@@ -153,8 +153,9 @@ static	int show_log(Window *window, char *name)
 	{
  		if ((*read_log_func)(line, 499, msg_fp))
 		{
-			if (*(line + strlen(line) - 1) == '\n')
-			*(line + strlen(line) - 1) = (char) 0;
+			size_t llen = strlen(line);
+			if (llen && line[llen - 1] == '\n')
+				line[llen - 1] = (char) 0;
 			#ifdef WANT_HEBREW
 			if (get_int_var(HEBREW_TOGGLE_VAR))
 				hebrew_process(line);

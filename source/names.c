@@ -548,7 +548,7 @@ int		add = 0,
 		mod = -1;
 char		*tmp = NULL, 
 		*rest = NULL, 
-		nmodes[16], 
+		nmodes[64],
 		nargs[100];
 UserChanModes	*ucm = NULL, 
 		*tucm = NULL;
@@ -733,8 +733,8 @@ NickList	*tnl = NULL;
 
    /* modes which can be done multiple times are added here */
 
-	for (tucm = ucm; tucm && (strlen(nmodes) + 2) < sizeof nmodes; 
-		tucm = tucm->next) 
+	for (tucm = ucm; tucm && (strlen(nmodes) + 6) < sizeof nmodes;
+		tucm = tucm->next)
 	{
 		if (tucm->o_ed) 
 		{
@@ -1964,7 +1964,6 @@ extern	void remove_from_mode_list(char *channel, int server)
 				mode_list = curr->next;
 			else
 				prev->next = curr->next;
-			prev = curr;
 			new_free(&curr->chan);
 			new_free(&curr->mode);
 			new_free((char **)&curr);

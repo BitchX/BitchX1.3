@@ -1878,6 +1878,12 @@ static	void	TruncateAndQuote(char **buff, const char *add, int length, const cha
 	if (length)
 	{
 		char *buffer = NULL;
+		/* Clamp attacker-controlled width to avoid an unbounded
+		 * (or INT_MIN abs()-UB) alloca from e.g. $[999999999]nick. */
+		if (length > 32767)
+			length = 32767;
+		else if (length < -32767)
+			length = -32767;
 		buffer = alloca(abs(length)+1);
 		strformat(buffer, add, length, pad_char ? pad_char:get_int_var(PAD_CHAR_VAR));
 		add = buffer;

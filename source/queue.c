@@ -75,7 +75,7 @@ BUILT_IN_COMMAND(queuecmd)
 
         if ((startcmds = strchr(args, '{')) == NULL)
                 commands = 0;
-        else
+        else if (startcmds > args)
                 *(startcmds-1) = '\0';
 
 	while ((arg = upper(next_arg(args, &args))) != NULL) 

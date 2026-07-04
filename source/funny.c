@@ -157,6 +157,8 @@ void funny_list(char *from, char **ArgList)
 	}
 	channel = ArgList[0];
 	user_cnt = ArgList[1];
+	if (!channel || !user_cnt)
+		return;
 	line = PasteArgs(ArgList, 2);
 	if (funny_flags & FUNNY_TOPIC && !(line && *line))
 			return;
@@ -408,7 +410,7 @@ void funny_mode(char *from, char **ArgList)
 	{
 		set_display_target(channel, LOG_CRAP);
 		if (do_hook(current_numeric, "%s %s %s", from, channel, mode))
-			put_it("%s", convert_output_format(fget_string_var(FORMAT_MODE_CHANNEL_FSET), "%s %s %s %s %s", update_clock(GET_TIME), from, *FromUserHost ? FromUserHost:"ÿ", channel, mode));
+			put_it("%s", convert_output_format(fget_string_var(FORMAT_MODE_CHANNEL_FSET), "%s %s %s %s %s", update_clock(GET_TIME), from, *FromUserHost ? FromUserHost:"ï¿½", channel, mode));
 		reset_display_target();
 	}
 }

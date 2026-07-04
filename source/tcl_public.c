@@ -1228,7 +1228,7 @@ int i;
 	}
 	for (i = 1; i < argc; i++)
 		m_s3cat(&tmp, space, argv[i]);
-	strcpy(buff, tmp);
+	strlcpy(buff, tmp, sizeof buff);
 	s = double_quote(tmp, "[]{}", buff);
 	Tcl_AppendResult(irp, s, NULL);
 	new_free(&tmp);

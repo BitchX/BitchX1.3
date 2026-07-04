@@ -130,7 +130,7 @@ void BX_add_to_log(FILE *fp, time_t t, const char *line, int mangler)
 	{
 		char *local_line;
 		int len = strlen(line) * 2 + 1;
-		local_line = alloca(len);
+		local_line = new_malloc(len);
 		strcpy(local_line, line);
 
 		/* Do this first */
@@ -138,14 +138,16 @@ void BX_add_to_log(FILE *fp, time_t t, const char *line, int mangler)
 			mangle_line(local_line, mangler, len);
 		else if (!get_int_var(MIRCS_VAR))
 		{
-			char *tmp = alloca(strlen(local_line) + 1);
+			char *tmp = new_malloc(strlen(local_line) + 1);
 			strip_control(local_line, tmp);
 			strcpy(local_line, tmp);
+			new_free(&tmp);
 		}
 
-		
+
 		fprintf(fp, "%s\n", local_line);
 		fflush(fp);
+		new_free(&local_line);
 	}
 #endif
 }

@@ -698,7 +698,7 @@ ArgList	*parse_arglist (char *arglist)
 	ArgList *args = new_malloc(sizeof(ArgList));
 
 	args->void_flag = args->dot_flag = 0;
-	for (this_term = arglist; *this_term; this_term = next_term,arg_count++)
+	for (this_term = arglist; *this_term && arg_count < ALIAS_MAXARGS - 1; this_term = next_term,arg_count++)
 	{
 		while (isspace((unsigned char)*this_term))
 			this_term++;

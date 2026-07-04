@@ -414,7 +414,7 @@ int BX_connect_by_number(char *hostn, unsigned short *portnum, int service, int 
 
 		memset(&name, 0, sizeof(struct sockaddr_un));
 		name.sun_family = AF_UNIX;
-		strcpy(name.sun_path, hostn);
+		strlcpy(name.sun_path, hostn, sizeof(name.sun_path));
 #ifdef HAVE_SUN_LEN
 # ifdef SUN_LEN
 		name.sun_len = SUN_LEN(&name);
@@ -712,6 +712,8 @@ extern char *BX_ip_to_host (const char *ip)
 
 extern char *BX_one_to_another (const char *what)
 {
+	if (!what || !*what)
+		return empty_string;
 	if (isdigit(what[strlen(what)-1]) || strchr(what, ':'))
 		return ip_to_host (what);
 	else
@@ -759,12 +761,19 @@ extern char *BX_ip_to_host (const char *ip)
 	ia.s_addr = inet_addr(ip);
 	he = gethostbyaddr((char*) &ia, sizeof(struct in_addr), AF_INET);
 
-	return (he ? strncpy(host, he->h_name, 100): empty_string);
+	if (he)
+	{
+		/* h_name is attacker-controlled reverse DNS; strlcpy always NUL-terminates */
+		strlcpy(host, he->h_name, sizeof host);
+		return host;
+	}
+	return empty_string;
 }
 
 extern char *BX_one_to_another (const char *what)
 {
-
+	if (!what || !*what)
+		return empty_string;
 	if (!isdigit((unsigned char)what[strlen(what)-1]))
 		return host_to_ip (what);
 	else

@@ -581,7 +581,7 @@ static int glob3		(	Char *pathbuf,
 	register struct dirent *dp;
 	DIR *dirp;
 	int err;
-	char buf[MAXPATHLEN];
+	char buf[MAXPATHLEN+1];
 	int nocase = 0;
 	
 	/*
@@ -788,7 +788,7 @@ void BX_bsd_globfree 		(	glob_t *pglob			)
 static DIR *g_opendir		(	register Char *str,
 					glob_t *pglob			)
 {
-	char buf[MAXPATHLEN];
+	char buf[MAXPATHLEN+1];
 
 	if (!*str)
 		strcpy(buf, ".");
@@ -805,7 +805,7 @@ static int g_lstat		(	register Char *fn,
 					struct stat *sb,
 					glob_t *pglob			)
 {
-	char buf[MAXPATHLEN];
+	char buf[MAXPATHLEN+1];
 
 	g_Ctoc(fn, buf);
 	if (pglob->gl_flags & GLOB_ALTDIRFUNC)
@@ -822,7 +822,7 @@ static int g_stat		(	register Char *fn,
 					struct stat *sb,
 					glob_t *pglob			)
 {
-	char buf[MAXPATHLEN];
+	char buf[MAXPATHLEN+1];
 
 	g_Ctoc(fn, buf);
 	if (pglob->gl_flags & GLOB_ALTDIRFUNC)
