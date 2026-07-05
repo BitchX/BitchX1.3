@@ -289,7 +289,7 @@ extern	long		find_index (an_array *array, long item)
 			i--;
 		i++;
 	}
-	while(array->index[i] != item && i < array->size)
+	while(i < array->size && array->index[i] != item)
 		i++;
 
 	if (i == array->size)

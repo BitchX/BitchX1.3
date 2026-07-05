@@ -1955,7 +1955,7 @@ void	BX_set_server_away (int ssa_index, char *message, int silent)
 				}
 			}
 			send_to_server("%s :%s", "AWAY", stripansicodes(convert_output_format(fget_string_var(FORMAT_AWAY_FSET), "%s [\002BX\002-MsgLog %s] %s", update_clock(GET_TIME), get_int_var(MSGLOG_VAR)?"On":"Off",message)));
-			strncpy(buffer, convert_output_format(fget_string_var(FORMAT_SEND_ACTION_FSET), "%s %s $C ", update_clock(GET_TIME), server_list[ssa_index].nickname), BIG_BUFFER_SIZE);
+			strlcpy(buffer, convert_output_format(fget_string_var(FORMAT_SEND_ACTION_FSET), "%s %s $C ", update_clock(GET_TIME), server_list[ssa_index].nickname), BIG_BUFFER_SIZE);
 			strlcat(buffer, convert_output_format(fget_string_var(FORMAT_AWAY_FSET), "%s [\002BX\002-MsgLog %s] %s", update_clock(GET_TIME), get_int_var(MSGLOG_VAR)?"On":"Off", message), BIG_BUFFER_SIZE);
 			put_it("%s", buffer);
 		}
@@ -2826,7 +2826,7 @@ void	change_server_nickname (int ssn_index, char *nick)
 	char    *n;
 	if (ssn_index == -1 && nick)
 	{
-		strcpy(nickname, nick);
+		strlcpy(nickname, nick, NICKNAME_LEN);
 		return;
 	}
 	s = &server_list[ssn_index];
@@ -3466,7 +3466,7 @@ void show_server_map (void)
 #ifdef ONLY_STD_CHARS
 	char *ascii="-> ";
 #else
-	char *ascii = "юд> ";
+	char *ascii = "О©╫О©╫> ";
 #endif			    
 	if (map) prevdist = map->hopcount;
 

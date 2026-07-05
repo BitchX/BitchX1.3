@@ -197,7 +197,12 @@ char *file_readb (int fd, int numb)
 		return m_strdup(empty_string);
 	else
 	{
-		char *blah = (char *)new_malloc(numb+1);
+		char *blah;
+		if (numb <= 0)
+			return m_strdup(empty_string);
+		if ((size_t)numb > 1024 * 1024)
+			numb = 1024 * 1024;
+		blah = (char *)new_malloc(numb+1);
 		if ((fread(blah, 1, numb, ptr->file)))
 			blah[numb] = 0;
 		else

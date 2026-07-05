@@ -891,10 +891,12 @@ static	void p_error(char *from, char **ArgList)
  * This only handles negotiating the SASL capability with the PLAIN method. It would
  * be good to add DH-BLOWFISH, and later, full capability support.
  */
-static	void p_cap(char *from, char **ArgList)
+static void p_cap(char *from, char **ArgList)
 {
 	char *caps, *p;
 
+	if (!ArgList[0] || !ArgList[1] || !ArgList[2])
+		return;
 	if (!strcmp(ArgList[1], "ACK"))
 	{
 		caps = LOCAL_COPY(ArgList[2]);
@@ -966,7 +968,8 @@ void add_user_who (WhoEntry *w, char *from, char **ArgList)
 	ChannelList *chan;
 	int op = 0, voice = 0;
 
-	/* Obviously this is safe. */
+	if (!ArgList[0] || !ArgList[1] || !ArgList[2] || !ArgList[3] || !ArgList[4] || !ArgList[5])
+		return;
 	userhost = alloca(strlen(ArgList[1]) + strlen(ArgList[2]) + 2);
 	sprintf(userhost, "%s@%s", ArgList[1], ArgList[2]);
 	voice = (strchr(ArgList[5], '+') != NULL);

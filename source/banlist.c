@@ -424,6 +424,11 @@ void userhost_ban(UserhostItem *stuff, char *nick1, char *args)
 			nick = whowas->nicklist->nick;
 			user = m_strdup(clear_server_flags(whowas->nicklist->host));
 			host = strchr(user, '@');
+			if (!host)
+			{
+				new_free(&user);
+				return;
+			}
 			*host++ = 0;
 			bitchsay("Using WhoWas info for ban of %s ", nick1);
 			n = whowas->nicklist;
@@ -977,6 +982,8 @@ register NickList *nicks;
 
 			q = clear_server_flags(temp);
 			p = strchr(temp, '@');
+			if (!p)
+				continue;
 			*p++ = 0;
 		
 			new = (ShitList *)new_malloc(sizeof(ShitList));
@@ -1217,6 +1224,8 @@ BUILT_IN_COMMAND(kickban)
 			p = LOCAL_COPY(nicks->host);
 			user = clear_server_flags(p);
 			host = strchr(user, '@');
+			if (!host)
+				continue;
 			*host++ = 0;
 			if (kick_first)
 				send_to_server("KICK %s %s :%s\r\nMODE %s +b %s", 
@@ -1284,6 +1293,8 @@ BUILT_IN_COMMAND(ban)
 			t = LOCAL_COPY(nicks->host);
 			user = clear_server_flags(t);
 			host = strchr(user, '@');
+			if (!host)
+				continue;
 			*host++ = 0;
 
 			send_to_server("MODE %s -o+b %s %s", chan->channel, nicks->nick, ban_it(nicks->nick, user, host, nicks->ip));
