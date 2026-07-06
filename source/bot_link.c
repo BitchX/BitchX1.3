@@ -364,10 +364,9 @@ int found = 0;
 		 *   - userhost is NULL on the initiating side (CTCP handler already
 		 *     verified credentials before creating this DCC connection);
 		 *     skip the check in that case.
-		 *   - BOT_PASSWD_VAR allows password-only auth without a userlist
-		 *     entry (consistent with do_botlink in ctcp.c); skip then too.
-		 *   - Otherwise, verify the sender is a known bot (ADD_BOT flag). */
-		if (n->userhost && !get_string_var(BOT_PASSWD_VAR))
+		 *   - Otherwise, verify the sender is a known bot (ADD_BOT flag),
+		 *     matching do_botlink_rep. */
+		if (n->userhost)
 		{
 			if (!(ul = lookup_userlevelc(s->server, n->userhost, "*", NULL)) ||
 			    !(ul->flags & ADD_BOT))
