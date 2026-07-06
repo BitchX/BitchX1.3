@@ -294,7 +294,7 @@ BUILT_IN_COMMAND(foreach)
         while (args && my_isspace(*args))
         	args++;
 
-        if (*args == '-')
+        if (args && *args == '-')
                 args++, list = COMMAND_ALIAS;
 
 	if ((ptr = new_next_arg(args, &args)) == NULL)

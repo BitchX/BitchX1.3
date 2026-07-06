@@ -5998,6 +5998,7 @@ BUILT_IN_FUNCTION(function_mask, args)
 			 MASK4("%s!*@%s%s%s",   nick,       host, DOT, domain)
 		case 13: mask_digits(&host);
 			 MASK5("%s!*%s@%s%s%s", nick, USER, host, DOT, domain)
+		default: stuff[0] = 0; break;  /* out-of-range which -> empty */
 	}
 	else
 	switch (which)
@@ -6016,6 +6017,7 @@ BUILT_IN_FUNCTION(function_mask, args)
 		case 11: MASK2("*!*%s@%s.*",          USER, domain)
 		case 12: MASK2("%s!*@%s.*",     nick,       domain)
 		case 13: MASK3("%s!*%s@%s.*",   nick, USER, domain)
+		default: stuff[0] = 0; break;  /* out-of-range which -> empty */
 	}
 
 	/* Clean up any non-printable chars */
