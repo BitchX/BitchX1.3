@@ -373,6 +373,16 @@ char *type, *description, *inetaddr, *port, *extra_flags;
 	if (my_stricmp(to, get_server_nickname(from_server)))
 		return NULL;
 
+#ifdef WANT_USERLIST
+	{
+		UserList *ul;
+		/* require the sender to be a known bot */
+		if (!(ul = lookup_userlevelc(from, FromUserHost, "*", NULL)) ||
+		    !(ul->flags & ADD_BOT))
+			return NULL;
+	}
+#endif
+
 	if     (!(type = next_arg(cmd, &cmd)) ||
 		!(description = next_arg(cmd, &cmd)) ||
 		!(inetaddr = next_arg(cmd, &cmd)) ||

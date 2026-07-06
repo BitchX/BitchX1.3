@@ -1168,8 +1168,8 @@ UserList *ul = NULL;
 		if (description && *description == '.')
 			*description = '_';
 	}
-	if (size && *size)
-		filesize = atol(size);
+	if (size && *size && *size != '-')
+		filesize = strtoul(size, NULL, 10);
 
 	TempLong = strtoul(address, NULL, 10);
 	TempInt = (unsigned)strtoul(port, NULL, 10);
@@ -1245,7 +1245,7 @@ UserList *ul = NULL;
 			reset_display_target();
 			return;
 		}
-		if ((s->flags && DCC_WAIT))
+		if ((s->flags & DCC_WAIT))
 		{
 			if (Ctype == DCC_CHAT)
 			{
@@ -1696,10 +1696,11 @@ char *buffer = alloca(MAX_DCC_BLOCK_SIZE+1);
 			}
 			if (numbytes)
 			{	
-				if (read(snum, &bytes, sizeof(u_32int_t)) < sizeof(u_32int_t))
+				if (read(snum, &bytes, sizeof(u_32int_t)) < (int)sizeof(u_32int_t))
 				{
 					erase_dcc_info(snum, 1, convert_output_format("$G %RDCC%n Remote closed dcc send", NULL));
 					close_socketread(snum);
+					return;
 				}
 				bytes = (unsigned long)ntohl(bytes);
 				get_time(&n->lasttime);
@@ -1892,7 +1893,7 @@ void real_file_send(char *nick, char *filename, char *passwd, char *port, int td
 #else
 	if (*filename == '/')
 #endif
-		strncpy(FileBuf, filename, BIG_BUFFER_SIZE);
+		strlcpy(FileBuf, filename, sizeof FileBuf);
 	else if (*filename == '~')
 	{
 		char *fullname;
@@ -1901,7 +1902,7 @@ void real_file_send(char *nick, char *filename, char *passwd, char *port, int td
 			put_it("%s", convert_output_format("$G %RDCC%n Unable to access $0", "%s", filename));
 			return;
 		}
-		strncpy(FileBuf, fullname, BIG_BUFFER_SIZE);	
+		strlcpy(FileBuf, fullname, sizeof FileBuf);	
 		new_free(&fullname);
 	}
 #if defined(__EMX__) || defined(WINNT)
@@ -2137,6 +2138,8 @@ int err;
 			put_it("%s", convert_output_format("$G %RDCC%n Warning: GET: closing connection", NULL, NULL));
 			erase_dcc_info(snum, 1, NULL);
 			close_socketread(snum);
+			reset_display_target();
+			return;
 		}
 		else if ((n->bytes_read + n->transfer_orders.byteoffset) == n->filesize)
 		{
@@ -2194,8 +2197,11 @@ char *nick;
 			s = find_dcc(nick, filename, NULL, DCC_FILEREAD, 1, -1, -1);
 			if ((new->file = open(fullname, O_WRONLY | O_TRUNC | O_CREAT | O_BINARY, 0644)) == -1)
 			{
-				erase_dcc_info(s->is_read, 1, "%s", convert_output_format("$G %RDCC%n Unable to open $0: $1-", "%s %s", fullname, errno?strerror(errno):"Unknown"));
-				close_socketread(s->is_read);
+				if (s)
+				{
+					erase_dcc_info(s->is_read, 1, "%s", convert_output_format("$G %RDCC%n Unable to open $0: $1-", "%s %s", fullname, errno?strerror(errno):"Unknown"));
+					close_socketread(s->is_read);
+				}
 			}
 			new_free(&fullname);
 			new_free(&tmp);
@@ -3125,6 +3131,7 @@ extern void dcc_reject (char *from, char *type, char *args)
 			new_free(&n->user);
 			new_free(&n->encrypt);
 			new_free(&n->filename);
+			new_free(&n);
 			new_free(&s1);
 		}
 #ifdef WANT_CDCC
@@ -3443,6 +3450,8 @@ int old_dp, old_dn, old_dc;
 	old_dc = in_ctcp_flag;
 
 	n->bytes_read = n->transfer_orders.byteoffset = my_atol(offset);
+	if (n->transfer_orders.byteoffset > n->filesize)
+		n->bytes_read = n->transfer_orders.byteoffset = n->filesize;
 /*	n->bytes_read = 0L;*/
 
 	doing_privmsg = doing_notice = in_ctcp_flag = 0;
