@@ -311,6 +311,8 @@ char *opcode;
 #endif
 	from = next_arg(par, &par);
 	to = next_arg(par, &par);
+	if (!from || !to)
+		return 0;
 	if (!(s = find_dcc(from, "chat", NULL, DCC_BOTMODE, 0, 1, -1)) || s->is_read != idx)
 		return 0;
 #ifdef WANT_TCL
@@ -605,12 +607,16 @@ char *to, *from, *p, *i_dx;
 	if (p && !my_stricmp(p+1, get_server_nickname(from_server)))
 	{
 		char *t = strchr(to, ':');
+		int target_fd;
+
 		i_dx = to;
 		if (t)
 			*t = 0;
-		/* this ones for me */
-		dcc_printf(atoi(i_dx), "%s\n", args);		
-	} 
+		target_fd = atoi(i_dx);
+		/* validate the fd before passing to send() */
+		if (check_dcc_socket(target_fd))
+			dcc_printf(target_fd, "%s\n", args);
+	}
 	else
 	{
 		tandout_but(idx, "%s\n", args);
@@ -1013,6 +1019,8 @@ int cmd_help(int idx, char *par)
 	{
 		DCC_int *n;
 		n = get_socketinfo(idx);
+		if (!n)
+			return TCL_OK;
 		dcc_printf(idx, "DCC commands :\n");
 		for (i = 1, j = 1; C_dcc[i-1].name; i++)
 		{	
