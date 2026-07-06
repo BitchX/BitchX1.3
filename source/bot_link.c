@@ -352,6 +352,30 @@ int handle_dcc_bot(int idx, char *param)
 char *code;
 int i = 0;
 int found = 0;
+
+#ifdef WANT_USERLIST
+	{
+		UserList *ul;
+		SocketList *s = get_socket(idx);
+		DCC_int *n;
+		if (!s || !check_dcc_socket(idx) || !(n = get_socketinfo(idx)))
+			return 0;
+		/* Gate tand commands on incoming bot links:
+		 *   - userhost is NULL on the initiating side (CTCP handler already
+		 *     verified credentials before creating this DCC connection);
+		 *     skip the check in that case.
+		 *   - BOT_PASSWD_VAR allows password-only auth without a userlist
+		 *     entry (consistent with do_botlink in ctcp.c); skip then too.
+		 *   - Otherwise, verify the sender is a known bot (ADD_BOT flag). */
+		if (n->userhost && !get_string_var(BOT_PASSWD_VAR))
+		{
+			if (!(ul = lookup_userlevelc(s->server, n->userhost, "*", NULL)) ||
+			    !(ul->flags & ADD_BOT))
+				return 0;
+		}
+	}
+#endif
+
 	code = next_arg(param, &param);
 	if (!code)
 		return 0;
