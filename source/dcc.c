@@ -491,9 +491,9 @@ int SSL_dcc_create(SocketList *s, int sock, int doconnect)
 {
 	set_blocking(sock);
 	if(doconnect)
-		s->ctx = SSL_CTX_new (SSLv23_client_method());
+		s->ctx = SSL_CTX_new (TLS_client_method());
 	else
-		s->ctx = SSL_CTX_new (SSLv23_server_method());
+		s->ctx = SSL_CTX_new (TLS_server_method());
 	SSL_CTX_set_cipher_list(s->ctx, "ADH:@STRENGTH");
 	s->ssl_fd = SSL_new (s->ctx);
 	SSL_set_fd (s->ssl_fd, sock);
