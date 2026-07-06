@@ -75,9 +75,9 @@ void unflash (void)
 #if !defined(WINNT) && !defined(__EMX__)
 
 #if defined(HARD_UNFLASH) && !defined(CHARSET_CUSTOM)
-	fwrite("\033c", 5, 1, current_ftarget);		/* hard reset */
+	fwrite("\033c", 1, 2, current_ftarget);		/* hard reset */
 #else
-	fwrite("\033)0", 6, 1, current_ftarget);		/* soft reset */
+	fwrite("\033)0", 1, 3, current_ftarget);		/* soft reset */
 #endif
 
 #if defined(LATIN1)

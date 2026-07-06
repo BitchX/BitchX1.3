@@ -3479,7 +3479,7 @@ struct stat sb;
 		malloc_strcpy(&fullname, tmp);
 
 	if (
-		!(n->file = open(fullname, O_WRONLY | O_APPEND | O_BINARY, 0644)) ||
+		(n->file = open(fullname, O_WRONLY | O_APPEND | O_BINARY, 0644)) == -1 ||
 		(fstat(n->file, &sb) != 0) || 
                 (sb.st_size >= n->filesize)
 		)

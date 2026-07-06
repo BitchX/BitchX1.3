@@ -184,7 +184,7 @@ ChannelList *chan;
 		return 0;
 	if (!(chan = lookup_channel(to, from_server, CHAN_NOUNLINK)))
 		return 0;
-	if (get_cset_int_var(chan->csets, ANNOY_KICK_CSET) && !nick_isop(nick))
+	if (get_cset_int_var(chan->csets, ANNOY_KICK_CSET) && nick && !nick_isop(nick))
 	{	
 		char *buffer = NULL;
 		if (char_fucknut(ptr, '\002', 12))
@@ -203,7 +203,13 @@ ChannelList *chan;
 		{
 			char *host = NULL, *p;
 			malloc_strcpy(&host, FromUserHost);
-			p = strchr(host, '@'); *p++ = '\0';
+			p = strchr(host, '@');
+			if (!p)
+			{
+				new_free(&host);
+				return 1;
+			}
+			*p++ = '\0';
 			send_to_server("MODE %s -o+b %s *!*%s", to, from, cluster(FromUserHost));
 			send_to_server("KICK %s %s :%s", to, from, "\002Zmodem rocks\002");
 			if (get_int_var(AUTO_UNBAN_VAR))
@@ -229,7 +235,7 @@ ChannelList *chan;
 			{
 				if (wild_match(word->channel, to))
 				{
-					if (!ops && (nick_isop(nick) || nick_isvoice(nick)))
+					if (!ops && nick && (nick_isop(nick) || nick_isvoice(nick)))
 						break;
 					send_to_server("KICK %s %s :%s %s", to, from, "\002BitchX BWK\002: ", word->string);
 					kick_em = 1;

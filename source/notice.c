@@ -432,6 +432,8 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 
 		if (!dalnet)
 		{
+		    if (!q)
+			    goto done;
 		    if ((q = strchr(q + 1, ' ')))
 		    {
 			    q++;
@@ -497,13 +499,15 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		}
 		else /* hybrid */
 		{
+		    if (!q)
+			    goto done;
 		    for_ = q;
 		    if ((q = strchr(q, ' ')))
 		    {
 			    *q = 0;
 			    q += 2;
 		    }
-		    if ((port = strchr(q, ' ')))
+		    if (q && (port = strchr(q, ' ')))
 		    {
 			    *port = 0;
 			    port++;

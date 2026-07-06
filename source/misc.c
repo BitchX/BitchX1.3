@@ -4791,12 +4791,14 @@ int arg_flags;
 			tmpc = alias_special_char(&new_str, tmpc, copy, NULL, &arg_flags);
 			in_cparse--;
 			if (new_str)
+			{
 #ifdef RECURSE_CPARSE
 				strlcat(s, convert_output_format(new_str, NULL, NULL), RAW_BUFFER_SIZE);
 #else
 				strlcat(s, new_str, RAW_BUFFER_SIZE);
 #endif
-                        s = s + (strlen(new_str));
+				s = s + (strlen(new_str));
+			}
 			new_free(&new_str);
 			if (!tmpc) break;
 			continue;
