@@ -2867,6 +2867,7 @@ struct	hostent	*ar_answer(char *reip, int size, void (*func)(struct reslist *) )
 		ar_reinfo.re_na_look++;
 		(void)strncpy(rptr->re_name, rptr->re_he.h_name,
 			sizeof(rptr->re_name)-1);
+		rptr->re_name[sizeof(rptr->re_name)-1] = '\0';
 		rptr->re_he.h_name = NULL;
 		rptr->re_retries = MAX_RETRIES;/*_res.retry + 2;*/
 		rptr->re_sends = 1;
