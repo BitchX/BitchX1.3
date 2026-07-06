@@ -1449,6 +1449,10 @@ void numbered_command(char *from, int comm, char **ArgList)
 			for (i = len = 0; ArgList[i]; len += strlen(ArgList[i++]))
 				;
 			len += (i - 1);
+			/* guard against an argument-less numeric (hostile server):
+			 * i == 0 → len == -1 → alloca(0) → 1-byte OOB below */
+			if (len < 0)
+				len = 0;
 			ArgSpace = alloca(len + 1);
 			ArgSpace[0] = '\0';
 			/* this is cheating */

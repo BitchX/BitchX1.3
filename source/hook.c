@@ -378,7 +378,7 @@ static void add_numeric_hook (int numeric, char *nick, char *stuff, Noise noisy,
 	{
 		entry = (NumericList *) new_malloc(sizeof(NumericList));
 		entry->numeric = numeric;
-		sprintf(entry->name, "%3.3u", numeric);
+		snprintf(entry->name, sizeof entry->name, "%3.3u", numeric);
 		entry->next = NULL;
 		entry->list = NULL;
 		add_numeric_list(entry);
@@ -415,7 +415,7 @@ static void add_numeric_dll_hook (int numeric, Noise noise, int serial, char *ni
 	{
 		entry = (NumericList *) new_malloc(sizeof(NumericList));
 		entry->numeric = numeric;
-		sprintf(entry->name, "%3.3u", numeric);
+		snprintf(entry->name, sizeof entry->name, "%3.3u", numeric);
 		entry->next = NULL;
 		entry->list = NULL;
 		add_numeric_list(entry);
@@ -767,7 +767,7 @@ static int show_numeric_list (int numeric)
 
 	if (numeric)
 	{
-		sprintf(buf, "%3.3u", numeric);
+		snprintf(buf, sizeof buf, "%3.3u", numeric);
 		if ((tmp = find_numeric_list(numeric)))
 		{
 			for (list = tmp->list; list; list = list->next, cnt++)
@@ -1641,7 +1641,7 @@ void	do_stack_on (int type, char *args)
 					nptr->list = p->list;
 					nptr->next = NULL;
 					nptr->numeric = -which;
-					sprintf(nptr->name, "%3.3u", -which);
+					snprintf(nptr->name, sizeof nptr->name, "%3.3u", -which);
 					add_numeric_list(nptr);
 				}
 			}
