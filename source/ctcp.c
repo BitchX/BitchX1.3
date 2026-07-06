@@ -1126,6 +1126,7 @@ extern 	char *do_ctcp (char *from, char *to, char *str)
 	CtcpEntryDll  *dll = NULL;
 #endif
 	int delim_char = charcount(str, CTCP_DELIM_CHAR);
+	size_t str_len = strlen(str);	/* bound for final strcpy */
 
 	if (delim_char < 2)
 		return str;             /* No CTCPs. */
@@ -1333,7 +1334,7 @@ extern 	char *do_ctcp (char *from, char *to, char *str)
 
 	in_ctcp_flag--;
 	if (*local_ctcp_buffer)
-		return strcpy(str, local_ctcp_buffer);
+		return strmcpy(str, local_ctcp_buffer, str_len);
 	else
 		return empty_string;
 }
@@ -1361,6 +1362,7 @@ extern 	char *do_notice_ctcp (char *from, char *to, char *str)
 #endif
 
 	int delim_char = charcount(str, CTCP_DELIM_CHAR);
+	size_t str_len = strlen(str);	/* bound for final strcpy */
 
 	if (delim_char < 2)
 		return str;		/* No CTCPs. */
@@ -1463,7 +1465,7 @@ extern 	char *do_notice_ctcp (char *from, char *to, char *str)
 	/* Reset the window level/logging */
 	reset_display_target();
 
-	return strcpy(str, local_ctcp_buffer);
+	return strmcpy(str, local_ctcp_buffer, str_len);
 }
 
 

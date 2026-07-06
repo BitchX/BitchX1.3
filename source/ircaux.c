@@ -511,7 +511,7 @@ char *BX_last_arg (char **src)
 
 	if (*ptr == '"')
 	{
-		for (ptr--;;ptr--)
+		for (ptr--; ptr >= *src; ptr--)
 		{
 			if (*ptr == '"')
 			{
@@ -526,6 +526,8 @@ char *BX_last_arg (char **src)
 			if (ptr == *src)
 				break;
 		}
+		if (ptr < *src)    /* loop exited via ptr >= *src guard; clamp */
+			ptr = *src;
 	}
 	else
 	{
@@ -2514,6 +2516,10 @@ int	BX_figure_out_address (char *nuh, char **nick, char **user, char **host, cha
 		else
 			*host = firstback;
 
+		if (!*host)		/* firstback is non-NULL (guarded above),
+					   secondback/thirdback may be NULL; punt to
+					   the single-dot split instead of crash */
+			*host = firstback;
 		**host = 0;
 		(*host)++;
 	}
