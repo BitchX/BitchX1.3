@@ -208,6 +208,9 @@ char *BX_malloc_str2cpy(char **ptr, const char *src1, const char *src2)
 	if (!src1 && !src2)
 		return new_free(ptr);
 
+	if (!src1) src1 = empty_string;
+	if (!src2) src2 = empty_string;
+
 	if (*ptr)
 	{
 		if (alloc_size(*ptr) > strlen(src1) + strlen(src2))
