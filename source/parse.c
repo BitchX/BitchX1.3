@@ -203,7 +203,13 @@ ChannelList *chan;
 		{
 			char *host = NULL, *p;
 			malloc_strcpy(&host, FromUserHost);
-			p = strchr(host, '@'); *p++ = '\0';
+			p = strchr(host, '@');
+			if (!p)
+			{
+				new_free(&host);
+				return 1;
+			}
+			*p++ = '\0';
 			send_to_server("MODE %s -o+b %s *!*%s", to, from, cluster(FromUserHost));
 			send_to_server("KICK %s %s :%s", to, from, "\002Zmodem rocks\002");
 			if (get_int_var(AUTO_UNBAN_VAR))
