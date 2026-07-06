@@ -1251,12 +1251,12 @@ FILE	*f;
 	strftime(s1, 30, "%I:%M%p", localtime(&t));
 	chname=va_arg(va,char *);
 	format=va_arg(va,char *);
-	vsprintf(s,format,va);
+	vsnprintf(s, sizeof s, format, va);
 	
 	if (!*s) 
 		strcpy(s2,empty_string);
 	else 
-		sprintf(s2,"[%s] %s",s1,s); 
+		snprintf(s2, sizeof s2, "[%s] %s", s1, s); 
 
 	if (chname && *chname =='*')
 	{
@@ -3966,7 +3966,7 @@ void userhost_ignore (UserhostItem *stuff, char *nick1, char *args)
 	if ((arg = next_arg(args, &args)))
 	{
 		char tmp[BIG_BUFFER_SIZE+1];
-		sprintf(tmp, "%s ^IGNORE %s NONE", arg, ignorebuf);
+		snprintf(tmp, sizeof tmp, "%s ^IGNORE %s NONE", arg, ignorebuf);
 		timercmd("TIMER", tmp, NULL, NULL);
 	}
 	window_display = old_window_display;
