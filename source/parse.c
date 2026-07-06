@@ -946,8 +946,8 @@ static	void p_authenticate(char *from, char **ArgList)
 		}
 
 		strlcpy(buf, nick, sizeof buf);
-		strlcpy(buf + strlen(nick) + 1, nick, sizeof buf);
-		strlcpy(buf + strlen(nick) * 2 + 2, pass, sizeof buf);
+		strlcpy(buf + strlen(nick) + 1, nick, sizeof buf - (strlen(nick) + 1));
+		strlcpy(buf + strlen(nick) * 2 + 2, pass, sizeof buf - (strlen(nick) * 2 + 2));
 
 		if (my_base64_encode(buf, strlen(nick) * 2 + strlen(pass) + 2, &output) != -1)
 		{
