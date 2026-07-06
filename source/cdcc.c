@@ -409,6 +409,8 @@ static int do_local_send(char *command, char *args, char *rest)
 		
 	while (1)
 	{
+		ptr = NULL;
+
 		if (!(temp = next_arg(rest, &rest)))
 			break;
 
@@ -1178,10 +1180,24 @@ static int l_load(char *args, char *rest)
 		ptr->num = ++cdcc_numpacks;
 		malloc_strcpy(&ptr->file, buffer);
 
-		fgets(buffer, BIG_BUFFER_SIZE, file);
+		if (!fgets(buffer, BIG_BUFFER_SIZE, file))
+		{
+			put_it("%s: not a cdcc pack aborting",  cparse(get_string_var(CDCC_PROMPT_VAR)));
+			new_free(&ptr->file);
+			new_free((char **)&ptr);
+			fclose(file);
+			return 0;
+		}
 		chop(buffer, 1);
 
-		temp = strrchr(buffer, ' ');
+		if (!(temp = strrchr(buffer, ' ')))
+		{
+			put_it("%s: not a cdcc pack aborting",  cparse(get_string_var(CDCC_PROMPT_VAR)));
+			new_free(&ptr->file);
+			new_free((char **)&ptr);
+			fclose(file);
+			return 0;
+		}
 		*temp = '\0';
 		temp++;
 		malloc_strcpy(&ptr->desc, buffer);
@@ -1196,13 +1212,27 @@ static int l_load(char *args, char *rest)
 		}
 		ptr->numfiles = atoi(temp);
 
-		fgets(buffer, BIG_BUFFER_SIZE, file);
+		if (!fgets(buffer, BIG_BUFFER_SIZE, file))
+		{
+			put_it("%s: not a cdcc pack aborting",  cparse(get_string_var(CDCC_PROMPT_VAR)));
+			new_free(&ptr->file);
+			new_free((char **)&ptr);
+			fclose(file);
+			return 0;
+		}
 		chop(buffer, 1);
 		if (*buffer)
 			malloc_strcpy(&ptr->notes, buffer);
 	
 
-		fgets(buffer, BIG_BUFFER_SIZE, file);
+		if (!fgets(buffer, BIG_BUFFER_SIZE, file))
+		{
+			put_it("%s: not a cdcc pack aborting",  cparse(get_string_var(CDCC_PROMPT_VAR)));
+			new_free(&ptr->file);
+			new_free((char **)&ptr);
+			fclose(file);
+			return 0;
+		}
 		chop(buffer, 1);
 
 		if ((q = next_arg(p, &p)))
@@ -1259,8 +1289,13 @@ static void add_files(char *args, char *rest)
 	struct dirent *dir;
 	struct stat statbuf;
 
-	path = alloca(strlen(rest)+1);
-	strcpy(path, rest);
+	{
+		size_t rest_len = strlen(rest);
+		if (rest_len > BIG_BUFFER_SIZE)
+			rest_len = BIG_BUFFER_SIZE;
+		path = alloca(rest_len + 1);
+		strlcpy(path, rest, rest_len + 1);
+	}
 	
 	temp = alloca(BIG_BUFFER_SIZE + 1);
 	*temp = 0;
@@ -1277,7 +1312,7 @@ static void add_files(char *args, char *rest)
 		if ((fptr = strrchr(thefile, '/')))
 		{
 			*fptr++ = 0;
-			strcpy(f_path, thefile);
+			strlcpy(f_path, thefile, BIG_BUFFER_SIZE + 1);
 		}
 		else 
 		{
@@ -1297,9 +1332,9 @@ static void add_files(char *args, char *rest)
 		{
 			if (!dir->d_ino || !wild_match(fptr, dir->d_name))
 				continue;
-			sprintf(temp, "%s/%s", expand, dir->d_name);
+			snprintf(temp, BIG_BUFFER_SIZE + 1, "%s/%s", expand, dir->d_name);
 			stat(temp, &statbuf);
-			sprintf(temp, "\"%s/%s\"", expand, dir->d_name);
+			snprintf(temp, BIG_BUFFER_SIZE + 1, "\"%s/%s\"", expand, dir->d_name);
 			if (filebuf)
 				malloc_strcat(&filebuf, space);
 			malloc_strcat(&filebuf, temp);
@@ -1807,18 +1842,18 @@ static int l_echo(char *args, char *rest)
 static int l_stats(char *args, char *rest)
 {
 	char cdcc_minspeed_s[80];
-	sprintf(cdcc_minspeed_s, "%1.3f", cdcc_minspeed);
-	put_it("%s",convert_output_format("       %GÕÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ%K[%C    cdcc stat     %K]%GÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¸", NULL));
-	put_it("%s",convert_output_format("       %G³                                                                 ³", NULL));
-	put_it("%s",convert_output_format("       %G³%gÖÄ%K[%Cp%ctimer  %K]%gÄÖ-%K[%Ct%cype     %K]%gÄ·Ä%K[%Ct%cotal %Cp%cacks%K]%gÄÖÄ%K[%Cs%cent  %K]%gÄ·Ä[%Cq%cueue%K]%gÄ·%G³", NULL));
-	put_it("%s",convert_output_format("       %G³%gº %W$[-10]0 %gº  %W$[-10]1 %gº    %W$[-10]2 %gº %W$[-8]3 %gº %W$[-7]4 %gº%G³", "%d %s %d %d %d", ptimer, do_notice_list ?"notice":"privmsg", cdcc_numpacks, send_numpacks, numqueue));
-	put_it("%s",convert_output_format("       %G³%gÓÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄ½%G³", NULL));
-	put_it("%s",convert_output_format("       %G³ CDCC channel                                                    ³", NULL));
-	put_it("%s",convert_output_format("       %G³ %W$[63]0-%G ³", "%s", !public_channel ? "current channel": public_channel));
-	put_it("%s",convert_output_format("       %gÖÄÄÄÄ%K[%C %c  %C %c    %K]%gÄÄÄÖÄÄÄ%K[%C %c   %C %c    %K]%gÄÄÄ·ÄÄÄÄÄÄÄÄÄÄ%K[%Ct%coggles%K]%gÄÄÄÄÄÄÄÄÄÄ·", NULL));
-	put_it("%s",convert_output_format("       %gº %C %n    %W$[-6]0%n%R     %gº %C %n    %W$[-6]1%n%R     %gº   %Ct%nimer:   %W$[-3]2%n   %Ce%ncho:  %W$[-3]3 %gº", "1 1 %s %s", on_off(ptimer), on_off(do_cdcc_echo)));
-	put_it("%s",convert_output_format("       %gº %C %n    %W$[-6]0%n%R     %gº %C %n    %W$[-6]1%n%R     %gº %Cm%ninspeed:  %W$[-3]2%n   %Cs%necure:%W$[-3]3 %gº", "1 1 %s %s", cdcc_minspeed == 0.0 ? "off":cdcc_minspeed_s, on_off(get_string_var(CDCC_SECURITY_VAR) ? 1 : 0)));
-	put_it("%s",convert_output_format("       %gÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½", NULL));
+	snprintf(cdcc_minspeed_s, sizeof cdcc_minspeed_s, "%1.3f", cdcc_minspeed);
+	put_it("%s",convert_output_format("       %Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%K[%C    cdcc stat     %K]%Gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¸", NULL));
+	put_it("%s",convert_output_format("       %Gï¿½                                                                 ï¿½", NULL));
+	put_it("%s",convert_output_format("       %Gï¿½%gï¿½ï¿½%K[%Cp%ctimer  %K]%gï¿½ï¿½-%K[%Ct%cype     %K]%gÄ·ï¿½%K[%Ct%cotal %Cp%cacks%K]%gï¿½ï¿½ï¿½%K[%Cs%cent  %K]%gÄ·ï¿½[%Cq%cueue%K]%gÄ·%Gï¿½", NULL));
+	put_it("%s",convert_output_format("       %Gï¿½%gï¿½ %W$[-10]0 %gï¿½  %W$[-10]1 %gï¿½    %W$[-10]2 %gï¿½ %W$[-8]3 %gï¿½ %W$[-7]4 %gï¿½%Gï¿½", "%d %s %d %d %d", ptimer, do_notice_list ?"notice":"privmsg", cdcc_numpacks, send_numpacks, numqueue));
+	put_it("%s",convert_output_format("       %Gï¿½%gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½%Gï¿½", NULL));
+	put_it("%s",convert_output_format("       %Gï¿½ CDCC channel                                                    ï¿½", NULL));
+	put_it("%s",convert_output_format("       %Gï¿½ %W$[63]0-%G ï¿½", "%s", !public_channel ? "current channel": public_channel));
+	put_it("%s",convert_output_format("       %gï¿½ï¿½ï¿½ï¿½ï¿½%K[%C %c  %C %c    %K]%gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%K[%C %c   %C %c    %K]%gï¿½ï¿½Ä·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½%K[%Ct%coggles%K]%gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä·", NULL));
+	put_it("%s",convert_output_format("       %gï¿½ %C %n    %W$[-6]0%n%R     %gï¿½ %C %n    %W$[-6]1%n%R     %gï¿½   %Ct%nimer:   %W$[-3]2%n   %Ce%ncho:  %W$[-3]3 %gï¿½", "1 1 %s %s", on_off(ptimer), on_off(do_cdcc_echo)));
+	put_it("%s",convert_output_format("       %gï¿½ %C %n    %W$[-6]0%n%R     %gï¿½ %C %n    %W$[-6]1%n%R     %gï¿½ %Cm%ninspeed:  %W$[-3]2%n   %Cs%necure:%W$[-3]3 %gï¿½", "1 1 %s %s", cdcc_minspeed == 0.0 ? "off":cdcc_minspeed_s, on_off(get_string_var(CDCC_SECURITY_VAR) ? 1 : 0)));
+	put_it("%s",convert_output_format("       %gï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä½", NULL));
 	return 0;
 }
 

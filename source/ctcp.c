@@ -643,8 +643,6 @@ CTCP_HANDLER(do_sed)
 		*crypt_who;
 	char	*ret = NULL, *ret2 = NULL;
 
-	if (*from == '=')
-		crypt_who = from;
 	if (my_stricmp(to, get_server_nickname(from_server)))
 		crypt_who = to;
 	else
@@ -1503,6 +1501,12 @@ extern	void	send_ctcp (int type, char *to, int datatag, char *format, ...)
 		va_start(args, format);
 		vsnprintf(putbuf, BIG_BUFFER_SIZE, format, args);
 		va_end(args);
+		{
+			char *p;
+			for (p = putbuf; *p; p++)
+				if (*p == '\r' || *p == '\n' || *p == '\001')
+					*p = ' ';
+		}
 		
 		do_hook(SEND_CTCP_LIST, "%s %s %s %s", 
 				ctcp_type[type], to, 

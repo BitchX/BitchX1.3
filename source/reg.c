@@ -406,14 +406,17 @@ int BX_wild_match (const char *p, const char *str)
 			switch (ptr[1]) 
 			{
 					/* step over it and add to nest */
-				case '[' :  ptr2 = ptr + 2 ;
+				case '[' :  if (!ptr[1]) { ptr2 = ptr + 1; break; }
+					    ptr2 = ptr + 2 ;
 					    nest++;
 					    break;
 					/* step over it and remove nest */
-				case ']' :  ptr2 = ptr + 2;
+				case ']' :  if (!ptr[1]) { ptr2 = ptr + 1; break; }
+					    ptr2 = ptr + 2;
 					    nest--;
 					    break;
 				default:
+					    if (!ptr[1]) { ptr2 = ptr + 1; break; }
 					    ptr2 = ptr + 2;
 					    break;
 			}
