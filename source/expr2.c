@@ -773,7 +773,6 @@ __inline static	void	pop2s_a (expr_info *c, char **s, char **t, TOKEN *v)
 	*v = t1;
 }
 
-#if notused
 __inline static void	pop2b_a (expr_info *c, BooL *a, BooL *b, TOKEN *v)
 {
 	TOKEN	t1, t2;
@@ -788,7 +787,6 @@ __inline static void	pop2b_a (expr_info *c, BooL *a, BooL *b, TOKEN *v)
 	new_free(&x);
 	new_free(&y);
 }
-#endif
 
 __inline static	void	pop3 (expr_info *c, NUMBER *a, TOKEN *v, TOKEN *w)
 {
@@ -887,6 +885,15 @@ void	op (expr_info *cx, int what)
 			debugyell("O: %s =  %s (%ld %ld) -> %ld",  \
 				get_token(cx, v), #x, a, b, x); \
 		pushn(cx, setnvar(cx, v, (x))); \
+		break; \
+	}
+#define IMPLIED_BOOLEAN(x) \
+	{ \
+		pop2b_a(cx, &c, &d, &v); \
+		if (x_debug & DEBUG_NEW_MATH_DEBUG) \
+			debugyell("O: %s =  %s (%ld %ld) -> %ld",  \
+				get_token(cx, v), #x, c, d, (long)(x)); \
+		pushn(cx, setnvar(cx, v, (long)(x))); \
 		break; \
 	}
 #define AUTO_UNARY(x, y) \
@@ -1040,9 +1047,9 @@ void	op (expr_info *cx, int what)
 		case OREQ:	IMPLIED(a | b)
 		case SHLEFTEQ:	IMPLIED(a << b)
 		case SHRIGHTEQ: IMPLIED(a >> b)
-		case DANDEQ:	IMPLIED((long)(c && d))
-		case DOREQ:	IMPLIED((long)(c || d))
-		case DXOREQ:	IMPLIED((long)((c && !d) || (!c && d)))
+		case DANDEQ:	IMPLIED_BOOLEAN(c && d)
+		case DOREQ:	IMPLIED_BOOLEAN(c || d)
+		case DXOREQ:	IMPLIED_BOOLEAN((c && !d) || (!c && d))
 		case STRCATEQ:
 			pop2s_a(cx, &s, &t, &v);
 			if (x_debug & DEBUG_NEW_MATH_DEBUG) 
