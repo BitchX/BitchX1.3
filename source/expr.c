@@ -302,7 +302,14 @@ union
 	 * CONS: Every operator is evaluated right-to-left which is *WRONG*.
 	 */
 
-	for (ptr = str; *ptr; ptr++)
+	/*
+	 * The body can leave ptr sitting on the terminating NUL -- e.g. after
+	 * ptr = lastop(ptr) on a trailing operator, or a case that consumed the
+	 * final character with its own ptr++.  Guard the loop increment so it
+	 * never advances past the NUL, which would make the next *ptr test an
+	 * out-of-bounds read one byte beyond the expression buffer.
+	 */
+	for (ptr = str; *ptr; *ptr ? ptr++ : ptr)
 	{
 		if (got_sloshed)
 		{
