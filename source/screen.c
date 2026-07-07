@@ -655,8 +655,9 @@ const 	u_char	*ptr = NULL;
 
 			buffer[word_break] = c;
 
-			if (!*cont && do_indent && (indent < (max_cols / 3)) &&
-					(strlen(cont_ptr) < indent))
+			if (!*cont && do_indent && (indent > 0) &&
+					(indent < (max_cols / 3)) &&
+					(strlen(cont_ptr) < (size_t)indent))
 			{
 				cont = alloca(indent+10);
 				sprintf(cont, "%-*s", indent, cont_ptr);
