@@ -895,7 +895,7 @@ void got_initial_version_28 (char **ArgList)
 				set_server_version(from_server, Server2_8hybrid);
 			else if (strstr(sversion, "comstud"))
 				set_server_version(from_server, Server2_8comstud);
-			else if (strstr(channel_modes, "che"))
+			else if (channel_modes && strstr(channel_modes, "che"))
 				set_server_version(from_server, Server2_8ts4); 
 			else
 				set_server_version(from_server, Server2_8);
