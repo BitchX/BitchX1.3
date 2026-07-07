@@ -308,7 +308,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		else
 			serversay(1, from_server, "%s", convert_output_format(fget_string_var(FORMAT_SERVER_NOTICE_KLINE_FSET), "%s %s %s %s", update_clock(GET_TIME), for_, temp2, temp));
 	}
-	else if (!strncmp(line, "Rejecting vlad/joh/com bot:", 27) || !strncmp(line+14, "Rejecting eggdrop bot:", 20) || !strncmp(line, "Rejecting ojnk/annoy bot", 24))
+	else if (!strncmp(line, "Rejecting vlad/joh/com bot:", 27) || (strlen(line) >= 14 && !strncmp(line+14, "Rejecting eggdrop bot:", 20)) || !strncmp(line, "Rejecting ojnk/annoy bot", 24))
 	{
 		client_bot++;
 		if (!(flags & POSSIBLE_BOT))
@@ -579,7 +579,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		p = line + 26;
 		serversay(1, from_server, "%s", convert_output_format(" Nick Flooding %K[%B$1-%K]", "%s %s", update_clock(GET_TIME), for_));
 	}
-	else if (!strncmp(line, "Kill line active for", 20) || !strncmp(line+14, "K-line active for", 17))
+	else if (!strncmp(line, "Kill line active for", 20) || (strlen(line) >= 14 && !strncmp(line+14, "K-line active for", 17)))
 	{
 
 		if (!(flags & KILL_ACTIVE))
