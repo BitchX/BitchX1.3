@@ -660,6 +660,12 @@ void numbered_command(char *from, int comm, char **ArgList)
 	case 301:		/* #define RPL_AWAY             301 */
 	{
 		PasteArgs(ArgList, 1);
+		/* A short RPL_AWAY (hostile/broken server sent one fewer arg)
+		 * leaves ArgList[1] NULL after the paste; the strcmp,
+		 * malloc_strcpy and hook below all assume a non-NULL away
+		 * message -> strcmp(last_away_msg, NULL) is a remote crash. */
+		if (!ArgList[1])
+			ArgList[1] = empty_string;
 		if (get_int_var(SHOW_AWAY_ONCE_VAR))
 		{
 			if (!last_away_msg || strcmp(last_away_nick, from) || strcmp(last_away_msg, ArgList[1]))
