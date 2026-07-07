@@ -1410,6 +1410,11 @@ static int check_mode_change(NickList *nick, char type_mode, char *from, char *t
 {
 time_t right_now = now;
 int found = 0;
+	/* nick is a mode target looked up from a server-supplied name; a
+	 * short/desynced MODE (e.g. "+o" for a nick not in our nicklist) makes
+	 * find_nicklist_in_channellist() return NULL here. */
+	if (!nick)
+		return found;
 	if (!nick->userlist && !isme(nick->nick))
 	{
 		if ((!nick_isop(nick) && type_mode == '+') || (nick_isop(nick) && type_mode == '-'))
@@ -1458,6 +1463,13 @@ time_t right_now;
 	set_display_target(channel, LOG_CRAP);
 	new_mode = LOCAL_COPY(line);
 	new_mode = next_arg(new_mode, &n);
+	/* An empty MODE argument leaves new_mode (and n) NULL; bail before the
+	 * mode-walk loop dereferences new_mode or LOCAL_COPY()s a NULL n. */
+	if (!new_mode)
+	{
+		reset_display_target();
+		return;
+	}
 	if (!nick->userlist || !check_channel_match(nick->userlist->channels, channel))
 	{
 		char *p;
@@ -1477,6 +1489,12 @@ time_t right_now;
 					break;
 				case 'o':
 					this_nick = next_arg(list_nicks, &list_nicks);
+					/* fewer nick args than 'o' flags: next_arg
+					 * returned NULL; skip rather than feed NULL to
+					 * find_nicklist_in_channellist (hash_nickname
+					 * would index NickListTable[-1]). */
+					if (!this_nick)
+						break;
 					nick = find_nicklist_in_channellist(this_nick, chan, 0);
 					found += check_mode_change(nick, type_mode, from, this_nick, channel);
 					break;
@@ -1584,6 +1602,10 @@ static void strip_modes (char *from, char *channel, char *line)
 	
 	copy = free_copy;
 	mode = next_arg(copy, &copy);
+	/* An empty MODE argument makes next_arg return NULL; the loops below
+	 * dereference mode unconditionally, so stop here. */
+	if (!mode)
+		return;
 	if (is_channel(channel))
 	{
 		for (pointer = mode; *pointer; pointer++)
