@@ -4616,6 +4616,17 @@ char *timestamp_str = get_string_var(TIMESTAMP_STRING_VAR);
 		{
 			char *cs;
 			tmpc++;
+			/*
+			 * A '%' at the very end of the string leaves tmpc on the
+			 * terminating NUL.  Several branches below (e.g. the
+			 * strchr(color_mod, *tmpc) test) treat that NUL as a valid
+			 * code -- strchr() matches the terminator -- and then advance
+			 * tmpc a second time, walking past the end of the buffer and
+			 * causing an out-of-bounds read on the next loop iteration.
+			 * Stop cleanly on a trailing '%'.
+			 */
+			if (!*tmpc)
+				break;
 			this_color = BLACK;
 			if (*tmpc == '%')
 			{
