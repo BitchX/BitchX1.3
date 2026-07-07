@@ -161,8 +161,20 @@ union
 	lastc = varname + strlen(varname) - 1;				\
 	while (lastc > varname && *lastc == ' ')			\
 		*lastc-- = '\0';					\
-	while (my_isspace(*varname))					\
-		 varname++;						\
+	/*								\
+	 * Trim leading whitespace IN PLACE.  varname is the base of an	\
+	 * expand_alias() heap buffer that CLEANUP_IMPLIED frees with	\
+	 * new_free(&varname); advancing the pointer past spaces (as the	\
+	 * old code did) left it interior to the allocation and made that	\
+	 * free an invalid interior free / heap corruption.		\
+	 */								\
+	{								\
+		char *_vp = varname;					\
+		while (my_isspace(*_vp))				\
+			_vp++;						\
+		if (_vp != varname)					\
+			memmove(varname, _vp, strlen(_vp) + 1);		\
+	}								\
 									\
 	/* Get the value of the implied argument */			\
 	result1 = get_variable(varname);				\
