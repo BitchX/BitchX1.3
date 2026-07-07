@@ -61,7 +61,13 @@ static char *canon_number (char *input)
 static char	*lastop (char *ptr)
 {
 	/* dont ask why i put the space in there. */
-	while (ptr[1] && strchr("!=<>&^|#+/%,-* ", ptr[1]))
+	/*
+	 * *ptr must be checked first: callers can hand us a pointer that already
+	 * sits on the string terminator (e.g. a ternary '?' that was the last
+	 * character and got overwritten with '\0'), and reading ptr[1] in that
+	 * case is an out-of-bounds read one byte past the buffer.
+	 */
+	while (*ptr && ptr[1] && strchr("!=<>&^|#+/%,-* ", ptr[1]))
 		ptr++;
 	return ptr;
 }
