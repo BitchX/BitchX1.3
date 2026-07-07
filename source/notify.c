@@ -910,7 +910,7 @@ NotifyItem *new_n;
 		if (online)
 		{
 			new_free(&new_n->host);
-			new_n->host = m_opendup(args[1], "@", args[2], NULL);
+			new_n->host = m_opendup(args[1] ? args[1] : empty_string, "@", args[2] ? args[2] : empty_string, NULL);
 			if (!new_n->flag)
 			{
 				new_n->lastseen = 0;
