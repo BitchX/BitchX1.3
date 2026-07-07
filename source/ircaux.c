@@ -781,7 +781,10 @@ int	BX_my_strnstr (register const unsigned char *str1, register const unsigned c
 /* chop -- chops off the last character. capiche? */
 char *BX_chop (char *stuff, int nchar)
 {
-	size_t sl = strlen(stuff);
+	size_t sl;
+	if (!stuff)
+		return stuff;		/* never strlen(NULL) */
+	sl = strlen(stuff);
 	if (nchar > 0 && sl > 0 && nchar <= sl)
 		stuff[sl - nchar] = 0;
 	else if (nchar > sl)
@@ -1776,7 +1779,11 @@ char *BX_plural (int number)
 
 char *BX_my_ctime (time_t when)
 {
-	return chop(ctime(&when), 1);
+	/* ctime() returns NULL for a time_t whose broken-down year is out of
+	 * range (e.g. an attacker-supplied CTCP "UTC <huge-number>"); passing
+	 * that NULL to chop() -> strlen(NULL) is a remote crash. */
+	char *t = ctime(&when);
+	return t ? chop(t, 1) : empty_string;
 }
 
 char *BX_my_ltoa (long foo)
