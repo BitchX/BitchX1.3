@@ -3599,7 +3599,7 @@ int is_server_valid(char *name, int server)
 
 void parse_364(char *channel, char *args, char *subargs)
 {
-	if (!*channel || !*args || from_server < 0)
+	if (!channel || !*channel || !args || !*args || from_server < 0)
 		return;
 
 	add_server(&server_list[from_server].tmplink, channel, args, atol(subargs), now);
