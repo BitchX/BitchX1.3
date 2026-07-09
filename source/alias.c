@@ -990,6 +990,18 @@ void	add_local_alias	(char *name, char *stuff)
 	 */
 	if (!(tmp = find_local_alias (name, &list)))
 	{
+		/*
+		 * A local variable can only live in an active runtime frame.
+		 * When there is none (wind_index < 0 / call_stack == NULL, e.g. a
+		 * top-level "${x := 1}" evaluated outside any alias or function),
+		 * find_local_alias() leaves list NULL; adding to it would pass a
+		 * NULL/out-of-bounds array to add_to_array().  Just drop it.
+		 */
+		if (!list)
+		{
+			new_free(&name);
+			return;
+		}
 		tmp = make_new_Alias(name);
 		add_to_array ((Array *)list, (Array_item *)tmp);
 	}
@@ -1384,7 +1396,7 @@ static Alias *	find_local_alias (char *name, AliasSet **list)
 		return alias;
 	}
 	else if (list)
-		*list = &call_stack[wind_index].alias;
+		*list = (wind_index >= 0) ? &call_stack[wind_index].alias : NULL;
 
 	return NULL;
 }

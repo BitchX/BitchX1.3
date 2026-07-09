@@ -1923,7 +1923,7 @@ void parse_server(char *orig_line)
 	end = len + orig_line;
 	if (*--end == '\n')
 		*end-- = 0;
-	if (*end == '\r')
+	if (end >= orig_line && *end == '\r')
 		*end-- = 0;
 
 	if (x_debug & DEBUG_INBOUND)

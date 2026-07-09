@@ -214,6 +214,19 @@ void BX_add_to_window(Window *window, const unsigned char *str)
 		                                                
 		add_to_log(window->log_fp, 0, str, window->mangler);
 		add_to_lastlog(window, str);
+		/*
+		 * In dumb mode the window has no display list (display_ip is
+		 * NULL -- resize_window_display() bails before allocating it),
+		 * so the split/display path below would deref NULL.  Callers that
+		 * reach add_to_window() directly (e.g. /window echo) bypass the
+		 * dumb-mode guard in add_to_screen(); mirror it here.
+		 */
+		if (dumb_mode)
+		{
+			puts((const char *)str);
+			fflush(stdout);
+			return;
+		}
 		display_standout(OFF);
 		display_bold(OFF);
 
@@ -655,8 +668,9 @@ const 	u_char	*ptr = NULL;
 
 			buffer[word_break] = c;
 
-			if (!*cont && do_indent && (indent < (max_cols / 3)) &&
-					(strlen(cont_ptr) < indent))
+			if (!*cont && do_indent && (indent > 0) &&
+					(indent < (max_cols / 3)) &&
+					(strlen(cont_ptr) < (size_t)indent))
 			{
 				cont = alloca(indent+10);
 				sprintf(cont, "%-*s", indent, cont_ptr);

@@ -61,7 +61,13 @@ static char *canon_number (char *input)
 static char	*lastop (char *ptr)
 {
 	/* dont ask why i put the space in there. */
-	while (ptr[1] && strchr("!=<>&^|#+/%,-* ", ptr[1]))
+	/*
+	 * *ptr must be checked first: callers can hand us a pointer that already
+	 * sits on the string terminator (e.g. a ternary '?' that was the last
+	 * character and got overwritten with '\0'), and reading ptr[1] in that
+	 * case is an out-of-bounds read one byte past the buffer.
+	 */
+	while (*ptr && ptr[1] && strchr("!=<>&^|#+/%,-* ", ptr[1]))
 		ptr++;
 	return ptr;
 }
@@ -155,8 +161,20 @@ union
 	lastc = varname + strlen(varname) - 1;				\
 	while (lastc > varname && *lastc == ' ')			\
 		*lastc-- = '\0';					\
-	while (my_isspace(*varname))					\
-		 varname++;						\
+	/*								\
+	 * Trim leading whitespace IN PLACE.  varname is the base of an	\
+	 * expand_alias() heap buffer that CLEANUP_IMPLIED frees with	\
+	 * new_free(&varname); advancing the pointer past spaces (as the	\
+	 * old code did) left it interior to the allocation and made that	\
+	 * free an invalid interior free / heap corruption.		\
+	 */								\
+	{								\
+		char *_vp = varname;					\
+		while (my_isspace(*_vp))				\
+			_vp++;						\
+		if (_vp != varname)					\
+			memmove(varname, _vp, strlen(_vp) + 1);		\
+	}								\
 									\
 	/* Get the value of the implied argument */			\
 	result1 = get_variable(varname);				\
@@ -296,7 +314,14 @@ union
 	 * CONS: Every operator is evaluated right-to-left which is *WRONG*.
 	 */
 
-	for (ptr = str; *ptr; ptr++)
+	/*
+	 * The body can leave ptr sitting on the terminating NUL -- e.g. after
+	 * ptr = lastop(ptr) on a trailing operator, or a case that consumed the
+	 * final character with its own ptr++.  Guard the loop increment so it
+	 * never advances past the NUL, which would make the next *ptr test an
+	 * out-of-bounds read one byte beyond the expression buffer.
+	 */
+	for (ptr = str; *ptr; *ptr ? ptr++ : ptr)
 	{
 		if (got_sloshed)
 		{

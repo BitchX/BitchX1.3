@@ -45,6 +45,20 @@ static	void	parse_server_notice (char *, char *);
 int	doing_notice = 0;
 unsigned long default_swatch = -1;
 
+/*
+ * skip_chopped: advance past up to nchar leading bytes of a server-supplied
+ * remainder without ever stepping past the string terminator.  Several of the
+ * server-notice parsers below chop the trailing byte and then skip a leading
+ * byte or two; on short remainders the naive "temp2 + n" walked past the NUL,
+ * and the subsequent %s / strchr() then read adjacent buffer bytes.
+ */
+static char *skip_chopped (char *p, int nchar)
+{
+	while (nchar-- > 0 && *p)
+		p++;
+	return p;
+}
+
 
 
 long	oper_kills = 0,
@@ -222,7 +236,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 			if (temp2)
 			{
 				chop(temp2, 1);
-				q = temp2+2;
+				q = skip_chopped(temp2, 2);
 			}
 		}
 		else if (!strncmp(line+10, "Entering", 8))
@@ -233,7 +247,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 			if (temp2)
 			{
 				chop(temp2, 1);
-				q = temp2+2;
+				q = skip_chopped(temp2, 2);
 			}
 		}
 		else
@@ -244,7 +258,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 			if (temp2)
 			{
 				chop(temp2, 1);
-				q = temp2+2;
+				q = skip_chopped(temp2, 2);
 			}
 		}
 		serversay(1, from_server, "%s", convert_output_format(fget_string_var(FORMAT_SERVER_NOTICE_TRAFFIC_HIGH_FSET), "%s %s %s", update_clock(GET_TIME), for_, q));
@@ -294,7 +308,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		else
 			serversay(1, from_server, "%s", convert_output_format(fget_string_var(FORMAT_SERVER_NOTICE_KLINE_FSET), "%s %s %s %s", update_clock(GET_TIME), for_, temp2, temp));
 	}
-	else if (!strncmp(line, "Rejecting vlad/joh/com bot:", 27) || !strncmp(line+14, "Rejecting eggdrop bot:", 20) || !strncmp(line, "Rejecting ojnk/annoy bot", 24))
+	else if (!strncmp(line, "Rejecting vlad/joh/com bot:", 27) || (strlen(line) >= 14 && !strncmp(line+14, "Rejecting eggdrop bot:", 20)) || !strncmp(line, "Rejecting ojnk/annoy bot", 24))
 	{
 		client_bot++;
 		if (!(flags & POSSIBLE_BOT))
@@ -476,7 +490,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 			if (temp2)
 			{
 				chop(temp2, 1);
-				q = temp2+1;
+				q = skip_chopped(temp2, 1);
 			}
 		} 
 		else if (conn && dalnet)
@@ -491,7 +505,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 				if (temp2)
 				{
 					chop(temp2, 1);
-					q = temp2+1;
+					q = skip_chopped(temp2, 1);
 				}
 			}
 		}
@@ -501,7 +515,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		    if ((q = strchr(q, ' ')))
 		    {
 			    *q = 0;
-			    q += 2;
+			    q += q[1] ? 2 : 1;
 		    }
 		    if ((port = strchr(q, ' ')))
 		    {
@@ -527,7 +541,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		if (temp2)
 		{
 			chop(temp2, 1);
-			q = temp2+1;
+			q = skip_chopped(temp2, 1);
 		}
 		serversay(1, from_server, "%s", convert_output_format(fget_string_var(FORMAT_SERVER_NOTICE_CLIENT_TERM_FSET), "%s %s %s", update_clock(GET_TIME), for_, q));
 	}
@@ -565,7 +579,7 @@ irc.BitchX.com *** Notice -- Nick collision on nickserv(irc.distracted.net <-
 		p = line + 26;
 		serversay(1, from_server, "%s", convert_output_format(" Nick Flooding %K[%B$1-%K]", "%s %s", update_clock(GET_TIME), for_));
 	}
-	else if (!strncmp(line, "Kill line active for", 20) || !strncmp(line+14, "K-line active for", 17))
+	else if (!strncmp(line, "Kill line active for", 20) || (strlen(line) >= 14 && !strncmp(line+14, "K-line active for", 17)))
 	{
 
 		if (!(flags & KILL_ACTIVE))
