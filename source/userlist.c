@@ -1674,7 +1674,7 @@ BUILT_IN_COMMAND(savelists)
 	/* this looks like a bug but it isn't. formats are saved in a
 	 * differant file altogether.
 	 */
-	save_formats(outfile);
+	save_formats(NULL);
 #endif
 }
 
