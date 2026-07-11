@@ -454,6 +454,16 @@ int		in_rhs = 0,
 
 	lhs_buffer[0] = 0;
 	rhs_buffer[0] = 0;
+	/* lhs_fillchar/rhs_fillchar are only ever assigned from a
+	 * printable byte in the buffer below; if the format has no
+	 * printable byte before the pad point (e.g. an empty rhs
+	 * segment), the loop never writes them and they are read
+	 * as fill characters while still holding uninitialized
+	 * stack memory.  Default to a space. */
+	lhs_fillchar[0] = ' ';
+	lhs_fillchar[1] = 0;
+	rhs_fillchar[0] = ' ';
+	rhs_fillchar[1] = 0;
 	if (!buffer || !*buffer)
 		return;
 	if (get_int_var(STATUS_DOES_EXPANDOS_VAR))
@@ -729,7 +739,16 @@ void make_status(Window *win)
 			*prc = &pr_lhs, 
 			i;
 
-		fillchar[0] = fillchar[1] = 0;
+		/* lhs_fillchar is reset here, but rhs_fillchar (used once
+		 * the loop below crosses into the %> segment) was never
+		 * initialized, so a format whose right-hand segment has
+		 * no printable byte before the pad point reads it as a
+		 * fill character while it still holds uninitialized
+		 * stack memory.  Default both to a space. */
+		fillchar[0] = ' ';
+		fillchar[1] = 0;
+		rhs_fillchar[0] = ' ';
+		rhs_fillchar[1] = 0;
 
 		if (!win->wset || !win->wset->status_format[line])
 			continue;
