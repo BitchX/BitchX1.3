@@ -2181,7 +2181,14 @@ const 	u_char 	*after = start;
 		if (val == lhs)
 		{
 			val = rhs;
-			if (*after == ',')
+			/* A literal comma in status/message text right after a
+			 * color code was being swallowed unconditionally, since
+			 * any comma here was assumed to introduce a mIRC fg,bg
+			 * background spec.  Only treat it that way when a
+			 * background value (or the -1 terminator) actually
+			 * follows; otherwise leave the comma as ordinary text. */
+			if (*after == ',' && (isdigit((unsigned char)after[1]) ||
+					(after[1] == '-' && after[2] == '1')))
 				continue;
 		}
 		break;
