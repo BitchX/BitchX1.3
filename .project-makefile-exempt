@@ -1,0 +1,2 @@
+Reason: Legacy autotools project; builds via ./configure and sub-Makefiles.
+Ticket: #2517

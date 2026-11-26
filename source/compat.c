@@ -880,7 +880,10 @@ unsigned long strtoul (const char *nptr, char **endptr, int base)
 /* --- end of strtoul.c --- */
 
 /* --- start of scandir.c --- */
-#ifndef HAVE_SCANDIR
+#if !defined(HAVE_SCANDIR) || defined(TEST_COMPAT)
+#ifdef TEST_COMPAT
+#define scandir bx_scandir
+#endif
 /*
  * Scandir.c -- A painful file for painful operating systems
  *
@@ -899,7 +902,15 @@ unsigned long strtoul (const char *nptr, char **endptr, int base)
  */
 
 
-#define RESIZEDIR(x, y, z) x = realloc((void *)(x), sizeof(y) * (z))
+#define RESIZEDIR(x, y, z) do { \
+	void *_tmp_realloc = realloc((void *)(x), sizeof(y) * (z)); \
+	if (!_tmp_realloc) { \
+		free(x); \
+		(x) = NULL; \
+	} else { \
+		(x) = _tmp_realloc; \
+	} \
+} while (0)
 
 /* Initial guess at directory size. */
 #define INITIAL_SIZE	30
@@ -945,10 +956,16 @@ int	scandir (const char *name,
 		return -1;
 
 	if (access(name, R_OK | X_OK))
+	{
+		free(names);
 		return -1;
+	}
 
 	if (!(dp = opendir(name)))
+	{
+		free(names);
 		return -1;
+	}
 
 	/* Read entries in the directory. */
 	for (i = 0; (e = readdir(dp));)
@@ -1069,6 +1086,11 @@ int bsd_setenv(const char *name, const char *value, int rewrite)
 	register char *c;
 	int l_value, offset;
 
+	if (!name || !*name || strchr(name, '=') || !value) {
+		errno = EINVAL;
+		return (-1);
+	}
+
 	if (*value == '=')			/* no `=' in value */
 		++value;
 	l_value = strlen(value);
@@ -1085,10 +1107,11 @@ int bsd_setenv(const char *name, const char *value, int rewrite)
 
 		for (p = environ, cnt = 0; *p; ++p, ++cnt);
 		if (alloced) {			/* just increase size */
-			environ = (char **)realloc((char *)environ,
+			char **new_environ = (char **)realloc((char *)environ,
 			    (size_t)(sizeof(char *) * (cnt + 2)));
-			if (!environ)
+			if (!new_environ)
 				return (-1);
+			environ = new_environ;
 		}
 		else {				/* get new space */
 			alloced = 1;		/* copy old entries into it */
@@ -2404,7 +2427,7 @@ register unsigned int count = 0;
 
 /* ----------------------- start of base64 stuff ---------------------------*/
 /*
- * Copyright (c) 1995-2001 Kungliga Tekniska Högskolan
+ * Copyright (c) 1995-2001 Kungliga Tekniska HÃ¶gskolan
  * (Royal Institute of Technology, Stockholm, Sweden).
  * All rights reserved.
  *

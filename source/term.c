@@ -74,18 +74,20 @@ void put_it(const char *str, ...) { return; }
 
 /* Systems cant seem to agree where to put these... */
 #ifdef HAVE_TERMINFO
-extern	int		setupterm();
-extern	char		*tigetstr();
-extern	int		tigetnum();
-extern	int		tigetflag();
+extern	int		setupterm(const char *, int, int *);
+extern	char		*tigetstr(const char *);
+extern	int		tigetnum(const char *);
+extern	int		tigetflag(const char *);
 #define Tgetstr(x, y) 	tigetstr(x.iname)
 #define Tgetnum(x) 	tigetnum(x.iname);
 #define Tgetflag(x) 	tigetflag(x.iname);
 #else
+#if !defined(NCURSES_VERSION) && !defined(tgetent)
 extern	int		tgetent();
 extern	char		*tgetstr();
 extern	int		tgetnum();
 extern	int		tgetflag();
+#endif
 #define Tgetstr(x, y) 	tgetstr(x.tname, &y)
 #define Tgetnum(x) 	tgetnum(x.tname)
 #define Tgetflag(x) 	tgetflag(x.tname)

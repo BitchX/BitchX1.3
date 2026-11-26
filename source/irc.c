@@ -63,26 +63,21 @@ CVS_REVISION(irc_c)
 #endif
 
 #ifndef VERSION
-	const char irc_version[] = "BitchX-1.3-git";
+	const char irc_version[] = "BitchX-2026.11-revytech";
 #else
 	const char irc_version[] = VERSION;
 #endif
 
-/* Format of bitchx_numver: MMmmpp
- * MM = major version (eg 10 = 1.0)
- * mm = minor version
- * pp = patchlevel (00 = development, 01 = release)
+/* Format of bitchx_numver: YYYYMM
+ * Date-based version for RevyTech fork
  */
-const unsigned long bitchx_numver = 120200;
+const unsigned long bitchx_numver = 202611;
 
 /*
  * INTERNAL_VERSION is the number that the special alias $V returns.
- * Make sure you are prepared for floods, pestilence, hordes of locusts( 
- * and all sorts of HELL to break loose if you change this number.
- * Its format is actually YYYYMMDD, for the _release_ date of the
- * client..
+ * Format is YYYYMMDD for the release date.
  */
-const char internal_version[] = "20210425";
+const char internal_version[] = "20261125";
 
 int	irc_port = IRC_PORT,			/* port of ircd */
 	strip_ansi_in_echo,
@@ -314,6 +309,7 @@ munge_term_env_var(void)
   /*
    * Add more if's here, if needed.
    */
+  return 0;
 }
 
 void
@@ -1457,8 +1453,10 @@ FILE *t;
 		if (errno != ESRCH)
 		{
 			fprintf(stderr, "Bitchx already running as %s\n", nickname);
+			fclose(t);
 			exit(1);
 		}
+		fclose(t);
 	}
 }
 

@@ -1672,9 +1672,9 @@ BUILT_IN_COMMAND(savelists)
 	fclose(outfile);
 	new_free(&p);
 	/* this looks like a bug but it isn't. formats are saved in a
-	 * differant file altogether.
+	 * differant file altogether. Pass NULL to avoid use-after-free on closed handle.
 	 */
-	save_formats(outfile);
+	save_formats(NULL);
 #endif
 }
 

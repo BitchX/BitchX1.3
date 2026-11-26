@@ -3002,11 +3002,12 @@ if (window->waiting_channel)
 if (window->bind_channel)
 	say("\tBound channel: %s", 
 				window->bind_channel);
-	say("\tQuery User: %s %s", 
-				window->query_nick ? 
-				window->query_nick : "<None>", 
-				window->query_cmd ? 
-				window->query_cmd : empty_string);
+
+say("\tQuery User: %s %s", 
+			window->query_nick ? 
+			window->query_nick : "<None>", 
+			window->query_cmd ? 
+			window->query_cmd : empty_string);
 	say("\tPrompt: %s", 
 				window->prompt ? 
 				window->prompt : "<None>");
@@ -4672,8 +4673,8 @@ void	BX_set_hold_mode (Window *window, int flag, int update)
 		{
 			window->last_lines_held = window->lines_held;
 			update_window_status(window, 0);
-			if (window->update | UPDATE_STATUS)
-				window->update -= UPDATE_STATUS;
+			if (window->update & UPDATE_STATUS)
+				window->update &= ~UPDATE_STATUS;
 			cursor_in_display(window);
 			update_input(NO_UPDATE);
 		}

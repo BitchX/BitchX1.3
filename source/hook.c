@@ -56,7 +56,7 @@ typedef struct numericlist_stru
 {
 struct	numericlist_stru *next;
 	int	numeric;
-	char	name[4];
+	char	name[8];
 	Hook	*list;
 	char	*filename;
 } NumericList;
@@ -362,6 +362,20 @@ static int 	find_hook (char *name, int *first)
 
 
 /* * * * * ADDING A HOOK * * * * * */
+static void populate_hook (Hook *new, char *nick, char *stuff, Noise noisy, int not_flag, int sernum, int flexible)
+{
+	malloc_strcpy(&new->nick, nick);
+	malloc_strcpy(&new->stuff, stuff);
+	new->noisy = noisy;
+	new->not = not_flag;
+	new->sernum = sernum;
+	new->flexible = flexible;
+	new->global = loading_global;
+	malloc_strcpy(&new->filename, current_package());
+	new->next = NULL;
+	upper(new->nick);
+}
+
 /*
  * This adds a numeric hook to the numeric hook list.  The composition of that
  * list is a linked list of "numeric holders" which simply indicate the 
@@ -369,7 +383,7 @@ static int 	find_hook (char *name, int *first)
  * list itself is just a linked list of events sorted by serial number, then
  * by "nick".
  */
-static void add_numeric_hook (int numeric, char *nick, char *stuff, Noise noisy, int not, int sernum, int flexible)
+static void add_numeric_hook (int numeric, char *nick, char *stuff, Noise noisy, int not_flag, int sernum, int flexible)
 {
 	NumericList *entry;
 	Hook	*new;
@@ -378,7 +392,7 @@ static void add_numeric_hook (int numeric, char *nick, char *stuff, Noise noisy,
 	{
 		entry = (NumericList *) new_malloc(sizeof(NumericList));
 		entry->numeric = numeric;
-		sprintf(entry->name, "%3.3u", numeric);
+		snprintf(entry->name, sizeof(entry->name), "%03u", (unsigned int)numeric);
 		entry->next = NULL;
 		entry->list = NULL;
 		add_numeric_list(entry);
@@ -391,17 +405,7 @@ static void add_numeric_hook (int numeric, char *nick, char *stuff, Noise noisy,
 		new->stuff = NULL;
 	}
 
-	malloc_strcpy(&new->nick, nick);
-	malloc_strcpy(&new->stuff, stuff);
-	new->noisy = noisy;
-	new->not = not;
-	new->sernum = sernum;
-	new->flexible = flexible;
-	new->global = loading_global;
-	malloc_strcpy(&new->filename, current_package());
-	new->next = NULL;
-
-	upper(new->nick);
+	populate_hook(new, nick, stuff, noisy, not_flag, sernum, flexible);
 	hook_add_to_list(&entry->list, new);
 }
 
@@ -415,7 +419,7 @@ static void add_numeric_dll_hook (int numeric, Noise noise, int serial, char *ni
 	{
 		entry = (NumericList *) new_malloc(sizeof(NumericList));
 		entry->numeric = numeric;
-		sprintf(entry->name, "%3.3u", numeric);
+		snprintf(entry->name, sizeof(entry->name), "%03u", (unsigned int)numeric);
 		entry->next = NULL;
 		entry->list = NULL;
 		add_numeric_list(entry);
@@ -458,14 +462,14 @@ static int serial = 0;
  * entry to the list as specified by the rest of the parameters.  The new
  * entry is added in alphabetical order (by nick). 
  */
-static void add_hook (int which, char *nick, char *stuff, Noise noisy, int not, int sernum, int flexible)
+static void add_hook (int which, char *nick, char *stuff, Noise noisy, int not_flag, int sernum, int flexible)
 {
 	Hook	*new;
 
 	if (which < 0)
 	{
 		add_numeric_hook(-which, nick, stuff, noisy, 
-					not, sernum, flexible);
+					not_flag, sernum, flexible);
 		return;
 	}
 
@@ -476,17 +480,7 @@ static void add_hook (int which, char *nick, char *stuff, Noise noisy, int not, 
 		new->stuff = NULL;
 	}
 
-	malloc_strcpy(&new->nick, nick);
-	malloc_strcpy(&new->stuff, stuff);
-	new->noisy = noisy;
-	new->not = not;
-	new->sernum = sernum;
-	new->flexible = flexible;
-	new->global = loading_global;
-	malloc_strcpy(&new->filename, current_package());
-	new->next = NULL;
-
-	upper(new->nick);
+	populate_hook(new, nick, stuff, noisy, not_flag, sernum, flexible);
 	new->debug = (hook_functions[which].flags & HF_DEBUG) ? HF_DEBUG : 0;
 	hook_add_to_list(&hook_functions[which].list, new);
 }
@@ -762,12 +756,12 @@ static int show_numeric_list (int numeric)
 {
 	NumericList *tmp;
 	Hook	*list;
-	char	buf[4];
+	char	buf[8];
 	int	cnt = 0;
 
 	if (numeric)
 	{
-		sprintf(buf, "%3.3u", numeric);
+		snprintf(buf, sizeof(buf), "%03u", (unsigned int)numeric);
 		if ((tmp = find_numeric_list(numeric)))
 		{
 			for (list = tmp->list; list; list = list->next, cnt++)
@@ -1641,7 +1635,7 @@ void	do_stack_on (int type, char *args)
 					nptr->list = p->list;
 					nptr->next = NULL;
 					nptr->numeric = -which;
-					sprintf(nptr->name, "%3.3u", -which);
+					snprintf(nptr->name, sizeof(nptr->name), "%03u", (unsigned int)(-which));
 					add_numeric_list(nptr);
 				}
 			}

@@ -26,7 +26,7 @@ echo
 dnl Checks for programs.
 dnl _AC_EMXOS2
 dnl _AC_CYGWIN
-AC_PROG_CC
+AC_PROG_CC([clang])
 AC_PROG_INSTALL
 AM_SANITY_CHECK
 AC_PROG_LN_S
@@ -966,9 +966,14 @@ AC_SUBST(SHLIB_SUFFIX)
 
 dnl Finish up
 
-dnl Add -Wall to our CFLAGS if we're using gcc
-if test x"$GCC" = x"yes" -a -z "`echo "$CFLAGS" | grep \\\-Wall`"; then
-  CFLAGS="$CFLAGS -Wall"
+dnl Add -Wall and -std=gnu17 to our CFLAGS if we're using gcc
+if test x"$GCC" = x"yes"; then
+  if test -z "`echo "$CFLAGS" | grep \\\-Wall`"; then
+    CFLAGS="$CFLAGS -Wall"
+  fi
+  if test -z "`echo "$CFLAGS" | grep \\\-std=`"; then
+    CFLAGS="$CFLAGS -std=gnu17"
+  fi
 fi
 
 LIBS="`echo "$LIBS" | sed -e 's/-rdynamic//g'`"

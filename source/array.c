@@ -232,7 +232,7 @@ extern 	void		insert_index (long **index, long *size, long newIndex)
 	long cnt;
 
 	if (*size)
-		*index = (long *)RESIZE(*index, long, *size + 1);
+		RESIZE(*index, long, *size + 1);
 	else
 	{
 		*index = (long *)new_malloc(sizeof(long));
@@ -348,8 +348,8 @@ extern	void		delete_array (char *name)
                         *ptr = *(ptr + 1);
                         *array = *(array + 1);
                 }
-                array_info.item = (char**)RESIZE(array_info.item, char *, array_info.size);
-                array_info.index = (long *)RESIZE(array_info.index, long, array_info.size);
+                RESIZE(array_info.item, char *, array_info.size);
+                RESIZE(array_info.index, long, array_info.size);
                 RESIZE(array_array, an_array, array_info.size);
         }
         else
@@ -666,7 +666,7 @@ BUILT_IN_FUNCTION(function_setitem)
 					}
 					else if (item == array->size)
 					{
-						array->item = (char **)RESIZE(array->item, char *, (array->size + 1));
+						RESIZE(array->item, char *, (array->size + 1));
 						array->item[item] = NULL;
 						malloc_strcpy(&array->item[item], input);
 						index = find_item(*array, input);
@@ -691,7 +691,7 @@ BUILT_IN_FUNCTION(function_setitem)
 						array->index[0] = 0;
 						malloc_strcpy(&array->item[0], input);
 						if (array_info.size)
-							array_info.item = (char **)RESIZE(array_info.item, char *, (array_info.size + 1));
+							RESIZE(array_info.item, char *, (array_info.size + 1));
 						else
 							array_info.item = (char **)new_malloc(sizeof(char *));
 						array_info.item[array_info.size] = NULL;
@@ -892,8 +892,8 @@ BUILT_IN_FUNCTION(function_delitem)
 					array->size--;
 					for(strptr=&(array->item[item]), cnt=item; cnt < array->size; cnt++, strptr++)
 						*strptr = *(strptr + 1);
-					array->item = (char**)RESIZE(array->item, char *, array->size);
-					array->index = (long*)RESIZE(array->index, long, array->size);
+					RESIZE(array->item, char *, array->size);
+					RESIZE(array->index, long, array->size);
 				}
 				found = 0;
                         }

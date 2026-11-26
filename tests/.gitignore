@@ -1,0 +1,10 @@
+test_compat
+test_array
+test_term_env
+test_window
+test_hook
+test_smoke
+*.o
+*.gcda
+*.gcno
+*.gcov
